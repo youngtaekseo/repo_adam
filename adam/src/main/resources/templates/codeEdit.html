@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeCreate</title>
+</head>
+<body>
+	<form action="codeUpdate" method="post">
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드순번<br>
+			<input type="text" name="seq" th:value="${item.seq}" readonly>
+		</div>
+		<br>		
+		<div>
+			코드명<br>
+			<input type="text" name="name" th:value="${item.name}" autocomplete="off"  autofocus="on">
+		</div>
+
+		<br>
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="홈" style="text-decoration: none;"></a>
+		</button>		
+		<button type="submit">저장</button>
+	</form>
+	
+	<br>
+	<br>
+	
+	<form action="codeDelOne" method="post">
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드순번<br>
+			<input type="text" name="seq" th:value="${item.seq}" readonly>
+		</div>
+		<br>
+		<div>
+			코드명<br>
+			<input type="text" name="name" th:value="${item.name}" readonly>
+		</div>
+		<br>
+		<div>
+			삭제여부<br>
+			<input type="text" name="delNy" th:if="${item.delNy eq 0}" value="N" readonly>
+			<input type="text" name="delNy" th:unless="${item.delNy eq 0}" value="Y" readonly>
+		</div>
+		<br>	
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="홈" style="text-decoration: none;"></a>
+		</button>
+		<button type="submit">삭제여부(Y)</button>
+	</form>	
+	
+	<br>
+	<br>
+	
+	<form action="codeDelZero" method="post">
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드순번<br>
+			<input type="text" name="seq" th:value="${item.seq}" readonly>
+		</div>
+		<br>
+		<div>
+			코드명<br>
+			<input type="text" name="name" th:value="${item.name}" readonly>
+		</div>
+		<br>	
+		<div>
+			삭제여부<br>
+			<input type="text" name="delNy" th:if="${item.delNy eq 0}" value="N" readonly>
+			<input type="text" name="delNy" th:unless="${item.delNy eq 0}" value="Y" readonly>
+		</div>
+		<br>	
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="홈" style="text-decoration: none;"></a>
+		</button>
+		<button type="submit">삭제여부(N)</button>
+	</form>	
+	
+	<br>
+	<br>
+	
+	<form action="codeDelete" method="post">
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드순번<br>
+			<input type="text" name="seq" th:value="${item.seq}" readonly>
+		</div>
+		<br>
+		<div>
+			코드명<br>
+			<input type="text" name="name" th:value="${item.name}" readonly>
+		</div>
+		<br>		
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="홈" style="text-decoration: none;"></a>
+		</button>
+		<button type="submit">자료삭제(delete)</button>
+	</form>	
+</body>
+</html>

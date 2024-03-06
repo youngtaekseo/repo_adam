@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeGroupView</title>
+</head>
+<body>
+	<form action="codeGroupInsert" method="post">
+<!-- 		<div> -->
+<!-- 			순번<br> -->
+<!-- 			<input type="text" name="seq"> -->
+<!-- 		</div> -->
+	
+		<div>
+			그룹명<br>
+			<input type="text" name="name" autocomplete="off">
+		</div>
+	
+		<br>
+		<button>
+			<a th:href="@{/codeGroupXdmList}" th:text="이전" style="text-decoration: none;"></a>
+		</button>
+		<button type="submit">저장</button>
+	</form>
+</body>
+</html>

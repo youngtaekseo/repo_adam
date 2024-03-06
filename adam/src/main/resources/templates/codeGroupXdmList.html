@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeGroupXdmList</title>
+</head>
+<body>
+    <button> 
+    	<a th:href="@{/codeGroupCreate}" th:text="등록" style="text-decoration: none;"></a>
+    </button>
+    <br>
+    <table>
+        <tr>
+            <td>ch</td>
+            <td>#</td>
+            <td>Del</td>
+            <td>seq</td>
+            <td>name</td>
+            <td>count</td>
+            <td>regDate</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(list)}">
+        	<td colspan="6">There is no data !!! </td>
+        </tr>
+        <tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+            <td></td>
+            <td></td>
+            
+            <td th:if="${list.delNy eq 0}">N</td>
+            <td th:unless="${list.delNy eq 0}">Y</td>
+            
+            <td th:text="${list.seq}"></td>
+            
+            <!-- <td th:text="${list.name}"></td> -->
+            <td><a th:href="@{/codeGroupView(seq=${list.seq})}" th:text="${list.name}"></a></td>
+            
+            <td th:text="${list.xcodeCount}"></td>
+            <td th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+    </table>
+</body>
+</html>

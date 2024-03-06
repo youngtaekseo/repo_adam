@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeXdmList</title>
+</head>
+<body>
+    <table>
+    	<tr>
+    		<td>체크박스</td>
+    		<td>#</td>
+    		<td>그룹코드seq</td>
+    		<td>그룹코드이름</td>
+    		<td>코드삭제여부</td>
+    		<td>코드seq</td>
+    		<td>코드이름</td>
+    		<td>코드수정일</td>
+    	</tr>
+    	
+    	<tr th:if="${#lists.isEmpty(list)}">
+    		<td colspan="8">자료가 없습니다.</td>
+    	</tr>
+    	
+    	<tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+    		<td></td>
+    		<td></td>
+    		
+    		<td th:text="${list.xcodeGroupSeq}"></td>
+    		    		
+    		<td>
+    			<a th:href="@{/codeCreate(seq=${list.Seq})}" th:text="${list.xcodeGroupName}"> </a>
+    		</td>
+    		
+    		<td th:if="${list.delNy eq 0}">N</td>
+    		<td th:unless="${list.delNy eq 0}">Y</td>
+    		
+    		<td th:text="${list.seq}"></td>
+    		    		
+<!--     		<td th:text="${list.name}"></td> -->
+    		<td>
+    			<a th:href="@{/codeView(xcodeGroupSeq=${list.xcodeGroupSeq}, xcodeGroupName=${list.xcodeGroupName}, seq=${list.seq}, name=${list.name})}" th:text="${list.name}"> </a>
+    		</td>
+    		    		
+    		<td th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+    	</tr> 
+    </table>
+</body>
+</html>

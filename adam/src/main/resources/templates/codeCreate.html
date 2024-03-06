@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeCreate</title>
+</head>
+<body>
+	<form action="codeInsert" method="post">
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드명<br>
+			<input type="text" name="name"  autocomplete="off" autofocus="on">
+		</div>
+
+		<br>
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="홈" style="text-decoration: none;"></a>
+		</button>		
+		<button type="submit">저장</button>
+	</form>
+</body>
+</html>

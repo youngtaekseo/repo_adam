@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeView</title>
+</head>
+<body>
+	<div>
+		<div>
+			그룹순번<br>
+			<input type="text" name="xcodeGroupSeq" th:value="${item.xcodeGroupSeq}" readonly>
+		</div>
+		<br>
+		<div>
+			그룹명<br>
+			<input type="text" name="xcodeGroupName" th:value="${item.xcodeGroupName}" readonly>
+		</div>
+		<br>
+		<div>
+			코드순번<br>
+			<input type="text" name="seq" th:value="${item.seq}" readonly>
+		</div>
+		<br>
+		<div>
+			코드명<br>
+			<input type="text" name="name" th:value="${item.name}" readonly>
+		</div>
+
+		<br>
+		<button>
+			<a th:href="@{/codeXdmList}" th:text="이전" style="text-decoration: none;"></a>
+		</button>
+		
+		<button>
+			<a th:href="@{/codeEdit(xcodeGroupSeq=${item.xcodeGroupSeq}, xcodeGroupName=${item.xcodeGroupName}, seq=${item.seq}, name=${item.name})}" th:text="수정" style="text-decoration: none;"></a>
+		</button>
+	</div>
+
+</body>
+</html>
