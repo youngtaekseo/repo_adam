@@ -36,6 +36,23 @@
          WHERE 1=1
            AND a.seq = #{seq}
          ORDER BY a.seq DESC
+    </select>  
+    
+    <select id="selectName" resultMap="resultMapObj">
+        SELECT a.seq
+			 , a.name
+			 , a.regDateTime
+			 , a.modDateTime
+			 , a.delNy
+			 , (SELECT COUNT(*) 
+			      FROM commoncode aa 
+			     WHERE aa.commonGroup_seq = a.seq 
+			       AND aa.delNy = 0
+			   ) xcodeCount
+          FROM commongroup a
+         WHERE 1=1
+           AND a.name = #{name}
+         ORDER BY a.seq DESC
     </select>    
     
     <insert id="insert">

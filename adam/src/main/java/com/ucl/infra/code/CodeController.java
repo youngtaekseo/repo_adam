@@ -14,19 +14,19 @@ public class CodeController {
 	@RequestMapping(value = "codeXdmList")
 	public String codeXdmList(Model model) throws Exception {
 		model.addAttribute("list", service.selectList());
-		return "codeXdmList";
+		return "/sdm/code/codeXdmList";
 	}
 	
 	@RequestMapping(value = "codeView")
 	public String codeView(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));
-		return "codeView";
+		return "/sdm/code/codeView";
 	}
 	
 	@RequestMapping(value = "codeCreate")
 	public String codeCreate(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));
-		return "codeCreate";
+		return "/sdm/code/codeCreate";
 	}
 	
 	@RequestMapping(value = "codeInsert")
@@ -38,7 +38,7 @@ public class CodeController {
 	@RequestMapping(value = "codeEdit")
 	public String codeEdit(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));
-		return "codeEdit";
+		return "/sdm/code/codeEdit";
 	}
 	
 	@RequestMapping(value = "codeUpdate")

@@ -28,6 +28,10 @@ public class CodeGroupService {
 		
 		return dao.selectOne(dto);
 	}
+	
+	public List<CodeGroupDto> selectName(CodeGroupDto dto){
+		return dao.selectName(dto);
+	}
 
 	public int insert(CodeGroupDto dto){
 		return dao.insert(dto);

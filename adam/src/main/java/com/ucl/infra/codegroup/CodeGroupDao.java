@@ -6,6 +6,7 @@ public interface CodeGroupDao {
 	public List<CodeGroupDto> selectList();
 	
 	public CodeGroupDto selectOne(CodeGroupDto dto);
+	public List<CodeGroupDto> selectName(CodeGroupDto dto);
 	
 //	mybatis에서 insert, update, delete 된 건수를 리턴한다
 //	그래서 리턴 타입을 int로 해야한다
