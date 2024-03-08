@@ -11,6 +11,7 @@
      		 , a.delNy
      		 , a.seq
      		 , a.name
+     		 , a.regDateTime
      		 , a.modDateTime
   		  FROM commoncode a
        		   LEFT JOIN commongroup b
@@ -18,19 +19,35 @@
          WHERE 1 = 1		
          ORDER BY b.seq, a.seq 
 	</select>
-	
+
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT b.seq  xcodeGroupSeq
      		 , b.name xcodeGroupName
      		 , a.delNy
      		 , a.seq
      		 , a.name
+     		 , a.regDateTime
      		 , a.modDateTime
   		  FROM commoncode a
        		   LEFT JOIN commongroup b
               		  ON b.seq = a.commonGroup_seq
          WHERE 1 = 1		
            AND a.seq = #{seq}	
+	</select>
+		
+	<select id="selectName" resultMap="resultMapObj">
+		SELECT b.seq  xcodeGroupSeq
+     		 , b.name xcodeGroupName
+     		 , a.delNy
+     		 , a.seq
+     		 , a.name
+     		 , a.regDateTime
+     		 , a.modDateTime
+  		  FROM commoncode a
+       		   LEFT JOIN commongroup b
+              		  ON b.seq = a.commonGroup_seq
+         WHERE 1 = 1			
+           AND a.name = #{name}
 	</select>
 	
 	<insert id="insert">
@@ -60,19 +77,17 @@
            AND seq = #{seq}	
 	</update>
 	
-	<update id="udtDelOne">
+	<update id="udtOne">
 		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
+		   SET modDateTime = now()
 		     , delNy = 1
          WHERE 1 = 1		
            AND seq = #{seq}	
 	</update>
 	
-	<update id="udtDelZero">
+	<update id="udtZero">
 		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
+		   SET modDateTime = now()
 		     , delNy = 0
          WHERE 1 = 1		
            AND seq = #{seq}	

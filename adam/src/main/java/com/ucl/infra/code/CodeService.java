@@ -19,23 +19,31 @@ public class CodeService {
 		return dao.selectOne(dto);
 	}
 	
-	public int insert(CodeDto dto) {
+	public List<CodeDto> selectName(CodeDto dto){
+		if(dto.getName().equals("")) {
+			return dao.selectList();
+		} else {
+			return dao.selectName(dto);	
+		}
+	}
+
+	public int insert(CodeDto dto){
 		return dao.insert(dto);
-	}
+	}	
 	
-	public int update(CodeDto dto) {
+	public int update(CodeDto dto){
 		return dao.update(dto);
-	}
+	}	
 	
-	public int udtDelOne(CodeDto dto) {
-		return dao.udtDelOne(dto);		
-	}
-	
-	public int udtDelZero(CodeDto dto) {
-		return dao.udtDelZero(dto);
-	}
-	
-	public int delete(CodeDto dto) {
+	public int delete(CodeDto dto){
 		return dao.delete(dto);
+	}
+	
+	public int udtOne(CodeDto dto){
+		return dao.udtOne(dto);
+	}
+	
+	public int udtZero(CodeDto dto){
+		return dao.udtZero(dto);
 	}
 }

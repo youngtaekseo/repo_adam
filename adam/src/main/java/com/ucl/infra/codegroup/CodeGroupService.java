@@ -30,7 +30,11 @@ public class CodeGroupService {
 	}
 	
 	public List<CodeGroupDto> selectName(CodeGroupDto dto){
-		return dao.selectName(dto);
+		if(dto.getName().equals("")) {
+			return dao.selectList();
+		} else {
+			return dao.selectName(dto);	
+		}
 	}
 
 	public int insert(CodeGroupDto dto){
@@ -45,11 +49,11 @@ public class CodeGroupService {
 		return dao.delete(dto);
 	}
 	
-	public int upDelete(CodeGroupDto dto){
-		return dao.upDelete(dto);
+	public int udtOne(CodeGroupDto dto){
+		return dao.udtOne(dto);
 	}
 	
-	public int upInsert(CodeGroupDto dto){
-		return dao.upInsert(dto);
+	public int udtZero(CodeGroupDto dto){
+		return dao.udtZero(dto);
 	}	
 }

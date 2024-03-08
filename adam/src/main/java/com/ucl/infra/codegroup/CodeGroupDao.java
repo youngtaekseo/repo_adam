@@ -3,8 +3,7 @@ package com.ucl.infra.codegroup;
 import java.util.List;
 
 public interface CodeGroupDao {
-	public List<CodeGroupDto> selectList();
-	
+	public List<CodeGroupDto> selectList();	
 	public CodeGroupDto selectOne(CodeGroupDto dto);
 	public List<CodeGroupDto> selectName(CodeGroupDto dto);
 	
@@ -12,7 +11,7 @@ public interface CodeGroupDao {
 //	그래서 리턴 타입을 int로 해야한다
 	public int insert(CodeGroupDto dto);
 	public int update(CodeGroupDto dto);
-	public int upDelete(CodeGroupDto dto);
-	public int upInsert(CodeGroupDto dto);
+	public int udtOne(CodeGroupDto dto);
+	public int udtZero(CodeGroupDto dto);
 	public int delete(CodeGroupDto dto);
 }

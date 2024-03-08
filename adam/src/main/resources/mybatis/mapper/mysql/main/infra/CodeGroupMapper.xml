@@ -45,6 +45,9 @@
 			 , a.modDateTime
 			 , a.delNy
 			 , (SELECT COUNT(*) 
+			      FROM commongroup bb
+			   ) xcodeGroupCount
+			 , (SELECT COUNT(*) 
 			      FROM commoncode aa 
 			     WHERE aa.commonGroup_seq = a.seq 
 			       AND aa.delNy = 0
@@ -81,7 +84,7 @@
            AND seq = #{seq}    	  
     </update>
     
-    <update id="upDelete">
+    <update id="udtOne">
     	UPDATE commongroup
     	   SET delNy = 1
     	     , modDateTime = now()
@@ -89,7 +92,7 @@
            AND seq = #{seq}    	  
     </update>
     
-    <update id="upInsert">
+    <update id="udtZero">
     	UPDATE commongroup
     	   SET delNy = 0
     	     , modDateTime = now()

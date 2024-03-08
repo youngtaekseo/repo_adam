@@ -10,7 +10,7 @@ import com.ucl.common.constants.Commvar;
 public class IndexController {
 
 	@RequestMapping(value = "/indexSdm")
-	public String codeXdmList() throws Exception {
+	public String indexSdm() throws Exception {
 		return Commvar.PATH_SDM + "indexSdm";
 	}
 }

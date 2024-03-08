@@ -5,11 +5,79 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ucl.common.constants.Commvar;
+
 @Controller
 public class CodeController {
 
 	@Autowired
 	CodeService service;
+	
+//	전체리스트
+	@RequestMapping(value = "/codeSdmList")
+	public String codeListSdm(Model model) throws Exception {		
+		model.addAttribute("list", service.selectList());		
+		return Commvar.PATH_SDM_C + "codeSdmList";
+	}
+	
+//	수정화면
+	@RequestMapping(value = "/codeSdmForm")
+	public String codeSdmForm(CodeDto dto, Model model) throws Exception {
+		model.addAttribute("item", service.selectOne(dto));	
+		return Commvar.PATH_SDM_C + "codeSdmForm";
+	}
+	
+//	등록화면
+	@RequestMapping(value = "/codeSdmCreate")
+	public String codeSdmCreate(CodeDto dto, Model model) throws Exception {
+		model.addAttribute("item", service.selectOne(dto));	
+		return Commvar.PATH_SDM_C + "codeSdmCreate";
+	}	
+	
+//	조회결과
+	@RequestMapping(value = "/codeSdmView")
+	public String codeSdmView(CodeDto dto, Model model) throws Exception {
+		model.addAttribute("list", service.selectName(dto));
+		return Commvar.PATH_SDM_C + "codeSdmList";
+	}	
+	
+//	그룹코드등록
+	@RequestMapping(value = "/codeSdmInsert")
+	public String codeSdmInsert(CodeDto dto) throws Exception {
+		service.insert(dto);
+		return "redirect:/codeSdmList";
+	}
+	
+//	그룹코드수정
+	@RequestMapping(value = "/codeSdmUpdate")
+	public String codeSdmUpdate(CodeDto dto) throws Exception {
+		service.update(dto);
+		return "redirect:/codeSdmList";	
+	}	
+	
+//	그룹코드삭제
+	@RequestMapping(value = "/codeSdmDelete")
+	public String codeSdmDelete(CodeDto dto) throws Exception {
+		service.delete(dto);
+		return "redirect:/codeSdmList";
+	}
+	
+//	그룹코드 삭제여부 Y로 변경
+	@RequestMapping(value = "/codeSdmUdtOne")
+	public String codeSdmUdtOne(CodeDto dto) throws Exception {
+		service.udtOne(dto);
+		return "redirect:/codeSdmList";
+	}		
+	
+//	그룹코드 삭제여부 N로 변경
+	@RequestMapping(value = "/codeSdmUdtZero")
+	public String codeSdmUdtZero(CodeDto dto) throws Exception {
+		service.udtZero(dto);
+		return "redirect:/codeSdmList";
+	}
+	
+//	-------------
+	
 	
 	@RequestMapping(value = "codeXdmList")
 	public String codeXdmList(Model model) throws Exception {
@@ -49,13 +117,13 @@ public class CodeController {
 	
 	@RequestMapping(value = "codeDelOne")
 	public String codeDelOne(CodeDto dto) throws Exception {
-		service.udtDelOne(dto);
+		service.udtOne(dto);
 		return "redirect:/codeXdmList";
 	}
 	
 	@RequestMapping(value = "codeDelZero")
 	public String codeDelZero(CodeDto dto) throws Exception {
-		service.udtDelZero(dto);
+		service.udtZero(dto);
 		return "redirect:/codeXdmList";
 	}
 	
