@@ -8,8 +8,9 @@ import com.ucl.common.constants.Commvar;
 @Controller
 public class FormController {
 
-	@RequestMapping(value = "formSdm")
-	public String forms() {
-		return Commvar.PATH_SDM + "formSdm";
+	@RequestMapping(value = "formSdmList")
+	public String formSdmList() {
+		return Commvar.PATH_SDM_SC + "formSdmList";
 	}
+
 }

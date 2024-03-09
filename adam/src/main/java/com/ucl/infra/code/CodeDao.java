@@ -11,7 +11,12 @@ public interface CodeDao {
 //	그래서 리턴 타입을 int로 해야한다	
 	public int insert(CodeDto dto);
 	public int update(CodeDto dto);
-	public int udtOne(CodeDto dto);
-	public int udtZero(CodeDto dto);
 	public int delete(CodeDto dto);
+	
+	public int udtZero(CodeDto dto);
+	public int udtOne(CodeDto dto);
+	
+	public List<CodeDto> selectRegDtList(CodeDto dto);
+	public List<CodeDto> selectModDtList(CodeDto dto);
+
 }

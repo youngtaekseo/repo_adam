@@ -10,6 +10,11 @@ public class CodeDto {
 	private Integer delNy;
 	private String commonGroup_seq;
 	
+	private String xnameType;
+	private String xdateType;
+	private String xdateFrom;
+	private String xdateTo;
+	
 	private String xcodeGroupSeq;
 	private String xcodeGroupName;
 	
@@ -55,13 +60,45 @@ public class CodeDto {
 	public void setDelNy(Integer delNy) {
 		this.delNy = delNy;
 	}
-	
+
 	public String getCommonGroup_seq() {
 		return commonGroup_seq;
 	}
 
 	public void setCommonGroup_seq(String commonGroup_seq) {
 		this.commonGroup_seq = commonGroup_seq;
+	}
+
+	public String getXnameType() {
+		return xnameType;
+	}
+
+	public void setXnameType(String xnameType) {
+		this.xnameType = xnameType;
+	}
+
+	public String getXdateType() {
+		return xdateType;
+	}
+
+	public void setXdateType(String xdateType) {
+		this.xdateType = xdateType;
+	}
+
+	public String getXdateFrom() {
+		return xdateFrom;
+	}
+
+	public void setXdateFrom(String xdateFrom) {
+		this.xdateFrom = xdateFrom;
+	}
+
+	public String getXdateTo() {
+		return xdateTo;
+	}
+
+	public void setXdateTo(String xdateTo) {
+		this.xdateTo = xdateTo;
 	}
 
 	public String getXcodeGroupSeq() {
@@ -86,6 +123,6 @@ public class CodeDto {
 
 	public void setXcodeCount(Integer xcodeCount) {
 		this.xcodeCount = xcodeCount;
-	}
+	}	
 
 }

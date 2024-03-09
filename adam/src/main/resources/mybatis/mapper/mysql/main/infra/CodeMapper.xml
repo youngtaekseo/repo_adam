@@ -16,7 +16,41 @@
   		  FROM commoncode a
        		   LEFT JOIN commongroup b
               		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
+         WHERE 1 = 1     	
+         ORDER BY b.seq, a.seq 
+	</select>
+	
+	<select id="selectRegDtList" resultMap="resultMapObj">
+		SELECT b.seq  xcodeGroupSeq
+     		 , b.name xcodeGroupName
+     		 , a.delNy
+     		 , a.seq
+     		 , a.name
+     		 , a.regDateTime
+     		 , a.modDateTime
+  		  FROM commoncode a
+       		   LEFT JOIN commongroup b
+              		  ON b.seq = a.commonGroup_seq
+         WHERE 1 = 1	
+           AND a.regDateTime BETWEEN date(#{xdateFrom}) AND date(#{xdateTo}) + 1
+           AND a.delNy = #{delNy}
+         ORDER BY b.seq, a.seq 
+	</select>
+	
+	<select id="selectModDtList" resultMap="resultMapObj">
+		SELECT b.seq  xcodeGroupSeq
+     		 , b.name xcodeGroupName
+     		 , a.delNy
+     		 , a.seq
+     		 , a.name
+     		 , a.regDateTime
+     		 , a.modDateTime
+  		  FROM commoncode a
+       		   LEFT JOIN commongroup b
+              		  ON b.seq = a.commonGroup_seq
+         WHERE 1 = 1	
+           AND a.modDateTime BETWEEN date(#{xdateFrom}) AND date(#{xdateTo}) + 1
+           AND a.delNy = #{delNy}
          ORDER BY b.seq, a.seq 
 	</select>
 
@@ -48,6 +82,7 @@
               		  ON b.seq = a.commonGroup_seq
          WHERE 1 = 1			
            AND a.name = #{name}
+           AND a.delNy = #{delNy}
 	</select>
 	
 	<insert id="insert">

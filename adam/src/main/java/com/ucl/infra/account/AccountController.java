@@ -10,6 +10,6 @@ public class AccountController {
 
 	@RequestMapping(value = "accountSdm")
 	public String account() {
-		return Commvar.PATH_SDM + "accountSdm";
+		return Commvar.PATH_SDM_SC + "accountSdm";
 	}
 }

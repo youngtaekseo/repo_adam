@@ -17,28 +17,30 @@ public class CodeController {
 	@RequestMapping(value = "/codeSdmList")
 	public String codeListSdm(Model model) throws Exception {		
 		model.addAttribute("list", service.selectList());		
-		return Commvar.PATH_SDM_C + "codeSdmList";
+		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}
 	
 //	수정화면
 	@RequestMapping(value = "/codeSdmForm")
 	public String codeSdmForm(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_SDM_C + "codeSdmForm";
+		return Commvar.PATH_SDM_CC + "codeSdmForm";
 	}
 	
 //	등록화면
 	@RequestMapping(value = "/codeSdmCreate")
 	public String codeSdmCreate(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_SDM_C + "codeSdmCreate";
+		return Commvar.PATH_SDM_CC + "codeSdmCreate";
 	}	
 	
 //	조회결과
 	@RequestMapping(value = "/codeSdmView")
 	public String codeSdmView(CodeDto dto, Model model) throws Exception {
+		System.out.println("dto.getXdateType() : " + dto.getXdateType());
+		
 		model.addAttribute("list", service.selectName(dto));
-		return Commvar.PATH_SDM_C + "codeSdmList";
+		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}	
 	
 //	그룹코드등록

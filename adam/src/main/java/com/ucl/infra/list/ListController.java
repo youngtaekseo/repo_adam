@@ -10,6 +10,6 @@ public class ListController {
 
 	@RequestMapping(value = "/listSdm")
 	public String account() {
-		return Commvar.PATH_SDM + "listSdm";
+		return Commvar.PATH_SDM_SC + "listSdm";
 	}
 }

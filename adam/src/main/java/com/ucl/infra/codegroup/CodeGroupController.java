@@ -19,27 +19,27 @@ public class CodeGroupController {
 	@RequestMapping(value = "/codeGroupSdmList")
 	public String codeGroupListSdm(Model model) throws Exception {		
 		model.addAttribute("list", service.selectList());		
-		return Commvar.PATH_SDM_G + "codeGroupSdmList";
+		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}
 	
 //	수정화면
 	@RequestMapping(value = "/codeGroupSdmForm")
 	public String codeGroupSdmForm(CodeGroupDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_SDM_G + "codeGroupSdmForm";
+		return Commvar.PATH_SDM_CG + "codeGroupSdmForm";
 	}
 	
 //	등록화면
 	@RequestMapping(value = "/codeGroupSdmCreate")
 	public String codeGroupSdmCreate() throws Exception {
-		return Commvar.PATH_SDM_G + "codeGroupSdmCreate";
+		return Commvar.PATH_SDM_CG + "codeGroupSdmCreate";
 	}	
 	
 //	조회결과
 	@RequestMapping(value = "/codeGroupSdmView")
 	public String codeGroupSdmView(CodeGroupDto dto, Model model) throws Exception {
 		model.addAttribute("list", service.selectName(dto));
-		return Commvar.PATH_SDM_G + "codeGroupSdmList";
+		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}	
 	
 //	그룹코드등록
