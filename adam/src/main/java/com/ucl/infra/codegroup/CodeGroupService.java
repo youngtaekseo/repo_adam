@@ -30,10 +30,22 @@ public class CodeGroupService {
 	}
 	
 	public List<CodeGroupDto> selectName(CodeGroupDto dto){
-		if(dto.getName().equals("")) {
+		if(dto.getName().equals("") && 
+		   dto.getXdateFrom().equals("") && 
+		   dto.getXdateTo().equals("")) 
+		{
 			return dao.selectList();
-		} else {
-			return dao.selectName(dto);	
+		} 
+		else 
+		if(dto.getName().equals("") && 
+		  (! dto.getXdateFrom().equals("") && 
+		   ! dto.getXdateTo().equals(""))) 
+		{
+			return dao.selectRegModList(dto);
+		}
+		else 
+		{
+			return dao.selectName(dto);
 		}
 	}
 

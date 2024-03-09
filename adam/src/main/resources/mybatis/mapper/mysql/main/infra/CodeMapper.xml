@@ -6,83 +6,71 @@
 	<resultMap id="resultMapObj" type="com.ucl.infra.code.CodeDto"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
+        SELECT a.seq  xcodeGroupSeq
+     		 , a.name xcodeGroupName
+     		 , b.delNy
+     		 , b.seq
+     		 , b.name
+     		 , b.regDateTime
+     		 , b.modDateTime
+  		  FROM commongroup a
+       		   LEFT JOIN commoncode b
+              		  ON b.commonGroup_seq = a.seq 
          WHERE 1 = 1     	
-         ORDER BY b.seq, a.seq 
+         ORDER BY a.seq, b.seq         
 	</select>
 	
-	<select id="selectRegDtList" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1	
-           AND a.regDateTime BETWEEN date(#{xdateFrom}) AND date(#{xdateTo}) + 1
-           AND a.delNy = #{delNy}
-         ORDER BY b.seq, a.seq 
-	</select>
-	
-	<select id="selectModDtList" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1	
-           AND a.modDateTime BETWEEN date(#{xdateFrom}) AND date(#{xdateTo}) + 1
-           AND a.delNy = #{delNy}
-         ORDER BY b.seq, a.seq 
+	<select id="selectRegModList" resultMap="resultMapObj">
+        SELECT a.seq  xcodeGroupSeq
+     		 , a.name xcodeGroupName
+     		 , b.delNy
+     		 , b.seq
+     		 , b.name
+     		 , b.regDateTime
+     		 , b.modDateTime
+  		  FROM commongroup a
+       		   LEFT JOIN commoncode b
+              		  ON b.commonGroup_seq = a.seq              		   
+         WHERE 1 = 1
+           AND (b.regDateTime BETWEEN IF(#{xdateType} = 'regDt', date(#{xdateFrom}), date('1000-01-01')) 
+                                  AND IF(#{xdateType} = 'regDt', date(#{xdateTo})+1, date('1000-01-01'))
+             OR b.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
+                                  AND IF(#{xdateType} = 'modDt', date(#{xdateTo})+1, date('1000-01-01'))
+               )                                 
+           AND b.delNy = #{delNy}         
+         ORDER BY a.seq, b.seq 
 	</select>
 
 	<select id="selectOne" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
-           AND a.seq = #{seq}	
+        SELECT a.seq  xcodeGroupSeq
+     		 , a.name xcodeGroupName
+     		 , b.delNy
+     		 , b.seq
+     		 , b.name
+     		 , b.regDateTime
+     		 , b.modDateTime
+  		  FROM commongroup a
+       		   LEFT JOIN commoncode b
+              		  ON b.commonGroup_seq = a.seq              		          
+                     AND b.seq = #{seq} 
+         WHERE 1 = 1
+           AND a.seq = #{xcodeGroupSeq}
 	</select>
 		
 	<select id="selectName" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
+        SELECT a.seq  xcodeGroupSeq
+     		 , a.name xcodeGroupName
+     		 , b.delNy
+     		 , b.seq
+     		 , b.name
+     		 , b.regDateTime
+     		 , b.modDateTime
+  		  FROM commongroup a
+       		   LEFT JOIN commoncode b
+              		  ON b.commonGroup_seq = a.seq          		   
          WHERE 1 = 1			
-           AND a.name = #{name}
-           AND a.delNy = #{delNy}
+           AND b.name  = #{name}
+           AND b.delNy = #{delNy}            
 	</select>
 	
 	<insert id="insert">

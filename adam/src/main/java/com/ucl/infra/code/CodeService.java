@@ -31,13 +31,7 @@ public class CodeService {
 		   (! dto.getXdateFrom().equals("") && 
 		    ! dto.getXdateTo().equals(""))) 
 		{
-			if(dto.getXdateType().equals("regDt")) {
-//				등록일시
-				return dao.selectRegDtList(dto);
-			} else {
-//				수정일시
-				return dao.selectModDtList(dto);	
-			}
+			return dao.selectRegModList(dto);
 		}
 		else 
 		{

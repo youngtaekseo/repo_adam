@@ -37,8 +37,6 @@ public class CodeController {
 //	조회결과
 	@RequestMapping(value = "/codeSdmView")
 	public String codeSdmView(CodeDto dto, Model model) throws Exception {
-		System.out.println("dto.getXdateType() : " + dto.getXdateType());
-		
 		model.addAttribute("list", service.selectName(dto));
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}	

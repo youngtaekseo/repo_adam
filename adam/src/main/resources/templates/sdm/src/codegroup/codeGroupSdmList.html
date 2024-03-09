@@ -286,42 +286,52 @@
 
         <script>
           // 조회버튼 클릭시 필수입력 확인
-          function fnValid() {
-            let inDateStart = document.getElementById("shDateStart");
-            let inDateEnd   = document.getElementById("shDateEnd");
+          function fnValid(obj) {
+            let vDateStartValid = document.getElementById("shDateStartValid");            
+            let vDateEndValid   = document.getElementById("shDateEndValid");
 
-            let inDateStartValid = document.getElementById("shDateStartValid");            
-            let inDateEndValid   = document.getElementById("shDateEndValid");
-
-            let valueChk = false;
-
-            if(inDateStart.value == "") {
-              inDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-              inDateStart.setAttribute("placeholder","시작일을 입력하세요!");   
-              inDateStartValid.innerHTML = "시작일을 입력하세요!";
-              valueChk = true;
-            } else {
-              inDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-              inDateStart.setAttribute("placeholder","");   
-              inDateStartValid.innerHTML = "";           
-            }
-
-            if(inDateEnd.value == "") {
-              inDateEnd.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-              inDateEnd.setAttribute("placeholder","종료일을 입력하세요!");     
-              inDateEndValid.innerHTML = "종료일을 입력하세요!";         
-              valueChk = true;
-            } else {
-              inDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-              inDateEnd.setAttribute("placeholder","");         
-              inDateEndValid.innerHTML = "";     
-            }   
+            let vElement = document.getElementById(obj);
+            let vChecked = false;
             
-            if (valueChk == true) {
-              return;
-            }
+            console.log(obj);
+            console.log(vElement.value);
 
-            document.getElementById("searchForm").submit();            
+            if(vElement.value == "") {
+              if(obj == "shDateStart") {
+                vElement.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+                vElement.setAttribute("placeholder","시작일을 입력하세요!");   
+                vDateStartValid.innerHTML = "시작일을 입력하세요!";
+              } else if(obj == "shDateEnd") {
+                vElement.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+                vElement.setAttribute("placeholder","종료일을 입력하세요!");     
+                vDateEndValid.innerHTML = "종료일을 입력하세요!"; 
+              };
+
+              return true;
+            } else {
+              if(obj == "shDateStart") {
+                vElement.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+                vElement.setAttribute("placeholder","");   
+                vDateStartValid.innerHTML = "";  
+              } else {
+                vElement.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+                vElement.setAttribute("placeholder","");         
+                vDateEndValid.innerHTML = "";  
+              };
+            };          
+          };
+
+          // 전송
+          function fnSave() {
+            let vChecked = false;
+            vChecked = fnValid("shDateStart"); // 시작일자
+            vChecked = fnValid("shDateEnd");   // 종료일자
+
+            if(vChecked == true) {
+              return;
+            };
+
+            document.getElementById("searchForm").submit();
           };
 
           // 초기화버튼 클릭
@@ -351,61 +361,114 @@
 
             <!-- 검색조건 -->
             <form id="searchForm" action="codeGroupSdmView" method="post">
-              <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                <div class="flex flex-col md:flex-row">
+			  <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="flex flex-col md:flex-row mt-4">
                     <!-- 삭제여부 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select
-                            name="delNy" 
+                            id="delSelect"
+                            name="delNy"
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                            <option value="" selected>삭제여부</option>
+                            <option value="0" selected>삭제여부</option>
                             <option value="0">N</option>
                             <option value="1">Y</option>
-                        </select>                        
+                        </select>
+                    </div>
+
+                    <!-- 일자조건 -->
+                    <div class="md:h-auto md:w-1/2 mr-3">
+                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            name="xdateType"
+                        >
+<!--                             onclick="fnDateChange(this)"                         -->
+                            <option value="regDt" selected>등록일</option>
+                            <option value="modDt">수정일</option>
+                        </select>
+                    </div>
+
+                    <!-- 시작일자 -->
+                    <div class="md:h-auto md:w-1/2 mr-3">
+                        <input
+                            id="shDateStart"
+                            name="xdateFrom"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            placeholder="시작일"
+                            autocomplete="off"
+                            required
+                            onchange="fnValid('shDateStart')"
+                        >
+                        <span id="shDateStartValid" class="text-xs text-red-600 dark:text-red-400">
+                        </span>
+                    </div>
+
+                    <!-- 종료일자 -->
+                    <div class="md:h-auto md:w-1/2 mr-3">
+                        <input
+                            id="shDateEnd"                            
+                            name="xdateTo"
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            placeholder="종료일"
+                            autocomplete="off"
+                            required
+                            onchange="fnValid('shDateEnd')"
+                        >
+                        <span id="shDateEndValid" class="text-xs text-red-600 dark:text-red-400">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row mt-4">
+                    <!-- 검색구분 -->
+                    <div class="md:h-auto md:w-1/2 mr-3">
+                        <select
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            name="xnameType"
+                        >
+                            <option value="cg" selected>검색구분</option>
+                            <option value="cg">코드그룹명</option>
+                        </select>
                     </div>
 
                     <!-- 검색어 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <input
-                            name="name" 
+                            name="name"
                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             placeholder="검색어"
-                            autocomplete="off"
-                            autofocus="on"
-                        >                        
-                    </div> 
-                    
+                        >
+                    </div>
+
                     <div class="md:h-auto md:w-1/2 sm:mt-auto mr-3">
                       <div class="flex flex-col overflow-y-auto md:flex-row">
                         <!-- 조회버튼 -->
-<!--                           onclick="fnValid()" -->                         
                         <button
                           id="btnSearch"
                           class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
-                          type="submit"
-                        >
-							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							  <path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
-							</svg>                          
-                        </button>                    
+                          type="button"
+                          onclick="fnSave()"
+                          >
+                          <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
+                          </svg>
+                        </button>
 
                         <!-- 초기화버튼 -->
                         <button
                           id="btnReset"
                           class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                           type="reset"
-                          onclick="fnReset()"
+                          onclick="fnReset()"                          
                           >                          
-							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-							  <path clip-rule="evenodd" fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"></path>
-							</svg> 
-                        </button>                     
+                          <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path clip-rule="evenodd" fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"></path>
+                          </svg>
+                        </button>
                       </div>
                     </div>
 
                     <div class="md:h-auto md:w-1/2 mr-3"></div>
-                </div>                 
-              </div> 
+                </div>
+              </div>              
 
               <div class="flex flex-col md:flex-row mb-4">
                 <div class="md:h-auto sm:mt-auto md:w-1/2">

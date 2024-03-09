@@ -16,7 +16,6 @@ public interface CodeDao {
 	public int udtZero(CodeDto dto);
 	public int udtOne(CodeDto dto);
 	
-	public List<CodeDto> selectRegDtList(CodeDto dto);
-	public List<CodeDto> selectModDtList(CodeDto dto);
+	public List<CodeDto> selectRegModList(CodeDto dto);
 
 }

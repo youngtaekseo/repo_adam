@@ -17,6 +17,7 @@
     <!-- jquery 로딩 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- 플러그인 javascript 로딩 -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
     <script>
@@ -409,9 +410,9 @@
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             name="xnameType"
                         >
-                            <option value="" selected>검색구분</option>
-                            <option value="code" >코드명</option>
-                            <option value="codegroup" >코드그룹명</option>
+                            <option value="cc" selected>검색구분</option>
+                            <option value="cc">코드명</option>
+                            <option value="cg">코드그룹명</option>
                         </select>
                     </div>
 
@@ -523,36 +524,52 @@
                     	<td class="px-4 py-1" th:text="${list.seq}"></td>
                     	
                     	<td class="px-4 py-1" th:text="${list.name}"></td>
-                                	
-                    	<td class="px-4 py-1 text-xs" th:if="${list.delNy eq 0}">
-                      		<span
+                             
+                        <td class="px-4 py-1 text-xs">
+                        	<th:block th:switch="${list.delNy}">
+                      		<span th:case="0"
                   				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
 								N
                       		</span>
-                    	</td>
-                    	
-                    	<td class="px-4 py-1 text-xs" th:unless="${list.delNy eq 0}">
-                      		<span
-                            	class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+                      		<span th:case="1"
+                  				class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
 								Y
-                      		</span>
-                    	</td>                    	
+                      		</span>      
+                      		</th:block>                		
+                        </td>
+                                	
+<!--                     	<td class="px-4 py-1 text-xs" th:if="${list.delNy eq 0}"> -->
+<!--                       		<span -->
+<!--                   				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"> -->
+<!-- 								N -->
+<!--                       		</span> -->
+<!--                     	</td> -->
+                    	
+<!--                     	<td class="px-4 py-1 text-xs" th:unless="${list.delNy eq 0}"> -->
+<!--                       		<span -->
+<!--                             	class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"> -->
+<!-- 								Y -->
+<!--                       		</span> -->
+<!--                     	</td>                    	 -->
                     	
                     	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     	
                     	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    
+                   
                     	<td class="px-6 py-1">
+<!--                     		수정 -->
                     	    <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-								<a th:href="@{/codeSdmForm(seq=${list.seq}, name=${list.name})}">
+								<a th:href="@{/codeSdmForm(xcodeGroupSeq=${list.xcodeGroupSeq}, seq=${list.seq}, name=${list.name})}">
 									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 									  <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z"></path>
 									  <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z"></path>
 									</svg>						
 								</a>
                       		</button>
+                      		
+<!--                       		추가 -->
                       		<button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">                   	
-								<a th:href="@{/codeSdmCreate(seq=${list.seq})}">
+								<a th:href="@{/codeSdmCreate(xcodeGroupSeq=${list.xcodeGroupSeq}, seq=${list.seq})}">
 									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 									  <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
 									</svg>				
@@ -562,7 +579,7 @@
                   	</tr> 
                   </tbody>
                 </table>
-              </div>
+              </div>            
 
               <script>
                 // 타이틀바 체크시 리스트 체크박스 체크 및 해제

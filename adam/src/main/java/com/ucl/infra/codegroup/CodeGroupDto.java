@@ -9,8 +9,17 @@ public class CodeGroupDto {
 	private Date modDateTime;
 	private Integer delNy;
 	
+	private String xnameType;
+	private String xdateType;
+	private String xdateFrom;
+	private String xdateTo;
+	
 	private Integer xcodeGroupCount;
 	private Integer xcodeCount;
+	
+//	-----------
+	
+	
 	public String getSeq() {
 		return seq;
 	}
@@ -41,6 +50,30 @@ public class CodeGroupDto {
 	public void setDelNy(Integer delNy) {
 		this.delNy = delNy;
 	}
+	public String getXnameType() {
+		return xnameType;
+	}
+	public void setXnameType(String xnameType) {
+		this.xnameType = xnameType;
+	}
+	public String getXdateType() {
+		return xdateType;
+	}
+	public void setXdateType(String xdateType) {
+		this.xdateType = xdateType;
+	}
+	public String getXdateFrom() {
+		return xdateFrom;
+	}
+	public void setXdateFrom(String xdateFrom) {
+		this.xdateFrom = xdateFrom;
+	}
+	public String getXdateTo() {
+		return xdateTo;
+	}
+	public void setXdateTo(String xdateTo) {
+		this.xdateTo = xdateTo;
+	}
 	public Integer getXcodeGroupCount() {
 		return xcodeGroupCount;
 	}
@@ -53,6 +86,5 @@ public class CodeGroupDto {
 	public void setXcodeCount(Integer xcodeCount) {
 		this.xcodeCount = xcodeCount;
 	}
-
 	
 }

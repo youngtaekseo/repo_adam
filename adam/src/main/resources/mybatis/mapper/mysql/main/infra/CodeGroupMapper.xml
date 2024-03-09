@@ -58,6 +58,31 @@
          ORDER BY a.seq DESC
     </select>    
     
+	<select id="selectRegModList" resultMap="resultMapObj">
+        SELECT a.seq
+			 , a.name
+			 , a.regDateTime
+			 , a.modDateTime
+			 , a.delNy
+			 , (SELECT COUNT(*) 
+			      FROM commongroup bb
+			   ) xcodeGroupCount
+			 , (SELECT COUNT(*) 
+			      FROM commoncode aa 
+			     WHERE aa.commonGroup_seq = a.seq 
+			       AND aa.delNy = 0
+			   ) xcodeCount
+          FROM commongroup a
+         WHERE 1=1
+           AND (a.regDateTime BETWEEN IF(#{xdateType} = 'regDt', date(#{xdateFrom}), date('1000-01-01')) 
+                                  AND IF(#{xdateType} = 'regDt', date(#{xdateTo})+1, date('1000-01-01'))
+             OR a.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
+                                  AND IF(#{xdateType} = 'modDt', date(#{xdateTo})+1, date('1000-01-01'))
+               )                                 
+           AND a.delNy = #{delNy}
+         ORDER BY a.seq DESC
+	</select>    
+    
     <insert id="insert">
     	INSERT INTO commongroup
     		( name
