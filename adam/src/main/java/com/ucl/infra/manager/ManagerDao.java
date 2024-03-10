@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ManagerDao {
 	public List<ManagerDto> selectList();
-	public List<ManagerDto> selectName(ManagerDto dto);
+	public List<ManagerDto> selectCondtion(ManagerDto dto);
 	public ManagerDto selectOne(ManagerDto dto);
 	
 	public int insert(ManagerDto dto);

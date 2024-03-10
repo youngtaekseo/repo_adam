@@ -15,8 +15,8 @@ public class ManagerService {
 		return dao.selectList();
 	}
 	
-	public List<ManagerDto> selectName(ManagerDto dto) {
-		return dao.selectName(dto);
+	public List<ManagerDto> selectCondtion(ManagerDto dto) {
+		return dao.selectCondtion(dto);
 	}
 	
 	public ManagerDto selectOne(ManagerDto dto) {

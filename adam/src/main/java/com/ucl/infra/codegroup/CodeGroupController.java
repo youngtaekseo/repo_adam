@@ -38,6 +38,30 @@ public class CodeGroupController {
 //	조회결과
 	@RequestMapping(value = "/codeGroupSdmView")
 	public String codeGroupSdmView(CodeGroupDto dto, Model model) throws Exception {
+		if(dto.getXdateType() == null) {
+			dto.setXdateType("regDt");
+		}		
+		
+		if(dto.getXdateFrom() == null) {
+			dto.setXdateFrom("1000-01-01");			
+		}		
+
+		if(dto.getXdateTo() == null) {
+			dto.setXdateTo("9999-12-31");
+		}		
+		
+		if(dto.getXnameType() == null) {
+			dto.setXnameType("cc");
+		}
+		
+		if(dto.getName() == null) {
+			dto.setName("");
+		}
+		
+		if(dto.getDelNy() == null) {
+			dto.setDelNy(2);
+		}
+		
 		model.addAttribute("list", service.selectName(dto));
 		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}	

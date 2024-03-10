@@ -16,7 +16,7 @@
   		  FROM commongroup a
        		   LEFT JOIN commoncode b
               		  ON b.commonGroup_seq = a.seq 
-         WHERE 1 = 1     	
+         WHERE 1 = 1          
          ORDER BY a.seq, b.seq         
 	</select>
 	
@@ -34,10 +34,11 @@
          WHERE 1 = 1
            AND (b.regDateTime BETWEEN IF(#{xdateType} = 'regDt', date(#{xdateFrom}), date('1000-01-01')) 
                                   AND IF(#{xdateType} = 'regDt', date(#{xdateTo})+1, date('1000-01-01'))
-             OR b.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
+                OR
+                b.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
                                   AND IF(#{xdateType} = 'modDt', date(#{xdateTo})+1, date('1000-01-01'))
-               )                                 
-           AND b.delNy = #{delNy}         
+               )
+           AND b.delNy != #{delNy}  
          ORDER BY a.seq, b.seq 
 	</select>
 

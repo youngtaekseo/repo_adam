@@ -16,28 +16,28 @@ public class ManagerController {
 //	관리자전체조회
 	@RequestMapping(value = "managerSdmList")
 	public String managerSdmList(Model model) {
-		model.addAttribute("list", service.selectList());		
+//		model.addAttribute("list", service.selectList());		
 		return Commvar.PATH_SDM_MG + "managerSdmList";
 	}
 	
 //	관리자수정
 	@RequestMapping(value = "/managerSdmForm")
 	public String managerSdmForm(ManagerDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));	
+//		model.addAttribute("item", service.selectOne(dto));	
 		return Commvar.PATH_SDM_MG + "managerSdmForm";
 	}
 	
 //	관리자등록
 	@RequestMapping(value = "/managerSdmCreate")
 	public String managerSdmCreate(ManagerDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));	
+//		model.addAttribute("item", service.selectOne(dto));	
 		return Commvar.PATH_SDM_MG + "managerSdmCreate";
 	}	
 	
-//	관리자조회결과
+//	관리자조건검색
 	@RequestMapping(value = "/managerSdmView")
 	public String managerSdmView(ManagerDto dto, Model model) throws Exception {
-		model.addAttribute("list", service.selectName(dto));
+//		model.addAttribute("list", service.selectCondtion(dto));
 		return Commvar.PATH_SDM_MG + "managerSdmView";
 	}	
 	

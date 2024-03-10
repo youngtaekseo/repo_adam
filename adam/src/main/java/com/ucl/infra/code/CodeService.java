@@ -20,23 +20,7 @@ public class CodeService {
 	}
 	
 	public List<CodeDto> selectName(CodeDto dto){
-		if(dto.getName().equals("") && 
-	       dto.getXdateFrom().equals("") && 
-	       dto.getXdateTo().equals("")) 
-		{
-			return dao.selectList();
-		} 
-		else 
-		if(dto.getName().equals("") && 
-		   (! dto.getXdateFrom().equals("") && 
-		    ! dto.getXdateTo().equals(""))) 
-		{
-			return dao.selectRegModList(dto);
-		}
-		else 
-		{
-			return dao.selectName(dto);
-		}
+		return dao.selectRegModList(dto);
 	}
 
 	public int insert(CodeDto dto){

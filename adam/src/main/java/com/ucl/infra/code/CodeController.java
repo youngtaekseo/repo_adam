@@ -15,7 +15,7 @@ public class CodeController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeSdmList")
-	public String codeListSdm(Model model) throws Exception {		
+	public String codeListSdm(Model model) throws Exception {
 		model.addAttribute("list", service.selectList());		
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}
@@ -37,6 +37,30 @@ public class CodeController {
 //	조회결과
 	@RequestMapping(value = "/codeSdmView")
 	public String codeSdmView(CodeDto dto, Model model) throws Exception {
+		if(dto.getXdateType() == null) {
+			dto.setXdateType("regDt");
+		}		
+		
+		if(dto.getXdateFrom() == null) {
+			dto.setXdateFrom("1000-01-01");			
+		}		
+
+		if(dto.getXdateTo() == null) {
+			dto.setXdateTo("9999-12-31");
+		}		
+		
+		if(dto.getXnameType() == null) {
+			dto.setXnameType("cc");
+		}
+		
+		if(dto.getName() == null) {
+			dto.setName("");
+		}
+		
+		if(dto.getDelNy() == null) {
+			dto.setDelNy(2);
+		}
+		
 		model.addAttribute("list", service.selectName(dto));
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}	
@@ -79,11 +103,11 @@ public class CodeController {
 //	-------------
 	
 	
-	@RequestMapping(value = "codeXdmList")
-	public String codeXdmList(Model model) throws Exception {
-		model.addAttribute("list", service.selectList());
-		return "/sdm/code/codeXdmList";
-	}
+//	@RequestMapping(value = "codeXdmList")
+//	public String codeXdmList(Model model) throws Exception {
+//		model.addAttribute("list", service.selectList());
+//		return "/sdm/code/codeXdmList";
+//	}
 	
 	@RequestMapping(value = "codeView")
 	public String codeView(CodeDto dto, Model model) throws Exception {
