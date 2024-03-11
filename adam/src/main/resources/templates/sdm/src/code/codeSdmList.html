@@ -760,7 +760,8 @@
             jQuery.datetimepicker.setLocale('ko'); // 한국어
 
             $("#shDateStart, #shDateEnd").datetimepicker({
-                timepicker:false,          
+                timepicker:false,
+                value : new Date(),
                 format: 'Y-m-d' //H:i
             });            
         }); 
@@ -805,7 +806,7 @@
 		    form.submit();
 		};
 
-          // 조회버튼 클릭시 필수입력 확인
+          // 필수입력 확인
           function fnValid(obj) {
             let vDateStartValid = document.getElementById("shDateStartValid");            
             let vDateEndValid   = document.getElementById("shDateEndValid");
