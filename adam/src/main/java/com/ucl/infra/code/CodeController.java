@@ -15,8 +15,9 @@ public class CodeController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeSdmList")
-	public String codeListSdm(Model model) throws Exception {
-		model.addAttribute("list", service.selectList());		
+	public String codeListSdm(CodeVo vo, Model model) throws Exception {
+		model.addAttribute("list", service.selectList(vo));
+		model.addAttribute("vo", vo);
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}
 	

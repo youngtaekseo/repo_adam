@@ -3,7 +3,7 @@ package com.ucl.infra.code;
 import java.util.List;
 
 public interface CodeDao {
-	public List<CodeDto> selectList();
+	public List<CodeDto> selectList(CodeVo vo);
 	public List<CodeDto> selectName(CodeDto dto);	
 	public CodeDto selectOne(CodeDto dto);
 	

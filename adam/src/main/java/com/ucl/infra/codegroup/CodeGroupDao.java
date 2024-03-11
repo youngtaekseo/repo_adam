@@ -3,7 +3,9 @@ package com.ucl.infra.codegroup;
 import java.util.List;
 
 public interface CodeGroupDao {
-	public List<CodeGroupDto> selectList();	
+	public List<CodeGroupDto> selectList(CodeGroupVo vo);	
+//	public List<CodeGroupDto> selectList();
+	
 	public CodeGroupDto selectOne(CodeGroupDto dto);
 	public List<CodeGroupDto> selectName(CodeGroupDto dto);
 	

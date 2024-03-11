@@ -17,10 +17,15 @@ public class CodeGroupController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
-	public String codeGroupListSdm(Model model) throws Exception {		
-		model.addAttribute("list", service.selectList());		
+	public String codeGroupListSdm(CodeGroupVo vo, Model model) throws Exception {		
+		model.addAttribute("list", service.selectList(vo));		
+		model.addAttribute("vo", vo);
 		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}
+//	public String codeGroupListSdm(Model model) throws Exception {		
+//		model.addAttribute("list", service.selectList());		
+//		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
+//	}
 	
 //	수정화면
 	@RequestMapping(value = "/codeGroupSdmForm")
@@ -37,32 +42,8 @@ public class CodeGroupController {
 	
 //	조회결과
 	@RequestMapping(value = "/codeGroupSdmView")
-	public String codeGroupSdmView(CodeGroupDto dto, Model model) throws Exception {
-		if(dto.getXdateType() == null) {
-			dto.setXdateType("regDt");
-		}		
-		
-		if(dto.getXdateFrom() == null) {
-			dto.setXdateFrom("1000-01-01");			
-		}		
-
-		if(dto.getXdateTo() == null) {
-			dto.setXdateTo("9999-12-31");
-		}		
-		
-		if(dto.getXnameType() == null) {
-			dto.setXnameType("cc");
-		}
-		
-		if(dto.getName() == null) {
-			dto.setName("");
-		}
-		
-		if(dto.getDelNy() == null) {
-			dto.setDelNy(2);
-		}
-		
-		model.addAttribute("list", service.selectName(dto));
+	public String codeGroupSdmView(CodeGroupVo vo, Model model) throws Exception {	
+		model.addAttribute("list", service.selectList(vo));	
 		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}	
 	

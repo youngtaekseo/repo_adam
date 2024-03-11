@@ -13,12 +13,12 @@ public class CodeGroupService {
 	CodeGroupDao dao;
 //	CodeGroupDao dao = new CodeGroupDao();
 	
-	public List<CodeGroupDto> selectList(){
+	public List<CodeGroupDto> selectList(CodeGroupVo vo){
 		
 //		List<CodeGroupDto> list = dao.selectList();
 //		return list;
 		
-		return dao.selectList();
+		return dao.selectList(vo);
 	}
 	
 	public CodeGroupDto selectOne(CodeGroupDto dto){
@@ -29,25 +29,25 @@ public class CodeGroupService {
 		return dao.selectOne(dto);
 	}
 	
-	public List<CodeGroupDto> selectName(CodeGroupDto dto){
-		if(dto.getName().equals("") && 
-		   dto.getXdateFrom().equals("") && 
-		   dto.getXdateTo().equals("")) 
-		{
-			return dao.selectList();
-		} 
-		else 
-		if(dto.getName().equals("") && 
-		  (! dto.getXdateFrom().equals("") && 
-		   ! dto.getXdateTo().equals(""))) 
-		{
-			return dao.selectRegModList(dto);
-		}
-		else 
-		{
-			return dao.selectName(dto);
-		}
-	}
+//	public List<CodeGroupDto> selectName(CodeGroupDto dto){
+//		if(dto.getName().equals("") && 
+//		   dto.getXdateFrom().equals("") && 
+//		   dto.getXdateTo().equals("")) 
+//		{
+//			return dao.selectList();
+//		} 
+//		else 
+//		if(dto.getName().equals("") && 
+//		  (! dto.getXdateFrom().equals("") && 
+//		   ! dto.getXdateTo().equals(""))) 
+//		{
+//			return dao.selectRegModList(dto);
+//		}
+//		else 
+//		{
+//			return dao.selectName(dto);
+//		}
+//	}
 
 	public int insert(CodeGroupDto dto){
 		return dao.insert(dto);

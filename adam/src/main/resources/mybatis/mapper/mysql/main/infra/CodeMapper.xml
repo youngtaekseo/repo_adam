@@ -17,6 +17,21 @@
        		   LEFT JOIN commoncode b
               		  ON b.commonGroup_seq = a.seq 
          WHERE 1 = 1          
+         
+         <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+         
+         <choose>
+         	<when test="shOptionDate == 1">AND a.regDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})+1</when>
+         	<when test="shOptionDate == 2">AND a.modDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})+1</when>
+         </choose>
+         
+         <choose>
+         	<when test="shOption == 1">AND a.seq = #{shValue}</when>
+         	<when test="shOption == 2">AND a.name LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 3">AND b.seq = #{shValue}</when>
+         	<when test="shOption == 4">AND b.name LIKE CONCAT('%', #{shValue}, '%')</when>
+         </choose>         
+         
          ORDER BY a.seq, b.seq         
 	</select>
 	
