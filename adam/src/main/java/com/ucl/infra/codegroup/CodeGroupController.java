@@ -18,6 +18,7 @@ public class CodeGroupController {
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
 	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+		System.out.println("======================================= codeGroupListSdm");
 		UtilFunction.setSearch(vo);
 		model.addAttribute("list", service.selectList(vo));		
 //		model.addAttribute("vo", vo);

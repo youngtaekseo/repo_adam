@@ -423,7 +423,8 @@
                 </div>
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
                   <select
-                    id="selListShow"
+                    id="recordSize"
+                    name="recordSize"
                     class="block text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                     onchange="fnListShow()" 
                   >
@@ -778,7 +779,7 @@
 //             window.opener.location.href="http://www.naver.com";
         });
  
-		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
+		let goUrlSdmList   	= "searchList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
 		let goUrlSdmView 	= "/codeGroupSdmView";		/* 조회결과 */
