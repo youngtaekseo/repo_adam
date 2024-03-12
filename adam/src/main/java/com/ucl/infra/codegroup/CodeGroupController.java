@@ -3,9 +3,11 @@ package com.ucl.infra.codegroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilFunction;
 
 @Controller
 public class CodeGroupController {
@@ -15,15 +17,13 @@ public class CodeGroupController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
-	public String codeGroupListSdm(CodeGroupVo vo, Model model) throws Exception {		
+	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+		UtilFunction.setSearch(vo);
 		model.addAttribute("list", service.selectList(vo));		
-		model.addAttribute("vo", vo);
+//		model.addAttribute("vo", vo);
+		
 		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
 	}
-//	public String codeGroupListSdm(Model model) throws Exception {		
-//		model.addAttribute("list", service.selectList());		
-//		return Commvar.PATH_SDM_CG + "codeGroupSdmList";
-//	}
 	
 //	수정화면
 	@RequestMapping(value = "/codeGroupSdmForm")
@@ -78,7 +78,7 @@ public class CodeGroupController {
 	public String codeGroupSdmUdtZero(CodeGroupDto dto) throws Exception {
 		service.udtZero(dto);
 		return "redirect:/codeGroupSdmList";
-	}	
+	}
 	
 	//-------------------------------------------------
 	

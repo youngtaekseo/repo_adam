@@ -21,8 +21,8 @@
          <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
          
          <choose>
-         	<when test="shOptionDate == 1">AND a.regDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})+1</when>
-         	<when test="shOptionDate == 2">AND a.modDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})+1</when>
+         	<when test="shOptionDate == 1">AND a.regDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})</when>
+         	<when test="shOptionDate == 2">AND a.modDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})</when>
          </choose>
          
          <choose>

@@ -18,4 +18,10 @@ public class Commvar {
 	
 	public static final String PATH_SDM_PD = "sdm/src/product/"; 
 	public static final String PATH_USR_PD = "usr/src/product/";
+	
+	public static final String DATETIME_FORMAT_BASIC = "yyyy-MM-dd HH:mm:ss";
+	
+	public static final String TIME_FORMAT_BASIC = "HH:mm:ss";
+	
+	public static final int DATE_INTERVAL = -10;
 }

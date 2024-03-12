@@ -3,9 +3,11 @@ package com.ucl.infra.code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilFunction;
 
 @Controller
 public class CodeController {
@@ -15,9 +17,10 @@ public class CodeController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeSdmList")
-	public String codeListSdm(CodeVo vo, Model model) throws Exception {
+	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
+		UtilFunction.setSearch(vo);
 		model.addAttribute("list", service.selectList(vo));
-		model.addAttribute("vo", vo);
+//		model.addAttribute("vo", vo);
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}
 	
@@ -38,30 +41,6 @@ public class CodeController {
 //	조회결과
 	@RequestMapping(value = "/codeSdmView")
 	public String codeSdmView(CodeDto dto, Model model) throws Exception {
-		if(dto.getXdateType() == null) {
-			dto.setXdateType("regDt");
-		}		
-		
-		if(dto.getXdateFrom() == null) {
-			dto.setXdateFrom("1000-01-01");			
-		}		
-
-		if(dto.getXdateTo() == null) {
-			dto.setXdateTo("9999-12-31");
-		}		
-		
-		if(dto.getXnameType() == null) {
-			dto.setXnameType("cc");
-		}
-		
-		if(dto.getName() == null) {
-			dto.setName("");
-		}
-		
-		if(dto.getDelNy() == null) {
-			dto.setDelNy(2);
-		}
-		
 		model.addAttribute("list", service.selectName(dto));
 		return Commvar.PATH_SDM_CC + "codeSdmList";
 	}	
