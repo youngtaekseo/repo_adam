@@ -14,6 +14,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/memberSdmList")
 	public String memberSdmList() {
-		return Commvar.PATH_SDM_MB + "memberSdmList";
+		return Commvar.PATH_MEMBER + "memberSdmList";
 	}
 }

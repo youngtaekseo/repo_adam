@@ -15,6 +15,6 @@ public class IndexController {
 	
 	@RequestMapping(value = "/indexSdm")
 	public String indexSdm() throws Exception {
-		return Commvar.PATH_SDM_SC + "indexSdm";
+		return Commvar.PATH_HOME + "indexSdm";
 	}
 }

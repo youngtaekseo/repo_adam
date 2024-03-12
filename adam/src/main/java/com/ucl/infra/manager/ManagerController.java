@@ -17,28 +17,28 @@ public class ManagerController {
 	@RequestMapping(value = "managerSdmList")
 	public String managerSdmList(Model model) {
 //		model.addAttribute("list", service.selectList());		
-		return Commvar.PATH_SDM_MG + "managerSdmList";
+		return Commvar.PATH_MANAGER + "managerSdmList";
 	}
 	
 //	관리자수정
 	@RequestMapping(value = "/managerSdmForm")
 	public String managerSdmForm(ManagerDto dto, Model model) throws Exception {
 //		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_SDM_MG + "managerSdmForm";
+		return Commvar.PATH_MANAGER + "managerSdmForm";
 	}
 	
 //	관리자등록
 	@RequestMapping(value = "/managerSdmCreate")
 	public String managerSdmCreate(ManagerDto dto, Model model) throws Exception {
 //		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_SDM_MG + "managerSdmCreate";
+		return Commvar.PATH_MANAGER + "managerSdmCreate";
 	}	
 	
 //	관리자조건검색
 	@RequestMapping(value = "/managerSdmView")
 	public String managerSdmView(ManagerDto dto, Model model) throws Exception {
 //		model.addAttribute("list", service.selectCondtion(dto));
-		return Commvar.PATH_SDM_MG + "managerSdmView";
+		return Commvar.PATH_MANAGER + "managerSdmView";
 	}	
 	
 //	관리자등록

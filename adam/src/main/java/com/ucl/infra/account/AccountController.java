@@ -8,8 +8,8 @@ import com.ucl.common.constants.Commvar;
 @Controller
 public class AccountController {
 
-	@RequestMapping(value = "accountSdm")
-	public String account() {
-		return Commvar.PATH_SDM_SC + "accountSdm";
-	}
+//	@RequestMapping(value = "accountSdm")
+//	public String account() {
+//		return Commvar.PATH_ACCOUNT + "accountSdm";
+//	}
 }

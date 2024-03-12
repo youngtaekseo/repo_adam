@@ -14,6 +14,6 @@ public class LoginController {
 	
 	@RequestMapping(value = "loginSdm")
 	public String login() throws Exception {
-		return Commvar.PATH_SDM_SC + "loginSdm";
+		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
 }

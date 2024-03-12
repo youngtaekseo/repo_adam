@@ -10,7 +10,7 @@ public class FormController {
 
 	@RequestMapping(value = "formSdmList")
 	public String formSdmList() {
-		return Commvar.PATH_SDM_SC + "formSdmList";
+		return Commvar.PATH_TEMP + "formSdmList";
 	}
 
 }

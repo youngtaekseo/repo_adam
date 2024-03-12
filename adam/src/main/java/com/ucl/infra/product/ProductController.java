@@ -14,6 +14,6 @@ public class ProductController {
 	
 	@RequestMapping(value = "/productSdmList")
 	public String productSdmList() {
-		return Commvar.PATH_SDM_PD + "productSdmList";
+		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
 }
