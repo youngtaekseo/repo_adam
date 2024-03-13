@@ -477,34 +477,37 @@
                       		>
                     	</td>
                     	
-                    	<td id="seq" name="seq" class="px-1 py-1" th:text="${list.seq}"></td>
+                    	<td id="cdgSeq" name="cdgSeq" class="px-1 py-1" th:text="${list.seq}"></td>
                     	
-                    	<td class="px-4 py-1" th:text="${list.name}"></td>
+                    	<td class="px-4 py-1" th:text="${list.cdgName}"></td>
                     	
                     	<td class="px-4 py-1" th:text="${list.xcodeCount}"></td>
                                 	
-                    	<td class="px-4 py-1 text-xs" th:if="${list.delNy eq 0}">
+                    	<td class="px-4 py-1 text-xs" th:if="${list.cdgDelNy eq 0}">
                       		<span
                   				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
 								N
                       		</span>
                     	</td>
                     	
-                    	<td class="px-4 py-1 text-xs" th:unless="${list.delNy eq 0}">
+                    	<td class="px-4 py-1 text-xs" th:unless="${list.cdgDelNy eq 0}">
                       		<span
                             	class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
 								Y
                       		</span>
                     	</td>                    	
                     	
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.cdgRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     	
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.cdgUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     
                     	<td class="px-6 py-1">
 <!--                     	수정 -->
-                    	    <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-								<a th:href="@{/codeGroupSdmForm(seq=${list.seq}, name=${list.name})}">
+                    	    <button 
+                            	id="btnUpate"
+                            	name="btnUpdate"
+                          		class="btnSave px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+								<a th:href="@{/codeGroupSdmForm(seq=${list.cdgSeq}, name=${list.cdgName})}">
 									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 									  <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z"></path>
 									  <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z"></path>
@@ -662,7 +665,10 @@
 	                </button>
 <!--                추가버튼 -->        
 					&nbsp;&nbsp;          
-	                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
+	                <button 
+                    	id="btnInsert"
+                    	name="btnInsert"
+                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
 						<a th:href="@{/codeGroupSdmCreate}">
 							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
@@ -779,7 +785,7 @@
 //             window.opener.location.href="http://www.naver.com";
         });
  
-		let goUrlSdmList   	= "searchList"; // "/codeGroupSdmList";		/* 조회화면 */
+		let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
 		let goUrlSdmView 	= "/codeGroupSdmView";		/* 조회결과 */
@@ -789,7 +795,7 @@
 		let goUrlSdmUdtOne 	= "/codeGroupSdmUdtOne";	/* 삭제여부-삭제로변경 */
 		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */
 		
-		let seq = document.querySelector("input[name=seq]");
+		let seq  = document.getElementById("seq"); // document. querySelector("td[name=seq]");
         let form = document.querySelector("form[name=searchForm]");
 		
 // 		document.getElementById("btnReset").onclick = function () {
@@ -872,6 +878,28 @@
             document.getElementById("searchForm").submit();
           };
 
+//           $("#btnInsert").click(function() {
+//               if(fnValidationIn == false) return false;
+//               form.action = goUrlSdmCreate;
+//               form.submit();
+//           });
+          
+//           $("#btnUpdate").click(function() {
+//               if(fnValidationUdt == false) return false;
+//               form.action = goUrlSdmForm;
+//               form.submit();
+//           });          
+	    
+//           function fnValidationIn() {
+//             if(fnValidationUdt() == false) return false;
+//             alert("fnValidationIn");
+//           };
+          
+//           function fnValidationUdt() {
+//             alert("fnValidationUdt");
+//             return false;
+//           };	          
+
           // 초기화버튼 클릭
           function fnReset() {  
             let inDateStart = document.getElementById("shDateStart");
@@ -889,15 +917,7 @@
             inDateStartValid.innerHTML = ""; 
             inDateEndValid.innerHTML   = ""; 
           };
-
-//           $(function(){
-//             $("#btnReset").click(function() {
-//               $("#shDateStart").attr("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-//               $("#shDateStart").attr("placeholder","시작일");
-//               $("#shDateStart").attr("value", new Date());
-//             });
-//           });
-    </script>
+    </script>     
     
   </body>
 </html>

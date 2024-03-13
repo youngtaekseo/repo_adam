@@ -3,11 +3,11 @@ package com.ucl.infra.codegroup;
 import java.util.Date;
 
 public class CodeGroupDto {
-	private String seq;
-	private String name;
-	private Date regDateTime;
-	private Date modDateTime;
-	private Integer delNy;
+	private String cdgSeq;
+	private String cdgName;
+	private Date cdgRegDt;
+	private Date cdgUdtDt;
+	private Integer cdgDelNy;
 	
 	private String xnameType;
 	private String xdateType;
@@ -19,36 +19,35 @@ public class CodeGroupDto {
 	
 //	-----------
 	
-	
-	public String getSeq() {
-		return seq;
+	public String getCdgSeq() {
+		return cdgSeq;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setCdgSeq(String cdgSeq) {
+		this.cdgSeq = cdgSeq;
 	}
-	public String getName() {
-		return name;
+	public String getCdgName() {
+		return cdgName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCdgName(String cdgName) {
+		this.cdgName = cdgName;
 	}
-	public Date getRegDateTime() {
-		return regDateTime;
+	public Date getCdgRegDt() {
+		return cdgRegDt;
 	}
-	public void setRegDateTime(Date regDateTime) {
-		this.regDateTime = regDateTime;
+	public void setCdgRegDt(Date cdgRegDt) {
+		this.cdgRegDt = cdgRegDt;
 	}
-	public Date getModDateTime() {
-		return modDateTime;
+	public Date getCdgUdtDt() {
+		return cdgUdtDt;
 	}
-	public void setModDateTime(Date modDateTime) {
-		this.modDateTime = modDateTime;
+	public void setCdgUdtDt(Date cdgUdtDt) {
+		this.cdgUdtDt = cdgUdtDt;
 	}
-	public Integer getDelNy() {
-		return delNy;
+	public Integer getCdgDelNy() {
+		return cdgDelNy;
 	}
-	public void setDelNy(Integer delNy) {
-		this.delNy = delNy;
+	public void setCdgDelNy(Integer cdgDelNy) {
+		this.cdgDelNy = cdgDelNy;
 	}
 	public String getXnameType() {
 		return xnameType;
