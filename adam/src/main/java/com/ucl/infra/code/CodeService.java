@@ -19,10 +19,6 @@ public class CodeService {
 		return dao.selectOne(dto);
 	}
 	
-	public List<CodeDto> selectName(CodeDto dto){
-		return dao.selectRegModList(dto);
-	}
-
 	public int insert(CodeDto dto){
 		return dao.insert(dto);
 	}	

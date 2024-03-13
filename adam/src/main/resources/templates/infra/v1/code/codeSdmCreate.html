@@ -14,6 +14,11 @@
       defer
     ></script>
     <script src="sdm/assets/js/init-alpine.js"></script>
+    
+    <!-- jquery 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 플러그인 javascript 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>       
   </head>
   <body>
     <div
@@ -277,7 +282,8 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-          <form name="regForm" id="regForm" action="codeSdmInsert" method="post">
+<!--         action="codeSdmInsert" -->
+          <form name="regForm" id="regForm" method="post" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -294,16 +300,12 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드순번</span>
                       <input
-                          id="inGroupSeq"
-                          name="xcodeGroupSeq"
+                          id="cdgSeq"
+                          name="cdgSeq"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           readonly="on"
-                          th:value="${item.xcodeGroupSeq}"                             
-                      >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
-                      </span>                    
+                          th:value="${item.cdgSeq}"                             
+                      >                          
                     </label>
                   </div>
                   
@@ -311,16 +313,12 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
                       <input
-                          id="inGroupName"
-                          name="xcodeGroupName"
+                          id="cdgName"
+                          name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           readonly="on"
-                          th:value="${item.xcodeGroupName}"                          
+                          th:value="${item.cdgName}"                          
                       >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
-                      </span>                    
                     </label>
                   </div>
                 
@@ -328,63 +326,17 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">코드명</span>
                       <input
-                          id="inName"
-                          name="name"
+                          id="cdcName"
+                          name="cdcName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           autofocus="on"                        
                       >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
+                      <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400">                        
                       </span>                    
                     </label>
                   </div> 
               </div> 
   
-              <script>
-                function fnSave() {
-                  let inName  = document.getElementById("inName");
-                  let inPhone = document.getElementById("inPhone");
-
-                  let inNameValid  = document.getElementById("inNameValid");            
-                  let inPhoneValid = document.getElementById("inPhoneValid");
-
-                  let valueChk = false;
-
-                  if (inName.value == "") {
-                    // inName.focus;
-                    inName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-                    inName.setAttribute("placeholder","이름을 입력하세요!");   
-                    inNameValid.innerHTML = "이름을 입력하세요!";
-                    valueChk = true;
-                    // return; // function sendit() 종료, 아래로 진행되지 않는다, input type="button" 일때 return; 사용한다
-                  } else {
-                    inName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-                    inName.setAttribute("placeholder","");   
-                    inNameValid.innerHTML = "";
-                  }
-
-                  if (inPhone.value == "") {
-                    // inPhone.focus;
-                    inPhone.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-                    inPhone.setAttribute("placeholder","전화번호를 입력하세요!");   
-                    inPhoneValid.innerHTML = "전화번호를 입력하세요!";
-                    valueChk = true;
-                    // return; // function sendit() 종료, 아래로 진행되지 않는다, input type="button" 일때 return; 사용한다
-                  } else {
-                    inPhone.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-                    inPhone.setAttribute("placeholder","숫자만");
-                    inPhoneValid.innerHTML = "";
-                  }                  
-
-                  if (valueChk == true) {
-                    return;
-                  }
-
-                  document.getElementById("regForm").submit();
-                };              
-              </script>
-
               <!-- 저장버튼, 회원조회버튼 -->
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
@@ -405,10 +357,11 @@
                 <!-- 저장버튼 -->
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
                   <button   
-                    id="btnSeve"             
+                    id="btnSubmit"             
+                    name="btnSubmit"             
                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
                     aria-label="Edit"
-                    type="submit"
+                    type="button"
                   >
 					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
@@ -420,5 +373,88 @@
         </main>
       </div>
     </div>
+    
+    <script type="text/javascript">
+    	let form    		= document.querySelector("form[name=regForm]");
+    	let cdgSeq  		= document.querySelector("input[name=cdgSeq]");
+    	let cdcSeq  		= document.querySelector("input[name=cdcSeq]");
+    	let cdcName 		= document.querySelector("input[name=cdcName]");
+    	let cdcNameValid 	= document.querySelector("span[name=cdcNameValid]");
+    	
+		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
+		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
+		let goUrlSdmCreate 	= "/codeSdmCreate";		/* 등록화면 */
+		let goUrlSdmInsert 	= "/codeSdmInsert";		/* 등록 */
+		let goUrlSdmUpdate 	= "/codeSdmUpdate";		/* 수정 */
+		let goUrlSdmDelete 	= "/codeSdmDelete";		/* 삭제 */
+		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";		/* 삭제여부-삭제로변경 */
+		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
+
+    	// 저장
+    	document.getElementById("btnSubmit").onclick = function() {
+        	if(fnValidationIn() == false) {
+        		return false;
+        	} else {
+        		form.action = goUrlSdmInsert;
+        		form.submit();
+        	};    		
+    	};
+    	
+    	// 입력시 필수항목 체크
+    	fnValidationIn = function() {
+    		if(fnValidationUp() == true) {
+    			return true;
+    		} else {
+    			return false;
+    		};
+    	};
+    	
+    	// 수정시 필수항목 체크
+    	fnValidationUp = function() {
+    		if(!fnNullToEmpty(cdcName.value)) {
+	    		cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    		cdcName.setAttribute("placeholder","코드명을 입력하세요!");   
+	    		cdcName.focus();
+	    		cdcNameValid.innerHTML = "그룹명을 입력하세요!";	    		
+	    		return false;	    			
+    		} else {
+	    		cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    		cdcName.setAttribute("placeholder","");         
+	    		cdcNameValid.innerHTML = "";  
+	    		return true;
+    		}
+    	};
+    	
+    	//null, 공백 비교
+    	fnNullToEmpty = function(value) {
+    		if(value == null || value == "" || value.length == 0) {
+    			return false;
+    		} else {
+    			return true;
+    		};
+    	};
+    	
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+		let vSpecialChar = /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+	
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		
+		// 코드명 특수문자체크
+		document.getElementById("cdcName").onkeyup = function() {
+			if(fnSpecialChar(cdcName.value) == true) {
+				cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				cdcNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";					
+			} else {
+				cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    		cdcNameValid.innerHTML = ""; 				
+			};
+		};
+	
+		// 특수문자 체크
+		fnSpecialChar = function(value) {
+			return vSpecialChar.test(value);
+		};    	
+    </script>
   </body>
 </html>

@@ -33,78 +33,32 @@
     </select>
     
     <select id="selectOne" resultMap="resultMapObj">
-        SELECT a.seq
-			 , a.name
-			 , a.regDateTime
-			 , a.modDateTime
-			 , a.delNy
+        SELECT a.cdgSeq
+			 , a.cdgName
+			 , a.cdgRegDt
+			 , a.cdgUdtDt
+			 , a.cdgDelNy
 			 , (SELECT COUNT(*) 
-			      FROM commoncode aa 
-			     WHERE aa.commonGroup_seq = a.seq 
-			       AND aa.delNy = 0
+			      FROM code aa 
+			     WHERE aa.cdcSeq = a.cdgSeq 
+			       AND aa.cdcDelNy = 0
 			   ) xcodeCount
-          FROM commongroup a
+          FROM codegroup a
          WHERE 1=1
-           AND a.seq = #{seq}
-         ORDER BY a.seq DESC
-    </select>  
-    
-    <select id="selectName" resultMap="resultMapObj">
-        SELECT a.seq
-			 , a.name
-			 , a.regDateTime
-			 , a.modDateTime
-			 , a.delNy
-			 , (SELECT COUNT(*) 
-			      FROM commongroup bb
-			   ) xcodeGroupCount
-			 , (SELECT COUNT(*) 
-			      FROM commoncode aa 
-			     WHERE aa.commonGroup_seq = a.seq 
-			       AND aa.delNy = 0
-			   ) xcodeCount
-          FROM commongroup a
-         WHERE 1=1
-           AND a.name = #{name}
-         ORDER BY a.seq DESC
-    </select>    
-    
-	<select id="selectRegModList" resultMap="resultMapObj">
-        SELECT a.seq
-			 , a.name
-			 , a.regDateTime
-			 , a.modDateTime
-			 , a.delNy
-			 , (SELECT COUNT(*) 
-			      FROM commongroup bb
-			   ) xcodeGroupCount
-			 , (SELECT COUNT(*) 
-			      FROM commoncode aa 
-			     WHERE aa.commonGroup_seq = a.seq 
-			       AND aa.delNy = 0
-			   ) xcodeCount
-          FROM commongroup a
-         WHERE 1=1
-           AND (a.regDateTime BETWEEN IF(#{xdateType} = 'regDt', date(#{xdateFrom}), date('1000-01-01')) 
-                                  AND IF(#{xdateType} = 'regDt', date(#{xdateTo})+1, date('1000-01-01'))
-               OR
-               a.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
-                                  AND IF(#{xdateType} = 'modDt', date(#{xdateTo})+1, date('1000-01-01'))
-               )                                 
-           AND a.delNy != #{delNy}
-         ORDER BY a.seq DESC
-	</select>    
+           AND a.cdgSeq = #{cdgSeq}
+         ORDER BY a.cdgSeq DESC
+    </select>
     
     <insert id="insert">
-    	INSERT INTO commongroup
-    		( name
-    		, regDateTime
-    		, modDateTime
-    		, delNy
+    	INSERT INTO codegroup
+    		( cdgName
+    		, cdgRegDt
+    		, cdgUdtDt
+    		, cdgDelNy
     		)
     	VALUES
     		(
-    		  #{name}
+    		  #{cdgName}
     		, now()
     		, now()
     		, 0
@@ -114,33 +68,33 @@
     </insert>
     
     <update id="update">
-    	UPDATE commongroup
-    	   SET name = #{name}
-    	     , modDateTime = now()
+    	UPDATE codegroup
+    	   SET cdgName  = #{cdgName}
+    	     , cdgUdtDt = now()
          WHERE 1=1
-           AND seq = #{seq}    	  
+           AND cdgSeq = #{cdgSeq}    	  
     </update>
     
     <update id="udtOne">
-    	UPDATE commongroup
-    	   SET delNy = 1
-    	     , modDateTime = now()
+    	UPDATE codegroup
+    	   SET cdgDelNy = 1
+    	     , cdgUdtDt = now()
          WHERE 1=1
-           AND seq = #{seq}    	  
+           AND cdgSeq = #{cdgSeq}    	  
     </update>
     
     <update id="udtZero">
-    	UPDATE commongroup
-    	   SET delNy = 0
-    	     , modDateTime = now()
+    	UPDATE codegroup
+    	   SET cdgDelNy = 0
+    	     , cdgUdtDt = now()
          WHERE 1=1
-           AND seq = #{seq}    	  
+           AND cdgSeq = #{cdgSeq}    	  
     </update>    
     
     <delete id="delete">
-    	DELETE FROM commongroup
+    	DELETE FROM codegroup
          WHERE 1=1
-           AND seq = #{seq}      
+           AND cdgSeq = #{cdgSeq}      
     </delete>
 	  
 </mapper>

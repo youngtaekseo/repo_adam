@@ -300,12 +300,12 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
                       <input
-                          id="name"
-                          name="name"
+                          id="cdgName"
+                          name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           autofocus="on"                         
                       >                    
-                      <span id="nameValid" name="nameValid" class="text-xs text-red-600 dark:text-red-400">    
+                      <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400">    
                       </span>                    
                     </label>
                   </div>                  
@@ -357,8 +357,8 @@
 		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 	
 		let form      = document.querySelector("form[name=regForm]");
-	  	let name      = document.querySelector("input[name=name]");
-	  	let nameValid = document.querySelector("span[name=nameValid]");            
+	  	let cdgName   = document.querySelector("input[name=cdgName]");
+	  	let cdgNameValid = document.querySelector("span[name=cdgNameValid]");            
 	  
 	   	let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
@@ -371,10 +371,10 @@
 		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */      
 	    
 		document.getElementById("btnSubmit").onclick = function() {
-			if(fnValidationIn() == false) {
+			if(fnValidationIn() == true) {
 	       		return false;
 	       	} else {
-		       	form.action = codeGroupSdmInsert;
+		       	form.action = goUrlSdmInsert;
 		       	form.submit();       			
 	       	};	
 	    };
@@ -388,18 +388,18 @@
 //        		};				
 // 		});
 		
-    	document.getElementById("name").onkeyup = function() {
-    		strongPassword(name.value);
+    	document.getElementById("cdgName").onkeyup = function() {
+    		if(strongPassword(cdgName.value) == true) {
+				cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";	    			
+    		} else {
+				cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    		cdgNameValid.innerHTML = "";  	    			
+    		};
     	};	
     	
     	strongPassword = function(str) {
-			if(vSpecialChar.test(str)) {
-	    		name.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		nameValid.innerHTML = "특수문자는 입력할 수 없습니다!";	 				
-			} else {
-	    		name.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		nameValid.innerHTML = "";  				
-			};
+			return vSpecialChar.test(str);
     	};
 		
 // 		document.getElementById("btnSubmit").onclick = function() {
@@ -416,22 +416,22 @@
 	    };
 	    
 	    fnValidationUdt = function() {
-	    	if(!nullToEmpty(name.value)) {
-	    		name.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		name.setAttribute("placeholder","그룹명을 입력하세요!");   
-	    		name.focus();
+	    	if(!nullToEmpty(cdgName.value)) {
+	    		cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    		cdgName.setAttribute("placeholder","그룹명을 입력하세요!");   
+	    		cdgName.focus();
 	    		nameValid.innerHTML = "그룹명을 입력하세요!";	    		
 	    		return false;	
 	    	} else {
-	    		name.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		name.setAttribute("placeholder","");         
+	    		cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    		cdgName.setAttribute("placeholder","");         
 	    		nameValid.innerHTML = "";  	    		
 	    	};
 	    	
-// 	    	if(!nullToEmpty(document.getElementById("name").value)) {
-// 	    		document.getElementById("name").setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-// 	    		document.getElementById("name").setAttribute("placeholder","그룹명을 입력하세요!");   
-// 	    		document.getElementById("name").focus();
+// 	    	if(!nullToEmpty(document.getElementById("cdgName").value)) {
+// 	    		document.getElementById("cdgName").setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+// 	    		document.getElementById("cdgName").setAttribute("placeholder","그룹명을 입력하세요!");   
+// 	    		document.getElementById("cdgName").focus();
 // 	    		document.getElementById("nameValid").innerHTML = "그룹명을 입력하세요!";	    		
 // 	    		return false;	
 // 	    	};

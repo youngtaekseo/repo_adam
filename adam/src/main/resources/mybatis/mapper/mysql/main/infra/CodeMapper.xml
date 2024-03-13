@@ -6,136 +6,98 @@
 	<resultMap id="resultMapObj" type="com.ucl.infra.code.CodeDto"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
-        SELECT a.seq  xcodeGroupSeq
-     		 , a.name xcodeGroupName
-     		 , b.delNy
-     		 , b.seq
-     		 , b.name
-     		 , b.regDateTime
-     		 , b.modDateTime
-  		  FROM commongroup a
-       		   LEFT JOIN commoncode b
-              		  ON b.commonGroup_seq = a.seq 
+        SELECT a.cdgSeq
+     		 , a.cdgName
+     		 , b.cdcDelNy
+     		 , b.cdcSeq
+     		 , b.cdcName
+     		 , b.cdcRegDt
+     		 , b.cdcUdtDt
+  		  FROM codegroup a
+       		   LEFT JOIN code b
+              		  ON b.cdgSeq = a.cdgSeq 
          WHERE 1 = 1          
          
-         <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+         <if test="shDelNy != null and !shDelNy.equals('')">AND b.cdcDelNy = #{shDelNy}</if>
          
          <choose>
-         	<when test="shOptionDate == 1">AND a.regDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})</when>
-         	<when test="shOptionDate == 2">AND a.modDateTime BETWEEN date(#{shDateStart}) AND date(#{shDateEnd})</when>
+         	<when test="shOptionDate == 1">AND b.cdcRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+         	<when test="shOptionDate == 2">AND b.cdcUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
          </choose>
          
          <choose>
-         	<when test="shOption == 1">AND a.seq = #{shValue}</when>
-         	<when test="shOption == 2">AND a.name LIKE CONCAT('%', #{shValue}, '%')</when>
-         	<when test="shOption == 3">AND b.seq = #{shValue}</when>
-         	<when test="shOption == 4">AND b.name LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
+         	<when test="shOption == 2">AND a.cdgName LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 3">AND b.cdcSeq = #{shValue}</when>
+         	<when test="shOption == 4">AND b.cdcName LIKE CONCAT('%', #{shValue}, '%')</when>
          </choose>         
          
-         ORDER BY a.seq, b.seq         
+         ORDER BY a.cdgSeq, b.cdcSeq         
 	</select>
 	
-	<select id="selectRegModList" resultMap="resultMapObj">
-        SELECT a.seq  xcodeGroupSeq
-     		 , a.name xcodeGroupName
-     		 , b.delNy
-     		 , b.seq
-     		 , b.name
-     		 , b.regDateTime
-     		 , b.modDateTime
-  		  FROM commongroup a
-       		   LEFT JOIN commoncode b
-              		  ON b.commonGroup_seq = a.seq              		   
-         WHERE 1 = 1
-           AND (b.regDateTime BETWEEN IF(#{xdateType} = 'regDt', date(#{xdateFrom}), date('1000-01-01')) 
-                                  AND IF(#{xdateType} = 'regDt', date(#{xdateTo})+1, date('1000-01-01'))
-                OR
-                b.modDateTime BETWEEN IF(#{xdateType} = 'modDt', date(#{xdateFrom}), date('1000-01-01')) 
-                                  AND IF(#{xdateType} = 'modDt', date(#{xdateTo})+1, date('1000-01-01'))
-               )
-           AND b.delNy != #{delNy}  
-         ORDER BY a.seq, b.seq 
-	</select>
-
 	<select id="selectOne" resultMap="resultMapObj">
-        SELECT a.seq  xcodeGroupSeq
-     		 , a.name xcodeGroupName
-     		 , b.delNy
-     		 , b.seq
-     		 , b.name
-     		 , b.regDateTime
-     		 , b.modDateTime
-  		  FROM commongroup a
-       		   LEFT JOIN commoncode b
-              		  ON b.commonGroup_seq = a.seq              		          
-                     AND b.seq = #{seq} 
+        SELECT a.cdgSeq
+     		 , a.cdgName
+     		 , b.cdcDelNy
+     		 , b.cdcSeq
+     		 , b.cdcName
+     		 , b.cdcRegDt
+     		 , b.cdcUdtDt
+  		  FROM codegroup a
+       		   LEFT JOIN code b
+              		  ON b.cdgSeq = a.cdgSeq              		          
          WHERE 1 = 1
-           AND a.seq = #{xcodeGroupSeq}
-	</select>
-		
-	<select id="selectName" resultMap="resultMapObj">
-        SELECT a.seq  xcodeGroupSeq
-     		 , a.name xcodeGroupName
-     		 , b.delNy
-     		 , b.seq
-     		 , b.name
-     		 , b.regDateTime
-     		 , b.modDateTime
-  		  FROM commongroup a
-       		   LEFT JOIN commoncode b
-              		  ON b.commonGroup_seq = a.seq          		   
-         WHERE 1 = 1			
-           AND b.name  = #{name}
-           AND b.delNy = #{delNy}            
+           AND a.cdgSeq = #{cdgSeq}
+           AND b.cdcseq = #{cdcSeq}           
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO commoncode
+		INSERT INTO code
 			( 
-			  name
-			, regDateTime
-			, modDateTime
-			, delNy
-			, commonGroup_seq
+			  cdcName
+			, cdcRegDt
+			, cdcUdtDt
+			, cdcDelNy
+			, cdgSeq
 			)
 		VALUES
 			(
-			  #{name}
+			  #{cdcName}
 			, now()
 			, now()
 			, 0
-			, #{xcodeGroupSeq}
+			, #{cdgSeq}
 			)
 	</insert>
 	
 	<update id="update">
-		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
+		UPDATE code
+		   SET cdcName  = #{cdcName}
+		     , cdcUdtDt = now()
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND cdcSeq = #{cdcSeq}	
 	</update>
 	
 	<update id="udtOne">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 1
+		UPDATE code
+		   SET cdcUdtDt = now()
+		     , cdcDelNy = 1
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND cdcSeq = #{cdcSeq}	
 	</update>
 	
 	<update id="udtZero">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 0
+		UPDATE code
+		   SET cdcUdtDt = now()
+		     , cdcDelNy = 0
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND cdcSeq = #{cdcSeq}	
 	</update>
 	
-	<update id="delete">
-		DELETE FROM commoncode
+	<delete id="delete">
+		DELETE FROM code
         WHERE 1 = 1		
-          AND seq = #{seq}	
-	</update>
+          AND cdcSeq = #{cdcSeq}
+    </delete>
 
 </mapper>

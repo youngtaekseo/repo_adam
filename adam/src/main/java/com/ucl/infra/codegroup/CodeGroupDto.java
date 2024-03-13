@@ -3,10 +3,10 @@ package com.ucl.infra.codegroup;
 import java.util.Date;
 
 public class CodeGroupDto {
-	private String cdgSeq;
-	private String cdgName;
-	private Date cdgRegDt;
-	private Date cdgUdtDt;
+	private String 	cdgSeq;
+	private String 	cdgName;
+	private Date 	cdgRegDt;
+	private Date 	cdgUdtDt;
 	private Integer cdgDelNy;
 	
 	private String xnameType;

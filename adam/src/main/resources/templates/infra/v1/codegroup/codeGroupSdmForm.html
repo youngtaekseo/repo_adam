@@ -296,13 +296,11 @@
                       <span class="text-gray-700 dark:text-gray-400">그룹코드순번</span>
 
                       <input
-                          id="seq"
-                          name="seq"
+                          id="cdgSeq"
+                          name="cdgSeq"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          th:value="${item.seq}"                             
-                      >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
-                      </span>                    
+                          th:value="${item.cdgSeq}"                             
+                      >                          
                     </label>
                   </div>
                   
@@ -310,13 +308,13 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
                       <input
-                          id="name"
-                          name="name"
+                          id="cdgName"
+                          name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           autofocus="on"
-                          th:value="${item.name}"                          
+                          th:value="${item.cdgName}"                          
                       >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
+                      <span id="nameValid" class="text-xs text-red-600 dark:text-red-400">                        
                       </span>                    
                     </label>
                   </div>                  
@@ -362,12 +360,12 @@
                     aria-label="Edit"
                     type="button"
                   >
-                    <a th:href="@{/codeGroupSdmUdtZero(seq=${item.seq})}">
+                    <a th:href="@{/codeGroupSdmUdtZero(cdgSeq=${item.cdgSeq})}">
 						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
 						</svg>						
                     </a>
-                    <a th:href="@{/codeGroupSdmUdtZero(seq=${item.seq})}">
+                    <a th:href="@{/codeGroupSdmUdtZero(cdgSeq=${item.cdgSeq})}">
                     	(N)
                     </a>
                   </button>  
@@ -380,12 +378,12 @@
                     aria-label="Edit"
                     type="button"
                   >
-                    <a th:href="@{/codeGroupSdmUdtOne(seq=${item.seq})}">
+                    <a th:href="@{/codeGroupSdmUdtOne(cdgSeq=${item.cdgSeq})}">
 						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
 						</svg>		
 					</a>
-					<a th:href="@{/codeGroupSdmUdtOne(seq=${item.seq})}">
+					<a th:href="@{/codeGroupSdmUdtOne(cdgSeq=${item.cdgSeq})}">
 						(Y)
 					</a>
                   </button>   
@@ -399,7 +397,7 @@
                     aria-label="Delete"
                     type="button"
                   >
-<!--                     <a th:href="@{/codeGroupSdmDelete(seq=${item.seq})}">삭제</a> -->
+<!--                     <a th:href="@{/codeGroupSdmDelete(cdgSeq=${item.cdgSeq})}">삭제</a> -->
 
 					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  <path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
@@ -487,7 +485,7 @@
             name="lineDelete"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
           >
-			<a th:href="@{/codeGroupSdmDelete(seq=${item.seq})}">삭제</a>
+			<a th:href="@{/codeGroupSdmDelete(cdgSeq=${item.cdgSeq})}">삭제</a>
           </button>            
         </footer>
       </div>
@@ -495,50 +493,8 @@
     <!-- End of modal backdrop -->   
     
     <script type="text/javascript">
-		let seq = document.querySelector("input[name=seq]");
+		let seq = document.querySelector("input[name=cdgSeq]");
       	let form = document.querySelector("form[name=regForm]");
-
-	    function fnSave() {
-	      let inName  = document.getElementById("inName");
-	      let inPhone = document.getElementById("inPhone");
-	
-	      let inNameValid  = document.getElementById("inNameValid");            
-	      let inPhoneValid = document.getElementById("inPhoneValid");
-	
-	      let valueChk = false;
-	
-	      if (inName.value == "") {
-	        // inName.focus;
-	        inName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	        inName.setAttribute("placeholder","이름을 입력하세요!");   
-	        inNameValid.innerHTML = "이름을 입력하세요!";
-	        valueChk = true;
-	        // return; // function sendit() 종료, 아래로 진행되지 않는다, input type="button" 일때 return; 사용한다
-	      } else {
-	        inName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	        inName.setAttribute("placeholder","");   
-	        inNameValid.innerHTML = "";
-	      }
-	
-	      if (inPhone.value == "") {
-	        // inPhone.focus;
-	        inPhone.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	        inPhone.setAttribute("placeholder","전화번호를 입력하세요!");   
-	        inPhoneValid.innerHTML = "전화번호를 입력하세요!";
-	        valueChk = true;
-	        // return; // function sendit() 종료, 아래로 진행되지 않는다, input type="button" 일때 return; 사용한다
-	      } else {
-	        inPhone.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	        inPhone.setAttribute("placeholder","숫자만");
-	        inPhoneValid.innerHTML = "";
-	      }                  
-	
-	      if (valueChk == true) {
-	        return;
-	      }
-	
-	      form.submit();
-	    };       
 
       	let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
@@ -567,9 +523,8 @@
         };
         
         function fnValidationUdt() {
-        	if(!nullToEmpty(document.getElementById("name").value)) {
-        		alert("이름이 없으니 입력하세요!!!");
-        		document.getElementById("name").focus();
+        	if(!nullToEmpty(document.getElementById("cdgName").value)) {
+        		document.getElementById("cdgName").focus();
         		return false;	
         	};
         };	  

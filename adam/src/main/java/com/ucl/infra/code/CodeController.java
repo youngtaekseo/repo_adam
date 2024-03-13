@@ -38,13 +38,6 @@ public class CodeController {
 		return Commvar.PATH_CODE + "codeSdmCreate";
 	}	
 	
-//	조회결과
-	@RequestMapping(value = "/codeSdmView")
-	public String codeSdmView(CodeDto dto, Model model) throws Exception {
-		model.addAttribute("list", service.selectName(dto));
-		return Commvar.PATH_CODE + "codeSdmList";
-	}	
-	
 //	그룹코드등록
 	@RequestMapping(value = "/codeSdmInsert")
 	public String codeSdmInsert(CodeDto dto) throws Exception {

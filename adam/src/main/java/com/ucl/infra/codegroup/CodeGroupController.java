@@ -18,7 +18,6 @@ public class CodeGroupController {
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
 	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
-		System.out.println("======================================= codeGroupListSdm");
 		UtilFunction.setSearch(vo);
 		model.addAttribute("list", service.selectList(vo));		
 //		model.addAttribute("vo", vo);
@@ -39,16 +38,10 @@ public class CodeGroupController {
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmCreate";
 	}	
 	
-//	조회결과
-	@RequestMapping(value = "/codeGroupSdmView")
-	public String codeGroupSdmView(CodeGroupVo vo, Model model) throws Exception {	
-		model.addAttribute("list", service.selectList(vo));	
-		return Commvar.PATH_CODE_GROUP + "codeGroupSdmList";
-	}	
-	
 //	그룹코드등록
 	@RequestMapping(value = "/codeGroupSdmInsert")
 	public String codeGroupSdmInsert(CodeGroupDto dto) throws Exception {
+		System.out.println("dto.getCdgName() : " + dto.getCdgName());
 		service.insert(dto);
 		return "redirect:/codeGroupSdmList";
 	}
