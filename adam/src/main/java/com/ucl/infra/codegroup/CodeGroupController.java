@@ -41,7 +41,6 @@ public class CodeGroupController {
 //	그룹코드등록
 	@RequestMapping(value = "/codeGroupSdmInsert")
 	public String codeGroupSdmInsert(CodeGroupDto dto) throws Exception {
-		System.out.println("dto.getCdgName() : " + dto.getCdgName());
 		service.insert(dto);
 		return "redirect:/codeGroupSdmList";
 	}

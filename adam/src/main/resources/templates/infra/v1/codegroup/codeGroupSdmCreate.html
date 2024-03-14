@@ -1,34 +1,24 @@
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>중고조아</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="sdm/assets/css/tailwind.output.css" />
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
-      defer
-    ></script>
-    <script src="sdm/assets/js/init-alpine.js"></script>
-    
-    <!-- jquery 로딩 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- 플러그인 javascript 로딩 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>    
-  </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>중고조아</title>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+		<link rel="stylesheet" href="sdm/assets/css/tailwind.output.css" />
+		<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+		<script src="sdm/assets/js/init-alpine.js"></script>
+	  
+		<!-- jquery 로딩 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- 플러그인 javascript 로딩 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>    
+	</head>
   <body>
-    <div
-      class="flex h-screen bg-gray-50 dark:bg-gray-900"
-      :class="{ 'overflow-hidden': isSideMenuOpen}"
-    >
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
+      :class="{ 'overflow-hidden': isSideMenuOpen}">
       <!-- Desktop sidebar -->
-      <aside
-        class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
-      >
+      <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
         <div class="py-4 text-gray-500 dark:text-gray-400">
 			<a class="inline-flex items-center w-full ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/indexSdm">
 				중고&nbsp;
@@ -282,7 +272,6 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-<!--         action="codeGroupSdmInsert"  -->
           <form name="regForm" id="regForm" method="get" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -297,15 +286,16 @@
               <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="mt-4 mb-4">                  
                   <div class="md:h-auto mr-3">
+                    <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
                       <input
                           id="cdgName"
                           name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          autofocus="on"                         
-                      >                    
-                      <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400">    
+                          autofocus="on">                    
+                      <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                      	필수항목체크
                       </span>                    
                     </label>
                   </div>                  
@@ -349,7 +339,7 @@
       </div>
     </div>
     
-    <script>
+    <script type="text/javascript">
 		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 		let vSpecialChar = /[/{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 	
@@ -373,35 +363,35 @@
 			if(fnValidationIn() == true) {
 	       		return false;
 	       	} else {
-		       	form.action = goUrlSdmInsert;
-		       	form.submit();       			
+	       		fnSave();
+	       		return true;
 	       	};	
 	    };
 		
-// 		$("#btnSubmit").click(function(){
-//        		if(fnValidationIn() == false) {
-//        			return false;
-//        		} else {
-// 	        	form.action = codeGroupSdmInsert;
-// 	        	form.submit();       			
-//        		};				
-// 		});
-		
+    	fnSave = function() {
+	       	form.action = goUrlSdmInsert;
+	       	form.submit();       			
+    	};
+    	
     	document.getElementById("cdgName").onkeyup = function() {
-	    	if(window.event.keycode == 13) {
+    		// form 안에 input이 하나뿐이면 onkeyup에 엔터키를 사용하게되면 스스로 submit이 된다
+    		// 그래서 input태그가 2개 이상부터 정상적으로 엔터키가 작동한다
+    		// 의미없는 input태그를 추가하는 방법으로 구현한다
+	    	if(window.event.keyCode == 13) {
 				if(fnValidationIn() == true) {
 		       		return false;
 		       	} else {
-			       	form.action = goUrlSdmInsert;
-			       	form.submit();       			
+		       		fnSave();
+		       		return true;
 		       	};
 	    	} else {
 	    		if(strongPassword(cdgName.value) == true) {
 					cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-					cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";	    			
+					cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+					cdgNameValid.setAttribute("style", "");
 	    		} else {
 					cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    		cdgNameValid.innerHTML = "";  	    			
+					cdgNameValid.setAttribute("style", "visibility:hidden;");
 	    		};	    		
 	    	};    		
     	};	
@@ -409,47 +399,32 @@
     	strongPassword = function(str) {
 			return vSpecialChar.test(str);
     	};
-		
-// 		document.getElementById("btnSubmit").onclick = function() {
-//        		if(fnValidationIn() == false) {
-//        			return false;
-//        		} else {
-// 	        	form.action = codeGroupSdmInsert;
-// 	        	form.submit();       			
-//        		};
-// 	  	};
 	    
 	    fnValidationIn = function() {
-	      if(fnValidationUdt() == false) return false;
+			return fnValidationUdt();
 	    };
 	    
 	    fnValidationUdt = function() {
-	    	if(!nullToEmpty(cdgName.value)) {
+	    	if(nullToEmpty(cdgName.value)) {
 	    		cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
 	    		cdgName.setAttribute("placeholder","그룹명을 입력하세요!");   
 	    		cdgName.focus();
-	    		nameValid.innerHTML = "그룹명을 입력하세요!";	    		
-	    		return false;	
+	    		cdgNameValid.innerHTML = "그룹명을 입력하세요!";	    		
+	    		cdgNameValid.setAttribute("style", "");	    		
+	    		return true;	
 	    	} else {
 	    		cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 	    		cdgName.setAttribute("placeholder","");         
-	    		nameValid.innerHTML = "";  	    		
+	    		cdgNameValid.setAttribute("style", "visibility:hidden;");
+	    		return false;
 	    	};
-	    	
-// 	    	if(!nullToEmpty(document.getElementById("cdgName").value)) {
-// 	    		document.getElementById("cdgName").setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-// 	    		document.getElementById("cdgName").setAttribute("placeholder","그룹명을 입력하세요!");   
-// 	    		document.getElementById("cdgName").focus();
-// 	    		document.getElementById("nameValid").innerHTML = "그룹명을 입력하세요!";	    		
-// 	    		return false;	
-// 	    	};
 	    };	  
 	    
 	    nullToEmpty = function(value) {
 	    	if(value == null || value == "" || value.length == 0) {
-	    		return false;
-	    	} else {
 	    		return true;
+	    	} else {
+	    		return false;
 	    	}
 	    };     
 	    
