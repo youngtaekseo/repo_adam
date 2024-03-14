@@ -312,7 +312,7 @@
                           name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           autofocus="on"
-                          th:value="${item.cdgName}"                          
+                          th:value="${item.cdgName}"
                       >                    
                       <span id="nameValid" class="text-xs text-red-600 dark:text-red-400">                        
                       </span>                    
@@ -534,6 +534,13 @@
         		return false;
         	} else {
         		return true;
+        	}
+        };
+        
+        document.getElementById("cdgName").onkeyup = function() {
+        	if(window.event.keycode == 13) {
+			    form.action = goUrlSdmUpdate;
+			    form.submit();        		
         	}
         };
   </script>    

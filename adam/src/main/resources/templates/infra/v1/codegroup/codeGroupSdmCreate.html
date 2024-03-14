@@ -283,7 +283,7 @@
 
         <main class="h-full pb-16 overflow-y-auto">
 <!--         action="codeGroupSdmInsert"  -->
-          <form name="regForm" id="regForm" method="post" autocomplete="off">
+          <form name="regForm" id="regForm" method="get" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -356,14 +356,13 @@
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 	
-		let form      = document.querySelector("form[name=regForm]");
-	  	let cdgName   = document.querySelector("input[name=cdgName]");
+		let form         = document.querySelector("form[name=regForm]");
+	  	let cdgName      = document.querySelector("input[name=cdgName]");
 	  	let cdgNameValid = document.querySelector("span[name=cdgNameValid]");            
 	  
-	   	let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
+	   	let goUrlSdmList   	= "/codeGroupSdmList"; 		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
-		let goUrlSdmView 	= "/codeGroupSdmView";		/* 조회결과 */
 		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
 		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
@@ -389,13 +388,22 @@
 // 		});
 		
     	document.getElementById("cdgName").onkeyup = function() {
-    		if(strongPassword(cdgName.value) == true) {
-				cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-				cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";	    			
-    		} else {
-				cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		cdgNameValid.innerHTML = "";  	    			
-    		};
+	    	if(window.event.keycode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+			       	form.action = goUrlSdmInsert;
+			       	form.submit();       			
+		       	};
+	    	} else {
+	    		if(strongPassword(cdgName.value) == true) {
+					cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+					cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";	    			
+	    		} else {
+					cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    		cdgNameValid.innerHTML = "";  	    			
+	    		};	    		
+	    	};    		
     	};	
     	
     	strongPassword = function(str) {
@@ -443,7 +451,8 @@
 	    	} else {
 	    		return true;
 	    	}
-	    };      
+	    };     
+	    
     </script>    
   </body>
 </html>
