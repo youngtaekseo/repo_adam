@@ -14,6 +14,11 @@
       defer
     ></script>
     <script src="sdm/assets/js/init-alpine.js"></script>
+    
+    <!-- jquery 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 플러그인 javascript 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>    
   </head>
   <body>
     <div
@@ -277,8 +282,7 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-<!--         action="codeGroupSdmUpdate" -->
-          <form name="regForm" id="regForm" method="post" autocomplete="off">
+          <form name="form" id="form" method="get" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -314,7 +318,8 @@
                           autofocus="on"
                           th:value="${item.cdgName}"
                       >                    
-                      <span id="nameValid" class="text-xs text-red-600 dark:text-red-400">                        
+                      <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+						필수입력 확인 메시지
                       </span>                    
                     </label>
                   </div>                  
@@ -493,56 +498,108 @@
     <!-- End of modal backdrop -->   
     
     <script type="text/javascript">
-		let seq = document.querySelector("input[name=cdgSeq]");
-      	let form = document.querySelector("form[name=regForm]");
+// ============================================================================
+// 변수선언
+// ============================================================================
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 
-      	let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
+		let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
-		let goUrlSdmView 	= "/codeGroupSdmView";		/* 조회결과 */
 		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
 		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
 		let goUrlSdmUdtOne 	= "/codeGroupSdmUdtOne";	/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */      
-	    
+		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */
+
+		let cdgSeq			= document.querySelector("cdgSeq");
+		let form			= document.querySelector("form[name=form]");
+	
+		// 그룹코드명
+		let cdgName         = document.querySelector("input[name=cdgName]");
+		let cdgNameValid    = document.querySelector("span[name=cdgNameValid]");
+
+// ============================================================================
+// event
+// ============================================================================
+
+		// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-        	if(seq.value == null || seq.value == "") {
-          		if(fnValidationIn() == false) return false;
-          		form.action = goUrlSdmUpdate;
-          		form.submit();
-        	} else {
-            	if(fnValidationUdt() == false) return false;
-            	form.action = goUrlSdmUpdate;
-            	form.submit();
-        	};
-      	};
-	    
-        function fnValidationIn() {
-          if(fnValidationUdt() == false) return false;
-        };
-        
-        function fnValidationUdt() {
-        	if(!nullToEmpty(document.getElementById("cdgName").value)) {
-        		document.getElementById("cdgName").focus();
-        		return false;	
-        	};
-        };	  
-        
-        function nullToEmpty(value) {
-        	if(value == null || value == "") {
-        		return false;
-        	} else {
-        		return true;
-        	}
-        };
-        
-        document.getElementById("cdgName").onkeyup = function() {
-        	if(window.event.keycode == 13) {
-			    form.action = goUrlSdmUpdate;
-			    form.submit();        		
-        	}
-        };
-  </script>    
+			if(fnValidationIn() == true) {
+	       		return false;
+	       	} else {
+	       		fnCallController();
+	       	};
+		};
+
+		// 그룹명 특수문자확인
+		document.getElementById("cdgName").onkeyup = function() {
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		fnCallController();
+		       	};
+			} else {
+	    		if(fnSpecialCharCheck(cdgName.value) == true) {
+	    			cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			cdgNameValid.setAttribute("style", "");
+	    		} else {
+	    			cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			cdgNameValid.setAttribute("style", "visibility:hidden;");
+	    		};
+			};
+		};
+
+// ============================================================================
+// function
+// ============================================================================
+
+		// 특수문자확인
+    	fnSpecialCharCheck = function(str) {
+			return vSpecialChar.test(str);
+    	};
+
+		// controller 호출
+		fnCallController = function() {
+	       	form.action = goUrlSdmUpdate;
+	       	form.submit();
+		};
+
+		// 입력
+	    fnValidationIn = function() {
+			return fnValidationUdt();
+		};
+
+		// 수정
+	    fnValidationUdt = function() {
+			// 그룹명
+		    if(fnNullToEmpty(cdgName.value)) {
+		    	cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+                cdgNameValid.innerHTML = "그룹명을 입력하세요!";
+		    	cdgName.focus();
+		    	cdgNameValid.setAttribute("style", "");
+		    	return true;
+		    } else {
+		    	cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	cdgNameValid.setAttribute("style", "visibility:hidden;");
+		    	return false;
+		    };
+	    };
+
+	    // null, 공백 확인
+	    fnNullToEmpty = function(value) {
+	    	if(value == null || value == "" || value.length == 0) {
+	    		return true;
+	    	} else {
+	    		return false;
+	    	}
+	    };
+    </script>  
   </body>
 </html>

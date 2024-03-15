@@ -13,10 +13,10 @@ public class UtilFunction {
 //		vo.setShOptionDate(vo.getShOptionDate() == null ? 2 : vo.getShOptionDate());
 		
 		/* 초기값 세팅이 있는 경우 사용 */
-		vo.setShDateStart(vo.getShDateStart() == null
+		vo.setShDateStart(vo.getShDateStart() == null || vo.getShDateStart() == ""
 		    ? UtilDateTime.calculateDayReplace00TimeString(UtilDateTime.nowLocalDateTime(), Commvar.DATE_INTERVAL)
 		    : UtilDateTime.add00TimeString(vo.getShDateStart()));
-		vo.setShDateEnd(vo.getShDateEnd() == null
+		vo.setShDateEnd(vo.getShDateEnd() == null || vo.getShDateEnd() == ""
 		    ? UtilDateTime.nowString()
 		    : UtilDateTime.add59TimeString(vo.getShDateEnd()));		
 		
