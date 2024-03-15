@@ -3,8 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: adam
 Bundle-SymbolicName: adam
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-17
-Automatic-Module-Name: adam
 Export-Package: com.ucl,
  com.ucl.common.base,
  com.ucl.common.config,
@@ -40,3 +38,5 @@ Export-Package: com.ucl,
  templates.sdm.src.member,
  templates.sdm.src.product,
  templates.usr
+Automatic-Module-Name: adam
+Bundle-RequiredExecutionEnvironment: JavaSE-17
