@@ -393,7 +393,7 @@
                           >
                           <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
-						  </svg>
+						  </svg> 						  
 						</button>
 
                         <!-- 초기화버튼 -->
@@ -409,6 +409,7 @@
                           </svg>
                         </button>
                       </div>
+	                  <span style="visibility:hidden;">&nbsp;</span>	                                          
                     </div>
 
                     <div class="md:h-auto md:w-1/2 mr-3"></div>
@@ -784,6 +785,12 @@
 //             window.opener.location.href="http://www.naver.com";
         });
  
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+		let vSpecialChar = /[/{\}\[\]\/?,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+	
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		
 		let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
@@ -796,9 +803,11 @@
 		let cdgSeq				= document.querySelector("cdgSeq");
         let form				= document.querySelector("form[name=searchForm]");
         let shDateStart			= document.querySelector("input[name=shDateStart]");
-        let inDateStartValid	= document.getElementById("shDateStartValid");            
+        let shDateStartValid	= document.getElementById("span[name=shDateStartValid]");            
         let shDateEnd			= document.querySelector("input[name=shDateEnd]");
-        let inDateEndValid		= document.getElementById("shDateEndValid");
+        let shDateEndValid		= document.getElementById("span[name=shDateEndValid]");
+        
+        let shOption            = document.querySelector("select[name=shOption]");
         let shValue				= document.querySelector("input[name=shValue]");
         let shValueValid		= document.querySelector("span[name=shValueValid]");
         
@@ -841,7 +850,12 @@
 	    		};				
 			};
 		};
+		
+    	strongPassword = function(str) {
+			return vSpecialChar.test(str);
+    	};		
 
+    	// 조회버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			if(fnValidationIn() == true) {
 	       		return false;
@@ -855,6 +869,22 @@
 		};
 		    
 	    fnValidationUdt = function() {
+	    	if(shOption.value != "") {
+		    	if(nullToEmpty(shValue.value)) {
+		    		shValue.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    		shValue.setAttribute("placeholder"," 입력하세요!");   
+		    		shValue.focus();
+		    		shValueValid.innerHTML = " 입력하세요!";	 
+		    		shValueValid.setAttribute("style", "");
+		    		return true;	
+		    	} else {
+		    		shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    		shValue.setAttribute("placeholder","");         
+		    		shValueValid.setAttribute("style", "visibility:hidden;");
+		    		return false;
+		    	};	    		
+	    	};
+	    	
 	    	if(nullToEmpty(shDateStart.value)) {
 	    		shDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
 	    		shDateStart.setAttribute("placeholder","시작일자를 입력하세요!");   
