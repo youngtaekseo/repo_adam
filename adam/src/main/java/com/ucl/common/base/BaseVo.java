@@ -1,13 +1,13 @@
 package com.ucl.common.base;
 
 public class BaseVo {
-	private Integer shUseNy = 1;		/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private Integer shDelNy = 0; 		/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private Integer shOptionDate=0;	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private String shDateStart;
-	private String shDateEnd;
-	private Integer shOption;			/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private String shValue;
+	private Integer shUseNy = 1;	// 사용여부	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
+	private Integer shDelNy = 0; 	// 삭제여부	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
+	private Integer shOptionDate=0;	// 날짜조건 	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
+	private String shDateStart;		// 시작일자
+	private String shDateEnd;		// 종료일자
+	private Integer shOption;		// 검색어조건	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
+	private String shValue;			// 검색어
 
 //	-------
 	

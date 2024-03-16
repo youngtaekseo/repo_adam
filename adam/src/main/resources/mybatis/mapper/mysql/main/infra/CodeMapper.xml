@@ -18,7 +18,7 @@
               		  ON b.cdgSeq = a.cdgSeq 
          WHERE 1 = 1          
          
-         <if test="shDelNy != null and !shDelNy.equals('')">AND b.cdcDelNy = #{shDelNy}</if>
+         <if test="shDelNy != null and !shDelNy.equals('')">AND IFNULL(b.cdcDelNy, 0) = #{shDelNy}</if>
          
          <choose>
          	<when test="shOptionDate == 1">AND b.cdcRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -48,7 +48,7 @@
               		  ON b.cdgSeq = a.cdgSeq              		          
          WHERE 1 = 1
            AND a.cdgSeq = #{cdgSeq}
-           AND b.cdcseq = #{cdcSeq}           
+           <if test="cdcSeq != null and !cdcSeq.equals('')">AND b.cdcseq = #{cdcSeq}</if>           
 	</select>
 	
 	<insert id="insert">

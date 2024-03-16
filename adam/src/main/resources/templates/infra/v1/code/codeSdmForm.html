@@ -14,6 +14,11 @@
       defer
     ></script>
     <script src="sdm/assets/js/init-alpine.js"></script>
+    
+    <!-- jquery 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 플러그인 javascript 로딩 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>      
   </head>
   <body>
     <div
@@ -277,8 +282,7 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-<!--         action="codeSdmUpdate"  -->
-          <form name="regForm" id="regForm" method="post">
+          <form name="form" id="form" method="get" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -298,13 +302,9 @@
                           id="cdgSeq"
                           name="cdgSeq"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           readonly="on"
                           th:value="${item.cdgSeq}"                             
-                      >                    
-                      <span id="inNameValid" class="text-xs text-red-600 dark:text-red-400">                        
-                      </span>                    
+                      >                          
                     </label>
                   </div>
                   
@@ -315,8 +315,6 @@
                           id="cdgName"
                           name="cdgName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           readonly="on"
                           th:value="${item.cdgName}"                          
                       >                          
@@ -330,8 +328,6 @@
                           id="cdcSeq"
                           name="cdcSeq"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           readonly="on"
                           th:value="${item.cdcSeq}"                             
                       >                          
@@ -345,16 +341,14 @@
                           id="cdcName"
                           name="cdcName"
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          required
-                          autocomplete="off"
                           autofocus="on"
                           th:value="${item.cdcName}"                          
                       >                    
-                      <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400">                        
+                      <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+						필수입력 확인 메시지          
                       </span>                    
                     </label>
                   </div>                 
-                               
               </div> 
               
               <!-- 저장버튼, 회원조회버튼 -->
@@ -428,8 +422,7 @@
                     name="btnDelete"             
                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red mr-3"
                     aria-label="Delete"
-                    type="button"
-                  >
+                    type="button">
 					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  <path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
 					</svg>
@@ -516,7 +509,7 @@
             name="lineDelete"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
           >
-			<a th:href="@{/codeSdmDelete(seq=${item.cdcSeq})}">삭제</a>
+			<a th:href="@{/codeSdmDelete(cdcSeq=${item.cdcSeq})}">삭제</a>
           </button>            
         </footer>
       </div>
@@ -524,62 +517,109 @@
     <!-- End of modal backdrop -->     
     
     <script type="text/javascript">
-		let form    		= document.querySelected("form[name=regForm]");
-		let cdgSeq  		= document.querySelected("input[name=cdgSeq]");
-		let cdcSeq  		= document.querySelected("input[name=cdcSeq]");
-		let cdcName 		= document.querySelected("input[name=cdcName]");
-		let cdcNameValid 	= document.querySelected("span[name=cdcNameValid]");
-		
-		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/codeSdmCreate";		/* 등록화면 */
-		let goUrlSdmInsert 	= "/codeSdmInsert";		/* 등록 */
-		let goUrlSdmUpdate 	= "/codeSdmUpdate";		/* 수정 */
-		let goUrlSdmDelete 	= "/codeSdmDelete";		/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";		/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-		
-		// 저장
-		document.getElementById("btnSubmit").onClick = function() {
-	    	if(fnValidationIn() == false) {
-	    		form.action = goUrlSdmUpdate;
-	    		form.submit();
-	    	};    		
+// ============================================================================
+// 변수선언
+// ============================================================================
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+
+		let goUrlSdmList   	= "/codeSdmList";	    /* 조회화면 */
+		let goUrlSdmForm   	= "/codeSdmForm";	    /* 수정화면 */
+		let goUrlSdmCreate 	= "/codeSdmCreate";	    /* 등록화면 */
+		let goUrlSdmInsert 	= "/codeSdmInsert";	    /* 등록 */
+		let goUrlSdmUpdate 	= "/codeSdmUpdate";	    /* 수정 */
+		let goUrlSdmDelete 	= "/codeSdmDelete";	    /* 삭제 */
+		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";	    /* 삭제여부-삭제로변경 */
+		let goUrlSdmUdtZero = "/codeSdmUdtZero";    /* 삭제여부-미삭제로변경 */
+
+		let cdgSeq			= document.querySelector("cdgSeq");
+		let cdcSeq			= document.querySelector("cdcSeq");
+		let form			= document.querySelector("form[name=form]");
+
+		// 그룹코드명
+		let cdcName         = document.querySelector("input[name=cdcName]");
+		let cdcNameValid    = document.querySelector("span[name=cdcNameValid]");
+
+// ============================================================================
+// event
+// ============================================================================
+
+		// 저장버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			if(fnValidationIn() == true) {
+	       		return false;
+	       	} else {
+	       		fnCallController();
+	       	};
 		};
-		
-		// 입력시 필수항목 체크
-		fnValidationIn = function() {
-			if(fnValidationUp() == true) {
-				return true;
+
+		// 코드명 특수문자확인
+		document.getElementById("cdcName").onkeyup = function() {
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		fnCallController();
+		       	};
 			} else {
-				return false;
+	    		if(fnSpecialCharCheck(cdcName.value) == true) {
+	    			cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			cdcNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			cdcNameValid.setAttribute("style", "");
+	    		} else {
+	    			cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			cdcNameValid.setAttribute("style", "visibility:hidden;");
+	    		};
 			};
 		};
-		
-		// 수정시 필수항목 체크
-		fnValidationUp = function() {
-			if(!fnNullToEmpty(cdcName.value)) {
-	    		cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		cdcName.setAttribute("placeholder","코드명을 입력하세요!");   
-	    		cdcName.focus();
-	    		cdcNameValid.innerHTML = "그룹명을 입력하세요!";	    		
-	    		return false;	    			
-			} else {
-	    		cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		cdcName.setAttribute("placeholder","");         
-	    		cdcNameValid.innerHTML = "";  
+
+// ============================================================================
+// function
+// ============================================================================
+
+		// 특수문자확인
+    	fnSpecialCharCheck = function(str) {
+			return vSpecialChar.test(str);
+    	};
+
+		// controller 호출
+		fnCallController = function() {
+	       	form.action = goUrlSdmUpdate;
+	       	form.submit();
+		};
+
+		// 입력
+	    fnValidationIn = function() {
+			return fnValidationUdt();
+		};
+
+		// 수정
+	    fnValidationUdt = function() {
+			// 그룹명
+		    if(fnNullToEmpty(cdcName.value)) {
+		    	cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+                cdcNameValid.innerHTML = "코드명을 입력하세요!";
+		    	cdcName.focus();
+		    	cdcNameValid.setAttribute("style", "");
+		    	return true;
+		    } else {
+		    	cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	cdcNameValid.setAttribute("style", "visibility:hidden;");
+		    	return false;
+		    };
+	    };
+
+	    // null, 공백 확인
+	    fnNullToEmpty = function(value) {
+	    	if(value == null || value == "" || value.length == 0) {
 	    		return true;
-			}
-		};
-		
-		//null, 공백 비교
-		fnNullToEmpty = function(value) {
-			if(value == null || value == "" || value.length == 0) {
-				return false;
-			} else {
-				return true;
-			};
-		};    
+	    	} else {
+	    		return false;
+	    	}
+	    };
     </script> 
   </body>
 </html>

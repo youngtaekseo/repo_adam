@@ -378,7 +378,7 @@
                             placeholder="검색어"
                         >
 	                    <span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-	                    	필수항목체크
+	                    	필수입력 확인 메시지
 	                    </span>                         
                     </div>
 
@@ -467,7 +467,7 @@
                   <tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   
                   	<tr th:if="${#lists.isEmpty(list)}">
-                  		<td colspan="8" class="text-center"> 
+                  		<td colspan="8" class="text-center text-purple-600"> 
 							There is no data !!!
                   		</td>
                   	</tr>
@@ -779,7 +779,7 @@
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 	
-		let goUrlSdmList   	= "/codeGroupSdmList"; // "/codeGroupSdmList";		/* 조회화면 */
+		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
 		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
@@ -866,7 +866,7 @@
 				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
 				
-	    		if(fnSpecialCharCheck(shDateStart.value) == true) {
+	    		if(fnSpecialCharCheck(vSpecialChar, shDateStart.value) == true) {
 	    			shDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
 	    			shDateStartValid.innerHTML = "특수문자는 입력할 수 없습니다!";
 	    			shDateStartValid.setAttribute("style", "");
@@ -889,7 +889,7 @@
 				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
 				
-	    		if(fnSpecialCharCheck(shDateEnd.value) == true) {
+	    		if(fnSpecialCharCheck(vSpecialChar, shDateEnd.value) == true) {
 	    			shDateEnd.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
 	    			shDateEndValid.innerHTML = "특수문자는 입력할 수 없습니다!";
 	    			shDateEndValid.setAttribute("style", "");
@@ -912,7 +912,7 @@
 				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				
-	    		if(fnSpecialCharCheck(shValue.value) == true) {
+	    		if(fnSpecialCharCheck(vSpecialChar, shValue.value) == true) {
 	    			shValue.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
 	    			shValueValid.innerHTML = "특수문자는 입력할 수 없습니다!";
 	    			shValueValid.setAttribute("style", "");
@@ -928,7 +928,7 @@
 // ============================================================================
 	
 		// 특수문자확인
-    	fnSpecialCharCheck = function(str) {
+    	fnSpecialCharCheck = function(vSpecialChar, str) {
 			return vSpecialChar.test(str);
     	};		
     	

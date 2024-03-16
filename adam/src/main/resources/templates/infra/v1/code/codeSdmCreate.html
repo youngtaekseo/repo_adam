@@ -282,8 +282,7 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-<!--         action="codeSdmInsert" -->
-          <form name="regForm" id="regForm" method="post" autocomplete="off">
+          <form name="form" id="form" method="get" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -331,7 +330,8 @@
                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           autofocus="on"                        
                       >                    
-                      <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400">                        
+                      <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                      	필수 입력 확인 메시지                        
                       </span>                    
                     </label>
                   </div> 
@@ -375,86 +375,121 @@
     </div>
     
     <script type="text/javascript">
-    	let form    		= document.querySelector("form[name=regForm]");
-    	let cdgSeq  		= document.querySelector("input[name=cdgSeq]");
-    	let cdcSeq  		= document.querySelector("input[name=cdcSeq]");
-    	let cdcName 		= document.querySelector("input[name=cdcName]");
-    	let cdcNameValid 	= document.querySelector("span[name=cdcNameValid]");
-    	
-		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/codeSdmCreate";		/* 등록화면 */
-		let goUrlSdmInsert 	= "/codeSdmInsert";		/* 등록 */
-		let goUrlSdmUpdate 	= "/codeSdmUpdate";		/* 수정 */
-		let goUrlSdmDelete 	= "/codeSdmDelete";		/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";		/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-
-    	// 저장
-    	document.getElementById("btnSubmit").onclick = function() {
-        	if(fnValidationIn() == false) {
-        		return false;
-        	} else {
-        		form.action = goUrlSdmInsert;
-        		form.submit();
-        	};    		
-    	};
-    	
-    	// 입력시 필수항목 체크
-    	fnValidationIn = function() {
-    		if(fnValidationUp() == true) {
-    			return true;
-    		} else {
-    			return false;
-    		};
-    	};
-    	
-    	// 수정시 필수항목 체크
-    	fnValidationUp = function() {
-    		if(!fnNullToEmpty(cdcName.value)) {
-	    		cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		cdcName.setAttribute("placeholder","코드명을 입력하세요!");   
-	    		cdcName.focus();
-	    		cdcNameValid.innerHTML = "그룹명을 입력하세요!";	    		
-	    		return false;	    			
-    		} else {
-	    		cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		cdcName.setAttribute("placeholder","");         
-	    		cdcNameValid.innerHTML = "";  
-	    		return true;
-    		}
-    	};
-    	
-    	//null, 공백 비교
-    	fnNullToEmpty = function(value) {
-    		if(value == null || value == "" || value.length == 0) {
-    			return false;
-    		} else {
-    			return true;
-    		};
-    	};
-    	
+// ============================================================================
+// 변수선언
+// ============================================================================
 		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-		let vSpecialChar = /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-	
+		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-		
-		// 코드명 특수문자체크
-		document.getElementById("cdcName").onkeyup = function() {
-			if(fnSpecialChar(cdcName.value) == true) {
-				cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-				cdcNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";					
-			} else {
-				cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		cdcNameValid.innerHTML = ""; 				
-			};		       		
+
+		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
+		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
+		let goUrlSdmCreate 	= "/codeSdmCreate";	/* 등록화면 */
+		let goUrlSdmInsert 	= "/codeSdmInsert";	/* 등록 */
+		let goUrlSdmUpdate 	= "/codeSdmUpdate";	/* 수정 */
+		let goUrlSdmDelete 	= "/codeSdmDelete";	/* 삭제 */
+		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";	/* 삭제여부-삭제로변경 */
+		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
+
+		let cdgSeq			= document.querySelector("cdgSeq");
+		let cdcSeq			= document.querySelector("cdcSeq");
+		let form			= document.querySelector("form[name=form]");
+
+		// 코드명
+		let cdcName         = document.querySelector("input[name=cdcName]");
+		let cdcNameValid    = document.querySelector("span[name=cdcNameValid]");
+
+// ============================================================================
+// event
+// ============================================================================
+
+		window.addEventListener('load', function() {
+			jQuery.datetimepicker.setLocale('ko'); // 한국어
+
+			$("#shDateStart, #shDateEnd").datetimepicker({
+				timepicker:false,
+				format: 'Y-m-d', //'Y-m-d' //H:i
+			});
+		});
+
+    	// 저장버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			if(fnValidationIn() == true) {
+	       		return false;
+	       	} else {
+	       		fnCallController();
+	       	};
 		};
-	
-		// 특수문자 체크
-		fnSpecialChar = function(value) {
-			return vSpecialChar.test(value);
-		};    	
+
+		// 코드명 특수문자확인
+		document.getElementById("cdcName").onkeyup = function() {
+    		// form 안에 input이 하나뿐이면 onkeyup에 엔터키를 사용하게되면 스스로 submit이 된다
+    		// 그래서 input태그가 2개 이상부터 정상적으로 엔터키가 작동한다
+    		// 의미없는 input태그를 추가하는 방법으로 구현한다
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		fnCallController();
+		       	};
+			} else {
+	    		if(fnSpecialCharCheck(cdcName.value) == true) {
+	    			cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			cdcNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			cdcNameValid.setAttribute("style", "");
+	    		} else {
+	    			cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			cdcNameValid.setAttribute("style", "visibility:hidden;");
+	    		};
+			};
+		};
+
+// ============================================================================
+// function
+// ============================================================================
+
+		// 특수문자확인
+    	fnSpecialCharCheck = function(str) {
+			return vSpecialChar.test(str);
+    	};
+
+		// controller 호출
+		fnCallController = function() {
+	       	form.action = goUrlSdmInsert;
+	       	form.submit();
+		};
+
+		// 입력
+	    fnValidationIn = function() {
+			return fnValidationUdt();
+		};
+
+		// 수정
+	    fnValidationUdt = function() {
+			// 코드명
+		    if(fnNullToEmpty(cdcName.value)) {
+		    	cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+                cdcNameValid.innerHTML = "코드명을 입력하세요!";
+		    	cdcName.focus();
+		    	cdcNameValid.setAttribute("style", "");
+		    	return true;
+		    } else {
+		    	cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	cdcNameValid.setAttribute("style", "visibility:hidden;");
+		    	return false;
+		    };
+	    };
+
+	    // null, 공백 확인
+	    fnNullToEmpty = function(value) {
+	    	if(value == null || value == "" || value.length == 0) {
+	    		return true;
+	    	} else {
+	    		return false;
+	    	}
+	    };
     </script>
   </body>
 </html>

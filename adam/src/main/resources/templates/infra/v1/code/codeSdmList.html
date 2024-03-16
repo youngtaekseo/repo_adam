@@ -277,7 +277,7 @@
             </h2>
 
             <!-- 검색조건 -->
-            <form id="searchForm" name="searchForm" method="post" autocomplete="off">
+            <form id="form" name="form" method="post" autocomplete="off">
               <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="flex flex-col md:flex-row">
                     <!-- 삭제여부 -->
@@ -298,7 +298,6 @@
                             id="shOptionDate"
                             name="shOptionDate"
                         >
-<!--                             onclick="fnDateChange(this)"                         -->
                             <option value=""  th:selected="${shOptionDate == null}">날짜</option>
                             <option value="1" th:selected="${shOptionDate == 1}">등록일</option>
                             <option value="2" th:selected="${shOptionDate == 2}">수정일</option>
@@ -314,8 +313,8 @@
                             placeholder="시작일"
                             th:value="${#strings.substring(vo.shDateStart,0,10)}"
                         >
-<!--                             onchange="fnValid('shDateStart')" -->
-                        <span id="shDateStartValid" class="text-xs text-red-600 dark:text-red-400">
+                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                        	시작일자를 입력하세요!
                         </span>
                     </div>
 
@@ -328,8 +327,8 @@
                             placeholder="종료일"
                             th:value="${#strings.substring(vo.shDateEnd,0,10)}"
                         >
-<!--                             onchange="fnValid('shDateEnd')" -->
-                        <span id="shDateEndValid" class="text-xs text-red-600 dark:text-red-400">
+                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                        	종료일자를 입력하세요!
                         </span>
                     </div>
                 </div>
@@ -358,6 +357,9 @@
                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             placeholder="검색어"
                         >
+	                    <span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+	                    	필수입력 확인 메시지
+	                    </span> 
                     </div>
 
                     <div class="md:h-auto md:w-1/2 sm:mt-auto mr-3">
@@ -387,6 +389,7 @@
                           </svg>
                         </button>
                       </div>
+	                  <span style="visibility:hidden;">&nbsp;</span>
                     </div>
 
                     <div class="md:h-auto md:w-1/2 mr-3"></div>
@@ -400,7 +403,8 @@
                 </div>
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
                   <select
-                    id="selListShow"
+                    id="recordSize"
+                    name="recordSize"
                     class="block text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                     onchange="fnListShow()" 
                   >
@@ -442,22 +446,28 @@
                   
                   <!-- 조회결과 리스트 내용 -->					
                   <tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  	<tr th:if="${#lists.isEmpty(list)}">
+                  		<td colspan="9" class="text-center text-purple-600"> 
+							There is no data !!!
+                  		</td>
+                  	</tr>
+                  
                   	<tr id="dataList" class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
                   		<td class="px-2 py-1">
                   			<input
                   				id = "checkbox"
+                        		name="checkbox"
                         		style="height: 15px; width: 15px"
                         		type="checkbox"
-                        		name="checkbox"
                         		class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
                       		>
                     	</td>
                     	
-                    	<td id="seq" class="px-1 py-1" th:text="${list.cdgSeq}"></td>
+                    	<td id="cdgSeq" name="cdgSeq" class="px-1 py-1" th:text="${list.cdgSeq}"></td>
                     	
                     	<td class="px-4 py-1" th:text="${list.cdgName}"></td>
                     	
-                    	<td class="px-4 py-1" th:text="${list.cdcSeq}"></td>
+                    	<td id="cdcSeq" name="cdcSeq" class="px-4 py-1" th:text="${list.cdcSeq}"></td>
                     	
                     	<td class="px-4 py-1" th:text="${list.cdcName}"></td>
                              
@@ -756,108 +766,248 @@
     <!-- End of modal backdrop -->  
     
     <script type="text/javascript">
-        window.addEventListener('load', function() {
-            jQuery.datetimepicker.setLocale('ko'); // 한국어
+// ============================================================================
+// 변수선언
+// ============================================================================
 
-            $("#shDateStart, #shDateEnd").datetimepicker({
-                timepicker:false,
-                format: 'Y-m-d' //H:i
-            });            
-        }); 
-        
-		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/codeSdmCreate";		/* 등록화면 */
-		let goUrlSdmInsert 	= "/codeSdmInsert";		/* 등록 */
-		let goUrlSdmUpdate 	= "/codeSdmUpdate";		/* 수정 */
-		let goUrlSdmDelete 	= "/codeSdmDelete";		/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";		/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-		
-// 		document.getElementById("btnReset").onclick = function () {
-// 		    location.href = goUrlXdmList;
-// 		}
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 
-// 		document.getElementById("searchForm").onclick = function () {
-// 		    goForm(0);
-// 		}
+		let goUrlSdmList   	= "/codeSdmList";	    /* 조회화면 */
+		let goUrlSdmForm   	= "/codeSdmForm";	    /* 수정화면 */
+		let goUrlSdmCreate 	= "/codeSdmCreate";     /* 등록화면 */
+		let goUrlSdmInsert 	= "/codeSdmInsert";	    /* 등록 */
+		let goUrlSdmUpdate 	= "/codeSdmUpdate";	    /* 수정 */
+		let goUrlSdmDelete 	= "/codeSdmDelete";	    /* 삭제 */
+		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";	    /* 삭제여부-삭제로변경 */
+		let goUrlSdmUdtZero = "/codeSdmUdtZero";    /* 삭제여부-미삭제로변경 */
 
-// 		goForm = function (keyValue) {
-// 		    seq.value = keyValue;
-// 		    form.action = goUrlXdmForm;
-// 		    form.submit();
-// 		}		
+		let cdgSeq			= document.querySelector("cdgSeq");
+		let cdcSeq			= document.querySelector("cdcSeq");
+		let form			= document.querySelector("form[name=form]");
 
-		let cdgSeq  	= document.querySelector("cdgSeq");
-		let cdcSeq  	= document.querySelector("cdcSeq");
-        let form 		= document.querySelector("form[name=searchForm]");
-        let shDateStart	= document.querySelector("input[name=shDateStart]");
-        let shDateEnd   = document.querySelector("input[name=shDateEnd]");
-        
+		// 날짜선택
+		let shOptionDate	= document.querySelector("select[name=shOptionDate]");
+
+		// 시작일자
+		let shDateStart		= document.querySelector("input[name=shDateStart]");
+		let shDateStartValid= document.querySelector("span[name=shDateStartValid]");
+
+		// 종료일자
+		let shDateEnd		= document.querySelector("input[name=shDateEnd]");
+		let shDateEndValid	= document.querySelector("span[name=shDateEndValid]");
+
+		// 검색선택
+		let shOption		= document.querySelector("select[name=shOption]");
+
+		// 검색어
+		let shValue			= document.querySelector("input[name=shValue]");
+		let shValueValid	= document.querySelector("span[name=shValueValid]");
+
+// ============================================================================
+// event
+// ============================================================================
+
+		window.addEventListener('load', function() {
+			jQuery.datetimepicker.setLocale('ko'); // 한국어
+
+			$("#shDateStart, #shDateEnd").datetimepicker({
+				timepicker:false,
+				format: 'Y-m-d', //'Y-m-d' //H:i
+			});
+
+//	             toDay.setDate(toDay.getDate() - 10);
+//	             $("#shDateStart").val(toDay.toISOString().substring(0,10));
+
+	            //현재창에서 다른페이지로 이동
+//	             window.location.href="/codeGroupSdmInitDate";
+
+	            //팝업창에서 부모창을 다른페이지로 이동합니다.
+//	             window.opener.location.href="http://www.naver.com";
+		});
+
+    	// 조회버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			if(fnValidationIn() == true) {
 	       		return false;
 	       	} else {
-		       	form.action = goUrlSdmList;
-		       	form.submit();       			
+	       		fnCallController();
 	       	};
 		};
 
-	    fnValidationIn = function() {
-		      if(fnValidationUdt() == false) return false;
+		// 시작일자 특수문자 확인
+		document.getElementById("shDateStart").onkeyup = function() {
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		shDateEnd.focus();
+		       	};
+			} else {
+				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
+
+	    		if(fnSpecialCharCheck(vSpecialChar, shDateStart.value) == true) {
+	    			shDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			shDateStartValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			shDateStartValid.setAttribute("style", "");
+	    		} else {
+	    			shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			shDateStartValid.setAttribute("style", "visibility:hidden;");
+	    		};
+			};
 		};
-		    
+
+		// 종료일자 특수문자 확인
+		document.getElementById("shDateEnd").onkeyup = function() {
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		shValue.focus();
+		       	};
+			} else {
+				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
+
+	    		if(fnSpecialCharCheck(vSpecialChar, shDateEnd.value) == true) {
+	    			shDateEnd.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			shDateEndValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			shDateEndValid.setAttribute("style", "");
+	    		} else {
+	    			shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			shDateEndValid.setAttribute("style", "visibility:hidden;");
+	    		};
+			};
+		};
+
+		// 검색어 특수문자확인
+		document.getElementById("shValue").onkeyup = function() {
+			if(window.event.keyCode == 13) {
+				if(fnValidationIn() == true) {
+		       		return false;
+		       	} else {
+		       		fnCallController();
+		       	};
+			} else {
+				// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+	    		if(fnSpecialCharCheck(vSpecialChar, shValue.value) == true) {
+	    			shValue.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    			shValueValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+	    			shValueValid.setAttribute("style", "");
+	    		} else {
+	    			shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    			shValueValid.setAttribute("style", "visibility:hidden;");
+	    		};
+			};
+		};
+
+// ============================================================================
+// function
+// ============================================================================
+
+		// 특수문자확인
+    	fnSpecialCharCheck = function(vSpecialChar, str) {
+			return vSpecialChar.test(str);
+    	};
+
+		// controller 호출
+		fnCallController = function() {
+	       	form.action = goUrlSdmList;
+	       	form.submit();
+		};
+
+		// 입력
+	    fnValidationIn = function() {
+			return fnValidationUdt();
+		};
+
+		// 수정
 	    fnValidationUdt = function() {
-	    	if(!nullToEmpty(shDateStart.value)) {
-	    		shDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		shDateStart.setAttribute("placeholder","시작일자를 입력하세요!");   
-	    		shDateStart.focus();
-	    		shDateStartValid.innerHTML = "시작일자를 입력하세요!";	    		
-	    		return false;	
-	    	} else {
-	    		shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		shDateStart.setAttribute("placeholder","");         
-	    		shDateStartValid.innerHTML = "";  	    		
+			// 검색어선택
+	    	if(shOption.value != "") {
+	    		let text = $("#shOption option:selected").text();
+
+		    	if(fnNullToEmpty(shValue.value)) {
+		    		shValue.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    		shValue.setAttribute("placeholder",text+" 입력하세요!");
+		    		shValue.focus();
+		    		shValueValid.innerHTML = text+" 입력하세요!";
+		    		shValueValid.setAttribute("style", "");
+		    		return true;
+		    	} else {
+		    		shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    		shValue.setAttribute("placeholder","");
+		    		shValueValid.setAttribute("style", "visibility:hidden;");
+		    		return false;
+		    	};
 	    	};
-	    	
-	    	if(!nullToEmpty(shDateEnd.value)) {
-	    		shDateEnd.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		shDateEnd.setAttribute("placeholder","종료일자를 입력하세요!");   
-	    		shDateEnd.focus();
-	    		shDateEndValid.innerHTML = "종료일자를 입력하세요!";	    		
-	    		return false;	
-	    	} else {
-	    		shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		shDateEnd.setAttribute("placeholder","");         
-	    		shDateEndValid.innerHTML = "";  	    		
-	    	};	    	
-	    };	  
-	    
-	    nullToEmpty = function(value) {
+
+	    	// 날짜선택
+	    	if(shOptionDate.value != '') {
+	    		let vValidChk;
+	    		let vPosition = 0;
+	    		let text = $("#shOptionDate option:selected").text();
+
+		    	if(fnNullToEmpty(shDateStart.value)) {
+		    		vPosition = 1;
+		    		shDateStart.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    		shDateStart.setAttribute("placeholder","시작 "+text + "자를 입력하세요!");
+		    		shDateStartValid.innerHTML = "시작 "+text + "자를 입력하세요!";
+		    		shDateStartValid.setAttribute("style", "");
+		    		vValidChk = true;
+		    	} else {
+		    		shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    		shDateStart.setAttribute("placeholder","");
+		    		shDateStartValid.setAttribute("style", "visibility:hidden;");
+		    		vValidChk = false;
+		    	};
+
+		    	if(fnNullToEmpty(shDateEnd.value)) {
+		    		vPosition == 0 ? vPosition = 2 : vPosition = 1;
+		    		shDateEnd.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    		shDateEnd.setAttribute("placeholder", "종료 "+text + "자를 입력하세요!");
+		    		shDateEndValid.innerHTML = "종료 "+text + "자를 입력하세요!";
+		    		shDateEndValid.setAttribute("style", "");
+		    		vValidChk = true;
+		    	} else {
+		    		shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    		shDateEnd.setAttribute("placeholder","");
+		    		shDateEndValid.setAttribute("style", "visibility:hidden;");
+		    		vValidChk = false;
+		    	};
+
+		    	if(vPosition != 0) {
+		    		vPosition == 1 ? shDateStart.focus() : shDateEnd.focus();
+		    	};
+
+		    	return vValidChk;
+	    	};
+	    };
+
+	    // null, 공백 확인
+	    fnNullToEmpty = function(value) {
 	    	if(value == null || value == "" || value.length == 0) {
-	    		return false;
-	    	} else {
 	    		return true;
+	    	} else {
+	    		return false;
 	    	}
 	    };
 
-		// 초기화버튼 클릭
-       	function fnReset() {  
-         	let inDateStart = document.getElementById("shDateStart");
-         	let inDateEnd   = document.getElementById("shDateEnd");
+        // 초기화버튼 클릭
+        function fnReset() {
+          shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+          shDateStart.setAttribute("placeholder","시작일");
 
-         	let inDateStartValid = document.getElementById("shDateStartValid");            
-         	let inDateEndValid   = document.getElementById("shDateEndValid");            
+          shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+          shDateEnd.setAttribute("placeholder","종료일");
 
-         	inDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-         	inDateStart.setAttribute("placeholder","시작일");   
-         
-         	inDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-         	inDateEnd.setAttribute("placeholder","종료일");  
-         
-         	inDateStartValid.innerHTML = ""; 
-         	inDateEndValid.innerHTML   = ""; 
-		};
-    </script>    
+          shDateStartValid.setAttribute("style", "visibility:hidden;");
+          shDateEndValid.setAttribute("style", "visibility:hidden;");
+        };
+    </script>
+     
   </body>
 </html>

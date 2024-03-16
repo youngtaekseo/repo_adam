@@ -46,7 +46,6 @@
           FROM codegroup a
          WHERE 1=1
            AND a.cdgSeq = #{cdgSeq}
-         ORDER BY a.cdgSeq DESC
     </select>
     
     <insert id="insert">
