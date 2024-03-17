@@ -17,6 +17,4 @@ public interface CodeGroupDao {
 	
 	public int udtOne(CodeGroupDto dto);
 	public int udtZero(CodeGroupDto dto);
-	
-	public List<CodeGroupDto> selectRegModList(CodeGroupDto dto);
 }

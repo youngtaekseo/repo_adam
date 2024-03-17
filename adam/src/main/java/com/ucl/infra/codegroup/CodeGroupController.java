@@ -72,53 +72,5 @@ public class CodeGroupController {
 		service.udtZero(dto);
 		return "redirect:/codeGroupSdmList";
 	}
-	
-	//-------------------------------------------------
-	
-	@RequestMapping(value = "/codeGroupView")
-	public String codeGroupView(CodeGroupDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
-		return "/sdm/codegroup/codeGroupView";
-	}
-	
-	@RequestMapping(value = "/codeGroupModify")
-	public String codeGroupModify(CodeGroupDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
-		return "/sdm/codegroup/codeGroupModify";
-	}	
-	
-	@RequestMapping(value = "/codeGroupCreate")
-	public String codeGroupCreate() throws Exception {		
-		return "codeGroupCreate";
-	}	
-	
-	@RequestMapping(value = "/codeGroupInsert")
-	public String codeGroupInsert(CodeGroupDto dto) throws Exception {
-		service.insert(dto);
-		return "redirect:/codeGroupXdmList";
-	}	
-	
-	@RequestMapping(value = "/codeGroupUpdate")
-	public String codeGroupUpdate(CodeGroupDto dto) throws Exception {
-		service.update(dto);
-		return "redirect:/codeGroupXdmList";
-	}
-	
-	@RequestMapping(value = "/codeGroupDelete")
-	public String codeGroupDelete(CodeGroupDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/codeGroupXdmList";
-	}
-	
-	@RequestMapping(value = "/codeGroupUpDelete")
-	public String codeGroupUpDelete(CodeGroupDto dto) throws Exception {
-		service.udtOne(dto);
-		return "redirect:/codeGroupXdmList";
-	}	
-	
-	@RequestMapping(value = "/codeGroupUpInsert")
-	public String codeGroupUpInsert(CodeGroupDto dto) throws Exception {
-		service.udtZero(dto);
-		return "redirect:/codeGroupXdmList";
-	}		
+
 }
