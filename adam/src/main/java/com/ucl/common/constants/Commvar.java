@@ -5,7 +5,6 @@ public class Commvar {
 	public static final String PATH_CODE_GROUP 	= "infra/v1/codegroup/";
 	public static final String PATH_HOME 		= "infra/v1/home/";
 	public static final String PATH_LOGIN 		= "infra/v1/login/";
-	public static final String PATH_MANAGER 	= "infra/v1/manager/";
 	public static final String PATH_MEMBER 		= "infra/v1/member/";
 	public static final String PATH_PRODUCT 	= "infra/v1/product/";
 	public static final String PATH_TEMP 		= "infra/v1/temp/";
