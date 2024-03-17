@@ -75,17 +75,17 @@
           </ul>
 
           <ul>
-            <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="/managerSdmList"
-              >
-				<svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-				  <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z"></path>
-				</svg>
-                <span class="ml-4">관리자관리</span>
-              </a>
-            </li>
+<!--             <li class="relative px-6 py-3"> -->
+<!--               <a -->
+<!--                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" -->
+<!--                 href="/managerSdmList" -->
+<!--               > -->
+<!-- 				<svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> -->
+<!-- 				  <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z"></path> -->
+<!-- 				</svg> -->
+<!--                 <span class="ml-4">관리자관리</span> -->
+<!--               </a> -->
+<!--             </li> -->
 
             <li class="relative px-6 py-3">
               <a
@@ -471,16 +471,16 @@
                     	
                     	<td class="px-4 py-1" th:text="${list.cdcName}"></td>
                              
-                        <td class="px-4 py-1 text-xs">
+                        <td class="px-4 py-1">
                         	<th:block th:switch="${list.cdcDelNy}">
-                      		<span th:case="0"
-                  				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-								N
-                      		</span>
-                      		<span th:case="1"
-                  				class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-								Y
-                      		</span>      
+                      			<span th:case="0"
+                  					class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+									N
+                      			</span>
+                      			<span th:case="1"
+                  					class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+									Y
+                      			</span>      
                       		</th:block>                		
                         </td>
                                 	
@@ -498,30 +498,30 @@
 <!--                       		</span> -->
 <!--                     	</td>                    	 -->
                     	
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.cdcRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdcRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     	
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.cdcUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdcUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                    
                     	<td class="px-6 py-1">
 <!--                     		수정 -->
-                    	    <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    	    <button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                     	    	th:if="${list.cdcSeq} != null">
 								<a th:href="@{/codeSdmForm(cdgSeq=${list.cdgSeq}, cdcSeq=${list.cdcSeq}, cdcName=${list.cdcName})}">
-									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z"></path>
-									  <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z"></path>
-									</svg>						
+									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+										<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
+										<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
+									</svg>					
 								</a>
                       		</button>
                     	    <button class="px-3" style="cursor:default" th:unless="${list.cdcSeq} != null">
                     	    </button>                      		
                       		
 <!--                       		추가 -->
-                      		<button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">                   	
+                      		<button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">                   	
 								<a th:href="@{/codeSdmCreate(cdgSeq=${list.cdgSeq}, cdcSeq=${list.cdcSeq})}">
-									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
-									</svg>				
+									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+										<path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
+									</svg>
 								</a>					              
                       		</button>
                     	</td>
