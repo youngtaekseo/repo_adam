@@ -1,102 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ucl.infra.product.ProductDao">
+<mapper namespace="com.ucl.infra.member.MemberDao">
 
-	<resultMap id="resultMapObj" type="com.ucl.infra.product.ProductDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.ucl.infra.member.MemberDto"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
-         ORDER BY b.seq, a.seq 
+		SELECT a.mbrSeq
+		     , a.mbrType
+		     , a.mbrName
+		     , a.mbrSex
+		     , b.cdcName xsexName
+		     , a.mbrBirthday
+		     , a.mbrEmail
+		     , a.mbrPassword
+		     , a.mbrRegDt
+		     , a.mbrUdtDt
+		     , a.mbrDelNy
+		  FROM members a
+		       LEFT JOIN code b
+		              ON b.cdcSeq = a.mbrSex
+		 WHERE 1 = 1
+		 
+		<choose>
+			<when test="shOptionDate == 1">AND a.mbrRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.mbrUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+		
+		<choose>
+			<when test="shOption == 1">AND a.mbrName  LIKE CONCAT('%', #{shValue}, '%')</when>
+			<when test="shOption == 2">AND a.mbrEmail LIKE CONCAT('%', #{shValue}, '%')</when>
+		</choose>
+
+		<if test="shOptionType != null and !shOptionType.equals('')">AND a.mbrType = #{shOptionType}</if>
+				
+		<if test="shDelNy != null and !shDelNy.equals('')" >AND a.mbrDelNy = #{shDelNy}</if>
+		
+		<if test="shSex != null and !shSex.equals('')">AND a.mbrSex = #{shSex}</if>
+	
+         ORDER BY a.mbrSeq DESC 
 	</select>
 
 	<select id="selectOne" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
-           AND a.seq = #{seq}	
-	</select>
-		
-	<select id="selectName" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1			
-           AND a.name = #{name}
+		SELECT a.mbrSeq
+		     , a.mbrType
+		     , a.mbrName
+		     , a.mbrSex
+		     , a.mbrBirthday
+		     , a.mbrEmail
+		     , a.mbrPassword
+		     , a.mbrRegDt
+		     , a.mbrUdtDt
+		     , a.mbrDelNy
+		  FROM members a
+		 WHERE 1 = 1		
+           AND a.mbrSeq = #{mbrSeq}	
 	</select>
 	
+	<select id="selectListCode" resultMap="resultMapObj">
+		SELECT a.cdcSeq
+		     , a.cdcName
+		  FROM code a
+		 WHERE 1 = 1		
+           AND a.cdgSeq = #{shCdgSeq}
+           AND a.cdcDelNy = 0
+         ORDER BY a.cdcSeq
+	</select>	
+	
 	<insert id="insert">
-		INSERT INTO commoncode
+		INSERT INTO members
 			( 
-			  name
-			, regDateTime
-			, modDateTime
-			, delNy
-			, commonGroup_seq
+			  mbrType
+			, mbrName
+			, mbrSex
+			, mbrBirthday
+			, mbrEmail
+			, mbrPassword
+			, mbrRegDt
+			, mbrUdtDt
+			, mbrDelNy
 			)
 		VALUES
 			(
-			  #{name}
+			  #{mbrType}
+			, #{mbrName}
+			, #{mbrSex}
+			, STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')
+			, #{mbrEmail}
+			, #{mbrPassword}
 			, now()
 			, now()
 			, 0
-			, #{xcodeGroupSeq}
 			)
 	</insert>
 	
 	<update id="update">
-		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
+		UPDATE members
+		   SET mbrName     = #{mbrName}
+			 , mbrSex      = #{mbrSex}
+			 , mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')
+			 , mbrEmail    = #{mbrEmail}
+			 <if test="mbrPassword != null and !mbrPassword.equals('')">, mbrPassword = #{mbrPassword}</if>
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND mbrSeq = #{mbrSeq}	
 	</update>
 	
-	<update id="udtOne">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 1
+	<update id="updatePw">
+		UPDATE members
+		   SET mbrPassword = #{mbrPassword}
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND mbrSeq = #{mbrSeq}	
 	</update>
 	
-	<update id="udtZero">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 0
+	<update id="updateOne">
+		UPDATE members
+		   SET mbrUdtDt = now()
+		     , mbrDelNy = 1
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND mbrSeq = #{mbrSeq}	
+	</update>
+	
+	<update id="updateDelNy">
+		UPDATE members
+		   SET mbrUdtDt = now()
+		   
+		   <choose>
+		   		<when test="mbrDelNy == 0">, mbrDelNy = 1</when>
+		   		<when test="mbrDelNy == 1">, mbrDelNy = 0</when>
+		   </choose>
+         WHERE 1 = 1		
+           AND mbrSeq = #{mbrSeq}
 	</update>	
 	
-	<update id="delete">
-		DELETE FROM commoncode
-        WHERE 1 = 1		
-          AND seq = #{seq}	
-	</update>
+	<delete id="delete">
+		DELETE FROM members
+         WHERE 1 = 1		
+           AND mbrSeq = #{mbrSeq}
+	</delete>
 
 </mapper>
