@@ -1,5 +1,6 @@
 package com.ucl.common.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -138,6 +139,13 @@ public class UtilDateTime {
 		String dateTimeRt = localDateTimeParam.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return dateTimeRt;
 	}	
+	
+	// String -> Date
+	public static Date StringToDateTime(String dateStr) throws ParseException {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = simpleDateFormat.parse(dateStr);
+		return date;
+	}
 	
 	// 리턴값 : 현재년도
 	public static String nowYearString() throws Exception {
