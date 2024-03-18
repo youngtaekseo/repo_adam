@@ -313,7 +313,7 @@
 				        			<span class="text-gray-700 dark:text-gray-400">회원명</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				            			id="mbrName" name="mbrName" autofocus="on"
-				            			onkeydown="fnEnterCheck(this, event)" onkeyup="fnSepcialChar(this)">
+				            			onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
 				        				<span id="mbrNameValid" name="mbrNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					필수 입력 확인 메시지
 				        				</span>				            			
@@ -355,7 +355,7 @@
 				        				<span class="input-group-text mt-1">@</span>
 				        				<input class="block w-full mt-1 form-control text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        					id="mbrEmail" name="mbrEmail"
-				        					onkeydown="fnEnterCheck(this, event)" onkeyup="fnSepcialChar(this)">
+				        					onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
 				        			</div>
 				        			<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				필수 입력 확인 메시지
@@ -371,7 +371,7 @@
 				        			<span class="text-gray-700 dark:text-gray-400">비밀번호 입력가능 특수문자 @ - _ !</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrPassword" name="mbrPassword"
-				        				onkeydown="fnEnterCheck(this, event)" onkeyup="fnSepcialChar(this)"
+				        				onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)"
 				            			type="password" placeholder="비밀번호 4자리">
 				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					필수 입력 확인 메시지
@@ -385,7 +385,7 @@
 				        			<span class="text-gray-700 dark:text-gray-400">비밀번호 확인</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        			 	id="mbrPwConfirm" name="mbrPwConfirm"
-				        			 	onkeydown="fnEnterCheck(this, event)" onkeyup="fnSepcialChar(this)"
+				        			 	onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)"
 				            			type="password" placeholder="비밀번호 4자리">
 				        				<span id="mbrPwConfirmValid" name="mbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					필수 입력 확인 메시지
@@ -442,7 +442,9 @@
 		// 암호화를 하게 되면 해당 값은 512비트(128자)의 문자열으로 변경됩니다.
 		
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		
+		let form				= document.querySelector("form[name=form]");
 		
 		// 필수입력체크대상
 		let nameArr = ["mbrName", "mbrEmail", "mbrPassword", "mbrPwConfirm"];
@@ -457,8 +459,6 @@
 		let goUrlSdmDelNy 	= "/memberSdmDelNy";	/* 삭제여부변경 */
 // 		let goUrlSdmUdtOne 	= "/memberSdmUdtOne";	/* 삭제여부-삭제로변경 */
 // 		let goUrlSdmUdtZero = "/memberSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-
-		let form				= document.querySelector("form[name=form]");
 
 		// 회원명
 		let mbrName         	= document.querySelector("input[name=mbrName]");
@@ -495,7 +495,7 @@
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if((fnValidation() == true) && (fnEmailCheck() == true)) {
+			if(!fnValidation()) {
 	       		return false;
 	       	} else {
 	       		fnCallController();
@@ -503,7 +503,7 @@
 		};
 		
 		// event onkeydown
-		fnEnterCheck = function(obj, event) {
+		fnOnKeyDown = function(obj, event) {
 			// 브라우저 종류와 버전마다 키보드 이벤트 캡쳐하는 방식이 다르다
 			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
 			let i;
@@ -528,12 +528,9 @@
 				// 필수입력확인 함수호출
 				if(vIdx >= 0) {
 					let validName = obj.name+"Valid";
-					let valid = document.querySelector("span[name="+validName+"]");
+					let objValid = document.querySelector("span[name="+validName+"]");
 					
-					if(fnValidationIn(obj, textArr[vIdx], valid) == true) {
-						obj.focus();
-						return false;
-					};	
+					fnValidationIn(obj, textArr[vIdx], objValid);
 				};
 				
 				// 다음 폼 필드의 인덱스 구하기
@@ -554,34 +551,36 @@
 		
 		// event onkeyup
 		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
-		fnSepcialChar = function(obj) {
-			if(window.event.keyCode == 13) {
+		fnOnKeyUp = function(obj, event) {
+			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+			if(keyCode == 13) {
 				return false;	
 			};
 			
-			let vSpecChar;
+			let regExp;
 			let text = "특수문자는 입력할 수 없습니다!";
 			switch(obj.name) {
 			case "mbrName" :
-				vSpecChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				break;
 			case "mbrEmail" :
-				vSpecChar = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+				regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
 				break;				
 			case "mbrPassword" :
 			case "mbrPwConfirm" :
-				vSpecChar = /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
+				regExp= /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
 				text = "비밀번호 입력가능 특수문자 @ - _ !";
 				break;
 			};
 			
 			// 특수문자확인
-		    fnSpecialCharCheck(obj, text, vSpecChar);			
+		    fnSpecialCharCheck(obj, text, regExp);			
 		};
 		
 		// 생년월일 특수문자 확인
 		document.getElementById("mbrBirthday").onkeyup = function() {
 			if(window.event.keyCode != 13) {
+				let mbrBirthday = document.querySelector("input[name=mbrBirthday]");
 				fnSpecialDate(mbrBirthday);	
 			};
 		};		
@@ -590,45 +589,20 @@
 // function
 // ============================================================================
 		
-		// 날짜항목에 대한 특수문자처리
-		fnSpecialDate = function(obj) {
-			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
- 			let vSpecChar = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
-			let text = "특수문자는 입력할 수 없습니다!";
-			
-			fnSpecialCharCheck(obj, text, vSpecChar);
-			return false;
-		};
-		
-		// 특수문자확인
-    	fnSpecialCharCheck = function(obj, text, vSpecChar) {
-			let value = obj.value;
-			let validName = obj.name+"Valid";
-			let valid = document.querySelector("span[name="+validName+"]");
-
-			if (vSpecChar.test(value) == true) {
-				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-				valid.innerHTML = text;
-				valid.setAttribute("style", "");				
-			} else {
-				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				valid.setAttribute("style", "visibility:hidden;");				
-			};		
-    	};    	
-
 		// controller 호출
 		fnCallController = function() {
 	       	form.action = goUrlSdmInsert;
 	       	form.submit();
 		};
-
+		
 		// 필수입력항목 확인
 		fnValidation = function() {
 			let obj;
 			let text;
 			let validName;
 			let valid;
-			let validChk;			
+			let submitChk = true;			
+			let validChk = true;
 			
 			for(let i = 0; i < nameArr.length; i++) {
 				for (let j = 0; j < form.elements.length; j++) {
@@ -636,71 +610,103 @@
 						obj = form.elements[j];
 						text = textArr[i];
 						validName = nameArr[i]+"Valid";
-						valid = document.querySelector("span[name="+validName+"]");
+						objValid = document.querySelector("span[name="+validName+"]");
 						
-						validChk = fnValidationIn(obj, text, valid);
+						validChk = fnValidationIn(obj, text, objValid);
+
+						// 이메일
+						if(nameArr[i] == "mbrEmail") {
+							validChk = fnEmailCheck(obj, objValid);
+						};
+						
+						if(submitChk) {
+							submitChk = validChk;
+						};
 						
 						break;						
 					};
 				};
-				
-				if(!validChk) {
-					break;
-				};
 			};
 			
-			return validChk;
-		};
-				
+			return submitChk;
+		};		
+		
+		
 		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, valid) {
-			return fnValidationUdt(obj, text, valid);
+	    fnValidationIn = function(obj, text, objValid) {
+			return fnValidationUdt(obj, text, objValid);
 		};
 
 		// 수정시 필수입력 확인
-	    fnValidationUdt = function(obj, text, valid) {
-		    if(fnNullToEmpty(obj.value)) {
+	    fnValidationUdt = function(obj, text, objValid) {
+		    if(!fnNullToEmpty(obj.value)) {
 		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-		    	obj.focus();
-		    	valid.innerHTML = text;
-		    	valid.setAttribute("style", "");
-		    	return true;
+		    	objValid.innerHTML = text;
+		    	objValid.setAttribute("style", "");
+		    	return false;
 		    } else {
 		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    	valid.setAttribute("style", "visibility:hidden;");
-		    	return false;
+		    	objValid.setAttribute("style", "visibility:hidden;");
+		    	return true;
 		    };
 	    };
 	    
+		// 날짜항목에 대한 특수문자처리
+		fnSpecialDate = function(obj) {
+			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+ 			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
+			let text = "특수문자는 입력할 수 없습니다!";
+			
+			fnSpecialCharCheck(obj, text, regExp);
+			return false;
+		};
+		
+		// 특수문자확인
+    	fnSpecialCharCheck = function(obj, text, regExp) {
+			let validName = obj.name+"Valid";
+			let objValid = document.querySelector("span[name="+validName+"]");
+
+			if (regExp.test(obj.value) == true) {
+				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				objValid.innerHTML = text;
+				objValid.setAttribute("style", "");				
+			} else {
+				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				objValid.setAttribute("style", "visibility:hidden;");				
+			};		
+    	};    	
+
+	    
 	    // 이메일 유효성 검사
-	    fnEmailCheck = function() {
-	    	let valid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-	    	let value = mbrEmail.value;
-	    	
-	    	if(!valid.test(value)) {
-	    		mbrEmail.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    		mbrEmail.focus();
-	    		mbrEmailValid.innerHTML = "이메일 형식에 맞지 않습니다";
-	    		mbrEmailValid.setAttribute("style", "");
-		    	
-	    		return true;
-	    	} else {
-	    		mbrEmail.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    		mbrEmailValid.setAttribute("style", "visibility:hidden;");
+	    fnEmailCheck = function(obj, objValid) {
+	    	let regExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
+	    	if(!regExp.test(obj.value)) {
+	    		obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+	    		objValid.innerHTML = "이메일 형식이 아닙니다";
+	    		objValid.setAttribute("style", "");
 		    	
 	    		return false;
+	    	} else {
+	    		obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+	    		objValid.setAttribute("style", "visibility:hidden;");
+		    	
+	    		return true;
 	    	};
 	    };
 
 	    // null, 공백 확인
 	    fnNullToEmpty = function(value) {
-	    	if(value == null || value == "" || value.length == 0) {
-	    		return true;
+	    	let str = value.replace(/\s/g, ""); // 공백제저
+	    	
+	    	if((str === null) || (str.length === 0)) {
+	    		return false; // null 또는 공백 
 	    	} else {
-	    		return false;
+	    		return true; // 값 존재
 	    	}
 	    };
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
 </html>
