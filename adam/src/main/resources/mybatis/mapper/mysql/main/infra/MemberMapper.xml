@@ -73,7 +73,7 @@
 			  mbrType
 			, mbrName
 			, mbrSex
-			, mbrBirthday
+			<if test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday</if>
 			, mbrEmail
 			, mbrPassword
 			, mbrRegDt
@@ -85,9 +85,9 @@
 			  #{mbrType}
 			, #{mbrName}
 			, #{mbrSex}
-			, STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')
+			<if test="mbrBirthday != null and !mbrBirthday.equals('')">, STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</if>
 			, #{mbrEmail}
-			, #{mbrPassword}
+			, SHA2(#{mbrPassword}, 512)
 			, now()
 			, now()
 			, 0
@@ -98,7 +98,10 @@
 		UPDATE members
 		   SET mbrName     = #{mbrName}
 			 , mbrSex      = #{mbrSex}
-			 , mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')
+			 <choose>
+			 	<when test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</when>
+			 	<when test="mbrBirthday == null or mbrBirthday.equals('')">, mbrBirthday = null</when>
+			 </choose>
 			 , mbrEmail    = #{mbrEmail}
 			 <if test="mbrPassword != null and !mbrPassword.equals('')">, mbrPassword = #{mbrPassword}</if>
          WHERE 1 = 1		
