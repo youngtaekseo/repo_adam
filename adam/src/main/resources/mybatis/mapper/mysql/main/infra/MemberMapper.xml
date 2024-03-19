@@ -115,14 +115,6 @@
            AND mbrSeq = #{mbrSeq}	
 	</update>
 	
-	<update id="updateOne">
-		UPDATE members
-		   SET mbrUdtDt = now()
-		     , mbrDelNy = 1
-         WHERE 1 = 1		
-           AND mbrSeq = #{mbrSeq}	
-	</update>
-	
 	<update id="updateDelNy">
 		UPDATE members
 		   SET mbrUdtDt = now()

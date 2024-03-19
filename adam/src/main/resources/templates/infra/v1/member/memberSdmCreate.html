@@ -315,7 +315,7 @@
 				            			id="mbrName" name="mbrName" autofocus="on"
 				            			onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrNameValid" name="mbrNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					회원명 입력하세요
 				        				</span>				            			
 				      			</label>
 				    		</div>
@@ -342,7 +342,7 @@
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrBirthday" name="mbrBirthday">
 				        				<span id="mbrBirthdayValid" name="mbrBirthdayValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					생년월일 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -358,7 +358,7 @@
 				        					onkeyup="fnOnKeyUp(this)">
 				        			</div>
 				        			<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        				필수 입력 확인 메시지
+				        				이메일 입력하세요
 				        			</span>
 				      			</label>
 				    		</div>
@@ -374,7 +374,7 @@
 				        				onkeyup="fnOnKeyUp(this)"
 				            			type="password" placeholder="비밀번호 4자리">
 				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -388,7 +388,7 @@
 				        			 	onkeyup="fnOnKeyUp(this)"
 				            			type="password" placeholder="비밀번호 4자리">
 				        				<span id="mbrPwConfirmValid" name="mbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -448,7 +448,7 @@
 		
 		// 필수입력체크대상
 		let nameArr = ["mbrName", "mbrEmail", "mbrPassword", "mbrPwConfirm"];
-		let textArr = ["회원명을 입력하세요!", "이메일을 입력하세요!", "비밀번호를 입력하세요!", "비밀번호를 입력하세요!"];		
+		let textArr = ["회원명 입력하세요", "이메일 입력하세요", "비밀번호 입력하세요", "비밀번호 입력하세요"];		
 
 		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
@@ -511,7 +511,7 @@
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
 				let regExp;
-				let text = "특수문자는 입력할 수 없습니다!";
+				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "mbrName" :
 					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
@@ -613,7 +613,7 @@
 		fnSpecialDate = function(obj) {
 			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
  			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
-			let text = "특수문자는 입력할 수 없습니다!";
+			let text = "특수문자는 입력할 수 없습니다";
 			
 			fnSpecialCharCheck(obj, text, regExp);
 			return false;

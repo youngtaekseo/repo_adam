@@ -298,8 +298,7 @@
 						<!-- 삭제여부 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								id="shDelNy" name="shDelNy"
-								onkeyup="fnOnKeyUp(this)">
+								id="shDelNy" name="shDelNy">
 								<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
 								<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
 								<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
@@ -309,8 +308,7 @@
 						<!-- 일자조건 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								id="shOptionDate" name="shOptionDate"
-								onkeyup="fnOnKeyUp(this)">
+								id="shOptionDate" name="shOptionDate">
 								<option value=""  th:selected="${vo.shOptionDate == null}">날짜</option>
 								<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
 								<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
@@ -823,7 +821,7 @@
 		
 		// 필수입력체크대상
 		let nameArr = ["shDateStart", "shDateEnd", "shValue"];
-		let textArr = ["시작일자를 입력하세요!", "종료일자를 입력하세요!", "검색어를 입력하세요!"];	
+		let textArr = ["시작일자 입력하세요", "종료일자 입력하세요", "검색어 입력하세요"];	
 
 // ============================================================================
 // event
@@ -857,7 +855,7 @@
 			if(window.event.keyCode != 13) {
 				// 특수문자확인
 				let regExp;
-				let text = "특수문자는 입력할 수 없습니다!";
+				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "shValue" :
 					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
@@ -982,7 +980,7 @@
 		fnSpecialDate = function(obj) {
 			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
  			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
-			let text = "특수문자는 입력할 수 없습니다!";
+			let text = "특수문자는 입력할 수 없습니다";
 			
 			fnSpecialCharCheck(obj, text, regExp);
 			return false;

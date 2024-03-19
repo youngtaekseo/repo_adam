@@ -578,15 +578,13 @@
 		let goUrlSdmUpdate 	= "/memberSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/memberSdmDelete";	/* 삭제 */
 		let goUrlSdmDelNy 	= "/memberSdmDelNy";	/* 삭제여부변경 */
-// 		let goUrlSdmUdtOne 	= "/memberSdmUdtOne";	/* 삭제여부-삭제로변경 */
-// 		let goUrlSdmUdtZero = "/memberSdmUdtZero";	/* 삭제여부-미삭제로변경 */
 
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 // 		let regExp = /[^\w\sㄱ-힣()0-9]/g;
 		
 		// 필수입력체크대상
 		let nameArr = ["mbrName", "mbrEmail"];
-		let textArr = ["회원명을 입력하세요!", "이메일을 입력하세요!"];
+		let textArr = ["회원명 입력하세요", "이메일 입력하세요"];
 
 // ============================================================================
 // event
@@ -620,7 +618,7 @@
 			if(window.event.keyCode != 13) {
 				// 특수문자확인
 				let regExp;
-				let text = "특수문자는 입력할 수 없습니다!";
+				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "mbrName" :
 					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
@@ -661,7 +659,6 @@
 			};
 		};	
 		
-
 // ============================================================================
 // function
 // ============================================================================
@@ -731,16 +728,6 @@
 		    };
 	    };
 	    
-		// 날짜항목에 대한 특수문자처리
-		fnSpecialDate = function(obj) {
-			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
- 			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
-			let text = "특수문자는 입력할 수 없습니다!";
-			
-			fnSpecialCharCheck(obj, text, regExp);
-			return false;
-		};
-				
 		// 특수문자확인
     	fnSpecialCharCheck = function(obj, text, regExp) {
 			let validName = obj.name+"Valid";
@@ -754,8 +741,29 @@
 				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 				objValid.setAttribute("style", "visibility:hidden;");				
 			};		
-    	};	    
+    	};	
+    	
+	    // null, 공백 확인
+	    fnNullToEmpty = function(value) {
+	    	let str = value.replace(/\s/g, ""); // 공백제저
+	    	
+	    	if((str === null) || (str.length === 0)) {
+	    		return false; // null 또는 공백 
+	    	} else {
+	    		return true; // 값 존재
+	    	}
+	    };    	
 	    
+		// 날짜항목에 대한 특수문자처리
+		fnSpecialDate = function(obj) {
+			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+ 			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
+			let text = "특수문자는 입력할 수 없습니다";
+			
+			fnSpecialCharCheck(obj, text, regExp);
+			return false;
+		};
+				
 	    // 이메일 유효성 검사
 	    fnEmailCheck = function(obj, objValid) {
 	    	let regExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
@@ -772,17 +780,6 @@
 		    	
 	    		return true;
 	    	};
-	    };
-
-	    // null, 공백 확인
-	    fnNullToEmpty = function(value) {
-	    	let str = value.replace(/\s/g, ""); // 공백제저
-	    	
-	    	if((str === null) || (str.length === 0)) {
-	    		return false; // null 또는 공백 
-	    	} else {
-	    		return true; // 값 존재
-	    	}
 	    };
     </script>
     
