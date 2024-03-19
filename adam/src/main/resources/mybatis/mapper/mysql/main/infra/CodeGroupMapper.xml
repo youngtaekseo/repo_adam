@@ -74,21 +74,17 @@
            AND cdgSeq = #{cdgSeq}    	  
     </update>
     
-    <update id="udtOne">
-    	UPDATE codegroup
-    	   SET cdgDelNy = 1
-    	     , cdgUdtDt = now()
-         WHERE 1=1
-           AND cdgSeq = #{cdgSeq}    	  
-    </update>
-    
-    <update id="udtZero">
-    	UPDATE codegroup
-    	   SET cdgDelNy = 0
-    	     , cdgUdtDt = now()
-         WHERE 1=1
-           AND cdgSeq = #{cdgSeq}    	  
-    </update>    
+	<update id="updateDelNy">
+		UPDATE codegroup
+		   SET cdgUdtDt = now()
+		   
+		   <choose>
+		   		<when test="cdgDelNy == 0">, cdgDelNy = 1</when>
+		   		<when test="cdgDelNy == 1">, cdgDelNy = 0</when>
+		   </choose>
+         WHERE 1 = 1		
+           AND cdgSeq = #{cdgSeq}
+	</update>
     
     <delete id="delete">
     	DELETE FROM codegroup

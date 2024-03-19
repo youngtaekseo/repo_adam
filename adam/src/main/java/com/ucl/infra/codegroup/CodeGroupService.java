@@ -41,11 +41,7 @@ public class CodeGroupService {
 		return dao.delete(dto);
 	}
 	
-	public int udtOne(CodeGroupDto dto){
-		return dao.udtOne(dto);
+	public int updateDelNy(CodeGroupDto dto){
+		return dao.updateDelNy(dto);
 	}
-	
-	public int udtZero(CodeGroupDto dto){
-		return dao.udtZero(dto);
-	}	
 }

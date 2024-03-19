@@ -59,17 +59,10 @@ public class CodeGroupController {
 		return "redirect:/codeGroupSdmList";
 	}
 	
-//	그룹코드 삭제여부 Y로 변경
-	@RequestMapping(value = "/codeGroupSdmUdtOne")
-	public String codeGroupSdmUdtOne(CodeGroupDto dto) throws Exception {
-		service.udtOne(dto);
-		return "redirect:/codeGroupSdmList";
-	}		
-	
-//	그룹코드 삭제여부 N로 변경
-	@RequestMapping(value = "/codeGroupSdmUdtZero")
-	public String codeGroupSdmUdtZero(CodeGroupDto dto) throws Exception {
-		service.udtZero(dto);
+//	그룹코드 삭제여부 변경         
+	@RequestMapping(value = "/codeGroupSdmUdtDelNy")
+	public String codeGroupSdmUdtDelNy(CodeGroupDto dto) throws Exception {
+		service.updateDelNy(dto);
 		return "redirect:/codeGroupSdmList";
 	}
 

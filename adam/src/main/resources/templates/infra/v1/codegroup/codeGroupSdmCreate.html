@@ -289,13 +289,11 @@
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
-                      <input
-                          id="cdgName"
-                          name="cdgName"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          autofocus="on">                    
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="cdgName" name="cdgName"
+                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">                    
                       <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	필수 입력 확인 메시지
+                      	그룹코드명 입력하세요
                       </span>                    
                     </label>
                   </div>                  
@@ -343,11 +341,19 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-				
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		
+		// 필수입력체크대상
+		let nameArr = ["cdgName"];
+		let textArr = ["그룹코드명 입력하세요"];			
+
+		let form			= document.querySelector("form[name=form]");
+		let cdgSeq			= document.querySelector("cdgSeq");
+	
+		// 그룹코드명
+		let cdgName         = document.querySelector("input[name=cdgName]");
+		let cdgNameValid    = document.querySelector("span[name=cdgNameValid]");
 
 		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
@@ -355,15 +361,7 @@
 		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
 		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeGroupSdmUdtOne";	/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-
-		let cdgSeq			= document.querySelector("cdgSeq");
-		let form			= document.querySelector("form[name=form]");
-	
-		// 그룹코드명
-		let cdgName         = document.querySelector("input[name=cdgName]");
-		let cdgNameValid    = document.querySelector("span[name=cdgNameValid]");
+		let goUrlSdmUdtOne 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
 
 // ============================================================================
 // event
@@ -376,91 +374,149 @@
 				timepicker:false,
 				format: 'Y-m-d', //'Y-m-d' //H:i
 			});
-
-//	             toDay.setDate(toDay.getDate() - 10);
-//	             $("#shDateStart").val(toDay.toISOString().substring(0,10));
-
-	            //현재창에서 다른페이지로 이동
-//	             window.location.href="/codeGroupSdmInitDate";
-
-	            //팝업창에서 부모창을 다른페이지로 이동합니다.
-//	             window.opener.location.href="http://www.naver.com";
 		});
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if(fnValidationIn() == true) {
-	       		return false;
-	       	} else {
-	       		fnCallController();
-	       	};
+			fnCallController();
 		};
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				let regExp;
+				let text = "특수문자는 입력할 수 없습니다";
+				switch(obj.name) {
+				case "cdgName" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				};
+				
+				// 특수문자확인
+			    fnSpecialCharCheck(obj, text, regExp);			
+			};	
+		};		
 
-		// 그룹명 특수문자확인
-		document.getElementById("cdgName").onkeyup = function() {
-    		// form 안에 input이 하나뿐이면 onkeyup에 엔터키를 사용하게되면 스스로 submit이 된다
-    		// 그래서 input태그가 2개 이상부터 정상적으로 엔터키가 작동한다
-    		// 의미없는 input태그를 추가하는 방법으로 구현한다		
-			if(window.event.keyCode == 13) {
-				if(fnValidationIn() == true) {
-		       		return false;
-		       	} else {
-		       		fnCallController();
-		       	};
-			} else {
-	    		if(fnSpecialCharCheck(cdgName.value) == true) {
-	    			cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    			cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
-	    			cdgNameValid.setAttribute("style", "");
-	    		} else {
-	    			cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    			cdgNameValid.setAttribute("style", "visibility:hidden;");
-	    		};
-			};
-		};
+// 		// 그룹명 특수문자확인
+// 		document.getElementById("cdgName").onkeyup = function() {
+//     		// form 안에 input이 하나뿐이면 onkeyup에 엔터키를 사용하게되면 스스로 submit이 된다
+//     		// 그래서 input태그가 2개 이상부터 정상적으로 엔터키가 작동한다
+//     		// 의미없는 input태그를 추가하는 방법으로 구현한다		
+// 			if(window.event.keyCode == 13) {
+// 				if(fnValidationIn() == true) {
+// 		       		return false;
+// 		       	} else {
+// 		       		fnCallController();
+// 		       	};
+// 			} else {
+// 	    		if(fnSpecialCharCheck(cdgName.value) == true) {
+// 	    			cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+// 	    			cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
+// 	    			cdgNameValid.setAttribute("style", "");
+// 	    		} else {
+// 	    			cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+// 	    			cdgNameValid.setAttribute("style", "visibility:hidden;");
+// 	    		};
+// 			};
+// 		};
 
 // ============================================================================
 // function
 // ============================================================================
 
-		// 특수문자확인
-    	fnSpecialCharCheck = function(str) {
-			return vSpecialChar.test(str);
-    	};
-
 		// controller 호출
 		fnCallController = function() {
-	       	form.action = goUrlSdmInsert;
-	       	form.submit();
+			if(!fnValidation()) {
+	       		return false;
+	       	} else {
+		       	form.action = goUrlSdmInsert;
+		       	form.submit();
+	       	};
 		};
 
-		// 입력
-	    fnValidationIn = function() {
-			return fnValidationUdt();
+		// 필수입력항목 확인
+		fnValidation = function() {
+			let obj;
+			let text;
+			let validName;
+			let valid;
+			let submitChk = true;			
+			let validChk = true;
+			
+			for(let i = 0; i < nameArr.length; i++) {
+				for (let j = 0; j < form.elements.length; j++) {
+					if (nameArr[i] == form.elements[j].name) {
+						obj = form.elements[j];
+						text = textArr[i];
+						validName = nameArr[i]+"Valid";
+						objValid = document.querySelector("span[name="+validName+"]");
+						
+						validChk = fnValidationIn(obj, text, objValid);
+
+						if(submitChk) {
+							submitChk = validChk;
+						};
+						
+						break;						
+					};
+				};
+			};
+			
+			return submitChk;
 		};
 
-		// 수정
-	    fnValidationUdt = function() {
-			// 그룹명
-		    if(fnNullToEmpty(cdgName.value)) {
-		    	cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-                cdgNameValid.innerHTML = "그룹명을 입력하세요!";
-		    	cdgName.focus();
-		    	cdgNameValid.setAttribute("style", "");
-		    	return true;
-		    } else {
-		    	cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    	cdgNameValid.setAttribute("style", "visibility:hidden;");
+
+		// 입력시 필수입력 확인
+	    fnValidationIn = function(obj, text, objValid) {
+			return fnValidationUdt(obj, text, objValid);
+		};
+
+		// 수정시 필수입력 확인
+	    fnValidationUdt = function(obj, text, objValid) {
+		    if(!fnNullToEmpty(obj.value)) {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    	objValid.innerHTML = text;
+		    	objValid.setAttribute("style", "");
 		    	return false;
+		    } else {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	objValid.setAttribute("style", "visibility:hidden;");
+		    	return true;
 		    };
 	    };
 
+		// 특수문자확인
+    	fnSpecialCharCheck = function(obj, text, regExp) {
+			let validName = obj.name+"Valid";
+			let objValid = document.querySelector("span[name="+validName+"]");
+
+			if (regExp.test(obj.value) == true) {
+				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				objValid.innerHTML = text;
+				objValid.setAttribute("style", "");				
+			} else {
+				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				objValid.setAttribute("style", "visibility:hidden;");				
+			};		
+    	}; 
+
 	    // null, 공백 확인
 	    fnNullToEmpty = function(value) {
-	    	if(value == null || value == "" || value.length == 0) {
-	    		return true;
+	    	let str = value.replace(/\s/g, ""); // 공백제저
+	    	
+	    	if((str === null) || (str.length === 0)) {
+	    		return false; // null 또는 공백 
 	    	} else {
-	    		return false;
+	    		return true; // 값 존재
 	    	}
 	    };
     </script>

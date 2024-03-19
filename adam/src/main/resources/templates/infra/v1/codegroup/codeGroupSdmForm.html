@@ -298,28 +298,21 @@
                   <div class="md:h-auto mr-3 md:w-1/2">
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드순번</span>
-
-                      <input
-                          id="cdgSeq"
-                          name="cdgSeq"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          th:value="${item.cdgSeq}"                             
-                      >                          
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="cdgSeq" name="cdgSeq"
+                          th:value="${item.cdgSeq}">                          
                     </label>
                   </div>
                   
                   <div class="md:h-auto mr-3 md:w-1/2">
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
-                      <input
-                          id="cdgName"
-                          name="cdgName"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          autofocus="on"
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="cdgName" name="cdgName"
                           th:value="${item.cdgName}"
-                      >                    
+                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">                    
                       <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-						필수입력 확인 메시지
+						그룹코드명 입력하세요
                       </span>                    
                     </label>
                   </div>                  
@@ -357,42 +350,17 @@
 					</svg>                    
                   </button>  
                   
-<!--              삭제여부 변경 -->
-                  <button   
-                    id="btnUdtZero"             
-                    name="btnUdtZero"             
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Edit"
-                    type="button"
-                  >
-                    <a th:href="@{/codeGroupSdmUdtZero(cdgSeq=${item.cdgSeq})}">
-						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
-						</svg>						
-                    </a>
-                    <a th:href="@{/codeGroupSdmUdtZero(cdgSeq=${item.cdgSeq})}">
-                    	(N)
-                    </a>
-                  </button>  
-                        
-<!--              삭제여부 변경 -->
-                  <button   
-                    id="btnUdtOne"             
-                    name="btnUdtOne"             
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Edit"
-                    type="button"
-                  >
-                    <a th:href="@{/codeGroupSdmUdtOne(cdgSeq=${item.cdgSeq})}">
-						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
-						</svg>		
-					</a>
-					<a th:href="@{/codeGroupSdmUdtOne(cdgSeq=${item.cdgSeq})}">
-						(Y)
-					</a>
-                  </button>   
-
+					<!-- 삭제여부버튼 -->
+					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+						id="btnDelNy" name="btnDelNy" aria-label="Edit" type="button">
+						<a th:href="@{/codeGroupSdmUdtDelNy(cdgSeq=${item.cdgSeq}, cdgDelNy=${item.cdgDelNy})}">
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+								<path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
+							</svg>
+						</a>
+						<a th:href="@{/codeGroupSdmUdtDelNy(cdgSeq=${item.cdgSeq}, cdgDelNy=${item.cdgDelNy})}"></a>
+					</button>
+								                  
 <!--              삭제 -->
                   <button   
                     @click="openModal"
@@ -501,21 +469,7 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 				
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-
-		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
-		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
-		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
-		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeGroupSdmUdtOne";	/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeGroupSdmUdtZero";	/* 삭제여부-미삭제로변경 */
-
 		let cdgSeq			= document.querySelector("cdgSeq");
 		let form			= document.querySelector("form[name=form]");
 	
@@ -523,83 +477,150 @@
 		let cdgName         = document.querySelector("input[name=cdgName]");
 		let cdgNameValid    = document.querySelector("span[name=cdgNameValid]");
 
+		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
+		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
+		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
+		let goUrlSdmInsert 	= "/codeGroupSdmInsert";	/* 등록 */
+		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
+		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
+		let goUrlSdmDelNy 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
+		
+		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
+		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
+		
+		// 필수입력체크대상
+		let nameArr = ["cdgName"];
+		let textArr = ["그룹코드명 입력하세요"];		
+
 // ============================================================================
 // event
 // ============================================================================
 
-		// 저장버튼
+    	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if(fnValidationIn() == true) {
-	       		return false;
-	       	} else {
-	       		fnCallController();
-	       	};
+			fnCallController();
 		};
-
-		// 그룹명 특수문자확인
-		document.getElementById("cdgName").onkeyup = function() {
-			if(window.event.keyCode == 13) {
-				if(fnValidationIn() == true) {
-		       		return false;
-		       	} else {
-		       		fnCallController();
-		       	};
-			} else {
-	    		if(fnSpecialCharCheck(cdgName.value) == true) {
-	    			cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    			cdgNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
-	    			cdgNameValid.setAttribute("style", "");
-	    		} else {
-	    			cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    			cdgNameValid.setAttribute("style", "visibility:hidden;");
-	    		};
-			};
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				// 특수문자확인
+				let regExp;
+				let text = "특수문자는 입력할 수 없습니다";
+				switch(obj.name) {
+				case "cdgName" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				};
+				
+				// 특수문자확인
+			    fnSpecialCharCheck(obj, text, regExp);	
+			};	
 		};
 
 // ============================================================================
 // function
 // ============================================================================
 
-		// 특수문자확인
-    	fnSpecialCharCheck = function(str) {
-			return vSpecialChar.test(str);
-    	};
-
 		// controller 호출
 		fnCallController = function() {
-	       	form.action = goUrlSdmUpdate;
-	       	form.submit();
+			if(!fnValidation()) {
+	       		return false;
+	       	} else {
+		       	form.action = goUrlSdmUpdate;
+		       	form.submit();
+	       	};	
 		};
 
-		// 입력
-	    fnValidationIn = function() {
-			return fnValidationUdt();
+		// 필수입력항목 확인
+		fnValidation = function() {
+			let obj;
+			let text;
+			let validName;
+			let valid;
+			let submitChk = true;			
+			let validChk = true;
+			
+			for(let i = 0; i < nameArr.length; i++) {
+				for (let j = 0; j < form.elements.length; j++) {
+					if (nameArr[i] == form.elements[j].name) {
+						obj = form.elements[j];
+						text = textArr[i];
+						validName = nameArr[i]+"Valid";
+						objValid = document.querySelector("span[name="+validName+"]");
+						
+						validChk = fnValidationIn(obj, text, objValid);
+
+						// 이메일
+						if(nameArr[i] == "mbrEmail") {
+							validChk = fnEmailCheck(obj, objValid);
+						};
+						
+						if(submitChk) {
+							submitChk = validChk;
+						};
+						
+						break;						
+					};
+				};
+			};
+			
+			return submitChk;
+		};
+				
+		// 입력시 필수입력 확인
+	    fnValidationIn = function(obj, text, objValid) {
+			return fnValidationUdt(obj, text, objValid);
 		};
 
-		// 수정
-	    fnValidationUdt = function() {
-			// 그룹명
-		    if(fnNullToEmpty(cdgName.value)) {
-		    	cdgName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-                cdgNameValid.innerHTML = "그룹명을 입력하세요!";
-		    	cdgName.focus();
-		    	cdgNameValid.setAttribute("style", "");
-		    	return true;
-		    } else {
-		    	cdgName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    	cdgNameValid.setAttribute("style", "visibility:hidden;");
+		// 수정시 필수입력 확인
+	    fnValidationUdt = function(obj, text, objValid) {
+		    if(!fnNullToEmpty(obj.value)) {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    	objValid.innerHTML = text;
+		    	objValid.setAttribute("style", "");
 		    	return false;
+		    } else {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	objValid.setAttribute("style", "visibility:hidden;");
+		    	return true;
 		    };
 	    };
+	    
+		// 특수문자확인
+    	fnSpecialCharCheck = function(obj, text, regExp) {
+			let validName = obj.name+"Valid";
+			let objValid = document.querySelector("span[name="+validName+"]");
 
+			if (regExp.test(obj.value) == true) {
+				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				objValid.innerHTML = text;
+				objValid.setAttribute("style", "");				
+			} else {
+				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				objValid.setAttribute("style", "visibility:hidden;");				
+			};		
+    	};
+    	
 	    // null, 공백 확인
 	    fnNullToEmpty = function(value) {
-	    	if(value == null || value == "" || value.length == 0) {
-	    		return true;
+	    	let str = value.replace(/\s/g, ""); // 공백제저
+	    	
+	    	if((str === null) || (str.length === 0)) {
+	    		return false; // null 또는 공백 
 	    	} else {
-	    		return false;
+	    		return true; // 값 존재
 	    	}
-	    };
+	    };    	
     </script>  
   </body>
 </html>

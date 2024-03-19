@@ -15,6 +15,5 @@ public interface CodeGroupDao {
 	public int update(CodeGroupDto dto);
 	public int delete(CodeGroupDto dto);
 	
-	public int udtOne(CodeGroupDto dto);
-	public int udtZero(CodeGroupDto dto);
+	public int updateDelNy(CodeGroupDto dto);
 }
