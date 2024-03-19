@@ -298,40 +298,31 @@
                   <div class="md:h-auto mr-3 md:w-1/2">
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드순번</span>
-                      <input
-                          id="cdgSeq"
-                          name="cdgSeq"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="cdgSeq" name="cdgSeq"
                           readonly="on"
-                          th:value="${item.cdgSeq}"                             
-                      >                          
+                          th:value="${item.cdgSeq}">                          
                     </label>
                   </div>
                   
                   <div class="md:h-auto mr-3 md:w-1/2">
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
-                      <input
-                          id="cdgName"
-                          name="cdgName"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="cdgName" name="cdgName"
                           readonly="on"
-                          th:value="${item.cdgName}"                          
-                      >                    
+                          th:value="${item.cdgName}">                    
                     </label>
                   </div>
                 
                   <div class="md:h-auto mr-3 md:w-1/2">
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">코드명</span>
-                      <input
-                          id="cdcName"
-                          name="cdcName"
-                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          autofocus="on"                        
-                      >                    
+                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+						id="cdcName" name="cdcName"
+                      	onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">                    
                       <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	필수 입력 확인 메시지                        
+                      	코드명 입력하세요                        
                       </span>                    
                     </label>
                   </div> 
@@ -341,11 +332,9 @@
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
                 <div class="md:h-auto sm:mt-auto md:w-1/2">
-                  <button
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
                     aria-label="Search"
-                    type="button"
-                  >        
+                    type="button">        
                     <a th:href="@{/codeSdmList}">
 						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
@@ -356,13 +345,9 @@
                               
                 <!-- 저장버튼 -->
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
-                  <button   
-                    id="btnSubmit"             
-                    name="btnSubmit"             
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Edit"
-                    type="button"
-                  >
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+                    id="btnSubmit" name="btnSubmit" type="button"
+                    aria-label="Edit">
 					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
 					</svg> 
@@ -378,20 +363,9 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-		let vSpecialChar = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-
-		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/codeSdmCreate";	/* 등록화면 */
-		let goUrlSdmInsert 	= "/codeSdmInsert";	/* 등록 */
-		let goUrlSdmUpdate 	= "/codeSdmUpdate";	/* 수정 */
-		let goUrlSdmDelete 	= "/codeSdmDelete";	/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeSdmUdtOne";	/* 삭제여부-삭제로변경 */
-		let goUrlSdmUdtZero = "/codeSdmUdtZero";	/* 삭제여부-미삭제로변경 */
+		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 
 		let cdgSeq			= document.querySelector("cdgSeq");
 		let cdcSeq			= document.querySelector("cdcSeq");
@@ -401,93 +375,148 @@
 		let cdcName         = document.querySelector("input[name=cdcName]");
 		let cdcNameValid    = document.querySelector("span[name=cdcNameValid]");
 
+		let goUrlSdmList   	= "/codeSdmList";		/* 조회화면 */
+		let goUrlSdmForm   	= "/codeSdmForm";		/* 수정화면 */
+		let goUrlSdmCreate 	= "/codeSdmCreate";		/* 등록화면 */
+		let goUrlSdmInsert 	= "/codeSdmInsert";		/* 등록 */
+		let goUrlSdmUpdate 	= "/codeSdmUpdate";		/* 수정 */
+		let goUrlSdmDelete 	= "/codeSdmDelete";		/* 삭제 */
+		let goUrlSdmUdtDelNy= "/codeSdmUdtDelNy";	/* 삭제여부변경 */
+		
+		// 필수입력체크대상
+		let nameArr = ["cdcName"];
+		let textArr = ["코드명 입력하세요"];			
+
 // ============================================================================
 // event
 // ============================================================================
 
-		window.addEventListener('load', function() {
-			jQuery.datetimepicker.setLocale('ko'); // 한국어
+// 		window.addEventListener('load', function() {
+// 			jQuery.datetimepicker.setLocale('ko'); // 한국어
 
-			$("#shDateStart, #shDateEnd").datetimepicker({
-				timepicker:false,
-				format: 'Y-m-d', //'Y-m-d' //H:i
-			});
-		});
+// 			$("#shDateStart, #shDateEnd").datetimepicker({
+// 				timepicker:false,
+// 				format: 'Y-m-d', //'Y-m-d' //H:i
+// 			});
+// 		});
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if(fnValidationIn() == true) {
-	       		return false;
-	       	} else {
-	       		fnCallController();
-	       	};
+			fnCallController();
 		};
-
-		// 코드명 특수문자확인
-		document.getElementById("cdcName").onkeyup = function() {
-    		// form 안에 input이 하나뿐이면 onkeyup에 엔터키를 사용하게되면 스스로 submit이 된다
-    		// 그래서 input태그가 2개 이상부터 정상적으로 엔터키가 작동한다
-    		// 의미없는 input태그를 추가하는 방법으로 구현한다
-			if(window.event.keyCode == 13) {
-				if(fnValidationIn() == true) {
-		       		return false;
-		       	} else {
-		       		fnCallController();
-		       	};
-			} else {
-	    		if(fnSpecialCharCheck(cdcName.value) == true) {
-	    			cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-	    			cdcNameValid.innerHTML = "특수문자는 입력할 수 없습니다!";
-	    			cdcNameValid.setAttribute("style", "");
-	    		} else {
-	    			cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-	    			cdcNameValid.setAttribute("style", "visibility:hidden;");
-	    		};
-			};
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				let regExp;
+				let text = "특수문자는 입력할 수 없습니다";
+				switch(obj.name) {
+				case "cdcName" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				};
+				
+				// 특수문자확인
+			    fnSpecialCharCheck(obj, text, regExp);			
+			};	
 		};
 
 // ============================================================================
 // function
 // ============================================================================
 
-		// 특수문자확인
-    	fnSpecialCharCheck = function(str) {
-			return vSpecialChar.test(str);
-    	};
-
 		// controller 호출
 		fnCallController = function() {
-	       	form.action = goUrlSdmInsert;
-	       	form.submit();
+			if(!fnValidation()) {
+	       		return false;
+	       	} else {
+		       	form.action = goUrlSdmInsert;
+		       	form.submit();
+	       	};
 		};
 
-		// 입력
-	    fnValidationIn = function() {
-			return fnValidationUdt();
+		// 필수입력항목 확인
+		fnValidation = function() {
+			let obj;
+			let text;
+			let validName;
+			let valid;
+			let submitChk = true;			
+			let validChk = true;
+			
+			for(let i = 0; i < nameArr.length; i++) {
+				for (let j = 0; j < form.elements.length; j++) {
+					if (nameArr[i] == form.elements[j].name) {
+						obj = form.elements[j];
+						text = textArr[i];
+						validName = nameArr[i]+"Valid";
+						objValid = document.querySelector("span[name="+validName+"]");
+						
+						validChk = fnValidationIn(obj, text, objValid);
+
+						if(submitChk) {
+							submitChk = validChk;
+						};
+						
+						break;						
+					};
+				};
+			};
+			
+			return submitChk;
 		};
 
-		// 수정
-	    fnValidationUdt = function() {
-			// 코드명
-		    if(fnNullToEmpty(cdcName.value)) {
-		    	cdcName.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-                cdcNameValid.innerHTML = "코드명을 입력하세요!";
-		    	cdcName.focus();
-		    	cdcNameValid.setAttribute("style", "");
-		    	return true;
-		    } else {
-		    	cdcName.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    	cdcNameValid.setAttribute("style", "visibility:hidden;");
+		// 입력시 필수입력 확인
+	    fnValidationIn = function(obj, text, objValid) {
+			return fnValidationUdt(obj, text, objValid);
+		};
+
+		// 수정시 필수입력 확인
+	    fnValidationUdt = function(obj, text, objValid) {
+		    if(!fnNullToEmpty(obj.value)) {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+		    	objValid.innerHTML = text;
+		    	objValid.setAttribute("style", "");
 		    	return false;
+		    } else {
+		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+		    	objValid.setAttribute("style", "visibility:hidden;");
+		    	return true;
 		    };
 	    };
 
+		// 특수문자확인
+    	fnSpecialCharCheck = function(obj, text, regExp) {
+			let validName = obj.name+"Valid";
+			let objValid = document.querySelector("span[name="+validName+"]");
+
+			if (regExp.test(obj.value) == true) {
+				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				objValid.innerHTML = text;
+				objValid.setAttribute("style", "");				
+			} else {
+				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				objValid.setAttribute("style", "visibility:hidden;");				
+			};		
+    	}; 
+
 	    // null, 공백 확인
 	    fnNullToEmpty = function(value) {
-	    	if(value == null || value == "" || value.length == 0) {
-	    		return true;
+	    	let str = value.replace(/\s/g, ""); // 공백제저
+	    	
+	    	if((str === null) || (str.length === 0)) {
+	    		return false; // null 또는 공백 
 	    	} else {
-	    		return false;
+	    		return true; // 값 존재
 	    	}
 	    };
     </script>

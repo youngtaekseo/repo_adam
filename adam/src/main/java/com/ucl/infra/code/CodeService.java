@@ -31,11 +31,7 @@ public class CodeService {
 		return dao.delete(dto);
 	}
 	
-	public int udtOne(CodeDto dto){
-		return dao.udtOne(dto);
-	}
-	
-	public int udtZero(CodeDto dto){
-		return dao.udtZero(dto);
+	public int updateDelNy(CodeDto dto){
+		return dao.updateDelNy(dto);
 	}
 }

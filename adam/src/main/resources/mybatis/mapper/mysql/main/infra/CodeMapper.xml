@@ -18,7 +18,7 @@
               		  ON b.cdgSeq = a.cdgSeq 
          WHERE 1 = 1          
          
-         <if test="shDelNy != null and !shDelNy.equals('')">AND IFNULL(b.cdcDelNy, 0) = #{shDelNy}</if>
+         <if test="shDelNy != null and !shDelNy.equals('')">AND b.cdcDelNy = #{shDelNy}</if>
          
          <choose>
          	<when test="shOptionDate == 1">AND b.cdcRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -26,10 +26,10 @@
          </choose>
          
          <choose>
-         	<when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
-         	<when test="shOption == 2">AND a.cdgName LIKE CONCAT('%', #{shValue}, '%')</when>
-         	<when test="shOption == 3">AND b.cdcSeq = #{shValue}</when>
-         	<when test="shOption == 4">AND b.cdcName LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 1">AND a.cdgName LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 2">AND a.cdgSeq = #{shValue}</when>
+         	<when test="shOption == 3">AND b.cdcName LIKE CONCAT('%', #{shValue}, '%')</when>
+         	<when test="shOption == 4">AND b.cdcSeq = #{shValue}</when>
          </choose>         
          
          ORDER BY a.cdgSeq, b.cdcSeq         
@@ -78,20 +78,16 @@
            AND cdcSeq = #{cdcSeq}	
 	</update>
 	
-	<update id="udtOne">
+	<update id="updateDelNy">
 		UPDATE code
 		   SET cdcUdtDt = now()
-		     , cdcDelNy = 1
+		   
+		   <choose>
+		   		<when test="cdcDelNy == 0">, cdcDelNy = 1</when>
+		   		<when test="cdcDelNy == 1">, cdcDelNy = 0</when>
+		   </choose>
          WHERE 1 = 1		
-           AND cdcSeq = #{cdcSeq}	
-	</update>
-	
-	<update id="udtZero">
-		UPDATE code
-		   SET cdcUdtDt = now()
-		     , cdcDelNy = 0
-         WHERE 1 = 1		
-           AND cdcSeq = #{cdcSeq}	
+           AND cdcSeq = #{cdcSeq}
 	</update>
 	
 	<delete id="delete">

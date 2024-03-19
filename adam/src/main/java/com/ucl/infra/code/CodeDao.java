@@ -12,7 +12,6 @@ public interface CodeDao {
 	public int update(CodeDto dto);
 	public int delete(CodeDto dto);
 	
-	public int udtZero(CodeDto dto);
-	public int udtOne(CodeDto dto);
+	public int updateDelNy(CodeDto dto);
 
 }

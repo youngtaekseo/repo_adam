@@ -20,7 +20,6 @@ public class CodeController {
 	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
 		UtilFunction.setSearch(vo);
 		model.addAttribute("list", service.selectList(vo));
-//		model.addAttribute("vo", vo);
 		return Commvar.PATH_CODE + "codeSdmList";
 	}
 	
@@ -59,75 +58,11 @@ public class CodeController {
 		return "redirect:/codeSdmList";
 	}
 	
-//	그룹코드 삭제여부 Y로 변경
-	@RequestMapping(value = "/codeSdmUdtOne")
-	public String codeSdmUdtOne(CodeDto dto) throws Exception {
-		service.udtOne(dto);
+//	그룹코드 삭제여부 변경
+	@RequestMapping(value = "/codeSdmUdtDelNy")
+	public String codeSdmUdtDelNy(CodeDto dto) throws Exception {
+		service.updateDelNy(dto);
 		return "redirect:/codeSdmList";
-	}		
-	
-//	그룹코드 삭제여부 N로 변경
-	@RequestMapping(value = "/codeSdmUdtZero")
-	public String codeSdmUdtZero(CodeDto dto) throws Exception {
-		service.udtZero(dto);
-		return "redirect:/codeSdmList";
-	}
-	
-//	-------------
-	
-	
-//	@RequestMapping(value = "codeXdmList")
-//	public String codeXdmList(Model model) throws Exception {
-//		model.addAttribute("list", service.selectList());
-//		return "/sdm/code/codeXdmList";
-//	}
-	
-	@RequestMapping(value = "codeView")
-	public String codeView(CodeDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
-		return "/sdm/code/codeView";
-	}
-	
-	@RequestMapping(value = "codeCreate")
-	public String codeCreate(CodeDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
-		return "/sdm/code/codeCreate";
-	}
-	
-	@RequestMapping(value = "codeInsert")
-	public String codeInsert(CodeDto dto, Model model) throws Exception {
-		service.insert(dto);
-		return "redirect:/codeXdmList";
-	}
-	
-	@RequestMapping(value = "codeEdit")
-	public String codeEdit(CodeDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
-		return "/sdm/code/codeEdit";
-	}
-	
-	@RequestMapping(value = "codeUpdate")
-	public String codeInsert(CodeDto dto) throws Exception {
-		service.update(dto);
-		return "redirect:/codeXdmList";
-	}
-	
-	@RequestMapping(value = "codeDelOne")
-	public String codeDelOne(CodeDto dto) throws Exception {
-		service.udtOne(dto);
-		return "redirect:/codeXdmList";
-	}
-	
-	@RequestMapping(value = "codeDelZero")
-	public String codeDelZero(CodeDto dto) throws Exception {
-		service.udtZero(dto);
-		return "redirect:/codeXdmList";
-	}
-	
-	@RequestMapping(value = "codeDelete")
-	public String codeDelete(CodeDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/codeXdmList";
 	}
 	
 }
