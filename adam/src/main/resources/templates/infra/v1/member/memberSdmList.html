@@ -299,7 +299,7 @@
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								id="shDelNy" name="shDelNy"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								onkeyup="fnOnKeyUp(this)">
 								<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
 								<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
 								<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
@@ -310,7 +310,7 @@
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								id="shOptionDate" name="shOptionDate"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								onkeyup="fnOnKeyUp(this)">
 								<option value=""  th:selected="${vo.shOptionDate == null}">날짜</option>
 								<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
 								<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
@@ -342,8 +342,7 @@
 						<!-- 회원구분 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								id="shOptionType" name="shOptionType"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								id="shOptionType" name="shOptionType">
 								<option value=""  th:selected="${vo.shOptionType == null}">회원구분</option>
 								<option value="1" th:selected="${vo.shOptionType == 1}">관리자</option>
 								<option value="2" th:selected="${vo.shOptionType == 2}">사용자</option>
@@ -353,8 +352,7 @@
 						<!-- 남여구분 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								id="shSex" name="shSex"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								id="shSex" name="shSex">
 								<option value="" th:selected="${vo.shSex == null}">성별</option>
 								<option value="12" th:selected="${vo.shSex == 1}">남</option>
 								<option value="13" th:selected="${vo.shSex == 2}">여</option>
@@ -364,8 +362,7 @@
 						<!-- 검색구분 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-								id="shOption" name="shOption"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								id="shOption" name="shOption">
 								<option value=""  th:selected="${vo.shOption == null}">검색구분</option>
 								<option value="1" th:selected="${vo.shOption == 1}">성명</option>
 								<option value="2" th:selected="${vo.shOption == 2}">이메일</option>
@@ -376,7 +373,7 @@
 						<div class="md:h-auto md:w-1/2 mr-3">
 							<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 								id="shValue" name="shValue" placeholder="검색어"
-								onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+								onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
 							<span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 								검색어를 입력하세요
 							</span>
@@ -843,79 +840,33 @@
 		
     	// 조회버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if(!fnValidation() == true) {
-	       		return false;
-	       	} else {
-	       		fnCallController();      			
-	       	};
+			fnCallController();
 		};
 		
-		// event onkeydown
-		fnOnKeyDown = function(obj, event) {
-			// 브라우저 종류와 버전마다 키보드 이벤트 캡쳐하는 방식이 다르다
-			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-			let i;
-			
+		// event onkeydown	
+		fnOnKeyDown = function() {
 			// 엔터키(13)이면
-			if (keyCode == 13) {
-				for (i = 0; i < obj.form.elements.length; i++) {
-					if (obj == obj.form.elements[i]) {
-						break;						
-					};
-				};
-
-				// 필수입력확인
-				let vIdx = -1;				
-				for(let j = 0; j < nameArr.length; j++) {
-					if(obj.name == nameArr[j]) {
-						vIdx = j;
-						break;
-					};
-				};
-				
-				// 필수입력확인 함수호출
-				if(vIdx >= 0) {
-					let validName = obj.name+"Valid";
-					let objValid = document.querySelector("span[name="+validName+"]");
-					
-					fnValidationIn(obj, textArr[vIdx], objValid);
-				};
-				
-				// 다음 폼 필드의 인덱스 구하기
-				i = (i + 1) % obj.form.elements.length;
-
-				//다음 폼 필드로 포커스 이동
-				if(obj.name == "shValue") {
-					fnCallController();
-				} else {
-					obj.form.elements[i].focus();	
-				};
-
-				return false;
-			} else {
-				return true;
-			};				
+			if (window.event.keyCode == 13) {
+				fnCallController();
+			};			
 		};
 		
 		// event onkeyup
 		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
-		fnOnKeyUp = function(obj, event) {
-			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-			if(keyCode == 13) {
-				return false;	
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				// 특수문자확인
+				let regExp;
+				let text = "특수문자는 입력할 수 없습니다!";
+				switch(obj.name) {
+				case "shValue" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				};
+				
+				// 특수문자확인
+			    fnSpecialCharCheck(obj, text, regExp);		
 			};
-		
-			// 특수문자확인
-			let regExp;
-			let text = "특수문자는 입력할 수 없습니다!";
-			switch(obj.name) {
-			case "shValue" :
-				regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-				break;
-			};
-			
-			// 특수문자확인
-		    fnSpecialCharCheck(obj, text, regExp);			
 		};			
 
 		// 시작일자 특수문자 확인
@@ -950,8 +901,12 @@
 
 		// controller 호출
 		fnCallController = function() {
-	       	form.action = goUrlSdmList;
-	       	form.submit();			
+			if(!fnValidation() == true) {
+	       		return false;
+	       	} else {
+		       	form.action = goUrlSdmList;
+		       	form.submit();      			
+	       	};
 		};	
 		
 		// 필수입력항목 확인
@@ -1056,7 +1011,7 @@
 	    		return false; // null 또는 공백 
 	    	} else {
 	    		return true; // 값 존재
-	    	}
+	    	};
 	    }; 		
     </script>
     

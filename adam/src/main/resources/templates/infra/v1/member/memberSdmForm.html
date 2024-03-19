@@ -319,11 +319,11 @@
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">회원명</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="mbrName" name="mbrName" autofocus="on"
+				            			id="mbrName" name="mbrName" placeholder="회원명"
 				            			th:value="${item.mbrName}"
-				            			onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+				            			onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrNameValid" name="mbrNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					회원명 입력하세요
 				        				</span>				            			
 				      			</label>
 				    		</div>
@@ -350,10 +350,10 @@
 				      			<label class="block text-sm">
 				        			<span class="text-gray-700 dark:text-gray-400">생년월일</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        				id="mbrBirthday" name="mbrBirthday"
+				        				id="mbrBirthday" name="mbrBirthday" placeholder="생년월일"
 				        				th:value="${#strings.substring(item.mbrBirthday, 0, 10)}">
 				        				<span id="mbrBirthdayValid" name="mbrBirthdayValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					생년월일 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -366,12 +366,12 @@
 				        			<div class="input-group flex-nowrap">
 				        				<span class="input-group-text mt-1">@</span>
 				        				<input class="block w-full mt-1 form-control text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        					id="mbrEmail" name="mbrEmail"
+				        					id="mbrEmail" name="mbrEmail" placeholder="이메일"
 				        					th:value="${item.mbrEmail}"
-				        					onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)">
+				        					onkeyup="fnOnKeyUp(this)">
 				        			</div>
 				        			<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        				필수 입력 확인 메시지
+				        				이메일 업력하세요
 				        			</span>
 				      			</label>
 				    		</div>
@@ -384,10 +384,10 @@
 				        			<span class="text-gray-700 dark:text-gray-400">현재 비밀번호</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="xmbrPasswordPre" name="xmbrPasswordPre"
-				        				onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)"
-				            			type="password" placeholder="비밀번호 4자리">
+				            			type="password" placeholder="현재 비밀번호"
+				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="xmbrPasswordPreValid" name="xmbrPasswordPreValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					현재 비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -398,10 +398,10 @@
 				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 입력가능 특수문자 @ - _ !</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrPassword" name="mbrPassword"
-				        				onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)"
-				            			type="password" placeholder="비밀번호 4자리">
+				            			type="password" placeholder="새 비밀번호"
+				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					새 비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -412,10 +412,10 @@
 				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 확인</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        			 	id="xmbrPwConfirm" name="xmbrPwConfirm"
-				        			 	onkeydown="fnOnKeyDown(this, event)" onkeyup="fnOnKeyUp(this, event)"
-				            			type="password" placeholder="비밀번호 4자리">
+				            			type="password" placeholder="새 비밀번호"
+				        			 	onkeyup="fnOnKeyUp(this)">
 				        				<span id="xmbrPwConfirmValid" name="xmbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					필수 입력 확인 메시지
+				        					새 비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -603,88 +603,42 @@
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-	       		fnCallController();
-	       	};
+			fnCallController();
 		};
 		
 		// event onkeydown
-		fnOnKeyDown = function(obj, event) {
-			// 브라우저 종류와 버전마다 키보드 이벤트 캡쳐하는 방식이 다르다
-			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-			let i;
-			
+		fnOnKeyDown = function() {
 			// 엔터키(13)이면
-			if (keyCode == 13) {
-				for (i = 0; i < obj.form.elements.length; i++) {
-					if (obj == obj.form.elements[i]) {
-						break;						
-					};
-				};
-
-				// 필수입력확인
-				let vIdx = -1;				
-				for(let j = 0; j < nameArr.length; j++) {
-					if(obj.name == nameArr[j]) {
-						vIdx = j;
-						break;
-					};
-				};
-				
-				// 필수입력확인 함수호출
-				if(vIdx >= 0) {
-					let validName = obj.name+"Valid";
-					let objValid = document.querySelector("span[name="+validName+"]");
-					
-					fnValidationIn(obj, textArr[vIdx], objValid);
-				};
-				
-				// 다음 폼 필드의 인덱스 구하기
-				i = (i + 1) % obj.form.elements.length;
-
-				//다음 폼 필드로 포커스 이동
-				if(obj.name == "shValue") {
-					fnCallController();
-				} else {
-					obj.form.elements[i].focus();	
-				};
-
-				return false;
-			} else {
-				return true;
+			if (window.event.keyCode == 13) {
+				fnCallController();
 			};				
 		};
 		
 		// event onkeyup
 		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
-		fnOnKeyUp = function(obj, event) {
-			let keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-			if(keyCode == 13) {
-				return false;	
-			};
-		
-			// 특수문자확인
-			let regExp;
-			let text = "특수문자는 입력할 수 없습니다!";
-			switch(obj.name) {
-			case "mbrName" :
-				regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-				break;
-			case "mbrEmail" :
-				regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
-				break;				
-			case "xmbrPasswordPre" :
-			case "mbrPassword" :
-			case "xmbrPwConfirm" :
-				regExp = /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
-				text = "비밀번호 입력가능 특수문자 @ - _ !";
-				break;
-			};
-			
-			// 특수문자확인
-		    fnSpecialCharCheck(obj, text, regExp);			
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				// 특수문자확인
+				let regExp;
+				let text = "특수문자는 입력할 수 없습니다!";
+				switch(obj.name) {
+				case "mbrName" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				case "mbrEmail" :
+					regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
+					break;				
+				case "xmbrPasswordPre" :
+				case "mbrPassword" :
+				case "xmbrPwConfirm" :
+					regExp = /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
+					text = "비밀번호 입력가능 특수문자 @ - _ !";
+					break;
+				};
+				
+				// 특수문자확인
+			    fnSpecialCharCheck(obj, text, regExp);	
+			};	
 		};
 		
 		// 생년월일 특수문자 확인
@@ -693,7 +647,20 @@
 				let mbrBirthday = document.querySelector("input[name=mbrBirthday]");
 				fnSpecialDate(mbrBirthday);	
 			};
-		};		
+		};	
+		
+		// 비밀번호 확인
+		document.getElementById("xmbrPwConfirm").onkeydown = function() {
+			if(window.event.keyCode == 13) {
+				let mbrPassword   = document.querySelector("input[name=mbrPassword]");
+				let xmbrPwConfirm = document.querySelector("input[name=xmbrPwConfirm]");
+				
+				if(mbrPassword.value === xmbrPwConfirm.value){
+					fnCallController();
+				}	
+			};
+		};	
+		
 
 // ============================================================================
 // function
@@ -701,8 +668,12 @@
 		
 		// controller 호출
 		fnCallController = function() {
-	       	form.action = goUrlSdmUpdate;
-	       	form.submit();
+			if(!fnValidation()) {
+	       		return false;
+	       	} else {
+		       	form.action = goUrlSdmUpdate;
+		       	form.submit();
+	       	};	
 		};
 
 		// 필수입력항목 확인
