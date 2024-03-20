@@ -42,4 +42,8 @@ public class MemberService {
 	public int updateDelNy(MemberDto dto) {
 		return dao.updateDelNy(dto);
 	}
+	
+	public MemberDto selectPassword(MemberDto dto) {
+		return dao.selectPassword(dto);
+	}
 }

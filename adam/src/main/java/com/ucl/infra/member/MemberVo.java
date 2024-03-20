@@ -34,5 +34,4 @@ public class MemberVo extends BaseVo {
 	public void setShCdgSeq(Integer shCdgSeq) {
 		this.shCdgSeq = shCdgSeq;
 	}
-	
 }

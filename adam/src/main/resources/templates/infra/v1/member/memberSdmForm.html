@@ -282,7 +282,7 @@
         </header>
 
         <main class="h-full pb-16 overflow-y-auto">
-			<form name="form" id="form" method="get" autocomplete="off">
+			<form name="form" id="form" method="post" autocomplete="off">
 				<div class="container px-6 mx-auto grid">
 					<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 				    	<a class="inline-flex items-center w-full">
@@ -578,6 +578,7 @@
 		let goUrlSdmUpdate 	= "/memberSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/memberSdmDelete";	/* 삭제 */
 		let goUrlSdmDelNy 	= "/memberSdmDelNy";	/* 삭제여부변경 */
+		let goUrlSdmPassword= "/memberSdmPassword";	/* 비밀번호 */
 
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 // 		let regExp = /[^\w\sㄱ-힣()0-9]/g;
@@ -668,10 +669,20 @@
 			if(!fnValidation()) {
 	       		return false;
 	       	} else {
-		       	form.action = goUrlSdmUpdate;
-		       	form.submit();
+				// 비밀번호 확인
+// 				if(fnPasswordValid) {
+					// 저장
+			       	form.action = goUrlSdmUpdate;
+			       	form.submit();					
+// 				};
 	       	};	
 		};
+		
+		// 비밀번호확인
+		fnPasswordValid = function() {
+	       	form.action = goUrlSdmPassword;
+	       	form.submit();			
+		}
 
 		// 필수입력항목 확인
 		fnValidation = function() {

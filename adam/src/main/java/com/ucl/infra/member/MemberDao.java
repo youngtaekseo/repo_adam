@@ -6,6 +6,7 @@ public interface MemberDao {
 	public List<MemberDto> selectList(MemberVo vo);
 	public List<MemberDto> selectListCode(MemberVo vo);
 	public MemberDto selectOne(MemberDto dto);
+	public MemberDto selectPassword(MemberDto dto);
 	
 	public int insert(MemberDto dto);
 	public int update(MemberDto dto);

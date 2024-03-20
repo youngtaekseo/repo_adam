@@ -57,6 +57,11 @@
            AND a.mbrSeq = #{mbrSeq}	
 	</select>
 	
+	<select id="selectPasword" resultMap="resultMapObj">>
+		SELECT SHA2(#{xmbrPasswordPre}, 512) xmbrPasswordPre
+		  FROM dual
+	</select>
+	
 	<select id="selectListCode" resultMap="resultMapObj">
 		SELECT a.cdcSeq
 		     , a.cdcName

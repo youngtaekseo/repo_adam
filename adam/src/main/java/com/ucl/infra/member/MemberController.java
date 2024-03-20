@@ -70,4 +70,11 @@ public class MemberController {
 		service.delete(dto);
 		return "redirect:/memberSdmList";
 	}	
+	
+	// 비밀번호 확인용
+	@RequestMapping(value = "/memberSdmPassword")
+	public String memberSdmPassword(MemberDto dto, Model model) {
+		model.addAttribute("item", service.selectPassword(dto));
+		return "redirect:/memberSdmList";
+	}	
 }

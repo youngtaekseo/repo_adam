@@ -16,6 +16,7 @@ public class MemberDto {
 	private Integer mbrDelNy; // 0:미삭제, 1:삭제
 	
 	private Integer xmbrCount;
+	private String xmbrPasswordPre;
 	
 //	===================================
 	
@@ -85,5 +86,11 @@ public class MemberDto {
 	public void setXmbrCount(Integer xmbrCount) {
 		this.xmbrCount = xmbrCount;
 	}
-	
+	public String getXmbrPasswordPre() {
+		return xmbrPasswordPre;
+	}
+	public void setXmbrPasswordPre(String xmbrPasswordPre) {
+		this.xmbrPasswordPre = xmbrPasswordPre;
+	}
+
 }
