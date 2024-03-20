@@ -109,6 +109,7 @@
 			 </choose>
 			 , mbrEmail    = #{mbrEmail}
 			 <if test="mbrPassword != null and !mbrPassword.equals('')">, mbrPassword = #{mbrPassword}</if>
+			 , mbrUdtDt = now()
          WHERE 1 = 1		
            AND mbrSeq = #{mbrSeq}	
 	</update>
@@ -116,6 +117,7 @@
 	<update id="updatePw">
 		UPDATE members
 		   SET mbrPassword = #{mbrPassword}
+		     , mbrUdtDt = now()
          WHERE 1 = 1		
            AND mbrSeq = #{mbrSeq}	
 	</update>
