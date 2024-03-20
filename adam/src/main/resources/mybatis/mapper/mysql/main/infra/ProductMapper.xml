@@ -1,102 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ucl.infra.product.ProductDao">
+<mapper namespace="com.ucl.infra.product.ProdectDao">
 
-	<resultMap id="resultMapObj" type="com.ucl.infra.product.ProductDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.ucl.infra.product.ProdectDto"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
-         ORDER BY b.seq, a.seq 
+		SELECT a.pdtSeq
+			 , b.cdcName pdtTypeCd
+			 , c.cdcName pbtBrandCd
+			 , a.pdtName
+			 , d.cdcName pdtAccidentCd
+			 , a.pdtYear
+			 , a.pdtYearRemark
+			 , a.pdtRunKm
+			 , e.cdcName pdtColorCd
+			 , a.pdtPrice
+			 , f.cdcName pdtRecommendCd
+			 , a.pdtRegDt
+			 , a.pdtUdtDt
+			 , a.pdtDelNy
+		  FROM product a
+		       LEFT JOIN code b
+		              ON b.cdcSeq = a.pdtTypeCd
+		       LEFT JOIN code c
+		              ON c.cdcSeq = a.pbtBrandCd
+		       LEFT JOIN code d
+		              ON d.cdcSeq = a.pdtAccidentCd
+		       LEFT JOIN code e
+		              ON e.cdcSeq = a.pdtColorCd
+		       LEFT JOIN code f
+		              ON e.cdcSeq = a.pdtRecommendCd		              			              		              
+		 WHERE 1 = 1
+		 
+		<choose>
+			<when test="shOptionDate == 1">AND a.pdtRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.pdtUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+		
+		<choose>
+			<when test="shOption == 1">AND a.pdtName  LIKE CONCAT('%', #{shValue}, '%')</when>
+			<when test="shOption == 2">AND a.pdtEmail LIKE CONCAT('%', #{shValue}, '%')</when>
+		</choose>
+
+		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd  = #{shCarType}</if>
+		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pbtBrandCd = #{shCarBrand}</if>
+		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd = #{shCarColor}</if>
+		<if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtColorCd = #{shRecommend}</if>
+		<if test="shAccident  != null and !shAccident.equals('')"> AND a.pdtColorCd = #{pdtAccidentCd}</if>
+		<if test="shDelNy 	  != null and !shDelNy.equals('')" >   AND a.pdtDelNy   = #{shDelNy}</if>
+	
+         ORDER BY a.pdtSeq DESC 
 	</select>
 
 	<select id="selectOne" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1		
-           AND a.seq = #{seq}	
-	</select>
-		
-	<select id="selectName" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
-       		   LEFT JOIN commongroup b
-              		  ON b.seq = a.commonGroup_seq
-         WHERE 1 = 1			
-           AND a.name = #{name}
-	</select>
+		SELECT a.pdtSeq
+			 , b.cdcName pdtTypeCd
+			 , c.cdcName pbtBrandCd
+			 , a.pdtName
+			 , d.cdcName pdtAccidentCd
+			 , a.pdtYear
+			 , a.pdtYearRemark
+			 , a.pdtRunKm
+			 , e.cdcName pdtColorCd
+			 , a.pdtPrice
+			 , f.cdcName pdtRecommendCd
+			 , a.pdtRegDt
+			 , a.pdtUdtDt
+			 , a.pdtDelNy
+		  FROM product a
+		       LEFT JOIN code b
+		              ON b.cdcSeq = a.pdtTypeCd
+		       LEFT JOIN code c
+		              ON c.cdcSeq = a.pbtBrandCd
+		       LEFT JOIN code d
+		              ON d.cdcSeq = a.pdtAccidentCd
+		       LEFT JOIN code e
+		              ON e.cdcSeq = a.pdtColorCd
+		       LEFT JOIN code f
+		              ON e.cdcSeq = a.pdtRecommendCd	
+		 WHERE 1 = 1		
+           AND a.pdtSeq = #{pdtSeq}	
+	</select>	
 	
 	<insert id="insert">
-		INSERT INTO commoncode
+		INSERT INTO product
 			( 
-			  name
-			, regDateTime
-			, modDateTime
-			, delNy
-			, commonGroup_seq
+			  pdtTypeCd
+			, pbtBrandCd
+			, pdtName
+			, pdtAccidentCd
+			, pdtYear
+			, pdtYearRemark
+			, pdtRunKm
+			, pdtColorCd
+			, pdtPrice
+			, pdtRecommendCd
+			, pdtRegDt
+			, pdtUdtDt
+			, pdtDelNy
 			)
 		VALUES
 			(
-			  #{name}
+			  #{pdtTypeCd}
+			, #{pbtBrandCd}
+			, #{pdtName}
+			, #{pdtAccidentCd}
+			, #{pdtYear}
+			, #{pdtYearRemark}
+			, #{pdtRunKm}
+			, #{pdtColorCd}
+			, #{pdtPrice}
+			, #{pdtRecommendCd}
 			, now()
 			, now()
 			, 0
-			, #{xcodeGroupSeq}
 			)
 	</insert>
 	
 	<update id="update">
-		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
+		UPDATE product
+		   SET pdtTypeCd      = #{pdtTypeCd}
+			 , pbtBrandCd     = #{pbtBrandCd}
+			 , pdtName        = #{pdtName}
+			 , pdtAccidentCd  = #{pdtAccidentCd}
+			 , pdtYear        = #{pdtYear}
+			 , pdtYearRemark  = #{pdtYearRemark}
+			 , pdtRunKm       = #{pdtRunKm}
+			 , pdtColorCd     = #{pdtColorCd}
+			 , pdtPrice       = #{pdtPrice}
+			 , pdtRecommendCd = #{pdtRecommendCd}
+			 , pdtUdtDt       = now()
          WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND pdtSeq = #{pdtSeq}	
 	</update>
 	
-	<update id="udtOne">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 1
+	<update id="updateDelNy">
+		UPDATE product
+		   SET pdtUdtDt = now()
+		   
+		   <choose>
+		   		<when test="pdtDelNy == 0">, mbrDelNy = 1</when>
+		   		<when test="pdtDelNy == 1">, mbrDelNy = 0</when>
+		   </choose>
          WHERE 1 = 1		
-           AND seq = #{seq}	
-	</update>
-	
-	<update id="udtZero">
-		UPDATE commoncode
-		   SET modDateTime = now()
-		     , delNy = 0
-         WHERE 1 = 1		
-           AND seq = #{seq}	
+           AND pdtSeq = #{pdtSeq}
 	</update>	
 	
-	<update id="delete">
-		DELETE FROM commoncode
-        WHERE 1 = 1		
-          AND seq = #{seq}	
-	</update>
+	<delete id="delete">
+		DELETE FROM product
+         WHERE 1 = 1		
+           AND pdtSeq = #{pdtSeq}
+	</delete>
 
 </mapper>

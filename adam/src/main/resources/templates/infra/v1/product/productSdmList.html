@@ -374,59 +374,46 @@
             </h2>
 
             <!-- 검색조건 -->
-            <form id="searchForm" action="productSdmView" method="post">
+            <form id="form" name="form" method="get" autocomplete="off">
               <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="flex flex-col md:flex-row">
                     <!-- 삭제여부 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <select
-                            id="delSelect"
-                            name="xpdDelNy"
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                            <option value="2" selected>삭제여부</option>
-                            <option value="1">N</option>
-                            <option value="0">Y</option>
+                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            id="shDelNy" name="shDelNy">
+                            <option value=""  th:selected="${vo.shDelNy == null}">삭제여부</option>
+                            <option value="0" th:selected="${vo.shDelNy == 0}">N</option>
+                            <option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
                         </select>
                     </div>
 
                     <!-- 일자조건 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdDateType"
-                        >
-<!--                             onclick="fnDateChange(this)"                         -->
-                            <option value="regDt" selected>등록일</option>
-                            <option value="modDt">수정일</option>
+							id="shOptionDate" name="shOptionDate">
+							<option value=""  th:selected="${vo.shOptionDate == null}">날짜</option>
+							<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+							<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
                         </select>
                     </div>
 
                     <!-- 시작일자 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <input
-                            id="shDateStart"
-                            name="xpbDateFrom"
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            placeholder="시작일"
-                            autocomplete="off"
-                            required
-                            onchange="fnValid('shDateStart')"
-                        >
-                        <span id="shDateStartValid" class="text-xs text-red-600 dark:text-red-400">
+                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+							id="shDateStart" name="shDateStart" placeholder="시작일"
+							th:value="${#strings.substring(vo.shDateStart,0,10)}">
+                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                        	시작일자를 입력하세요
                         </span>
                     </div>
 
                     <!-- 종료일자 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <input
-                            id="shDateEnd"                            
-                            name="xpbDateTo"
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            placeholder="종료일"
-                            autocomplete="off"
-                            required
-                            onchange="fnValid('shDateEnd')"
-                        >
-                        <span id="shDateEndValid" class="text-xs text-red-600 dark:text-red-400">
+                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+							id="shDateEnd" name="shDateEnd" placeholder="종료일"
+							th:value="${#strings.substring(vo.shDateEnd,0,10)}">
+                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+                        	종료일자를 입력하세요
                         </span>
                     </div>
                 </div>
@@ -434,12 +421,10 @@
                 <div class="flex flex-col md:flex-row">
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdRecommandtion"
-                        >
-<!--                             onclick="fnDateChange(this)"                         -->
-                            <option value="2" selected>차종</option>
-                            <option value="0">중형차</option>
-                            <option value="1">대형차</option>
+                            id="shCarType" name="shCarType">
+                            <option value=""  th:selected="${vo.shCarType == null}">차종</option>
+                            <option value="5" th:selected="${vo.shCarType == 1}">중형차</option>
+                            <option value="6" th:selected="${vo.shCarType == 2}">대형차</option>
                         </select>
                     </div>
                                     
@@ -447,89 +432,83 @@
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdNameType"
-                        >
-                            <option value="3" selected>브랜드</option>
-                            <option value="0">현대</option>
-                            <option value="1">제네시스</option>
-                            <option value="2">기아</option>
+                            id="shCarBrand" name="shCarBrand">
+                            <option value=""  th:selected="${vo.shCarBrand == null}">브랜드</option>
+                            <option value="7" th:selected="${vo.shCarBrand == 1">현대</option>
+                            <option value="8" th:selected="${vo.shCarBrand == 2}">제네시스</option>
+                            <option value="9" th:selected="${vo.shCarBrand == 3}">기아</option>
                         </select>
                     </div>
                     
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdRecommandtion"
-                        >
-<!--                             onclick="fnDateChange(this)"                         -->
-                            <option value="2" selected>색상</option>
-                            <option value="0">검정색</option>
-                            <option value="1">흰색</option>
+                            id="shCarColor" name="shCarColor">
+                            <option value=""   th:selected="${vo.shCarColor == null}">색상</option>
+                            <option value="10" th:selected="${vo.shCarColor == 1}">검정색</option>
+                            <option value="21" th:selected="${vo.shCarColor == 2}">흰색</option>
                         </select>
                     </div>
                     
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdRecommandtion"
-                        >
-<!--                             onclick="fnDateChange(this)"                         -->
-                            <option value="2" selected>추천여부</option>
-                            <option value="0">추천</option>
-                            <option value="1">비추천</option>
+                            id="shRecommend" name="shRecommend">
+                            <option value=""   th:selected="${vo.shRecommend == null}">추천여부</option>
+                            <option value="16" th:selected="${vo.shRecommend == 1}">추천</option>
+                            <option value="17" th:selected="${vo.shRecommend == 2}">비추천</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="flex flex-col md:flex-row">
+                    <div class="md:h-auto md:w-1/2 mr-3">
+                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            id="shAccident" name="shAccident">
+                            <option value=""   th:selected="${vo.shAccident == null}">사고유무</option>
+                            <option value="14" th:selected="${vo.shAccident == 1}">무사고</option>
+                            <option value="15" th:selected="${vo.shAccident == 2}">유사고</option>
+                        </select>
+                    </div>
+                                    
                     <!-- 검색구분 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <select
-                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            name="xpdNameType"
-                        >
-                            <option value="all" selected>검색구분</option>
-                            <option value="name">성명</option>
-                            <option value="email">이메일</option>
+                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            id="shOption" name="shOption">
+                            <option value=""  th:selected="${vo.shOption == null}">검색구분</option>
+                            <option value="1" th:selected="${vo.shOption == 1}">성명</option>
+                            <option value="2" th:selected="${vo.shOption == 2}">이메일</option>
                         </select>
                     </div>
 
                     <!-- 검색어 -->
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <input
-                            name="pdName"
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            placeholder="검색어"
-                        >
+                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            id="shValue" name="shValue" placeholder="검색어"
+							onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
+							<span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+								검색어를 입력하세요
+							</span>                            
                     </div>
 
                     <div class="md:h-auto md:w-1/2 sm:mt-auto mr-3">
                       <div class="flex flex-col overflow-y-auto md:flex-row">
                         <!-- 조회버튼 -->
-                        <button
-                          id="btnSearch"
-                          class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
-                          type="button"
-                          onclick="fnSave()"
-                          >
+                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
+                          id="btnSubmit" name="btnSubmit" type="button">
                           <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
                           </svg>
                         </button>
 
                         <!-- 초기화버튼 -->
-                        <button
-                          id="btnReset"
-                          class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                          type="reset"
-                          onclick="fnReset()"                          
-                          >                          
+                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                          id="btnReset" name="btnReset" type="reset"
+                          onclick="fnReset()">                          
                           <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"></path>
                           </svg>
                         </button>
                       </div>
                     </div>
-                    
-                    <div class="md:h-auto md:w-1/2 mr-3"></div>
                 </div>
               </div>
 
@@ -575,8 +554,9 @@
                       <th class="px-4 py-1">차량명</th>
                       <th class="px-4 py-1">색상</th>
                       <th class="px-4 py-1">판매가격</th>
-                      <th class="px-4 py-1">추천여부</th>
-                      <th class="px-4 py-1">삭제여부</th>
+                      <th class="px-4 py-1">사고</th>
+                      <th class="px-4 py-1">추천</th>
+                      <th class="px-4 py-1">삭제</th>
                       <th class="px-4 py-1">등록일시</th>
                       <th class="px-4 py-1">수정일시</th>
                       <th class="px-6 py-1">작업</th>
@@ -588,52 +568,50 @@
                   	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 <!--                   	체크박스 -->
                   		<td class="px-2 py-1">
-                  			<input
-                  				id = "checkbox"
-                        		style="height: 15px; width: 15px"
-                        		type="checkbox"
-                        		name="checkbox"
-                        		class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
-                      		>
+                  			<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+                  				id = "checkbox" name="checkbox" type="checkbox"
+                        		style="height: 15px; width: 15px">
                     	</td>
 <!--                   	순번 -->                    	
-                    	<td id="seq" class="px-1 py-1" th:text="${list.pdSeq}"></td>
+                    	<td id="seq" class="px-1 py-1" th:text="${list.pdtSeq}"></td>
 <!--                   	차종 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdCarType}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtCarType}"></td>
 <!--                   	브랜드 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdBrand}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtBrand}"></td>
 <!--                   	상품명 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdName}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtName}"></td>
 <!--                   	색상 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdColor}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtColor}"></td>
 <!--                   	판매가격 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdPrice}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtPrice}"></td>
 <!--                   	추천여부 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdSelect}"></td>
+                    	<td class="px-4 py-1" th:text="${list.pdtRecommend}"></td>
 <!--                   	삭제여부 -->                                	
-                    	<td class="px-4 py-1 text-xs" th:if="${list.pdDelNy eq 0}">
+                    	<td class="px-4 py-1 text-xs" th:if="${list.pdtDelNy eq 0}">
                       		<span
                   				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
 								N
                       		</span>
                     	</td>
-                    	<td class="px-4 py-1 text-xs" th:unless="${list.pdDelNy eq 0}">
+                    	<td class="px-4 py-1 text-xs" th:unless="${list.pdtDelNy eq 0}">
                       		<span
                             	class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
 								Y
                       		</span>
                     	</td>                    	
 <!--                   	등록일시 -->
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.pdRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.pdtRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 <!--                   	수정일시 -->                    	
-                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.pdUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="px-4 py-1 text-sm" th:text="${#dates.format(list.pdtUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 <!--                   	작업버튼 -->                    
                     	<td class="px-6 py-1">
-                    	    <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-								<a th:href="@{/productSdmForm(seq=${list.seq}, name=${list.name})}">수정</a>
-                      		</button>
-                      		<button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">                   	
-								<a th:href="@{/productSdmCreate(seq=${list.seq})}">추가</a>
+                    	    <button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+								<a th:href="@{/productSdmForm(pdtSeq=${list.pdtSeq}, pdtName=${list.pdtName})}">
+									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+										<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
+										<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
+									</svg>
+								</a>
                       		</button>
                     	</td>
                   	</tr> 
@@ -774,16 +752,26 @@
                               
                 <!-- 이전버튼 -->
                 <span class="flex col-span-3 sm:mt-auto sm:justify-end">
-                  <button
-                    class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Back"
-                  >
-                  <a th:href="@{/indexSdm}">
-					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-					  <path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
-					</svg>
-				  </a>
-                  </button>
+	                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+	                  aria-label="Back" >
+	                	<a th:href="@{/indexSdm}">
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					  			<path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
+							</svg>
+				  		</a>
+	                </button>
+					&nbsp;&nbsp;          
+					<!-- 추가버튼 -->        
+	                <button 
+	                   	id="btnInsert"
+	                   	name="btnInsert"
+	                   	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
+						<a th:href="@{/memberSdmCreate}">
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+							  <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
+							</svg>								
+						</a>
+	                </button>                  
                 </span>                
               </div>
                             
@@ -868,7 +856,7 @@
             name="lineDelete"
             class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
           >
-<!-- 			<a th:href="@{/productSdmDelete(pdSeq=${list.pdSeq})}"></a> -->
+<!-- 			<a th:href="@{/productSdmDelete(pdtSeq=${list.pdtSeq})}"></a> -->
 			삭제
           </button>            
         </footer>

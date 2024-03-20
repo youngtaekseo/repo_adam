@@ -10,6 +10,5 @@ public interface ProductDao {
 	public int update(ProductDto dto);
 	public int delete(ProductDto dto);
 	
-	public int udtOne(ProductDto dto);
-	public int udtZero(ProductDto dto);
+	public int updateDelNy(ProductDto dto);
 }
