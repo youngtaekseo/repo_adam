@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ucl.infra.product.ProdectDao">
+<mapper namespace="com.ucl.infra.product.ProductDao">
 
-	<resultMap id="resultMapObj" type="com.ucl.infra.product.ProdectDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.ucl.infra.product.ProductDto"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT a.pdtSeq
-			 , b.cdcName pdtTypeCd
-			 , c.cdcName pbtBrandCd
+			 , a.pdtTypeCd
+			 , a.pdtBrandCd
 			 , a.pdtName
-			 , d.cdcName pdtAccidentCd
+			 , a.pdtAccidentCd
 			 , a.pdtYear
-			 , a.pdtYearRemark
 			 , a.pdtRunKm
-			 , e.cdcName pdtColorCd
+			 , a.pdtColorCd
 			 , a.pdtPrice
-			 , f.cdcName pdtRecommendCd
+			 , a.pdtRecommendCd
 			 , a.pdtRegDt
 			 , a.pdtUdtDt
 			 , a.pdtDelNy
+			 , b.cdcName xpdtTypeNm
+			 , c.cdcName xpdtBrandNm
+			 , SUBSTRING(d.cdcName, 1, 1) xpdtAccidentNm
+			 , e.cdcName xpdtColorNm
+			 , SUBSTRING(f.cdcName, 1, 1) xpdtRecommendNm
 		  FROM product a
 		       LEFT JOIN code b
 		              ON b.cdcSeq = a.pdtTypeCd
 		       LEFT JOIN code c
-		              ON c.cdcSeq = a.pbtBrandCd
+		              ON c.cdcSeq = a.pdtBrandCd
 		       LEFT JOIN code d
 		              ON d.cdcSeq = a.pdtAccidentCd
 		       LEFT JOIN code e
 		              ON e.cdcSeq = a.pdtColorCd
 		       LEFT JOIN code f
-		              ON e.cdcSeq = a.pdtRecommendCd		              			              		              
+		              ON f.cdcSeq = a.pdtRecommendCd	
 		 WHERE 1 = 1
 		 
 		<choose>
@@ -42,13 +46,25 @@
 			<when test="shOption == 1">AND a.pdtName  LIKE CONCAT('%', #{shValue}, '%')</when>
 			<when test="shOption == 2">AND a.pdtEmail LIKE CONCAT('%', #{shValue}, '%')</when>
 		</choose>
+		
+		<choose>
+			<when test="shOptionRunKm == 1">AND a.pdtRunKm  BETWEEN #{shOptionRunKmFrom} AND #{shOptionRunKmTo}</when>
+			<when test="shOptionRunKm == 2">AND a.pdtRunKm <![CDATA[<=]]> #{shOptionRunKmFrom}</when>
+			<when test="shOptionRunKm == 3">AND a.pdtRunKm >= #{shOptionRunKmFrom}</when>
+		</choose>	
+		
+		<choose>
+			<when test="shOptionYear == 1">AND a.pdtYear  BETWEEN #{shOptionYearFrom} AND #{shOptionYearTo}</when>
+			<when test="shOptionYear == 2">AND a.pdtYear <![CDATA[<=]]> #{shOptionYearFrom}</when>
+			<when test="shOptionYear == 3">AND a.pdtYear >= #{shOptionYearFrom}</when>
+		</choose>			
 
-		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd  = #{shCarType}</if>
-		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pbtBrandCd = #{shCarBrand}</if>
-		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd = #{shCarColor}</if>
-		<if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtColorCd = #{shRecommend}</if>
-		<if test="shAccident  != null and !shAccident.equals('')"> AND a.pdtColorCd = #{pdtAccidentCd}</if>
-		<if test="shDelNy 	  != null and !shDelNy.equals('')" >   AND a.pdtDelNy   = #{shDelNy}</if>
+		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd      = #{shCarType}</if>
+		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pdtBrandCd     = #{shCarBrand}</if>
+		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd     = #{shCarColor}</if>
+		<if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
+		<if test="shAccident  != null and !shAccident.equals('')"> AND a.pdtAccidentCd  = #{shAccident}</if>
+		<if test="shDelNy 	  != null and !shDelNy.equals('')">    AND a.pdtDelNy       = #{shDelNy}</if>
 	
          ORDER BY a.pdtSeq DESC 
 	</select>
@@ -56,11 +72,10 @@
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT a.pdtSeq
 			 , b.cdcName pdtTypeCd
-			 , c.cdcName pbtBrandCd
+			 , c.cdcName pdtBrandCd
 			 , a.pdtName
 			 , d.cdcName pdtAccidentCd
 			 , a.pdtYear
-			 , a.pdtYearRemark
 			 , a.pdtRunKm
 			 , e.cdcName pdtColorCd
 			 , a.pdtPrice
@@ -72,7 +87,7 @@
 		       LEFT JOIN code b
 		              ON b.cdcSeq = a.pdtTypeCd
 		       LEFT JOIN code c
-		              ON c.cdcSeq = a.pbtBrandCd
+		              ON c.cdcSeq = a.pdtBrandCd
 		       LEFT JOIN code d
 		              ON d.cdcSeq = a.pdtAccidentCd
 		       LEFT JOIN code e
@@ -87,11 +102,10 @@
 		INSERT INTO product
 			( 
 			  pdtTypeCd
-			, pbtBrandCd
+			, pdtBrandCd
 			, pdtName
 			, pdtAccidentCd
 			, pdtYear
-			, pdtYearRemark
 			, pdtRunKm
 			, pdtColorCd
 			, pdtPrice
@@ -103,11 +117,10 @@
 		VALUES
 			(
 			  #{pdtTypeCd}
-			, #{pbtBrandCd}
+			, #{pdtBrandCd}
 			, #{pdtName}
 			, #{pdtAccidentCd}
 			, #{pdtYear}
-			, #{pdtYearRemark}
 			, #{pdtRunKm}
 			, #{pdtColorCd}
 			, #{pdtPrice}
@@ -121,11 +134,10 @@
 	<update id="update">
 		UPDATE product
 		   SET pdtTypeCd      = #{pdtTypeCd}
-			 , pbtBrandCd     = #{pbtBrandCd}
+			 , pdtBrandCd     = #{pdtBrandCd}
 			 , pdtName        = #{pdtName}
 			 , pdtAccidentCd  = #{pdtAccidentCd}
 			 , pdtYear        = #{pdtYear}
-			 , pdtYearRemark  = #{pdtYearRemark}
 			 , pdtRunKm       = #{pdtRunKm}
 			 , pdtColorCd     = #{pdtColorCd}
 			 , pdtPrice       = #{pdtPrice}
@@ -140,8 +152,8 @@
 		   SET pdtUdtDt = now()
 		   
 		   <choose>
-		   		<when test="pdtDelNy == 0">, mbrDelNy = 1</when>
-		   		<when test="pdtDelNy == 1">, mbrDelNy = 0</when>
+		   		<when test="pdtDelNy == 0">, pdtDelNy = 1</when>
+		   		<when test="pdtDelNy == 1">, pdtDelNy = 0</when>
 		   </choose>
          WHERE 1 = 1		
            AND pdtSeq = #{pdtSeq}

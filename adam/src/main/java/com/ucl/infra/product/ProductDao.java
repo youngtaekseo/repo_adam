@@ -3,7 +3,7 @@ package com.ucl.infra.product;
 import java.util.List;
 
 public interface ProductDao {
-	public List<ProductDto> selectList();
+	public List<ProductDto> selectList(ProductVo vo);
 	public ProductDto selectOne(ProductDto dto);
 	
 	public int insert(ProductDto dto);
