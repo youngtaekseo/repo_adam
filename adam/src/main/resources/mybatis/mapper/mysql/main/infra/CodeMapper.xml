@@ -18,7 +18,7 @@
               		  ON b.cdgSeq = a.cdgSeq 
          WHERE 1 = 1          
          
-         <if test="shDelNy != null and !shDelNy.equals('')">AND b.cdcDelNy = #{shDelNy}</if>
+         <if test="shDelNy != null and !shDelNy.equals('')">AND IFNULL(b.cdcDelNy, 0) = #{shDelNy}</if>
          
          <choose>
          	<when test="shOptionDate == 1">AND b.cdcRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -95,5 +95,14 @@
         WHERE 1 = 1		
           AND cdcSeq = #{cdcSeq}
     </delete>
+    
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT cdcSeq
+			 , cdcName
+			 , cdgSeq
+		  FROM code
+		 WHERE 1=1
+		   AND cdcDelNy = 0
+   </select>    
 
 </mapper>

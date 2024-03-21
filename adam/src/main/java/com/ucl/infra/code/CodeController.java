@@ -23,19 +23,19 @@ public class CodeController {
 		return Commvar.PATH_CODE + "codeSdmList";
 	}
 	
+//	등록화면
+	@RequestMapping(value = "/codeSdmCreate")
+	public String codeSdmCreate(CodeDto dto, Model model) throws Exception {
+		model.addAttribute("item", service.selectOne(dto));	
+		return Commvar.PATH_CODE + "codeSdmCreate";
+	}
+	
 //	수정화면
 	@RequestMapping(value = "/codeSdmForm")
 	public String codeSdmForm(CodeDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));	
 		return Commvar.PATH_CODE + "codeSdmForm";
 	}
-	
-//	등록화면
-	@RequestMapping(value = "/codeSdmCreate")
-	public String codeSdmCreate(CodeDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));	
-		return Commvar.PATH_CODE + "codeSdmCreate";
-	}	
 	
 //	그룹코드등록
 	@RequestMapping(value = "/codeSdmInsert")

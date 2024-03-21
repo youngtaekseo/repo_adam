@@ -1,9 +1,13 @@
 package com.ucl.infra.code;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class CodeService {
@@ -34,4 +38,40 @@ public class CodeService {
 	public int updateDelNy(CodeDto dto){
 		return dao.updateDelNy(dto);
 	}
+	
+	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
+    @PostConstruct
+	public void selectListCachedCodeArrayList() throws Exception {
+//		List<CodeDto> codeListFromDb = dao.selectListCachedCodeArrayList();
+//		codeListFromDb = (ArrayList<Code>) dao.selectListCachedCodeArrayList();
+		CodeDto.cachedCodeArrayList.clear(); 
+		CodeDto.cachedCodeArrayList.addAll(dao.selectListCachedCodeArrayList());
+		System.out.println("cachedCodeArrayList: " + CodeDto.cachedCodeArrayList.size() + " chached !");
+	}
+    
+	public static String selectOneCachedCode(int code) throws Exception {
+		String rt = "";
+		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
+			if (codeRow.getCdcSeq().equals(Integer.toString(code))) {
+				rt = codeRow.getCdcName();
+			} else {
+				// by pass
+			}
+		}
+		return rt;
+	}    
+	
+	public static List<CodeDto> selectListCachedCode(String cdgSeq) throws Exception {
+		System.out.println("cdgSeq : " + cdgSeq);
+		
+		List<CodeDto> rt = new ArrayList<CodeDto>();
+		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
+			if (codeRow.getCdgSeq().equals(cdgSeq)) {
+				rt.add(codeRow);
+			} else {
+				// by pass
+			}
+		}
+		return rt;
+	}	
 }

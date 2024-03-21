@@ -2,6 +2,8 @@ package com.ucl.infra.code;
 
 import java.util.List;
 
+import com.ucl.infra.product.ProductDto;
+
 public interface CodeDao {
 	public List<CodeDto> selectList(CodeVo vo);
 	public CodeDto selectOne(CodeDto dto);
@@ -13,5 +15,7 @@ public interface CodeDao {
 	public int delete(CodeDto dto);
 	
 	public int updateDelNy(CodeDto dto);
+	
+	public List<CodeDto> selectListCachedCodeArrayList();
 
 }

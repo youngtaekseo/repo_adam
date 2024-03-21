@@ -1,6 +1,8 @@
 package com.ucl.infra.code;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CodeDto {
 	private String 	cdcSeq;
@@ -12,6 +14,9 @@ public class CodeDto {
 			
 	private String 	cdgName;	
 	private Integer xcodeCount;
+	
+//	for cache
+	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
 	
 //============
 	
@@ -64,5 +69,10 @@ public class CodeDto {
 		this.xcodeCount = xcodeCount;
 	}
 	
-
+	public static List<CodeDto> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
+		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
+	}
 }
