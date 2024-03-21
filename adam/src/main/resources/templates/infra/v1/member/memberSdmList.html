@@ -349,12 +349,19 @@
 											
 						<!-- 남여구분 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
+<!-- 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" -->
+<!-- 								id="shSex" name="shSex"> -->
+<!-- 								<option value="" th:selected="${vo.shSex == null}">성별</option> -->
+<!-- 								<option value="12" th:selected="${vo.shSex == 1}">남</option> -->
+<!-- 								<option value="13" th:selected="${vo.shSex == 2}">여</option> -->
+<!--  th:selected="${list.cdcSeq} == ${item?.cdgSeq}" -->
+<!-- 							</select> -->
+							
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								id="shSex" name="shSex">
-								<option value="" th:selected="${vo.shSex == null}">성별</option>
-								<option value="12" th:selected="${vo.shSex == 1}">남</option>
-								<option value="13" th:selected="${vo.shSex == 2}">여</option>
-							</select>
+								<option value="">성별</option>
+								<option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}"></option>
+							</select>							
 						</div>
 
 						<!-- 검색구분 -->
@@ -481,18 +488,8 @@
 <!--                    이메일 -->
                     	<td class="px-4 py-1" th:text="${list.mbrEmail}"></td>
 <!--                    성별 -->
-                    	<td class="px-4 py-1">
-                    		<th:block th:switch = "${list.mbrSex}">
-                    			<span th:case = "12"
-                    				class="px-2 py-1 font-semibold leading-tight text-blue-100 bg-blue-600 rounded-full dark:text-white dark:bg-blue-100">
-                    				남
-                    			</span>
-                    			<span th:case = "13"
-                    				class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-100">
-                    				여
-                    			</span>
-                    		</th:block>
-                    	</td>
+						<td class="mbrSex px-4 py-1" th:if="${list.mbrSex != null}" th:text="${@codeService.selectOneCachedCode(list.mbrSex)}"></td>
+						<td class="mbrSex px-4 py-1" th:unless="${list.mbrSex != null}"></td>
 <!--                    생년월일 -->
                     	<td class="px-4 py-1" th:text="${#strings.substring(list.mbrBirthday, 0, 10)}"></td>
 <!--                    삭제여부 -->
