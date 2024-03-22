@@ -349,14 +349,6 @@
 											
 						<!-- 남여구분 -->
 						<div class="md:h-auto md:w-1/2 mr-3">
-<!-- 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" -->
-<!-- 								id="shSex" name="shSex"> -->
-<!-- 								<option value="" th:selected="${vo.shSex == null}">성별</option> -->
-<!-- 								<option value="12" th:selected="${vo.shSex == 1}">남</option> -->
-<!-- 								<option value="13" th:selected="${vo.shSex == 2}">여</option> -->
-<!--  th:selected="${list.cdcSeq} == ${item?.cdgSeq}" -->
-<!-- 							</select> -->
-							
 							<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 								id="shSex" name="shSex">
 								<option value="">성별</option>
@@ -464,7 +456,7 @@
                   	</tr>
                   	                  
                   	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
-<!--                   	체크박스 -->
+						<!-- 체크박스 -->
                   		<td class="px-2 py-1">
                   			<input
                   				id = "checkbox"
@@ -474,26 +466,41 @@
                         		class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
                       		>
                     	</td>
-<!--                    순번 -->
-                    	<td id="mbrSeq" class="px-1 py-1" th:text="${list.mbrSeq}"></td>
-<!--                    회원구분 -->
-                    	<td id="mbrType" class="px-4 py-1">
+						<!-- 순번 -->
+						<td id="mbrSeq" class="px-1 py-1" th:text="${list.mbrSeq}"></td>
+						<!-- 회원구분 -->
+						<td id="mbrType" class="px-4 py-1">
                     		<th:block th:switch="${list.mbrType}">
                     			<span th:case = "1">관리자</span>
                     			<span th:case = "2">사용자</span>
                     		</th:block>
                     	</td>
-<!--                    성명 -->
-                    	<td class="px-4 py-1" th:text="${list.mbrName}"></td>
-<!--                    이메일 -->
-                    	<td class="px-4 py-1" th:text="${list.mbrEmail}"></td>
-<!--                    성별 -->
-						<td class="mbrSex px-4 py-1" th:if="${list.mbrSex != null}" th:text="${@codeService.selectOneCachedCode(list.mbrSex)}"></td>
-						<td class="mbrSex px-4 py-1" th:unless="${list.mbrSex != null}"></td>
+						<!-- 성명 -->
+                    	<td class="mbrName px-4 py-1" th:text="${list.mbrName}"></td>
+						<!-- 이메일 -->
+                    	<td class="mbrEmail px-4 py-1" th:text="${list.mbrEmail}"></td>
+						<!-- 성별 -->
+						<td class="mbrSex px-4 py-1">
+							<th:block th:switch="${list.mbrSex}">
+								<!-- 남 -->
+	                      		<span th:case="12" class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700"
+	                      		 	th:if="${list.mbrSex != null}" th:text="${#strings.substring(@codeService.selectOneCachedCode(list.mbrSex),0,1)}">
+	                      		</span>
+	                      		
+	                      		<!-- 여 -->
+	                      		<span th:case="13" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
+	                      		 	th:if="${list.mbrSex != null}" th:text="${#strings.substring(@codeService.selectOneCachedCode(list.mbrSex),0,1)}">
+	                      		</span>	                      		
+	                      		<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-white dark:bg-green-700"
+	                      		 	th:unless="${list.mbrSex != null}">
+	                      		</span>	                      							
+							</th:block>						
+						</td>
+<!-- 						<td class="mbrSex px-4 py-1" th:unless="${list.mbrSex != null}"></td> -->
 <!--                    생년월일 -->
-                    	<td class="px-4 py-1" th:text="${#strings.substring(list.mbrBirthday, 0, 10)}"></td>
+                    	<td class="mbrBirthday px-4 py-1" th:text="${#strings.substring(list.mbrBirthday, 0, 10)}"></td>
 <!--                    삭제여부 -->
-                    	<td class="px-4 py-1">
+                    	<td class="mbrDelNy px-4 py-1">
                     		<th:block th:switch="${list.mbrDelNy}">
 	                      		<span th:case="0"
 	                  				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-white dark:bg-green-700">
@@ -506,9 +513,9 @@
                     		</th:block>
                     	</td>
 <!--                    등록일시 -->
-                    	<td class="px-4 py-1" th:text="${#dates.format(list.mbrRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="mbrRegDt px-4 py-1" th:text="${#dates.format(list.mbrRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 <!--                    수정일시 -->
-                    	<td class="px-4 py-1" th:text="${#dates.format(list.mbrUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    	<td class="mbrUdtDt px-4 py-1" th:text="${#dates.format(list.mbrUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 <!--                    작업버튼 -->
                     	<td class="px-6 py-1">
 <!--                     	수정버튼 -->

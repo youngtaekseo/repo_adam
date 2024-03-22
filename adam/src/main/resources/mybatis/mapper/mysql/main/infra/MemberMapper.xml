@@ -10,7 +10,6 @@
 		     , a.mbrType
 		     , a.mbrName
 		     , a.mbrSex
-		     , b.cdcName xsexName
 		     , a.mbrBirthday
 		     , a.mbrEmail
 		     , a.mbrPassword
@@ -18,8 +17,6 @@
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
 		  FROM members a
-		       LEFT JOIN code b
-		              ON b.cdcSeq = a.mbrSex
 		 WHERE 1 = 1
 		 
 		<choose>
@@ -92,7 +89,7 @@
 			, #{mbrSex}
 			<if test="mbrBirthday != null and !mbrBirthday.equals('')">, STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</if>
 			, #{mbrEmail}
-			, SHA2(#{mbrPassword}, 512)
+			, #{mbrPassword}
 			, now()
 			, now()
 			, 0
