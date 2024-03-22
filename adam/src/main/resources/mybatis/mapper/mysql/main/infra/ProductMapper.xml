@@ -19,22 +19,7 @@
 			 , a.pdtRegDt
 			 , a.pdtUdtDt
 			 , a.pdtDelNy
-			 , b.cdcName xpdtTypeNm
-			 , c.cdcName xpdtBrandNm
-			 , SUBSTRING(d.cdcName, 1, 1) xpdtAccidentNm
-			 , e.cdcName xpdtColorNm
-			 , SUBSTRING(f.cdcName, 1, 1) xpdtRecommendNm
 		  FROM product a
-		       LEFT JOIN code b
-		              ON b.cdcSeq = a.pdtTypeCd
-		       LEFT JOIN code c
-		              ON c.cdcSeq = a.pdtBrandCd
-		       LEFT JOIN code d
-		              ON d.cdcSeq = a.pdtAccidentCd
-		       LEFT JOIN code e
-		              ON e.cdcSeq = a.pdtColorCd
-		       LEFT JOIN code f
-		              ON f.cdcSeq = a.pdtRecommendCd	
 		 WHERE 1 = 1
 		 
 		<choose>
@@ -71,29 +56,19 @@
 
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT a.pdtSeq
-			 , b.cdcName pdtTypeCd
-			 , c.cdcName pdtBrandCd
+			 , a.pdtTypeCd
+			 , a.pdtBrandCd
 			 , a.pdtName
-			 , d.cdcName pdtAccidentCd
+			 , a.pdtAccidentCd
 			 , a.pdtYear
 			 , a.pdtRunKm
-			 , e.cdcName pdtColorCd
+			 , a.pdtColorCd
 			 , a.pdtPrice
-			 , f.cdcName pdtRecommendCd
+			 , a.pdtRecommendCd
 			 , a.pdtRegDt
 			 , a.pdtUdtDt
 			 , a.pdtDelNy
 		  FROM product a
-		       LEFT JOIN code b
-		              ON b.cdcSeq = a.pdtTypeCd
-		       LEFT JOIN code c
-		              ON c.cdcSeq = a.pdtBrandCd
-		       LEFT JOIN code d
-		              ON d.cdcSeq = a.pdtAccidentCd
-		       LEFT JOIN code e
-		              ON e.cdcSeq = a.pdtColorCd
-		       LEFT JOIN code f
-		              ON e.cdcSeq = a.pdtRecommendCd	
 		 WHERE 1 = 1		
            AND a.pdtSeq = #{pdtSeq}	
 	</select>	

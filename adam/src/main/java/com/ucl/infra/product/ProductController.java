@@ -54,13 +54,13 @@ public class ProductController {
 	// 삭제
 	@RequestMapping(value = "/productSdmDelete")
 	public String productSdmDelete(ProductDto dto) throws Exception {
-		service.update(dto);
+		service.delete(dto);
 		return "redirect:/productSdmList";
 	}
 	
 	// 삭제여부수정
-	@RequestMapping(value = "/productSdmUdtDelNy")
-	public String productSdmUdtDelNy(ProductDto dto) throws Exception {
+	@RequestMapping(value = "/productSdmDelNy")
+	public String productSdmDelNy(ProductDto dto) throws Exception {
 		service.updateDelNy(dto);
 		return "redirect:/productSdmList";
 	}

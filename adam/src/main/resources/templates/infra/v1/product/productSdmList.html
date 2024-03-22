@@ -339,12 +339,12 @@
 
                 <div class="flex flex-col md:flex-row">
                     <div class="md:h-auto md:w-1/2 mr-3">
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            id="shCarType" name="shCarType">
-                            <option value=""  th:selected="${vo.shCarType == null}">차종</option>
-                            <option value="5" th:selected="${vo.shCarType == 1}">중형차</option>
-                            <option value="6" th:selected="${vo.shCarType == 2}">대형차</option>
-                        </select>
+						<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+							id="shCarType" name="shCarType">
+							<option value=""  th:selected="${vo.shCarType == null}">차종</option>
+							<option th:each="list : ${@codeService.selectListCachedCode(3)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq} == ${vo?.shCarType}"></option>
+															
+						</select>	                        
                     </div>
                                     
                     <!-- 검색구분 -->
@@ -353,18 +353,15 @@
                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             id="shCarBrand" name="shCarBrand">
                             <option value=""  th:selected="${vo.shCarBrand == null}">브랜드</option>
-                            <option value="7" th:selected="${vo.shCarBrand == 1}">현대</option>
-                            <option value="8" th:selected="${vo.shCarBrand == 2}">제네시스</option>
-                            <option value="9" th:selected="${vo.shCarBrand == 3}">기아</option>
+                            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq} == ${vo?.shCarColor}"></option>
                         </select>
                     </div>
                     
                     <div class="md:h-auto md:w-1/2 mr-3">
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             id="shCarColor" name="shCarColor">
-                            <option value=""   th:selected="${vo.shCarColor == null}">색상</option>
-                            <option value="10" th:selected="${vo.shCarColor == 1}">검정색</option>
-                            <option value="21" th:selected="${vo.shCarColor == 2}">흰색</option>
+                            <option value="" th:selected="${vo.shCarColor == null}">색상</option>
+                            <option th:each="list : ${@codeService.selectListCachedCode(5)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq} == ${vo?.shCarColor}"></option>
                         </select>
                     </div>
                     
@@ -372,8 +369,7 @@
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             id="shRecommend" name="shRecommend">
                             <option value=""   th:selected="${vo.shRecommend == null}">추천여부</option>
-                            <option value="16" th:selected="${vo.shRecommend == 1}">추천</option>
-                            <option value="17" th:selected="${vo.shRecommend == 2}">비추천</option>
+                            <option th:each="list : ${@codeService.selectListCachedCode(8)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq} == ${vo?.shRecommend}"></option>
                         </select>
                         <span style="visibility:hidden;">&nbsp;</span>
                     </div>
@@ -454,8 +450,7 @@
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             id="shAccident" name="shAccident">
                             <option value=""   th:selected="${vo.shAccident == null}">사고유무</option>
-                            <option value="14" th:selected="${vo.shAccident == 1}">무사고</option>
-                            <option value="15" th:selected="${vo.shAccident == 2}">유사고</option>
+                            <option th:each="list : ${@codeService.selectListCachedCode(7)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shAccident}"></option>
                         </select>
                     </div>
                                     
@@ -560,6 +555,12 @@
                   
                   <!-- 조회결과 리스트 내용 -->
                   <tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  	<tr th:if="${#lists.isEmpty(list)}">
+                  		<td colspan="15" class="text-center text-purple-600"> 
+							There is no data !!!
+                  		</td>
+                  	</tr>
+                  	                  
                   	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 <!--                   	체크박스 -->
                   		<td class="px-2 py-1">
@@ -570,13 +571,13 @@
 <!--                   	순번 -->                    	
                     	<td id="seq" class="px-1 py-1" th:text="${list.pdtSeq}"></td>
 <!--                   	차종 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.xpdtTypeNm}"></td>
+                    	<td class="px-4 py-1" th:text="${@codeService.selectOneCachedCode(list.pdtTypeCd)}"></td>
 <!--                   	브랜드 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.xpdtBrandNm}"></td>
+                    	<td class="px-4 py-1" th:text="${@codeService.selectOneCachedCode(list.pdtBrandCd)}"></td>
 <!--                   	상품명 -->                    	
                     	<td class="px-4 py-1" th:text="${list.pdtName}"></td>
 <!--                   	색상 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.xpdtColorNm}"></td>
+                    	<td class="px-4 py-1" th:text="${@codeService.selectOneCachedCode(list.pdtColorCd)}"></td>
 <!--                   	연식 -->                    	
                     	<td class="px-4 py-1" th:text="${list.pdtYear}"></td>
 <!--                   	주행기록 -->                    	
@@ -587,13 +588,13 @@
 <!--                   	사고유무 -->             
                     	<td class="px-4 py-1">
                       		<span class="px-2 py-1 font-semibold leading-tight text-blue-500 bg-blue-100 rounded-full dark:bg-blue-500 dark:text-blue-100"
-								 th:text="${list.xpdtAccidentNm}">
+								 th:text="${#strings.substring(@codeService.selectOneCachedCode(list.pdtAccidentCd),0,1)}">
                       		</span>                    	
                     	</td>
 <!--                   	추천여부 -->                    	
                     	<td class="px-4 py-1">
                       		<span class="px-2 py-1 font-semibold leading-tight text-blue-500 bg-blue-100 rounded-full dark:bg-blue-500 dark:text-blue-100"
-								 th:text="${list.xpdtRecommendNm}">
+								 th:text="${#strings.substring(@codeService.selectOneCachedCode(list.pdtRecommendCd),0,1)}">
                       		</span>                     	
                     	</td>
 <!--                   	삭제여부 -->                                	
@@ -916,6 +917,10 @@
 		let shOptionRunKm	= document.querySelector("select[name=shOptionRunKm]");
 		let shOptionRunKmTo	= document.querySelector("input[name=shOptionRunKmTo]");
 		
+		// 연식
+		let shOptionYear	= document.querySelector("select[name=shOptionYear]");
+		let shOptionYearTo	= document.querySelector("input[name=shOptionYearTo]");
+		
 		// 사고유무
 		let shAccident		= document.querySelector("select[name=shAccident]");
 		
@@ -1035,6 +1040,9 @@
 
 			shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			shValueValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+			shOptionYearTo.setAttribute("style", "visibility:hidden;");
 		};
 		
 // ============================================================================

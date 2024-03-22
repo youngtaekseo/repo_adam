@@ -18,11 +18,6 @@ public class ProductDto {
 	private Integer pdtDelNy;
 	
 	private Integer xpdtCount;
-	private String xpdtTypeNm;
-	private String xpdtBrandNm;
-	private String xpdtAccidentNm;
-	private String xpdtColorNm;
-	private String xpdtRecommendNm;	
 //=============================================================================
 	public String getPdtSeq() {
 		return pdtSeq;
@@ -107,35 +102,5 @@ public class ProductDto {
 	}
 	public void setXpdtCount(Integer xpdtCount) {
 		this.xpdtCount = xpdtCount;
-	}
-	public String getXpdtTypeNm() {
-		return xpdtTypeNm;
-	}
-	public void setXpdtTypeNm(String xpdtTypeNm) {
-		this.xpdtTypeNm = xpdtTypeNm;
-	}
-	public String getXpdtBrandNm() {
-		return xpdtBrandNm;
-	}
-	public void setXpdtBrandNm(String xpdtBrandNm) {
-		this.xpdtBrandNm = xpdtBrandNm;
-	}
-	public String getXpdtAccidentNm() {
-		return xpdtAccidentNm;
-	}
-	public void setXpdtAccidentNm(String xpdtAccidentNm) {
-		this.xpdtAccidentNm = xpdtAccidentNm;
-	}
-	public String getXpdtColorNm() {
-		return xpdtColorNm;
-	}
-	public void setXpdtColorNm(String xpdtColorNm) {
-		this.xpdtColorNm = xpdtColorNm;
-	}
-	public String getXpdtRecommendNm() {
-		return xpdtRecommendNm;
-	}
-	public void setXpdtRecommendNm(String xpdtRecommendNm) {
-		this.xpdtRecommendNm = xpdtRecommendNm;
 	}
 }
