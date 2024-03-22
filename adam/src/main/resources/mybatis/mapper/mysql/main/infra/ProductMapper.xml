@@ -53,8 +53,8 @@
 	
          ORDER BY a.pdtSeq DESC 
          
-    	 LIMIT #{rowCount}
-    	OFFSET #{offset}         
+    	 LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}         
 	</select>
 
 	<select id="selectOne" resultMap="resultMapObj">
@@ -73,7 +73,7 @@
 			 , a.pdtDelNy
 		  FROM product a
 		 WHERE 1 = 1		
-           AND a.pdtSeq = #{pdtSeq}	
+           AND a.pdtSeq = #{pdtSeq}
 	</select>	
 	
 	<insert id="insert">
@@ -196,7 +196,7 @@
     
     <!-- 카운팅 -->
     <select id="getCount">
-        SELECT COUNT(*) xpdtCount
+        SELECT COUNT(*)
           FROM product a
          WHERE 1 = 1
 		<choose>

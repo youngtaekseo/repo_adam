@@ -20,17 +20,12 @@ public class ProductController {
 	
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
-	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model, @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model, @RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
 		UtilFunction.setSearch(vo);
-//		model.addAttribute("list", service.selectList(vo));
+		vo.setProductVo(service.getCount(vo), page);
 		
-//		ProductVo paginationVo = 
-		new ProductVo().setProductVo(service.getCount(vo), page); // 모든 게시글 개수 구하기.
-		List<ProductDto> list = service.selectList(vo);
-
 		model.addAttribute("list", service.selectList(vo));
 		model.addAttribute("page", page);
-		model.addAttribute("pageVo", vo);
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
