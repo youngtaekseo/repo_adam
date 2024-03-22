@@ -4,17 +4,17 @@ import com.ucl.common.base.BaseVo;
 
 public class ProductVo extends BaseVo {
 	private String shSeq;
-	private Integer shCarType; 			// 1:중형차, 2:대형차
-	private Integer shCarBrand; 		// 1:현대, 2:제네시스, 3:기아
-	private Integer shCarColor; 		// 1:검정색, 2:흰색
-	private Integer shRecommend; 		// 1:추천, 2:비추천
-	private Integer shAccident; 		// 1:무사고, 2:유사고
-	private Integer shOptionRunKm; 		// 주행기록
-	private Integer shOptionRunKmFrom; 	// 주행기록 시작값
-	private Integer shOptionRunKmTo;   	// 주행기록 종료값
-	private Integer shOptionYear; 		// 연식
-	private Integer shOptionYearFrom; 	// 연식 시작값
-	private Integer shOptionYearTo;   	// 연식 종료값
+	private Integer shCarType     = null; 	// 1:중형차, 2:대형차
+	private Integer shCarBrand    = null; 	// 1:현대, 2:제네시스, 3:기아
+	private Integer shCarColor    = null; 	// 1:검정색, 2:흰색
+	private Integer shRecommend   = null; 	// 1:추천, 2:비추천
+	private Integer shAccident    = null; 	// 1:무사고, 2:유사고
+	private Integer shOptionRunKm = null;	// 주행기록
+	private Integer shOptionRunKmFrom; 		// 주행기록 시작값
+	private Integer shOptionRunKmTo;   		// 주행기록 종료값
+	private Integer shOptionYear  = null;	// 연식
+	private Integer shOptionYearFrom; 		// 연식 시작값
+	private Integer shOptionYearTo;   		// 연식 종료값
 	
 //=============================================================================
 	
