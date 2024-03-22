@@ -34,5 +34,8 @@ public class ProductService {
 	public int updateDelNy(ProductDto dto) {
 		return dao.updateDelNy(dto);
 	}
-		
+	
+	public int getCount(ProductVo vo) {
+		return dao.getCount(vo);
+	}	
 }

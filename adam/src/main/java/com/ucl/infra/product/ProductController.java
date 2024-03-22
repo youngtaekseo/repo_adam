@@ -1,10 +1,13 @@
 package com.ucl.infra.product;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
@@ -17,9 +20,18 @@ public class ProductController {
 	
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
-	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
+	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model, @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 		UtilFunction.setSearch(vo);
+//		model.addAttribute("list", service.selectList(vo));
+		
+//		ProductVo paginationVo = 
+		new ProductVo().setProductVo(service.getCount(vo), page); // 모든 게시글 개수 구하기.
+		List<ProductDto> list = service.selectList(vo);
+
 		model.addAttribute("list", service.selectList(vo));
+		model.addAttribute("page", page);
+		model.addAttribute("pageVo", vo);
+		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
 	

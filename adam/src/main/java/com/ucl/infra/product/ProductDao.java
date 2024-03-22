@@ -11,4 +11,6 @@ public interface ProductDao {
 	public int delete(ProductDto dto);
 	
 	public int updateDelNy(ProductDto dto);
+	
+	public int getCount(ProductVo vo);   	
 }

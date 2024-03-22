@@ -52,6 +52,9 @@
 		<if test="shDelNy 	  != null and !shDelNy.equals('')">    AND a.pdtDelNy       = #{shDelNy}</if>
 	
          ORDER BY a.pdtSeq DESC 
+         
+    	 LIMIT #{rowCount}
+    	OFFSET #{offset}         
 	</select>
 
 	<select id="selectOne" resultMap="resultMapObj">
@@ -139,5 +142,91 @@
          WHERE 1 = 1		
            AND pdtSeq = #{pdtSeq}
 	</delete>
+	
+    <select id="findAll" resultMap="resultMapObj">
+		SELECT a.pdtSeq
+			 , a.pdtTypeCd
+			 , a.pdtBrandCd
+			 , a.pdtName
+			 , a.pdtAccidentCd
+			 , a.pdtYear
+			 , a.pdtRunKm
+			 , a.pdtColorCd
+			 , a.pdtPrice
+			 , a.pdtRecommendCd
+			 , a.pdtRegDt
+			 , a.pdtUdtDt
+			 , a.pdtDelNy
+		  FROM product a
+		 WHERE 1 = 1
+		 
+		<choose>
+			<when test="shOptionDate == 1">AND a.pdtRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.pdtUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+		
+		<choose>
+			<when test="shOption == 1">AND a.pdtName  LIKE CONCAT('%', #{shValue}, '%')</when>
+			<when test="shOption == 2">AND a.pdtEmail LIKE CONCAT('%', #{shValue}, '%')</when>
+		</choose>
+		
+		<choose>
+			<when test="shOptionRunKm == 1">AND a.pdtRunKm  BETWEEN #{shOptionRunKmFrom} AND #{shOptionRunKmTo}</when>
+			<when test="shOptionRunKm == 2">AND a.pdtRunKm <![CDATA[<=]]> #{shOptionRunKmFrom}</when>
+			<when test="shOptionRunKm == 3">AND a.pdtRunKm >= #{shOptionRunKmFrom}</when>
+		</choose>	
+		
+		<choose>
+			<when test="shOptionYear == 1">AND a.pdtYear  BETWEEN #{shOptionYearFrom} AND #{shOptionYearTo}</when>
+			<when test="shOptionYear == 2">AND a.pdtYear <![CDATA[<=]]> #{shOptionYearFrom}</when>
+			<when test="shOptionYear == 3">AND a.pdtYear >= #{shOptionYearFrom}</when>
+		</choose>			
+
+		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd      = #{shCarType}</if>
+		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pdtBrandCd     = #{shCarBrand}</if>
+		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd     = #{shCarColor}</if>
+		<if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
+		<if test="shAccident  != null and !shAccident.equals('')"> AND a.pdtAccidentCd  = #{shAccident}</if>
+		<if test="shDelNy 	  != null and !shDelNy.equals('')">    AND a.pdtDelNy       = #{shDelNy}</if>
+	
+         ORDER BY a.pdtSeq DESC 
+         LIMIT #{UtilPaging.limitStart}, #{recordSize}         
+    </select>
+    
+    
+    <!-- 카운팅 -->
+    <select id="getCount">
+        SELECT COUNT(*) xpdtCount
+          FROM product a
+         WHERE 1 = 1
+		<choose>
+			<when test="shOptionDate == 1">AND a.pdtRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.pdtUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+		
+		<choose>
+			<when test="shOption == 1">AND a.pdtName  LIKE CONCAT('%', #{shValue}, '%')</when>
+			<when test="shOption == 2">AND a.pdtEmail LIKE CONCAT('%', #{shValue}, '%')</when>
+		</choose>
+		
+		<choose>
+			<when test="shOptionRunKm == 1">AND a.pdtRunKm  BETWEEN #{shOptionRunKmFrom} AND #{shOptionRunKmTo}</when>
+			<when test="shOptionRunKm == 2">AND a.pdtRunKm <![CDATA[<=]]> #{shOptionRunKmFrom}</when>
+			<when test="shOptionRunKm == 3">AND a.pdtRunKm >= #{shOptionRunKmFrom}</when>
+		</choose>	
+		
+		<choose>
+			<when test="shOptionYear == 1">AND a.pdtYear  BETWEEN #{shOptionYearFrom} AND #{shOptionYearTo}</when>
+			<when test="shOptionYear == 2">AND a.pdtYear <![CDATA[<=]]> #{shOptionYearFrom}</when>
+			<when test="shOptionYear == 3">AND a.pdtYear >= #{shOptionYearFrom}</when>
+		</choose>			
+
+		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd      = #{shCarType}</if>
+		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pdtBrandCd     = #{shCarBrand}</if>
+		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd     = #{shCarColor}</if>
+		<if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
+		<if test="shAccident  != null and !shAccident.equals('')"> AND a.pdtAccidentCd  = #{shAccident}</if>
+		<if test="shDelNy 	  != null and !shDelNy.equals('')">    AND a.pdtDelNy       = #{shDelNy}</if>
+    </select>	
 
 </mapper>
