@@ -62,8 +62,6 @@ public class CodeService {
 	}    
 	
 	public static List<CodeDto> selectListCachedCode(String cdgSeq) throws Exception {
-		System.out.println("cdgSeq : " + cdgSeq);
-		
 		List<CodeDto> rt = new ArrayList<CodeDto>();
 		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
 			if (codeRow.getCdgSeq().equals(cdgSeq)) {
