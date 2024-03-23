@@ -1,7 +1,5 @@
 package com.ucl.infra.product;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +18,21 @@ public class ProductController {
 	
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
-	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model, @RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
+	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model,
+								 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+		System.out.println("1 vo.getShCarType() : " + vo.getShCarType());
 		UtilFunction.setSearch(vo);
-		vo.setProductVo(service.getCount(vo), page);
+		System.out.println("2 vo.getShCarType() : " + vo.getShCarType());
+		vo.setPagingVo(service.getCount(vo), page);
+		System.out.println("3 vo.getShCarType() : " + vo.getShCarType());
 		
 		model.addAttribute("list", service.selectList(vo));
+		System.out.println("4 vo.getShCarType() : " + vo.getShCarType());
 		model.addAttribute("page", page);
+		System.out.println("5 vo.getShCarType() : " + vo.getShCarType());
+		model.addAttribute("vo", vo);
+		
+		System.out.println("vo.getShCarType() : " + vo.getShCarType());
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}

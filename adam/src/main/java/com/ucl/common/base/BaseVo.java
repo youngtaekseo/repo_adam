@@ -15,22 +15,21 @@ public class BaseVo {
      * 인덱스: 특정 페이지에서 특정 게시물을 지시하는 숫자
      */
 
-	private int     pgRowCount  = 3;    // 한 페이지 당 보여줄 게시물 개수
-	private int     pgPageCount = 3;     // 한 블럭에 몇 개의 페이지 개수
-	private int     pgTotalCount;        // 총 게시물 개수
-//	private int     pgPage;              // 현재 페이지
+	private int     pgRowCount  = 3;  // 한 페이지 당 보여줄 게시물 개수
+	private int     pgPageCount = 2;  // 한 블럭에 몇 개의 페이지 개수
+	private int     pgTotalCount;     // 총 게시물 개수
 	
-	private int     pgStartPage = 1;     // 한 블럭의 시작 페이지: 기본 값 1 // ex) 1 2 3 4 5 일 때 1을 의미.
-	private int     pgEndPage;           // 한 블럭의 끝 페이지
+	private int     pgStartPage = 1;  // 한 블럭의 시작 페이지: 기본 값 1 // ex) 1 2 3 4 5 일 때 1을 의미.
+	private int     pgEndPage;        // 한 블럭의 끝 페이지
 
-	private int     pgTotalPageCount;    // 총 페이지 개수
+	private int     pgTotalPageCount; // 총 페이지 개수
 
 	private boolean pgIsPrev = false; // 다음 페이지로 이동하는 버튼 유무
 	private boolean pgIsNext = false; // 이전 페이지로 이동하는 버튼 유무
 
-	private int		pgOffset;            // 얼만큼 끊어서 가져올 것인가.
+	private int		pgOffset;         // 얼만큼 끊어서 가져올 것인가.
 
-    public void setProductVo(int totalCount, int page) {
+    public void setPagingVo(int totalCount, int page) {
     	
 		// 총 페이지 개수 구하기
 		setPgTotalPageCount(totalCount, this.pgRowCount); 
@@ -97,10 +96,6 @@ public class BaseVo {
 	public int getPgTotalCount() {
 		return pgTotalCount;
 	}
-
-//	public int getPgPage() {
-//		return pgPage;
-//	}
 
 	public int getPgStartPage() {
 		return pgStartPage;
