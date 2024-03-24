@@ -1,5 +1,8 @@
 package com.ucl.common.util;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.ucl.common.base.BaseVo;
 import com.ucl.common.constants.Commvar;
 
@@ -23,5 +26,5 @@ public class UtilFunction {
 //		/* 초기값 세팅이 없는 경우 사용 */
 //		vo.setShDateStart(vo.getShDateStart() == null || vo.getShDateStart() == "" ? null : UtilDateTime.add00TimeString(vo.getShDateStart()));
 //		vo.setShDateEnd(vo.getShDateEnd() == null || vo.getShDateEnd() == "" ? null : UtilDateTime.add59TimeString(vo.getShDateEnd()));
-	}		
+	}
 }

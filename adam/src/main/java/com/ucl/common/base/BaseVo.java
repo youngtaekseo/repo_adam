@@ -28,8 +28,10 @@ public class BaseVo {
 	private boolean pgIsNext = false; // 이전 페이지로 이동하는 버튼 유무
 
 	private int		pgOffset;         // 얼만큼 끊어서 가져올 것인가.
+	
+	private String 	uri;
 
-    public void setPagingVo(int totalCount, int page) {
+	public void setPagingVo(int totalCount, int page) {
     	
 		// 총 페이지 개수 구하기
 		setPgTotalPageCount(totalCount, this.pgRowCount); 
@@ -120,6 +122,14 @@ public class BaseVo {
 	public int getPgOffset() {
 		return pgOffset;
 	} 
+	
+    public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}	
 	
 	//=============================================================================
 	

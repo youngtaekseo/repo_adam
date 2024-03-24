@@ -1,12 +1,17 @@
 package com.ucl.infra.product;
 
+import java.net.URLEncoder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ucl.common.base.BaseVo;
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
 
@@ -20,19 +25,13 @@ public class ProductController {
 	@RequestMapping(value = "/productSdmList")
 	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model,
 								 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
-		System.out.println("1 vo.getShCarType() : " + vo.getShCarType());
 		UtilFunction.setSearch(vo);
-		System.out.println("2 vo.getShCarType() : " + vo.getShCarType());
 		vo.setPagingVo(service.getCount(vo), page);
-		System.out.println("3 vo.getShCarType() : " + vo.getShCarType());
 		
 		model.addAttribute("list", service.selectList(vo));
-		System.out.println("4 vo.getShCarType() : " + vo.getShCarType());
 		model.addAttribute("page", page);
-		System.out.println("5 vo.getShCarType() : " + vo.getShCarType());
-		model.addAttribute("vo", vo);
 		
-		System.out.println("vo.getShCarType() : " + vo.getShCarType());
+		setUrl(vo);
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
@@ -78,4 +77,28 @@ public class ProductController {
 		service.updateDelNy(dto);
 		return "redirect:/productSdmList";
 	}
+	
+	// 조회조건 및 페이징정보 포함된 url 생성
+	public void setUrl(ProductVo vo) throws Exception {
+		UriComponents uri = UriComponentsBuilder.newInstance()
+				.queryParam("shDelNy"          , vo.getShDelNy())
+				.queryParam("shOptionDate"     , vo.getShOptionDate())
+				.queryParam("shDateStart"      , vo.getShDateStart())
+				.queryParam("shDateEnd"        , vo.getShDateEnd())
+				.queryParam("shCarType"        , vo.getShCarType())
+				.queryParam("shCarBrand"       , vo.getShCarBrand())
+				.queryParam("shCarColor"       , vo.getShCarColor())
+				.queryParam("shRecommend"      , vo.getShRecommend())
+				.queryParam("shOptionRunKm"    , vo.getShOptionRunKm())
+				.queryParam("shOptionRunKmFrom", vo.getShOptionRunKmFrom())
+				.queryParam("shOptionRunKmTo"  , vo.getShOptionRunKmTo())
+				.queryParam("shOptionYear"     , vo.getShOptionYear())
+				.queryParam("shOptionYearFrom" , vo.getShOptionYearFrom())
+				.queryParam("shOptionYearTo"   , vo.getShOptionYearTo())
+				.queryParam("shAccident"       , vo.getShAccident())
+				.queryParam("shOption"         , vo.getShOption())
+				.queryParam("shValue"          , vo.getShValue())
+				.build();
+		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
+	}	
 }

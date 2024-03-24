@@ -14,4 +14,5 @@ public class Commvar {
 	public static final String TIME_FORMAT_BASIC = "HH:mm:ss";
 	
 	public static final int DATE_INTERVAL = -10;
+	
 }
