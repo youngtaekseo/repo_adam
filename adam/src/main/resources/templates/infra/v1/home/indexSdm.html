@@ -103,26 +103,13 @@
       <!-- Backdrop -->
       <div class="flex flex-col flex-1 w-full">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-          <div
-            class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
-          >
+          <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
             <!-- Mobile hamburger -->
-            <button
-              class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+            <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
               @click="toggleSideMenu"
-              aria-label="Menu"
-            >
-              <svg
-                class="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clip-rule="evenodd"
-                ></path>
+              aria-label="Menu">
+              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
               </svg>
             </button>
             <!-- Search input -->
@@ -171,48 +158,29 @@
               
               <!-- Profile menu -->
               <li class="relative">
-                <button
-                  class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+                <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                   @click="toggleProfileMenu"
                   @keydown.escape="closeProfileMenu"
                   aria-label="Account"
-                  aria-haspopup="true"
-                >
-                  <img
-                    class="object-cover w-8 h-8 rounded-full"
+                  aria-haspopup="true">
+                  <img class="object-cover w-8 h-8 rounded-full"
                     src="sdm/img/face.jpg"
                     alt=""
-                    aria-hidden="true"
-                  />
+                    aria-hidden="true"/>
                 </button>
                 <template x-if="isProfileMenuOpen">
-                  <ul
-                    x-transition:leave="transition ease-in duration-150"
+                  <ul x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
                     @click.away="closeProfileMenu"
                     @keydown.escape="closeProfileMenu"
                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
-                    aria-label="submenu"
-                  >
+                    aria-label="submenu">
                     <li class="flex">
-                      <a
-                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                        href="/loginSdm"
-                      >
-                        <svg
-                          class="w-4 h-4 mr-3"
-                          aria-hidden="true"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                          ></path>
+                      <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="/loginSdm">
+                        <svg class="w-4 h-4 mr-3" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                         </svg>
                         <span>로그아웃</span>
                       </a>
@@ -354,6 +322,8 @@
                     >
                       <th class="px-4 py-3">차종</th>
                       <th class="px-4 py-3">브랜드</th>
+                      <th class="px-4 py-3">색상</th>
+                      <th class="px-4 py-3">연식</th>
                       <th class="px-4 py-3">차량명</th>
                       <th class="px-4 py-3">판매금액</th>
                       <th class="px-4 py-3">판매일시</th>
@@ -389,20 +359,24 @@
 <!--                         </div> -->
 						중형
                       </td>                     
-                      <td class="px-4 py-3 text-sm">
+                      <td class="px-4 py-3">
                         현대
                       </td>                      
-                      <td class="px-4 py-3 text-sm">
+                      <td class="px-4 py-3">
+                        검정색
+                      </td>                      
+                      <td class="px-4 py-3">
+                        2000년
+                      </td>                      
+                      <td class="px-4 py-3">
                         그랜져 2.5 AWD
                       </td>
-                      <td class="px-4 py-3 text-xs">
-                        <span
-                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
+                      <td class="px-4 py-3">
+                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
                           ￦10,000,000
                         </span>
                       </td>
-                      <td class="px-4 py-3 text-sm">
+                      <td class="px-4 py-3">
                         2024-03-08 13:21:33
                       </td>
                     </tr>
@@ -432,22 +406,26 @@
 <!--                             </p> -->
 <!--                           </div> -->
 <!--                         </div> -->
-						중형
+						대형
                       </td>                     
-                      <td class="px-4 py-3 text-sm">
-                        현대
+                      <td class="px-4 py-3">
+                        제네시스
+                      </td>    
+                      <td class="px-4 py-3">
+                        흰색
                       </td>                      
-                      <td class="px-4 py-3 text-sm">
-                        그랜져 2.5 AWD
+                      <td class="px-4 py-3">
+                        2010년
                       </td>
-                      <td class="px-4 py-3 text-xs">
-                        <span
-                          class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:bg-green-700 dark:bg-orange-600"
-                        >
-                          ￦10,000,000
+                      <td class="px-4 py-3">
+                        제네시스
+                      </td>
+                      <td class="px-4 py-3">
+                        <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:bg-green-700 dark:bg-orange-600">
+                          ￦550,000,000
                         </span>
                       </td>
-                      <td class="px-4 py-3 text-sm">
+                      <td class="px-4 py-3">
                         2024-03-08 13:21:33
                       </td>
                     </tr>
