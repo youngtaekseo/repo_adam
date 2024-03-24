@@ -9,6 +9,7 @@ public class ProductDto {
 	private String pdtName;
 	private Integer pdtAccidentCd;
 	private Integer pdtYear;
+	private Integer pdtMonth;
 	private Double pdtRunKm;
 	private Integer pdtColorCd;
 	private Double pdtPrice;
@@ -18,7 +19,9 @@ public class ProductDto {
 	private Integer pdtDelNy;
 	
 	private Integer xpdtCount;
-//=============================================================================
+	private String xpdtYearMonth;
+
+	//=============================================================================
 	public String getPdtSeq() {
 		return pdtSeq;
 	}
@@ -55,6 +58,12 @@ public class ProductDto {
 	public void setPdtYear(Integer pdtYear) {
 		this.pdtYear = pdtYear;
 	}
+	public Integer getPdtMonth() {
+		return pdtMonth;
+	}
+	public void setPdtMonth(Integer pdtMonth) {
+		this.pdtMonth = pdtMonth;
+	}	
 	public Double getPdtRunKm() {
 		return pdtRunKm;
 	}
@@ -103,4 +112,10 @@ public class ProductDto {
 	public void setXpdtCount(Integer xpdtCount) {
 		this.xpdtCount = xpdtCount;
 	}
+	public String getXpdtYearMonth() {
+		return xpdtYearMonth;
+	}
+	public void setXpdtYearMonth(String xpdtYearMonth) {
+		this.xpdtYearMonth = xpdtYearMonth;
+	}	
 }

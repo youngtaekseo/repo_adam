@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>중고조아</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">    
+<!-- 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">     -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="sdm/assets/css/tailwind.output.css">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -343,7 +343,7 @@
                             id="shOptionRunKmFrom" name="shOptionRunKmFrom" placeholder="주행기록"
                             th:text="${vo.shOptionRunKmFrom}"
 							onkeyup="fnOnKeyUp(this)">
-						<span id="shOptionRunKmFromValue" name="shOptionRunKmFromValue" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+						<span id="shOptionRunKmFromValid" name="shOptionRunKmFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 							주행기록 입력하세요
 						</span>                            
                     </div>
@@ -354,7 +354,7 @@
                             id="shOptionRunKmTo" name="shOptionRunKmTo" placeholder="주행기록" style="visibility:hidden;"
                             th:text="${vo.shOptionRunKmTo}"
 							onkeyup="fnOnKeyUp(this)">
-						<span id="shOptionRunKmToValue" name="shOptionRunKmToValue" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+						<span id="shOptionRunKmToValid" name="shOptionRunKmToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 							주행기록 입력하세요
 						</span>                            
                     </div>   
@@ -375,25 +375,49 @@
                     </div>
 
                     <!-- 연식 시작값 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            id="shOptionYearFrom" name="shOptionYearFrom" placeholder="연식"
-                            th:text="${vo.shOptionYearFrom}"
-							onkeyup="fnOnKeyUp(this)">
-						<span id="shOptionYearFromValue" name="shOptionYearFromValue" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-							연식 입력하세요
-						</span>                            
+                    <div class="inline-flex md:h-auto md:w-1/2 mr-3">
+                    	<div class="md:h-auto md:w-1/2 mr-3">
+	                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                            id="shOptionYearFrom" name="shOptionYearFrom" placeholder="연식(년)"
+	                            th:text="${vo.shOptionYearFrom}"
+								onkeyup="fnOnKeyUp(this)">
+							<span id="shOptionYearFromValid" name="shOptionYearFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+								연식(년) 입력하세요
+							</span>                    	
+                    	</div>
+						
+						<div class="md:h-auto md:w-1/2">
+	                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                            id="shOptionMonthFrom" name="shOptionMonthFrom" placeholder="연식(월)"
+	                            th:text="${vo.shOptionMonthFrom}"
+								onkeyup="fnOnKeyUp(this)">
+							<span id="shOptionMonthFromValid" name="shOptionMonthFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+								연식(월) 입력하세요
+							</span> 						
+						</div>
                     </div>
                     
                     <!-- 연식 종료값 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            id="shOptionYearTo" name="shOptionYearTo" placeholder="연식" style="visibility:hidden;"
-                            th:text="${vo.shOptionYearTo}"
-							onkeyup="fnOnKeyUp(this)">
-						<span id="shOptionYearToValue" name="shOptionYearToValue" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-							연식 입력하세요
-						</span>                            
+                    <div class="inline-flex md:h-auto md:w-1/2 mr-3">
+                    	<div class="md:h-auto md:w-1/2 mr-3">
+	                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                            id="shOptionYearTo" name="shOptionYearTo" placeholder="연식(년)" style="visibility:hidden;"
+	                            th:text="${vo.shOptionYearTo}"
+								onkeyup="fnOnKeyUp(this)">
+							<span id="shOptionYearToValid" name="shOptionYearToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+								연식(년) 입력하세요
+							</span>                            
+                    	</div>
+                    	
+						<div class="md:h-auto md:w-1/2">
+	                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                            id="shOptionMonthTo" name="shOptionMonthTo" placeholder="연식(월)" style="visibility:hidden;"
+	                            th:text="${vo.shOptionMonthTo}"
+								onkeyup="fnOnKeyUp(this)">
+							<span id="shOptionMonthToValid" name="shOptionMonthToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+								연식(월) 입력하세요
+							</span> 						
+						</div>                    	
                     </div>   
                     
                     <div class="md:h-auto md:w-1/2 mr-3"></div>               
@@ -413,8 +437,7 @@
                         <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                             id="shOption" name="shOption">
                             <option value=""  th:selected="${vo.shOption == null}">검색구분</option>
-                            <option value="1" th:selected="${vo.shOption == 1}">성명</option>
-                            <option value="2" th:selected="${vo.shOption == 2}">이메일</option>
+                            <option value="1" th:selected="${vo.shOption == 1}">차량명</option>
                         </select>
                     </div>
 
@@ -488,7 +511,7 @@
                       <th class="px-4 py-1">브랜드</th>
                       <th class="px-4 py-1">차량명</th>
                       <th class="px-4 py-1">색상</th>
-                      <th class="px-4 py-1">연식</th>
+                      <th class="px-4 py-1">연식(년/월)</th>
                       <th class="px-4 py-1">주행기록</th>
                       <th class="px-4 py-1">판매가격</th>
                       <th class="px-4 py-1">사고유무</th>
@@ -526,7 +549,7 @@
 						<!-- 색상 -->                    	
                     	<td class="px-4 py-1" th:text="${@codeService.selectOneCachedCode(list.pdtColorCd)}"></td>
 						<!-- 연식 -->                    	
-                    	<td class="px-4 py-1" th:text="${list.pdtYear}"></td>
+                    	<td class="px-4 py-1" th:text="${list.xpdtYearMonth}"></td>
 						<!-- 주행기록 -->                    	
                     	<td class="px-4 py-1" th:text="${list.pdtRunKm}"></td>
 						<!-- 판매가격 -->                    	
@@ -835,12 +858,25 @@
 		let shRecommend		= document.querySelector("select[name=shRecommend]");
 
 		// 주행기록
-		let shOptionRunKm	= document.querySelector("select[name=shOptionRunKm]");
-		let shOptionRunKmTo	= document.querySelector("input[name=shOptionRunKmTo]");
+		let shOptionRunKm			= document.querySelector("select[name=shOptionRunKm]");
+		let shOptionRunKmTo			= document.querySelector("input[name=shOptionRunKmTo]");
+
+		let shOptionRunKmFromValid	= document.querySelector("span[name=shOptionRunKmFromValid]");
+		let shOptionRunKmToValid	= document.querySelector("span[name=shOptionRunKmToValid]");
 		
 		// 연식
-		let shOptionYear	= document.querySelector("select[name=shOptionYear]");
-		let shOptionYearTo	= document.querySelector("input[name=shOptionYearTo]");
+		let shOptionYear			= document.querySelector("select[name=shOptionYear]");
+		let shOptionYearFrom		= document.querySelector("input[name=shOptionYearFrom]");
+		let shOptionYearFromValid	= document.querySelector("span[name=shOptionYearFromValid]");
+		
+		let shOptionYearTo			= document.querySelector("input[name=shOptionYearTo]");
+		let shOptionYearToValid		= document.querySelector("span[name=shOptionYearToValid]");
+		
+		let shOptionMonthFrom		= document.querySelector("input[name=shOptionMonthFrom]");
+		let shOptionMonthFromValid	= document.querySelector("span[name=shOptionMonthFromValid]");
+		
+		let shOptionMonthTo			= document.querySelector("input[name=shOptionMonthTo]");
+		let shOptionMonthToValid	= document.querySelector("span[name=shOptionMonthToValid]");
 		
 		// 사고유무
 		let shAccident		= document.querySelector("select[name=shAccident]");
@@ -864,8 +900,8 @@
 		let goUrlSdmUdtDelNy= "/productSdmUdtDelNy";/* 삭제여부-삭제로변경 */
 		
 		// 필수입력체크대상
-		let nameArr = ["shDateStart", "shDateEnd", "shValue", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo"];
-		let textArr = ["시작일자 입력하세요", "종료일자 입력하세요", "검색어 입력하세요", "주행기록 입력하세요", "주행기록 입력하세요", "연식 입력하세요", "연식 입력하세요"];	
+		let nameArr = ["shDateStart", "shDateEnd", "shValue", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo", "shOptionMonthFrom", "shOptionMonthTo"];
+		let textArr = ["시작일자 입력하세요", "종료일자 입력하세요", "검색어 입력하세요", "주행기록 입력하세요", "주행기록 입력하세요", "연식(년) 입력하세요", "연식(년) 입력하세요", "연식(월) 입력하세요", "연식(월) 입력하세요"];	
 
 // ============================================================================
 // event
@@ -903,6 +939,14 @@
 				switch(obj.name) {
 				case "shValue" :
 					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+					break;
+				case "shOptionYearFrom" :
+				case "shOptionMonthFrom" :
+				case "shOptionYearTo" :
+				case "shOptionMonthTo" :
+				case "shOptionRunKmFrom" :
+				case "shOptionRunKmTo" :
+					regExp= /[^0-9]/g;
 					break;
 				};
 				
@@ -943,10 +987,12 @@
 			switch(shOptionYear.value) {
 			case "1" :
 				shOptionYearTo.setAttribute("style", "");
+				shOptionMonthTo.setAttribute("style", "");
 				break;
 			case "2" :
 			case "3" :
 				shOptionYearTo.setAttribute("style", "visibility:hidden;");
+				shOptionMonthTo.setAttribute("style", "visibility:hidden;");
 				break;				
 			};
 		};
@@ -962,30 +1008,50 @@
 			shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			shValueValid.setAttribute("style", "visibility:hidden;");
 			
+			shOptionRunKmFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionRunKmTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");			
 			shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+			shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionYearFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionMonthFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionYearTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			shOptionYearTo.setAttribute("style", "visibility:hidden;");
+			shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionMonthTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionMonthTo.setAttribute("style", "visibility:hidden;");
+			shOptionMonthToValid.setAttribute("style", "visibility:hidden;");
 		};
 		
 		// 페이지 리스트 갯수 변경 이벤트
 		$("#pgRowCount").on("change", function(){
-			let url = "shDelNy="           +$("#shDelNy").val()
-				    + "&shOptionDate="     +$("#shOptionDate").val()
-				    + "&shDateStart="      +$("#shDateStart").val()
-				    + "&shDateEnd="        +$("#shDateEnd").val()
-				    + "&shCarType="        +$("#shCarType").val()
-				    + "&shCarBrand="       +$("#shCarBrand").val()
-				    + "&shCarColor="       +$("#shCarColor").val()
-				    + "&shRecommend="      +$("#shRecommend").val()
-				    + "&shOptionRunKm="    +$("#shOptionRunKm").val()
-				    + "&shOptionRunKmFrom="+$("#shOptionRunKmFrom").val()
-				    + "&shOptionRunKmTo="  +$("#shOptionRunKmTo").val()
-				    + "&shOptionYear="     +$("#shOptionYear").val()
-				    + "&shOptionYearFrom=" +$("#shOptionYearFrom").val()
-				    + "&shOptionYearTo="   +$("#shOptionYearTo").val()
-				    + "&shAccident="       +$("#shAccident").val()
-				    + "&shOption="         +$("#shOption").val()
-				    + "&shValue="          +$("#shValue").val()
-				    + "&pgRowCount="       +$("#pgRowCount").val();
+			let url = "shDelNy="            +$("#shDelNy").val()
+				    + "&shOptionDate="      +$("#shOptionDate").val()
+				    + "&shDateStart="       +$("#shDateStart").val()
+				    + "&shDateEnd="         +$("#shDateEnd").val()
+				    + "&shCarType="         +$("#shCarType").val()
+				    + "&shCarBrand="        +$("#shCarBrand").val()
+				    + "&shCarColor="        +$("#shCarColor").val()
+				    + "&shRecommend="       +$("#shRecommend").val()
+				    + "&shOptionRunKm="     +$("#shOptionRunKm").val()
+				    + "&shOptionRunKmFrom=" +$("#shOptionRunKmFrom").val()
+				    + "&shOptionRunKmTo="   +$("#shOptionRunKmTo").val()
+				    + "&shOptionYear="      +$("#shOptionYear").val()
+				    + "&shOptionYearFrom="  +$("#shOptionYearFrom").val()
+				    + "&shOptionMonthrFrom="+$("#shOptionMonthFrom").val()
+				    + "&shOptionYearTo="    +$("#shOptionYearTo").val()
+				    + "&shOptionMonthTo="   +$("#shOptionMonthTo").val()
+				    + "&shAccident="        +$("#shAccident").val()
+				    + "&shOption="          +$("#shOption").val()
+				    + "&shValue="           +$("#shValue").val()
+				    + "&pgRowCount="        +$("#pgRowCount").val();
 			location.href="/productSdmList?"+url;
 		});
 		
@@ -1029,6 +1095,18 @@
 						} else {
 							loopChk = false;
 						};							
+					} else if(nameArr[i] === "shOptionRunKmFrom" || nameArr[i] === "shOptionRunKmTo") { // 주행기록
+						if(shOptionRunKm.value != "") {
+							loopChk = true;
+						} else {
+							loopChk = false;
+						};							
+					} else if(nameArr[i] === "shOptionYearFrom" || nameArr[i] === "shOptionMonthFrom" || nameArr[i] === "shOptionYearTo" || nameArr[i] === "shOptionMonthTo") { // 연식
+						if(shOptionYear.value != "") {
+							loopChk = true;
+						} else {
+							loopChk = false;
+						};							
 					};
 					
 					if(loopChk) {
@@ -1038,7 +1116,11 @@
 							validName = nameArr[i]+"Valid";
 							objValid = document.querySelector("span[name="+validName+"]");
 							
-							validChk = fnValidationIn(obj, text, objValid);
+							if((nameArr[i] === "shOptionYearTo" || nameArr[i] === "shOptionMonthTo") && (shOptionYear.value != "1")){
+								validChk = true;
+							} else {
+								validChk = fnValidationIn(obj, text, objValid);	
+							};
 
 							if(submitChk) {
 								submitChk = validChk;

@@ -95,6 +95,8 @@ public class ProductController {
 				.queryParam("shOptionYear"     , vo.getShOptionYear())
 				.queryParam("shOptionYearFrom" , vo.getShOptionYearFrom())
 				.queryParam("shOptionYearTo"   , vo.getShOptionYearTo())
+				.queryParam("shOptionMonthFrom", vo.getShOptionMonthFrom())
+				.queryParam("shOptionMonthTo"  , vo.getShOptionMonthTo())
 				.queryParam("shAccident"       , vo.getShAccident())
 				.queryParam("shOption"         , vo.getShOption())
 				.queryParam("shValue"          , vo.getShValue())

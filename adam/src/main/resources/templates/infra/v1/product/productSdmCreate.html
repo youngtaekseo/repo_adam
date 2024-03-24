@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>중고조아</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="sdm/assets/css/tailwind.output.css" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer ></script>
@@ -308,17 +308,32 @@
 						</div>
 				  								
 						<div class="flex flex-col md:flex-row mt-4 mb-4">
-				    		<div class="md:h-auto mr-3 md:w-1/2">
-				      			<label class="block text-sm">
-				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
-				        			<span class="text-gray-700 dark:text-gray-400">연식</span>
-				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="pdtYear" name="pdtYear" type="text"
-				            			onkeyup="fnOnKeyUp(this)">
-				        			<span id="pdtYearValid" name="pdtYearValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        				연식 입력하세요
-				        			</span>
-				      			</label>
+				    		<div class="inline-flex md:h-auto mr-3 md:w-1/2">
+								<div class="md:h-auto md:w-1/2 mr-3">
+					      			<label class="block w-full text-sm">
+					        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
+					        			<span class="text-gray-700 dark:text-gray-400">연식(년)</span>
+					        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					            			id="pdtYear" name="pdtYear" type="text"
+					            			onkeyup="fnOnKeyUp(this)">
+					        			<span id="pdtYearValid" name="pdtYearValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+					        				연식(년) 입력하세요
+					        			</span>
+					      			</label>								
+								</div>				    			
+
+								<div class="md:h-auto md:w-1/2">
+					      			<label class="block w-full text-sm">
+					        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
+					        			<span class="text-gray-700 dark:text-gray-400">연식(월)</span>
+					        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					            			id="pdtMonth" name="pdtMonth" type="text"
+					            			onkeyup="fnOnKeyUp(this)">
+					        			<span id="pdtMonthValid" name="pdtMonthValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+					        				연식(월) 입력하세요
+					        			</span>
+					      			</label>								
+								</div>
 				    		</div>
 				    								
 				    		<div class="md:h-auto mr-3 md:w-1/2">
@@ -399,8 +414,8 @@
 		let form = document.querySelector("form[name=form]");
 		
 		// 필수입력체크대상
-		let nameArr = ["pdtName", "pdtYear", "pdtRunKm", "pdtPrice"];
-		let textArr = ["차량명 입력하세요", "연식 입력하세요", "주생기록 입력하세요", "차량가액 입력하세요"];		
+		let nameArr = ["pdtName", "pdtYear", "pdtMonth", "pdtRunKm", "pdtPrice"];
+		let textArr = ["차량명 입력하세요", "연식(년) 입력하세요", "연식(월) 입력하세요", "주생기록 입력하세요", "차량가액 입력하세요"];		
 
 		let goUrlSdmList   	= "/productSdmList";	/* 조회화면 */
 		let goUrlSdmForm   	= "/productSdmForm";	/* 수정화면 */
@@ -463,6 +478,7 @@
 					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
 					break;				
 				case "pdtYear" :
+				case "pdtMonth" :
 				case "pdtRunKm" :
 				case "pdtPrice" :
 					regExp= /[^0-9]/g;
@@ -507,11 +523,6 @@
 						
 						validChk = fnValidationIn(obj, text, objValid);
 
-						// 이메일
-						if(nameArr[i] == "pdtEmail") {
-							validChk = fnEmailCheck(obj, objValid);
-						};
-						
 						if(submitChk) {
 							submitChk = validChk;
 						};
