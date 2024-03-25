@@ -13,7 +13,7 @@
 			 , a.cdgDelNy
 			 , (SELECT COUNT(*) 
 			      FROM code aa 
-			     WHERE aa.cdcSeq = a.cdgSeq		        
+			     WHERE aa.cdgSeq = a.cdgSeq		        
 			   ) xcodeCount
           FROM codegroup a
          WHERE 1=1
@@ -28,6 +28,8 @@
          	<when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
          	<when test="shOption == 2">AND a.cdgName LIKE CONCAT('%', #{shValue}, '%')</when>
          </choose>
+         
+         <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if>      
                   
          ORDER BY a.cdgSeq DESC
     </select>
@@ -38,11 +40,6 @@
 			 , a.cdgRegDt
 			 , a.cdgUdtDt
 			 , a.cdgDelNy
-			 , (SELECT COUNT(*) 
-			      FROM code aa 
-			     WHERE aa.cdcSeq = a.cdgSeq 
-			       AND aa.cdcDelNy = 0
-			   ) xcodeCount
           FROM codegroup a
          WHERE 1=1
            AND a.cdgSeq = #{cdgSeq}
@@ -91,5 +88,14 @@
          WHERE 1=1
            AND cdgSeq = #{cdgSeq}      
     </delete>
+    
+    <select id="selectListCachedCodeGroupArrayList" resultMap="resultMapObj">
+        SELECT cdgSeq
+             , cdgName
+          FROM codegroup
+         WHERE 1=1
+           AND cdgDelNy = 0
+         ORDER BY cdgSeq            
+    </select>    
 	  
 </mapper>

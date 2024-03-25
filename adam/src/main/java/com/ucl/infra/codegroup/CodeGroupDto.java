@@ -1,6 +1,8 @@
 package com.ucl.infra.codegroup;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CodeGroupDto {
 	private String 	cdgSeq;
@@ -11,6 +13,9 @@ public class CodeGroupDto {
 		
 	private Integer xcodeCount;
 
+//	for cache
+	public static List<CodeGroupDto> cachedCodeGroupArrayList = new ArrayList<CodeGroupDto>();
+	
 //	-----------
 	
 	public String getCdgSeq() {
@@ -61,5 +66,11 @@ public class CodeGroupDto {
 		this.xcodeCount = xcodeCount;
 	}
 	
+	public static List<CodeGroupDto> getCachedCodeGroupArrayList() {
+		return cachedCodeGroupArrayList;
+	}
 
+	public static void setCachedCodeGroupArrayList(List<CodeGroupDto> cachedCodeGroupArrayList) {
+		CodeGroupDto.cachedCodeGroupArrayList = cachedCodeGroupArrayList;
+	}
 }

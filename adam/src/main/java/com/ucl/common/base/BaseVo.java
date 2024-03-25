@@ -15,8 +15,8 @@ public class BaseVo {
      * 인덱스: 특정 페이지에서 특정 게시물을 지시하는 숫자
      */
 
-	private int     pgRowCount  = 3;  // 한 페이지 당 보여줄 게시물 개수
-	private int     pgPageCount = 2;  // 한 블럭에 몇 개의 페이지 개수
+	private int     pgRowCount  = 10;  // 한 페이지 당 보여줄 게시물 개수
+	private int     pgPageCount = 5;  // 한 블럭에 몇 개의 페이지 개수
 	private int     pgTotalCount;     // 총 게시물 개수
 	
 	private int     pgStartPage = 1;  // 한 블럭의 시작 페이지: 기본 값 1 // ex) 1 2 3 4 5 일 때 1을 의미.

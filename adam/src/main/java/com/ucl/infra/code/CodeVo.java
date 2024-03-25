@@ -4,6 +4,7 @@ import com.ucl.common.base.BaseVo;
 
 public class CodeVo extends BaseVo {
 	private String seq;
+	private Integer shOptionGroup;
 
 //	-------
 	
@@ -15,5 +16,11 @@ public class CodeVo extends BaseVo {
 		this.seq = seq;
 	}
 	
-	
+	public Integer getShOptionGroup() {
+		return shOptionGroup;
+	}
+
+	public void setShOptionGroup(Integer shOptionGroup) {
+		this.shOptionGroup = shOptionGroup;
+	}
 }

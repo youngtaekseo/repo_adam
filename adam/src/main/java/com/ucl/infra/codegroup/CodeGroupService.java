@@ -1,9 +1,14 @@
 package com.ucl.infra.codegroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ucl.infra.code.CodeDto;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class CodeGroupService {
@@ -44,4 +49,34 @@ public class CodeGroupService {
 	public int updateDelNy(CodeGroupDto dto){
 		return dao.updateDelNy(dto);
 	}
+	
+	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
+    @PostConstruct
+	public void selectListCachedCodeGroupArrayList() throws Exception {
+//		List<CodeDto> codeListFromDb = dao.selectListCachedCodeArrayList();
+//		codeListFromDb = (ArrayList<Code>) dao.selectListCachedCodeArrayList();
+    	CodeGroupDto.cachedCodeGroupArrayList.clear(); 
+    	CodeGroupDto.cachedCodeGroupArrayList.addAll(dao.selectListCachedCodeGroupArrayList());
+		System.out.println("cachedCodeGroupArrayList: " + CodeGroupDto.cachedCodeGroupArrayList.size() + " chached !");
+	}
+    
+	public static String selectOneCachedCodeGroup(int code) throws Exception {
+		String rt = "";
+		for(CodeGroupDto codeRow : CodeGroupDto.cachedCodeGroupArrayList) {
+			if (codeRow.getCdgSeq().equals(Integer.toString(code))) {
+				rt = codeRow.getCdgName();
+			} else {
+				// by pass
+			}
+		}
+		return rt;
+	}
+	
+	public static List<CodeGroupDto> selectListCachedCodeGroup() throws Exception {
+		List<CodeGroupDto> rt = new ArrayList<CodeGroupDto>();
+		for(CodeGroupDto codeRow : CodeGroupDto.cachedCodeGroupArrayList) {
+			rt.add(codeRow);
+		}
+		return rt;
+	}    
 }

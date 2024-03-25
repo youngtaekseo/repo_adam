@@ -1,23 +1,8 @@
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>중고조아</title>
-<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="sdm/assets/css/tailwind.output.css" />
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="sdm/assets/js/init-alpine.js"></script>
-    
-    <!-- DateTimepicker 관련 CDN -->
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-        
-    <!-- jquery 로딩 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- 플러그인 javascript 로딩 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-  </head>
+  
+  <div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+
   <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
 		:class="{'overflow-hidden': isSideMenuOpen}">
@@ -612,93 +597,93 @@
 	       	};
 		};
 		
-		// 필수입력항목 확인
-		fnValidation = function() {
-			let obj;
-			let text;
-			let validName;
-			let valid;
-			let submitChk = true;			
-			let validChk = true;
+// 		// 필수입력항목 확인
+// 		fnValidation = function() {
+// 			let obj;
+// 			let text;
+// 			let validName;
+// 			let valid;
+// 			let submitChk = true;			
+// 			let validChk = true;
 			
-			for(let i = 0; i < nameArr.length; i++) {
-				for (let j = 0; j < form.elements.length; j++) {
-					if (nameArr[i] == form.elements[j].name) {
-						obj = form.elements[j];
-						text = textArr[i];
-						validName = nameArr[i]+"Valid";
-						objValid = document.querySelector("span[name="+validName+"]");
+// 			for(let i = 0; i < nameArr.length; i++) {
+// 				for (let j = 0; j < form.elements.length; j++) {
+// 					if (nameArr[i] == form.elements[j].name) {
+// 						obj = form.elements[j];
+// 						text = textArr[i];
+// 						validName = nameArr[i]+"Valid";
+// 						objValid = document.querySelector("span[name="+validName+"]");
 						
-						validChk = fnValidationIn(obj, text, objValid);
+// 						validChk = fnValidationIn(obj, text, objValid);
 
-						if(submitChk) {
-							submitChk = validChk;
-						};
+// 						if(submitChk) {
+// 							submitChk = validChk;
+// 						};
 						
-						break;						
-					};
-				};
-			};
+// 						break;						
+// 					};
+// 				};
+// 			};
 			
-			return submitChk;
-		};		
+// 			return submitChk;
+// 		};		
 		
 		// 입력시 필수입력 확인
 	    fnValidationIn = function(obj, text, objValid) {
 			return fnValidationUdt(obj, text, objValid);
 		};
 
-		// 수정시 필수입력 확인
-	    fnValidationUdt = function(obj, text, objValid) {
-		    if(!fnNullToEmpty(obj.value)) {
-		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-		    	objValid.innerHTML = text;
-		    	objValid.setAttribute("style", "");
-		    	return false;
-		    } else {
-		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		    	objValid.setAttribute("style", "visibility:hidden;");
-		    	return true;
-		    };
-	    };
+// 		// 수정시 필수입력 확인
+// 	    fnValidationUdt = function(obj, text, objValid) {
+// 		    if(!fnNullToEmpty(obj.value)) {
+// 		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+// 		    	objValid.innerHTML = text;
+// 		    	objValid.setAttribute("style", "");
+// 		    	return false;
+// 		    } else {
+// 		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+// 		    	objValid.setAttribute("style", "visibility:hidden;");
+// 		    	return true;
+// 		    };
+// 	    };
 	    
-		// 날짜항목에 대한 특수문자처리
-		fnSpecialDate = function(obj) {
-			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
- 			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
-			let text = "특수문자는 입력할 수 없습니다";
+// 		// 날짜항목에 대한 특수문자처리
+// 		fnSpecialDate = function(obj) {
+// 			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+//  			let regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\_+<>@\#$%&\\\=\(\'\"]/g;
+// 			let text = "특수문자는 입력할 수 없습니다";
 			
-			fnSpecialCharCheck(obj, text, regExp);
-			return false;
-		};
+// 			fnSpecialCharCheck(obj, text, regExp);
+// 			return false;
+// 		};
 		
-		// 특수문자확인
-    	fnSpecialCharCheck = function(obj, text, regExp) {
-			let validName = obj.name+"Valid";
-			let objValid = document.querySelector("span[name="+validName+"]");
+// 		// 특수문자확인
+//     	fnSpecialCharCheck = function(obj, text, regExp) {
+// 			let validName = obj.name+"Valid";
+// 			let objValid = document.querySelector("span[name="+validName+"]");
 
-			if (regExp.test(obj.value) == true) {
-				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-				objValid.innerHTML = text;
-				objValid.setAttribute("style", "");				
-			} else {
-				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				objValid.setAttribute("style", "visibility:hidden;");				
-			};		
-    	};
+// 			if (regExp.test(obj.value) == true) {
+// 				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+// 				objValid.innerHTML = text;
+// 				objValid.setAttribute("style", "");				
+// 			} else {
+// 				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+// 				objValid.setAttribute("style", "visibility:hidden;");				
+// 			};		
+//     	};
 
-	    // null, 공백 확인
-	    fnNullToEmpty = function(value) {
-	    	let str = value.replace(/\s/g, ""); // 공백제저
+// 	    // null, 공백 확인
+// 	    fnNullToEmpty = function(value) {
+// 	    	let str = value.replace(/\s/g, ""); // 공백제저
 	    	
-	    	if((str === null) || (str.length === 0)) {
-	    		return false; // null 또는 공백 
-	    	} else {
-	    		return true; // 값 존재
-	    	}
-	    };
+// 	    	if((str === null) || (str.length === 0)) {
+// 	    		return false; // null 또는 공백 
+// 	    	} else {
+// 	    		return true; // 값 존재
+// 	    	}
+// 	    };
     </script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
   </body>
 </html>
