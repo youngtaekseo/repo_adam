@@ -861,7 +861,7 @@
 		};
 
 		// 주행기록
-		document.getElementById("shOptionRunKm").onclick = function() {
+		document.getElementById("shOptionRunKm").onchange = function() {
 			switch(shOptionRunKm.value) {
 			case "1" :
 				shOptionRunKmTo.setAttribute("style", "");
@@ -874,7 +874,7 @@
 		};
 		
 		// 연식
-		document.getElementById("shOptionYear").onclick = function() {
+		document.getElementById("shOptionYear").onchange = function() {
 			switch(shOptionYear.value) {
 			case "1" :
 				shOptionYearTo.setAttribute("style", "");
