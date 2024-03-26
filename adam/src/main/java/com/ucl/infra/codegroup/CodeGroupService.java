@@ -50,8 +50,13 @@ public class CodeGroupService {
 		return dao.updateDelNy(dto);
 	}
 	
+	// 코드그룹명
+	public List<CodeGroupDto> selectListCodeGroup() {
+		return dao.selectListCodeGroup();
+	};
+	
 	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
-    @PostConstruct
+    //@PostConstruct
 	public void selectListCachedCodeGroupArrayList() throws Exception {
 //		List<CodeDto> codeListFromDb = dao.selectListCachedCodeArrayList();
 //		codeListFromDb = (ArrayList<Code>) dao.selectListCachedCodeArrayList();

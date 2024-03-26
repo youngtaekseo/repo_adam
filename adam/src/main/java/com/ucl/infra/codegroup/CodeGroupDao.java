@@ -8,6 +8,7 @@ public interface CodeGroupDao {
 	
 	public CodeGroupDto selectOne(CodeGroupDto dto);
 	public List<CodeGroupDto> selectName(CodeGroupDto dto);
+	public List<CodeGroupDto> selectListCodeGroup();
 	public List<CodeGroupDto> selectListCachedCodeGroupArrayList();
 	
 //	mybatis에서 insert, update, delete 된 건수를 리턴한다

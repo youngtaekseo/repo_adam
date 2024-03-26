@@ -88,7 +88,102 @@
 				</li>
 			</ul>
 		</div>
-	</aside>				
+	</aside>
+	
+    <header th:fragment="bodyHeader(menuName1, menuName2)" class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+      <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+        <!-- Search input -->
+        <div class="flex justify-start flex-1 lg:mr-32">
+            <h2 class="my-1 font-semibold text-gray-700 dark:text-gray-200">
+              <a th:href="@{/indexSdm}">	              
+	              <span class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+	              	HOME
+	              </span>               
+              </a>
+              
+              <th:block th:if="${menuName1} != ''">
+				  &nbsp;
+	              <a th:href="@{/indexSdm}">
+		              <span class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+		              	th:text="${menuName1}">
+		              </span>                   
+	              </a>  
+			  </th:block>
+			  
+			  <th:block th:if="${menuName2} != ''">				  
+		          &nbsp;    				  
+	              <a th:href="@{/indexSdm}">
+		              <span class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg opacity-50 cursor-not-allowed focus:outline-none"
+		              	th:text="${menuName2}">
+		              </span>                   
+	              </a>
+			  </th:block>      
+            </h2>
+        </div>
+        
+        <ul class="flex items-center flex-shrink-0 space-x-6">
+          <!-- Profile menu -->
+          <li class="relative">
+            <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+              @click="toggleProfileMenu"
+              @keydown.escape="closeProfileMenu"
+              aria-label="Account"
+              aria-haspopup="true">
+              <img class="object-cover w-8 h-8 rounded-full"
+                src="sdm/img/face.jpg"
+                alt=""
+                aria-hidden="true"
+              />
+            </button>
+            <template x-if="isProfileMenuOpen">
+              <ul x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click.away="closeProfileMenu"
+                @keydown.escape="closeProfileMenu"
+                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                aria-label="submenu">
+                
+                <li class="flex">
+                  <a class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                    href="#">
+                    <svg
+                      class="w-4 h-4 mr-3"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                      ></path>
+                    </svg>
+                    <span>로그아웃</span>
+                  </a>
+                </li>
+              </ul>
+            </template>
+          </li>
+        </ul>
+      </div>
+    </header>
+    
+	  <div th:fragment="bodyPaging" class="flex flex-col md:flex-row mb-4">
+	    <div class="md:h-auto sm:mt-auto md:w-1/2">
+	      Total:<span th:text="${vo.pgTotalCount}"></span>
+	    </div>
+	    <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
+	      <select class="block text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+	        id="pgRowCount" name="pgRowCount">
+	        <option value="5"  th:selected="${vo.pgRowCount == 5}">5</option>
+	        <option value="10" th:selected="${vo.pgRowCount == 10}">10</option>
+	        <option value="15" th:selected="${vo.pgRowCount == 15}">15</option>
+	      </select> 
+	    </div>               
+	  </div>    
 </body>
 
 </html>

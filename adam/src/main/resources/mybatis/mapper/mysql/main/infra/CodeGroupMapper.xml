@@ -97,5 +97,14 @@
            AND cdgDelNy = 0
          ORDER BY cdgSeq            
     </select>    
+
+    <select id="selectListCodeGroup" resultMap="resultMapObj">
+        SELECT cdgSeq
+             , cdgName
+          FROM codegroup
+         WHERE 1=1
+           AND cdgDelNy = 0
+         ORDER BY cdgSeq            
+    </select>    
 	  
 </mapper>

@@ -1,7 +1,5 @@
 package com.ucl.infra.product;
 
-import java.net.URLEncoder;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ucl.common.base.BaseVo;
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
 
@@ -26,12 +23,17 @@ public class ProductController {
 	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model,
 								 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 		UtilFunction.setSearch(vo);
-		vo.setPagingVo(service.getCount(vo), page);
 		
-		model.addAttribute("list", service.selectList(vo));
-		model.addAttribute("page", page);
+		int rowCount = service.getCount(vo);
 		
-		setUrl(vo);
+		if(rowCount != 0) {			
+			vo.setPagingVo(rowCount, page);
+			
+			model.addAttribute("list", service.selectList(vo));
+			model.addAttribute("page", page);
+			
+			setUrl(vo);
+		};
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
