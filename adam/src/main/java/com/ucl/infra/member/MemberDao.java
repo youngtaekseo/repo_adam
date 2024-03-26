@@ -14,4 +14,6 @@ public interface MemberDao {
 	
 	public int updatePw(MemberDto dto);
 	public int updateDelNy(MemberDto dto);
+	
+	public int getCount(MemberVo vo); 
 }

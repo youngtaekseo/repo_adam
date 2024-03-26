@@ -5,16 +5,7 @@
 
 	<resultMap id="resultMapObj" type="com.ucl.infra.codegroup.CodeGroupDto"></resultMap>
 
-    <select id="selectList" resultMap="resultMapObj">
-        SELECT a.cdgSeq
-			 , a.cdgName
-			 , a.cdgRegDt
-			 , a.cdgUdtDt
-			 , a.cdgDelNy
-			 , (SELECT COUNT(*) 
-			      FROM code aa 
-			     WHERE aa.cdgSeq = a.cdgSeq		        
-			   ) xcodeCount
+	<sql id="selectCommon">
           FROM codegroup a
          WHERE 1=1
          <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
@@ -29,9 +20,33 @@
          	<when test="shOption == 2">AND a.cdgName LIKE CONCAT('%', #{shValue}, '%')</when>
          </choose>
          
-         <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if>      
-                  
-         ORDER BY a.cdgSeq DESC
+         <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if> 	
+	</sql>
+    
+    <select id="selectList" resultMap="resultMapObj">
+    	SELECT aa.*
+    	  FROM (
+		        SELECT a.cdgSeq
+					 , a.cdgName
+					 , a.cdgRegDt
+					 , a.cdgUdtDt
+					 , a.cdgDelNy
+					 , (SELECT COUNT(*) 
+					      FROM code aa 
+					     WHERE aa.cdgSeq = a.cdgSeq		        
+					   ) xcodeCount
+		      <include refid="selectCommon"/>
+		         ORDER BY a.cdgSeq DESC
+		         LIMIT 99999999999
+               ) aa
+    	 LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}          
+    </select>
+	
+    <!-- 카운팅 -->
+    <select id="getCount">
+        SELECT COUNT(*)
+      <include refid="selectCommon"/>
     </select>
     
     <select id="selectOne" resultMap="resultMapObj">

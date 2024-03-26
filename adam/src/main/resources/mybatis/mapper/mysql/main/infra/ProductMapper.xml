@@ -62,7 +62,7 @@
 					 , a.pdtRegDt
 					 , a.pdtUdtDt
 					 , a.pdtDelNy
-				 <include refid="selectCommon"/>
+			  <include refid="selectCommon"/>
 		         ORDER BY a.pdtSeq DESC
 		         LIMIT 99999999999
                ) aa
@@ -73,7 +73,7 @@
     <!-- 카운팅 -->
     <select id="getCount">
         SELECT COUNT(*)
-        <include refid="selectCommon"/>
+      <include refid="selectCommon"/>
     </select>		
 
 	<select id="selectOne" resultMap="resultMapObj">

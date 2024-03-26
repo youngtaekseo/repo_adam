@@ -6,10 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ucl.infra.code.CodeDto;
-
-import jakarta.annotation.PostConstruct;
-
 @Service
 public class CodeGroupService {
 //	CodeGroupDao codeGroupDao;
@@ -54,6 +50,10 @@ public class CodeGroupService {
 	public List<CodeGroupDto> selectListCodeGroup() {
 		return dao.selectListCodeGroup();
 	};
+	
+	public int getCount(CodeGroupVo vo) {
+		return dao.getCount(vo);
+	}	
 	
 	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
     //@PostConstruct

@@ -5,14 +5,7 @@
 
 	<resultMap id="resultMapObj" type="com.ucl.infra.code.CodeDto"></resultMap>
 	
-	<select id="selectList" resultMap="resultMapObj">
-        SELECT a.cdgSeq
-     		 , a.cdgName
-     		 , b.cdcDelNy
-     		 , b.cdcSeq
-     		 , b.cdcName
-     		 , b.cdcRegDt
-     		 , b.cdcUdtDt
+	<sql id="selectCommon">
   		  FROM codegroup a
        		   LEFT JOIN code b
               		  ON b.cdgSeq = a.cdgSeq 
@@ -32,11 +25,33 @@
          	<when test="shOption == 4">AND b.cdcSeq = #{shValue}</when>
          </choose>         
          
-         <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if> 
-         
-         ORDER BY a.cdgSeq, b.cdcSeq         
+         <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if> 	
+	</sql>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.*
+		  FROM (
+		        SELECT a.cdgSeq
+		     		 , a.cdgName
+		     		 , b.cdcDelNy
+		     		 , b.cdcSeq
+		     		 , b.cdcName
+		     		 , b.cdcRegDt
+		     		 , b.cdcUdtDt
+			  <include refid="selectCommon"/>			 
+		         ORDER BY a.cdgSeq, b.cdcSeq         
+				 LIMIT 99999999999
+               ) aa
+    	 LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}  		 
 	</select>
 	
+    <!-- 카운팅 -->
+    <select id="getCount">
+        SELECT COUNT(*)
+      <include refid="selectCommon"/>
+    </select>
+    	
 	<select id="selectOne" resultMap="resultMapObj">
         SELECT a.cdgSeq
      		 , a.cdgName

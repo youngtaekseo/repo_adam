@@ -1,6 +1,5 @@
 package com.ucl.infra.code;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,10 @@ public class CodeService {
 	public int updateDelNy(CodeDto dto){
 		return dao.updateDelNy(dto);
 	}
+	
+	public int getCount(CodeVo vo) {
+		return dao.getCount(vo);
+	}	
 	
 	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
     @PostConstruct

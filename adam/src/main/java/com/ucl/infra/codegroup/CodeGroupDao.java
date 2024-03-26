@@ -18,4 +18,6 @@ public interface CodeGroupDao {
 	public int delete(CodeGroupDto dto);
 	
 	public int updateDelNy(CodeGroupDto dto);
+	
+	public int getCount(CodeGroupVo vo); 
 }

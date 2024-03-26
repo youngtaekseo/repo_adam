@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
@@ -17,10 +20,20 @@ public class CodeGroupController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
-	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model,
+			 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 		UtilFunction.setSearch(vo);
-		model.addAttribute("list", service.selectList(vo));		
-//		model.addAttribute("vo", vo);
+		
+		int rowCount = service.getCount(vo);
+		
+		if(rowCount != 0) {			
+			vo.setPagingVo(rowCount, page);
+			
+			model.addAttribute("list", service.selectList(vo));
+			model.addAttribute("page", page);
+			
+			setUrl(vo);
+		};
 		
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmList";
 	}
@@ -64,6 +77,20 @@ public class CodeGroupController {
 	public String codeGroupSdmUdtDelNy(CodeGroupDto dto) throws Exception {
 		service.updateDelNy(dto);
 		return "redirect:/codeGroupSdmList";
+	}
+	
+	// 조회조건 및 페이징정보 포함된 url 생성
+	public void setUrl(CodeGroupVo vo) throws Exception {
+		UriComponents uri = UriComponentsBuilder.newInstance()
+				.queryParam("shDelNy"      , vo.getShDelNy())
+				.queryParam("shOptionDate" , vo.getShOptionDate())
+				.queryParam("shDateStart"  , vo.getShDateStart())
+				.queryParam("shDateEnd"    , vo.getShDateEnd())
+				.queryParam("shOptionGroup", vo.getShOptionGroup())
+				.queryParam("shOption"     , vo.getShOption())
+				.queryParam("shValue"      , vo.getShValue())
+				.build();
+		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
 	}
 
 }

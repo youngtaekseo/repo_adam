@@ -5,17 +5,7 @@
 
 	<resultMap id="resultMapObj" type="com.ucl.infra.member.MemberDto"></resultMap>
 	
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT a.mbrSeq
-		     , a.mbrType
-		     , a.mbrName
-		     , a.mbrSex
-		     , a.mbrBirthday
-		     , a.mbrEmail
-		     , a.mbrPassword
-		     , a.mbrRegDt
-		     , a.mbrUdtDt
-		     , a.mbrDelNy
+	<sql id="selectCommon">
 		  FROM members a
 		 WHERE 1 = 1
 		 
@@ -33,11 +23,36 @@
 				
 		<if test="shDelNy != null and !shDelNy.equals('')" >AND a.mbrDelNy = #{shDelNy}</if>
 		
-		<if test="shSex != null and !shSex.equals('')">AND a.mbrSex = #{shSex}</if>
+		<if test="shSex != null and !shSex.equals('')">AND a.mbrSex = #{shSex}</if>	
+	</sql>
 	
-         ORDER BY a.mbrSeq DESC 
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.*
+		  FROM (
+				SELECT a.mbrSeq
+				     , a.mbrType
+				     , a.mbrName
+				     , a.mbrSex
+				     , a.mbrBirthday
+				     , a.mbrEmail
+				     , a.mbrPassword
+				     , a.mbrRegDt
+				     , a.mbrUdtDt
+				     , a.mbrDelNy
+			  <include refid="selectCommon"/>			 
+		         ORDER BY a.mbrSeq DESC 
+				 LIMIT 99999999999
+               ) aa
+    	 LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}          
 	</select>
 
+    <!-- 카운팅 -->
+    <select id="getCount">
+        SELECT COUNT(*)
+      <include refid="selectCommon"/>
+    </select>
+    
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT a.mbrSeq
 		     , a.mbrType
