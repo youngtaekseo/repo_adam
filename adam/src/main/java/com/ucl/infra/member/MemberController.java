@@ -10,6 +10,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilFunction;
 
 @Controller
 public class MemberController {
@@ -19,16 +20,15 @@ public class MemberController {
 	
 	//조회화면
 	@RequestMapping(value = "/memberSdmList")
-	public String memberSdmList(@ModelAttribute("vo") MemberVo vo, Model model,
-			 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	public String memberSdmList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		UtilFunction.setSearch(vo);
 		
 		int rowCount = service.getCount(vo);
 		
-		if(rowCount != 0) {			
-			vo.setPagingVo(rowCount, page);
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
 			
 			model.addAttribute("list", service.selectList(vo));
-			model.addAttribute("page", page);
 			
 			setUrl(vo);
 		};
@@ -104,5 +104,6 @@ public class MemberController {
 				.queryParam("shValue"     , vo.getShValue())
 				.build();
 		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
+		System.out.println("uri : " + uri);
 	}
 }

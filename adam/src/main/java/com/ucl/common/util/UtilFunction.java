@@ -18,10 +18,10 @@ public class UtilFunction {
 		/* 초기값 세팅이 있는 경우 사용 */
 		vo.setShDateStart(vo.getShDateStart() == null || vo.getShDateStart() == ""
 		    ? UtilDateTime.calculateDayReplace00TimeString(UtilDateTime.nowLocalDateTime(), Commvar.DATE_INTERVAL)
-		    : UtilDateTime.add00TimeString(vo.getShDateStart()));
+		    : UtilDateTime.add00TimeString(vo.getShDateStart().substring(0, 10)));
 		vo.setShDateEnd(vo.getShDateEnd() == null || vo.getShDateEnd() == ""
 		    ? UtilDateTime.nowString()
-		    : UtilDateTime.add59TimeString(vo.getShDateEnd()));		
+		    : UtilDateTime.add59TimeString(vo.getShDateEnd().substring(0, 10)));		
 		
 //		/* 초기값 세팅이 없는 경우 사용 */
 //		vo.setShDateStart(vo.getShDateStart() == null || vo.getShDateStart() == "" ? null : UtilDateTime.add00TimeString(vo.getShDateStart()));

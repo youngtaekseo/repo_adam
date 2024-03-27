@@ -23,18 +23,18 @@ public class CodeController {
 	CodeGroupService codeGroupService;
 	
 	
-//	전체리스트
+//	전체리스트 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 	@RequestMapping(value = "/codeSdmList")
-	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model,
-			 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
+			 
 		UtilFunction.setSearch(vo);
+		
 		int rowCount = service.getCount(vo);
 		
-		if(rowCount != 0) {			
-			vo.setPagingVo(rowCount, page);
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
 			
 			model.addAttribute("list", service.selectList(vo));
-			model.addAttribute("page", page);
 			
 			setUrl(vo);
 		};

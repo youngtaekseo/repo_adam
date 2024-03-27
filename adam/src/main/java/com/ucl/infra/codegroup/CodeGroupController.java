@@ -20,17 +20,16 @@ public class CodeGroupController {
 	
 //	전체리스트
 	@RequestMapping(value = "/codeGroupSdmList")
-	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model,
-			 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	public String codeGroupListSdm(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+		
 		UtilFunction.setSearch(vo);
 		
 		int rowCount = service.getCount(vo);
 		
-		if(rowCount != 0) {			
-			vo.setPagingVo(rowCount, page);
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
 			
 			model.addAttribute("list", service.selectList(vo));
-			model.addAttribute("page", page);
 			
 			setUrl(vo);
 		};

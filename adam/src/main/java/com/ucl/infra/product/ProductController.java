@@ -20,17 +20,15 @@ public class ProductController {
 	
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
-	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model,
-								 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
 		UtilFunction.setSearch(vo);
 		
 		int rowCount = service.getCount(vo);
 		
-		if(rowCount != 0) {			
-			vo.setPagingVo(rowCount, page);
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
 			
 			model.addAttribute("list", service.selectList(vo));
-			model.addAttribute("page", page);
 			
 			setUrl(vo);
 		};
