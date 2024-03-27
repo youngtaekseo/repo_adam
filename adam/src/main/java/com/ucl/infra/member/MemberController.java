@@ -21,6 +21,7 @@ public class MemberController {
 	//조회화면
 	@RequestMapping(value = "/memberSdmList")
 	public String memberSdmList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		
 		UtilFunction.setSearch(vo);
 		
 		int rowCount = service.getCount(vo);
@@ -30,7 +31,7 @@ public class MemberController {
 			
 			model.addAttribute("list", service.selectList(vo));
 			
-			setUrl(vo);
+			/* setUrl(vo); */
 		};
 		return Commvar.PATH_MEMBER + "memberSdmList";
 	}
@@ -104,6 +105,5 @@ public class MemberController {
 				.queryParam("shValue"     , vo.getShValue())
 				.build();
 		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
-		System.out.println("uri : " + uri);
 	}
 }

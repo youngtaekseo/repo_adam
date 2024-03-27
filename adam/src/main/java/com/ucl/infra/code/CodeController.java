@@ -36,7 +36,7 @@ public class CodeController {
 			
 			model.addAttribute("list", service.selectList(vo));
 			
-			setUrl(vo);
+			/* setUrl(vo); */
 		};
 
 		model.addAttribute("listCodeGroupName", codeGroupService.selectListCodeGroup());

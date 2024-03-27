@@ -21,6 +21,7 @@ public class ProductController {
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
 	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
+		
 		UtilFunction.setSearch(vo);
 		
 		int rowCount = service.getCount(vo);
@@ -30,7 +31,7 @@ public class ProductController {
 			
 			model.addAttribute("list", service.selectList(vo));
 			
-			setUrl(vo);
+			/* setUrl(vo); */
 		};
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
