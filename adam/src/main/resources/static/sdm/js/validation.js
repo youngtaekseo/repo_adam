@@ -12,25 +12,25 @@ fnValidation = function() {
 		for (let j = 0; j < form.elements.length; j++) {
 
 			// 날짜옵션
-			if((nameArr[i] === "shDateStart") || (nameArr[i] === "shDateEnd")) {
+			if((nameArr[i] == "shDateStart") || (nameArr[i] == "shDateEnd")) {
 				if(shOptionDate.value != "") {
 					loopChk = true;
 				} else {
 					loopChk = false;
 				};
-			} else if(nameArr[i] === "shValue") { // 검색어옵션
+			} else if(nameArr[i] == "shValue") { // 검색어옵션
 				if(shOption.value != "") {
 					loopChk = true;
 				} else {
 					loopChk = false;
 				};
-			} else if(nameArr[i] === "shOptionRunKmFrom" || nameArr[i] === "shOptionRunKmTo") { // 주행기록
+			} else if(nameArr[i] == "shOptionRunKmFrom" || nameArr[i] == "shOptionRunKmTo") { // 주행기록
 				if(shOptionRunKm.value != "") { // 주행기록 옵션
 					loopChk = true;
 				} else {
 					loopChk = false;
 				};
-			} else if(nameArr[i] === "shOptionYearFrom" || nameArr[i] === "shOptionMonthFrom" || nameArr[i] === "shOptionYearTo" || nameArr[i] === "shOptionMonthTo") { // 연식
+			} else if(nameArr[i] == "shOptionYearFrom" || nameArr[i] == "shOptionMonthFrom" || nameArr[i] == "shOptionYearTo" || nameArr[i] == "shOptionMonthTo") { // 연식
 				if(shOptionYear.value != "") { // 연식 옵션
 					loopChk = true;
 				} else {
@@ -47,7 +47,7 @@ fnValidation = function() {
 					validName = nameArr[i]+"Valid";
 					objValid = document.querySelector("span[name="+validName+"]");
 
-					if((nameArr[i] === "shOptionYearTo" || nameArr[i] === "shOptionMonthTo") && (shOptionYear.value != "1")){ // 연식
+					if((nameArr[i] == "shOptionYearTo" || nameArr[i] == "shOptionMonthTo") && (shOptionYear.value != "1")){ // 연식
 						validChk = true;
 					} else {
 						validChk = fnValidationIn(obj, text, objValid);

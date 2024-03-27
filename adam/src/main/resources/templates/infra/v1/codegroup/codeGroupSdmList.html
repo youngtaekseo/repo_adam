@@ -1,365 +1,330 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html :class="{'theme-dark': dark}" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
 
-  <div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+	<div th:replace="~{infra/v1/include/headSdm :: head}"></div>
       
-  <body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
-		:class="{'overflow-hidden': isSideMenuOpen}">
-		<!-- Desktop sidebar -->
-		<div th:replace="~{infra/v1/include/bodySdm :: bodyTop('2')}"></div>
+	<body>
+    	<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{'overflow-hidden': isSideMenuOpen}">
+		
+	  		<!-- Desktop sidebar -->
+	  		<div th:replace="~{infra/v1/include/bodySdm :: bodyTop(2)}"></div>
 
-      <div class="flex flex-col flex-1 w-full">
-		<div th:replace="~{infra/v1/include/bodySdm :: bodyHeader('코드관리','코드그룹')}"></div>
+      		<div class="flex flex-col flex-1 w-full">
+				<div th:replace="~{infra/v1/include/bodySdm :: bodyHeader('코드관리','코드그룹')}"></div>
 
-        <main class="h-full pb-16 overflow-y-auto">
-          <div class="container grid px-6 mx-auto">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-              <a class="inline-flex items-center w-full">
-				<svg  class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-				  <path d="M15.98 1.804a1 1 0 0 0-1.96 0l-.24 1.192a1 1 0 0 1-.784.785l-1.192.238a1 1 0 0 0 0 1.962l1.192.238a1 1 0 0 1 .785.785l.238 1.192a1 1 0 0 0 1.962 0l.238-1.192a1 1 0 0 1 .785-.785l1.192-.238a1 1 0 0 0 0-1.962l-1.192-.238a1 1 0 0 1-.785-.785l-.238-1.192ZM6.949 5.684a1 1 0 0 0-1.898 0l-.683 2.051a1 1 0 0 1-.633.633l-2.051.683a1 1 0 0 0 0 1.898l2.051.684a1 1 0 0 1 .633.632l.683 2.051a1 1 0 0 0 1.898 0l.683-2.051a1 1 0 0 1 .633-.633l2.051-.683a1 1 0 0 0 0-1.898l-2.051-.683a1 1 0 0 1-.633-.633L6.95 5.684ZM13.949 13.684a1 1 0 0 0-1.898 0l-.184.551a1 1 0 0 1-.632.633l-.551.183a1 1 0 0 0 0 1.898l.551.183a1 1 0 0 1 .633.633l.183.551a1 1 0 0 0 1.898 0l.184-.551a1 1 0 0 1 .632-.633l.551-.183a1 1 0 0 0 0-1.898l-.551-.184a1 1 0 0 1-.633-.632l-.183-.551Z"></path>
-				</svg>
-				&nbsp;코드그룹조회
-              </a>            
-            </h2>
+        		<main class="h-full pb-16 overflow-y-auto">
+          			<div class="container grid px-6 mx-auto">
+            			<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+              				<a class="inline-flex items-center w-full">
+								<svg  class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				  					<path d="M15.98 1.804a1 1 0 0 0-1.96 0l-.24 1.192a1 1 0 0 1-.784.785l-1.192.238a1 1 0 0 0 0 1.962l1.192.238a1 1 0 0 1 .785.785l.238 1.192a1 1 0 0 0 1.962 0l.238-1.192a1 1 0 0 1 .785-.785l1.192-.238a1 1 0 0 0 0-1.962l-1.192-.238a1 1 0 0 1-.785-.785l-.238-1.192ZM6.949 5.684a1 1 0 0 0-1.898 0l-.683 2.051a1 1 0 0 1-.633.633l-2.051.683a1 1 0 0 0 0 1.898l2.051.684a1 1 0 0 1 .633.632l.683 2.051a1 1 0 0 0 1.898 0l.683-2.051a1 1 0 0 1 .633-.633l2.051-.683a1 1 0 0 0 0-1.898l-2.051-.683a1 1 0 0 1-.633-.633L6.95 5.684ZM13.949 13.684a1 1 0 0 0-1.898 0l-.184.551a1 1 0 0 1-.632.633l-.551.183a1 1 0 0 0 0 1.898l.551.183a1 1 0 0 1 .633.633l.183.551a1 1 0 0 0 1.898 0l.184-.551a1 1 0 0 1 .632-.633l.551-.183a1 1 0 0 0 0-1.898l-.551-.184a1 1 0 0 1-.633-.632l-.183-.551Z"></path>
+								</svg>
+								&nbsp;코드그룹조회
+              				</a>            
+            			</h2>
 
-            <!-- 검색조건 -->
-            <form id="form" name="form" method="get" autocomplete="off">
-			  <input type="hidden" id="pgPage" name="pgPage" th:value="${vo.pgPage}" default="1">
-			  <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                <div class="flex flex-col md:flex-row">
-                    <!-- 삭제여부 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            id="shDelNy" name="shDelNy">
-                            <option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-                            <option value="0" th:selected="${vo.shDelNy == 0}">N</option>
-                            <option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-                        </select>
-                    </div>
+            			<!-- 검색조건 -->
+            			<form id="form" name="form" method="get" autocomplete="off">
+			  				<input type="hidden" id="pgPage" name="pgPage" th:value="${vo.pgPage}" default="1">
+			  				<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                				<div class="flex flex-col md:flex-row">
+                    				<!-- 삭제여부 -->
+                    				<div class="md:h-auto md:w-1/2 mr-3">
+				                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+				                            id="shDelNy" name="shDelNy">
+				                            <option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+				                            <option value="0" th:selected="${vo.shDelNy == 0}">N</option>
+				                            <option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+				                        </select>
+				                    </div>
 
-                    <!-- 일자조건 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            id="shOptionDate" name="shOptionDate">
-							<option value=""  th:selected="${vo.shOptionDate == null}">날짜</option>
-                            <option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
-                            <option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
-                        </select>
-                    </div>
+				                    <!-- 일자조건 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+				                            id="shOptionDate" name="shOptionDate">
+											<option value=""  th:selected="${vo.shOptionDate == null}">날짜</option>
+				                            <option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+				                            <option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+				                        </select>
+				                    </div>
 
-                    <!-- 시작일자 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            id="shDateStart" name="shDateStart" placeholder="시작일"
-                            th:value="${#strings.substring(vo.shDateStart,0,10)}">
-                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                        	시작일자 입력하세요
-                        </span>
-                    </div>
+				                    <!-- 시작일자 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shDateStart" name="shDateStart" placeholder="시작일"
+				                            th:value="${#strings.substring(vo.shDateStart,0,10)}">
+				                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+				                        	시작일자 입력하세요
+				                        </span>
+				                    </div>
+				
+				                    <!-- 종료일자 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shDateEnd" name="shDateEnd" placeholder="종료일"
+				                            th:value="${#strings.substring(vo.shDateEnd,0,10)}">
+				                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+				                        	종료일자 입력하세요
+				                        </span>
+				                    </div>
+				                </div>
 
-                    <!-- 종료일자 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            id="shDateEnd" name="shDateEnd" placeholder="종료일"
-                            th:value="${#strings.substring(vo.shDateEnd,0,10)}">
-                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                        	종료일자 입력하세요
-                        </span>
-                    </div>
-                </div>
+				                <div class="flex flex-col md:flex-row">
+				                    <!-- 코드그룹 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+				                            id="shOptionGroup" name="shOptionGroup">
+				                            <option value="" th:selected="${vo.shOptionGroup == null}">코드그룹선택</option>
+				                            <option th:each="list : ${listGroupName}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == vo.shOptionGroup}">
+											<!--<option th:each="list : ${@codeGroupService.selectListCachedCodeGroup()}" th:value="${list.cdgSeq}" th:text="${list.cdgName}"></option>-->
+				                        </select>
+				                    </div>
+				                    
+				                    <!-- 검색구분 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+				                            id="shOption" name="shOption">
+				                            <option value=""  th:selected="${vo.shOption == null}">검색구분</option>
+				                            <option value="1" th:selected="${vo.shOption == 1}">코드그룹코드</option>
+				                            <option value="2" th:selected="${vo.shOption == 2}">코드그룹명</option>
+				                        </select>
+				                    </div>
 
-                <div class="flex flex-col md:flex-row">
-                    <!-- 코드그룹 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            id="shOptionGroup" name="shOptionGroup">
-                            <option value="" th:selected="${vo.shOptionGroup == null}">코드그룹선택</option>
-                            <option th:each="list : ${listGroupName}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == vo.shOptionGroup}">
-							<!--<option th:each="list : ${@codeGroupService.selectListCachedCodeGroup()}" th:value="${list.cdgSeq}" th:text="${list.cdgName}"></option>-->
-                        </select>
-                    </div>
-                    
-                    <!-- 검색구분 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                            id="shOption" name="shOption">
-                            <option value=""  th:selected="${vo.shOption == null}">검색구분</option>
-                            <option value="1" th:selected="${vo.shOption == 1}">코드그룹코드</option>
-                            <option value="2" th:selected="${vo.shOption == 2}">코드그룹명</option>
-                        </select>
-                    </div>
+				                    <!-- 검색어 -->
+				                    <div class="md:h-auto md:w-1/2 mr-3">
+				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                        	id="shValue" name="shValue" placeholder="검색어"
+				                        	onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
+					                    <span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+					                    	검색어 입력하세요
+					                    </span>                         
+				                    </div>
 
-                    <!-- 검색어 -->
-                    <div class="md:h-auto md:w-1/2 mr-3">
-                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                        	id="shValue" name="shValue" placeholder="검색어"
-                        	onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
-	                    <span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-	                    	검색어 입력하세요
-	                    </span>                         
-                    </div>
+                    				<div class="md:h-auto md:w-1/2 sm:mt-auto mr-3">
+                      					<div class="flex flex-col overflow-y-auto md:flex-row">
+                        					<!-- 조회버튼 -->
+                        					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
+                          						id="btnSubmit" name="btnSubmit" type="button">
+                          						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            						<path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
+						  						</svg> 						  
+											</button>
 
-                    <div class="md:h-auto md:w-1/2 sm:mt-auto mr-3">
-                      <div class="flex flex-col overflow-y-auto md:flex-row">
-                        <!-- 조회버튼 -->
-                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
-                          id="btnSubmit" name="btnSubmit" type="button">
-                          <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
-						  </svg> 						  
-						</button>
+                        					<!-- 초기화버튼 -->
+                        					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                          						id="btnReset" name="btnReset" type="reset"
+                          						onclick="fnReset()">
+                          						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            						<path clip-rule="evenodd" fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"></path>
+                          						</svg>
+                        					</button>
+                      					</div>
+	                  					<span style="visibility:hidden;">&nbsp;</span>	                                          
+                    				</div>
 
-                        <!-- 초기화버튼 -->
-                        <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                          id="btnReset" name="btnReset" type="reset"
-                          onclick="fnReset()">
-                          <svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path clip-rule="evenodd" fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z"></path>
-                          </svg>
-                        </button>
-                      </div>
-	                  <span style="visibility:hidden;">&nbsp;</span>	                                          
-                    </div>
+									<!-- <div class="md:h-auto md:w-1/2 mr-3"></div> -->
+                				</div>
+              				</div> 
 
-<!--                     <div class="md:h-auto md:w-1/2 mr-3"></div> -->
-                </div>
-              </div> 
-
-			  <!-- 페이지목록 건수 -->
-			  <div th:replace="~{infra/v1/include/bodySdm :: bodyPaging}"></div>
+			  				<!-- 페이지목록 건수 -->
+			  				<div th:replace="~{infra/v1/include/bodySdm :: bodyPaging}"></div>
+            			</form>
             
-            <!-- 조회결과 리스트 -->
-            <div class="w-full overflow-hidden rounded-lg shadow-xs">
-              <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap">
-                  <!-- 조회결과 리스트 타이틀-->
-                  <thead>
-                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                      <th class="px-2 py-1">
-                        <input
-                          id="checkboxAll"
-                          name="checkboxAll"
-                          style="height: 15px; width: 15px"
-                          type="checkbox"
-                          class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
-                        >
-                      </th>
-                      <th class="px-1 py-1">###</th>
-                      <th class="px-4 py-1">그룹명</th>
-                      <th class="px-4 py-1">코드갯수</th>
-                      <th class="px-4 py-1">삭제여부</th>
-                      <th class="px-4 py-1">등록일시</th>
-                      <th class="px-4 py-1">수정일시</th>
-                      <th class="px-6 py-1">작업</th>
-                    </tr>
-                  </thead>
+            			<!-- 조회결과 리스트 -->
+            			<div class="w-full overflow-hidden rounded-lg shadow-xs">
+              				<div class="w-full overflow-x-auto">
+                				<table class="w-full whitespace-no-wrap">
+                  					<!-- 조회결과 리스트 타이틀-->
+                  					<thead>
+                    					<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                      						<th class="px-2 py-1">
+                        						<input class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+                          							id="checkboxAll" name="checkboxAll" type="checkbox"
+                          							style="height: 15px; width: 15px">
+                      						</th>
+                      						<th class="px-1 py-1">###</th>
+                      						<th class="px-4 py-1">그룹명</th>
+                      						<th class="px-4 py-1">코드갯수</th>
+                      						<th class="px-4 py-1">삭제여부</th>
+                      						<th class="px-4 py-1">등록일시</th>
+                      						<th class="px-4 py-1">수정일시</th>
+                      						<th class="px-6 py-1">작업</th>
+                    					</tr>
+                  					</thead>
                   
-                  <!-- 조회결과 리스트 내용 -->
-                  <tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                  
-                  	<tr th:if="${#lists.isEmpty(list)}">
-                  		<td colspan="8" class="text-center text-purple-600"> 
-							There is no data !!!
-                  		</td>
-                  	</tr>
-                  	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
-                  		<td class="px-2 py-1">
-                  			<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
-                  				id = "checkbox" name="checkbox" type="checkbox"
-                        		style="height: 15px; width: 15px"
-                        		th:checked="false">
-                    	</td>
-                    	
-                    	<td id="cdgSeq" name="cdgSeq" class="px-1 py-1" th:text="${list.cdgSeq}"></td>
-                    	
-                    	<td class="px-4 py-1" th:text="${list.cdgName}"></td>
-                    	
-                    	<td class="px-4 py-1" th:text="${list.xcodeCount}"></td>
+                  					<!-- 조회결과 리스트 내용 -->
+                  					<tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  						<tr th:if="${#lists.isEmpty(list)}">
+					                  		<td colspan="8" class="text-center text-purple-600"> 
+												There is no data !!!
+					                  		</td>
+                  						</tr>
+					                  	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+					                  		<td class="px-2 py-1">
+					                  			<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+					                  				id = "checkbox" name="checkbox" type="checkbox"
+					                        		style="height: 15px; width: 15px"
+					                        		th:checked="false">
+					                    	</td>
+					                    	
+					                    	<td id="cdgSeq" name="cdgSeq" class="px-1 py-1" th:text="${list.cdgSeq}"></td>
+					                    	
+					                    	<td class="px-4 py-1" th:text="${list.cdgName}"></td>
+					                    	
+					                    	<td class="px-4 py-1" th:text="${list.xcodeCount}"></td>
                         
-                        <td class="px-4 py-1">
-                        	<th:block th:switch="${list.cdgDelNy}">
-                        		<span th:case = "0"
-                        			class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
-                        			N
-                        		</span>
-                        		<span th:case = "1"
-                        			class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:bg-orange-700 dark:text-orange-100">
-                        			Y
-                        		</span>                        		
-                        	</th:block>
-                        </td>        	
+					                        <td class="px-4 py-1">
+					                        	<th:block th:switch="${list.cdgDelNy}">
+					                        		<span th:case = "0"
+					                        			class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+					                        			N
+					                        		</span>
+					                        		<span th:case = "1"
+					                        			class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:bg-orange-700 dark:text-orange-100">
+					                        			Y
+					                        		</span>                        		
+					                        	</th:block>
+					                        </td>        	
                    	
-                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdgRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    	
-                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdgUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    
-                    	<td class="px-6 py-1">
-<!--                     	수정 -->
-                    	    <button 
-                            	id="btnUpate"
-								name="btnUpdate"
-								class="btnSave px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-								<a th:href="@{/codeGroupSdmForm(cdgSeq=${list.cdgSeq}, cdgName=${list.cdgName})}">
-									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-										<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
-										<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
-									</svg>															
-								</a>
-                      		</button>
-                    	</td>
-                  	</tr> 
-                  </tbody>
-                </table>
-              </div>
+					                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdgRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    	
+					                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdgUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    
+					                    	<td class="px-6 py-1">
+											<!-- 수정 -->
+                    	    					<button class="btnSave px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                            						id="btnUpate" name="btnUpdate">
+													<a th:href="@{/codeGroupSdmForm(cdgSeq=${list.cdgSeq}, cdgName=${list.cdgName})}">
+														<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+															<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
+															<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
+														</svg>															
+													</a>
+                      							</button>
+                    						</td>
+                  						</tr> 
+                  					</tbody>
+                				</table>
+              				</div>
 
-              <script>
-                // 타이틀바 체크시 리스트 체크박스 체크 및 해제
-                document.getElementById("checkboxAll").addEventListener("change", fnCheckboxCheck);
-
-                function fnCheckboxCheck() {
-                  let checkedAll = document.querySelector("#checkboxAll");
-                  const isChecked = checkedAll.checked;
-                  $(".checkboxList").prop("checked", isChecked);
-                }  
-              </script>
+							<script>
+								// 타이틀바 체크시 리스트 체크박스 체크 및 해제
+								document.getElementById("checkboxAll").addEventListener("change", fnCheckboxCheck);
+							
+								function fnCheckboxCheck() {
+							  		let checkedAll = document.querySelector("#checkboxAll");
+							  		const isChecked = checkedAll.checked;
+							  		$(".checkboxList").prop("checked", isChecked);
+								}  
+							</script>
               
-              <!-- 페이지넘김 -->
-			  <div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
+							<!-- 페이지넘김 -->
+							<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
+							         
+							<!-- 삭제버튼, 홈버튼 -->
+							<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                				<!-- 삭제버튼 -->
+                				<span class="flex items-center col-span-3">
+                  					<button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"                    
+                    					@click="openModal"
+                    					aria-label="Delete">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					  						<path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
+										</svg>
+                  					</button>
+                				</span>              
               
-              <!-- 삭제버튼, 홈버튼 -->
-              <div
-                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-              >
-                <!-- 삭제버튼 -->
-                <span class="flex items-center col-span-3">
-                  <button
-                    @click="openModal"
-					class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"                    
-                    aria-label="Delete"
-
-                  >
-					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-					  <path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
-					</svg>
-                  </button>
-                </span>              
-              
-                <span class="flex col-span-3 mt-2 sm:mt-auto sm:justify-center">
-                  <nav aria-label="Table navigation">
-                  </nav>
-                </span>
+                				<span class="flex col-span-3 mt-2 sm:mt-auto sm:justify-center">
+                  					<nav aria-label="Table navigation"></nav>
+                				</span>
                               
-                <span class="flex col-span-3 sm:mt-auto sm:justify-end">
-<!--                홈버튼 -->                
-	                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
-	                	<a th:href="@{/indexSdm}">
-							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  		<path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
-							</svg>                
-	                  	</a>	                  
-	                </button>
-<!--                추가버튼 -->        
-					&nbsp;&nbsp;          
-	                <button 
-                    	id="btnInsert"
-                    	name="btnInsert"
-                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
-						<a th:href="@{/codeGroupSdmCreate}">
-							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
-							</svg>	
-						</a>
-	                </button>                  
-                </span>                
-              </div>
-            </div>
-            </form>
-          </div>
-        </main>
-      </div>
+                				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
+								<!-- 홈버튼 -->                
+				                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
+				                	<a th:href="@{/indexSdm}">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  		<path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
+										</svg>                
+				                  	</a>	                  
+				                </button>
+								<!-- 추가버튼 -->        
+								&nbsp;&nbsp;          
+				                <button 
+			                    	id="btnInsert"
+			                    	name="btnInsert"
+			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
+									<a th:href="@{/codeGroupSdmCreate}">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
+										</svg>	
+									</a>
+				                </button>                  
+                			</span>                
+              			</div>
+            		</div>
+          		</div>
+       		</main>
+      	</div>
     </div>
     
     <!-- Modal backdrop. This what you want to place close to the closing body tag -->
-    <div
-      x-show="isModalOpen"
-      x-transition:enter="transition ease-out duration-150"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-    >
-      <!-- Modal -->
-      <div
-        x-show="isModalOpen"
-        x-transition:enter="transition ease-out duration-150"
-        x-transition:enter-start="opacity-0 transform translate-y-1/2"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0  transform translate-y-1/2"
-        @click.away="closeModal"
-        @keydown.escape="closeModal"
-        class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
-        role="dialog"
-        id="modal"
-      >
-        <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
-        <header class="flex justify-end">
-          <button
-            class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
-            aria-label="close"
-            @click="closeModal"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              role="img"
-              aria-hidden="true"
-            >
-              <path
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-                fill-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </header>
-        
-        <!-- Modal body -->
-        <div class="mt-4 mb-6">
-          <!-- Modal title -->
-          <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-            삭제확인
-          </p>
-          <!-- Modal description -->
-          <p class="text-sm text-gray-700 dark:text-gray-400">
-            삭제을 진행 하시겠습니까?
-          </p>
-        </div>
-        <footer
-          class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800"
-        >
-          <button
-            @click="closeModal"
-            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 border bg-purple-600 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:bg-purple-700 focus:outline-none active:bg-purple-600 focus:outline-none focus:shadow-outline-gray"
-          >
-            취소
-          </button>
-          <button
-            @click="closeModal"
-            id="lineDelete"
-            name="lineDelete"
-            class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
-          >
-<!-- 			<a th:href="@{/codeSdmDelete(seq=${item.cdgSeq})}">삭제</a> -->
-			삭제
-          </button> 
-        </footer>
-      </div>
+    <div class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+		x-show="isModalOpen"
+		x-transition:enter="transition ease-out duration-150"
+		x-transition:enter-start="opacity-0"
+		x-transition:enter-end="opacity-100"
+		x-transition:leave="transition ease-in duration-150"
+		x-transition:leave-start="opacity-100"
+		x-transition:leave-end="opacity-0">
+		<!-- Modal -->
+		<div class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+			x-show="isModalOpen"
+			x-transition:enter="transition ease-out duration-150"
+			x-transition:enter-start="opacity-0 transform translate-y-1/2"
+			x-transition:enter-end="opacity-100"
+			x-transition:leave="transition ease-in duration-150"
+			x-transition:leave-start="opacity-100"
+			x-transition:leave-end="opacity-0  transform translate-y-1/2"
+			@click.away="closeModal"
+			@keydown.escape="closeModal"
+			role="dialog"
+			id="modal">
+       		<!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
+       		<header class="flex justify-end">
+         			<button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+           			aria-label="close"
+           			@click="closeModal">
+           			<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
+             				<path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+           			</svg>
+         			</button>
+       		</header>
+       
+       		<!-- Modal body -->
+       		<div class="mt-4 mb-6">
+         			<!-- Modal title -->
+         			<p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
+           			삭제확인
+         			</p>
+         			<!-- Modal description -->
+         			<p class="text-sm text-gray-700 dark:text-gray-400">
+           			삭제을 진행 하시겠습니까?
+         			</p>
+       		</div>
+        		
+        	<footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+          		<button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 border bg-purple-600 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:bg-purple-700 focus:outline-none active:bg-purple-600 focus:outline-none focus:shadow-outline-gray"
+            		@click="closeModal">
+            		취소
+          		</button>
+          		<button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
+            		@click="closeModal"
+            		id="lineDelete" name="lineDelete">
+					<!-- <a th:href="@{/codeSdmDelete(seq=${item.cdgSeq})}">삭제</a> -->
+					삭제
+				</button> 
+        	</footer>
+      	</div>
     </div>
     <!-- End of modal backdrop -->    
     
