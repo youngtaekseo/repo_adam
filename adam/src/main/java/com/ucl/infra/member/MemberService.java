@@ -50,4 +50,12 @@ public class MemberService {
 	public int getCount(MemberVo vo) {
 		return dao.getCount(vo);
 	}	
+	
+	public MemberDto selectLoginId(MemberDto dto) {
+		return dao.selectLoginId(dto);
+	}	
+	
+	public MemberDto selectLoginPassword(MemberDto dto) {
+		return dao.selectLoginPassword(dto);
+	}	
 }

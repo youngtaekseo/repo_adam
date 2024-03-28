@@ -1,20 +1,24 @@
 package com.ucl.infra.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ucl.common.base.BaseController;
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
 
 @Controller
-public class MemberController {
-
+public class MemberController extends BaseController {
+	
 	@Autowired
 	MemberService service;
 	
@@ -52,8 +56,12 @@ public class MemberController {
 	// 등록
 	@RequestMapping(value = "/memberSdmInsert")
 	public String memberSdmInsert(MemberDto dto) {
+		
+		// 비밀번호 암호화
+		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+
 		service.insert(dto);
-		return "redirect:/memberSdmList";
+		return "redirect:/memberSdmList";		
 	}
 	
 	// 수정화면
@@ -66,8 +74,14 @@ public class MemberController {
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")
 	public String memberSdmUpdate(MemberDto dto) {
+		
+		// 비밀번호 암호화
+		if(dto.getMbrPassword() != "") {
+			dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+		}
+
 		service.update(dto);
-		return "redirect:/memberSdmList";
+		return "redirect:/memberSdmList";	
 	}
 	
 	// 삭제여부수정
@@ -84,11 +98,59 @@ public class MemberController {
 		return "redirect:/memberSdmList";
 	}	
 	
-	// 비밀번호 확인용
-	@RequestMapping(value = "/memberSdmPassword")
-	public String memberSdmPassword(MemberDto dto, Model model) {
-		model.addAttribute("item", service.selectPassword(dto));
-		return "redirect:/memberSdmList";
+	// 로그인 아이디, 비밀번호 확인용
+	@ResponseBody
+	@RequestMapping(value = "/memberSdmLoginConfirm")
+	public Map<String, Object> memberSdmLoginConfirm(MemberDto dto) {
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		String loginChk = "";
+		
+		String loginId       = dto.getMbrEmail();
+		String loginPassword = dto.getMbrPassword();
+		
+		MemberDto mDto = service.selectLoginId(dto);
+		
+		// 아이디 확인
+		if(loginId.equals(mDto.getMbrEmail())) {
+			loginChk = "success";
+		} else {
+			loginChk = "id";
+		}
+		
+		// 아이디 확인 정상일때
+		if(loginChk == "success") {
+			if(matchesBcrypt(loginPassword, mDto.getMbrPassword(), 10)) {
+				loginChk = "success";
+			} else {
+				loginChk = "password";
+			}				
+		}	
+		
+		returnMap.put("rt", loginChk);
+		
+		return returnMap;
+	}
+	
+	// 수정, 등록화면 비밀번호 확인용
+	@ResponseBody
+	@RequestMapping(value = "/memberSdmPwConfirm")
+	public Map<String, Object> memberSdmPassword(MemberDto dto) {
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		// 암호화
+		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+		
+		// 비밀번호 비교
+		if(matchesBcrypt(dto.getMbrPwConfirm(), dto.getMbrPassword(), 10)) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;			
 	}	
 	
 	// 조회조건 및 페이징정보 포함된 url 생성

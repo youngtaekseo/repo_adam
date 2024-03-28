@@ -69,10 +69,21 @@
            AND a.mbrSeq = #{mbrSeq}	
 	</select>
 	
-	<select id="selectPasword" resultMap="resultMapObj">>
-		SELECT SHA2(#{xmbrPasswordPre}, 512) xmbrPasswordPre
-		  FROM dual
+	<select id="selectLoginId" resultMap="resultMapObj">
+		SELECT mbrSeq
+		     , mbrEmail
+		     , mbrPassword
+		  FROM members
+		 WHERE 1 = 1
+		   AND mbrEmail = #{mbrEmail}
 	</select>
+	
+	<select id="selectLoginPassword" resultMap="resultMapObj">
+		SELECT mbrPassword
+		  FROM members
+		 WHERE 1 = 1
+		   AND mbrEmail = #{mbrEmail}
+	</select>	
 	
 	<select id="selectListCode" resultMap="resultMapObj">
 		SELECT a.cdcSeq

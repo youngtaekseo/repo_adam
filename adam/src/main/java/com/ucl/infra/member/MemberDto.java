@@ -11,6 +11,7 @@ public class MemberDto {
 	private String mbrBirthday;
 	private String mbrEmail;
 	private String mbrPassword;
+	private String mbrPwConfirm;
 	private Date mbrRegDt;
 	private Date mbrUdtDt;
 	private Integer mbrDelNy; // 0:미삭제, 1:삭제
@@ -62,6 +63,12 @@ public class MemberDto {
 	public void setMbrPassword(String mbrPassword) {
 		this.mbrPassword = mbrPassword;
 	}
+	public String getMbrPwConfirm() {
+		return mbrPwConfirm;
+	}
+	public void setMbrPwConfirm(String mbrPwConfirm) {
+		this.mbrPwConfirm = mbrPwConfirm;
+	}	
 	public Date getMbrRegDt() {
 		return mbrRegDt;
 	}

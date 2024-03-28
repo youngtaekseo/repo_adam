@@ -16,4 +16,7 @@ public interface MemberDao {
 	public int updateDelNy(MemberDto dto);
 	
 	public int getCount(MemberVo vo); 
+	
+	public MemberDto selectLoginId(MemberDto dto); 
+	public MemberDto selectLoginPassword(MemberDto dto); 
 }
