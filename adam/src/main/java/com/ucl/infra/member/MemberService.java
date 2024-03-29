@@ -43,19 +43,11 @@ public class MemberService {
 		return dao.updateDelNy(dto);
 	}
 	
-	public MemberDto selectPassword(MemberDto dto) {
-		return dao.selectPassword(dto);
-	}
-	
 	public int getCount(MemberVo vo) {
 		return dao.getCount(vo);
 	}	
 	
 	public MemberDto selectLoginId(MemberDto dto) {
 		return dao.selectLoginId(dto);
-	}	
-	
-	public MemberDto selectLoginPassword(MemberDto dto) {
-		return dao.selectLoginPassword(dto);
-	}	
+	}
 }

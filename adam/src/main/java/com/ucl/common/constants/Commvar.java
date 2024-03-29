@@ -15,4 +15,6 @@ public class Commvar {
 	
 	public static final int DATE_INTERVAL = -10;
 	
+	public static final int SESSION_MINUTE_SDM = 30;
+	
 }
