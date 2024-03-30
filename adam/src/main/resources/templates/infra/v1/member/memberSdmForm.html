@@ -80,7 +80,8 @@
 				        			<span class="text-gray-700 dark:text-gray-400">생년월일</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrBirthday" name="mbrBirthday" placeholder="생년월일"
-				        				th:value="${#strings.substring(item.mbrBirthday, 0, 10)}">
+				        				th:value="${#strings.substring(item.mbrBirthday, 0, 10)}"
+				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrBirthdayValid" name="mbrBirthdayValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					생년월일 입력하세요
 				        				</span>
@@ -94,7 +95,8 @@
 				        			<span class="text-gray-700 dark:text-gray-400">이메일</span>
 			        				<input class="block w-full mt-1 form-control text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			        					id="mbrEmail" name="mbrEmail" placeholder="이메일" readonly
-			        					th:value="${item.mbrEmail}">
+			        					th:value="${item.mbrEmail}"
+			        					onkeyup="fnOnKeyUp(this)">
 				        			<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				이메일 업력하세요
 				        			</span>
@@ -102,50 +104,6 @@
 				    		</div>
 						</div>
 						
-						<div class="flex flex-col md:flex-row mt-4 mb-4">
-							<!--  현재비밀번호 -->
-				    		<div class="md:h-auto mr-3 md:w-1/2">
-				      			<label class="block text-sm">
-				        			<span class="text-gray-700 dark:text-gray-400">현재 비밀번호</span>
-				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        				id="xmbrPasswordPre" name="xmbrPasswordPre"
-				            			type="password" placeholder="현재 비밀번호"
-				        				onkeyup="fnOnKeyUp(this)">
-				        				<span id="xmbrPasswordPreValid" name="xmbrPasswordPreValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					현재 비밀번호 입력하세요
-				        				</span>
-				      			</label>
-				    		</div>
-				    							
-				    		<!--  새 비밀번호 -->	
-				    		<div class="md:h-auto mr-3 md:w-1/2">
-				      			<label class="block text-sm">
-				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 입력가능 특수문자 @ - _ !</span>
-				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        				id="mbrPassword" name="mbrPassword"
-				            			type="password" placeholder="새 비밀번호"
-				        				onkeyup="fnOnKeyUp(this)">
-				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					새 비밀번호 입력하세요
-				        				</span>
-				      			</label>
-				    		</div>
-				
-							<!--  새 비밀번호 확인 -->
-				    		<div class="md:h-auto mr-3 md:w-1/2">
-				      			<label class="block text-sm">
-				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 확인</span>
-				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        			 	id="xmbrPwConfirm" name="xmbrPwConfirm"
-				            			type="password" placeholder="새 비밀번호"
-				        			 	onkeyup="fnOnKeyUp(this)">
-				        				<span id="xmbrPwConfirmValid" name="xmbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					새 비밀번호 입력하세요
-				        				</span>
-				      			</label>
-				    		</div>
-				  		</div>
-				
 						<!-- 저장버튼, 회원조회버튼 -->
 						<div class="flex flex-col md:flex-row mt-4">
 				  			<!-- 이전 -->
@@ -296,21 +254,24 @@
 		
 		let form = document.querySelector("form[name=form]");
 
-		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/memberSdmCreate";	/* 등록화면 */
-		let goUrlSdmInsert 	= "/memberSdmInsert";	/* 등록 */
-		let goUrlSdmUpdate 	= "/memberSdmUpdate";	/* 수정 */
-		let goUrlSdmDelete 	= "/memberSdmDelete";	/* 삭제 */
-		let goUrlSdmDelNy 	= "/memberSdmDelNy";	/* 삭제여부변경 */
-		let goUrlSdmPassword= "/memberSdmPassword";	/* 비밀번호 */
+		let goUrlSdmList   		= "/memberSdmList";			/* 조회화면 */
+		let goUrlSdmForm   		= "/memberSdmForm";			/* 수정화면 */
+		let goUrlSdmCreate 		= "/memberSdmCreate";		/* 등록화면 */
+		let goUrlSdmInsert 		= "/memberSdmInsert";		/* 등록 */
+		let goUrlSdmUpdate 		= "/memberSdmUpdate";		/* 수정 */
+		let goUrlSdmDelete 		= "/memberSdmDelete";		/* 삭제 */
+		let goUrlSdmDelNy 		= "/memberSdmDelNy";		/* 삭제여부변경 */
+		let goUrlSdmPass		= "/memberSdmPass";			/* 비밀번호수정화면 */
+		let goUrlSdmUpdatePass 	= "/memberSdmUpdatePass";	/* 비밀번호수정 */
 
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-// 		let regExp = /[^\w\sㄱ-힣()0-9]/g;
-		
 		// 필수입력체크대상
-		let nameArr = ["mbrName", "mbrEmail"];
-		let textArr = ["회원명 입력하세요", "이메일 입력하세요"];
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "";
+		let typeArr = [3, 13, 12];		
+		let nameArr = ["mbrName", "mbrBirthday", "mbrEmail"];
+		let textArr = ["", "", ""];
 
 // ============================================================================
 // event
@@ -339,31 +300,22 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				// 특수문자확인
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "mbrName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
+					fnValidType(obj, "", dispText, 3);
+					break;					
+				case "mbrBirthday" :
+					fnValidType(obj, "", dispText, 13);
+					break;					
 				case "mbrEmail" :
-					regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
-					break;				
-				case "xmbrPasswordPre" :
-				case "mbrPassword" :
-				case "xmbrPwConfirm" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
-					text = "비밀번호 입력가능 특수문자 @ - _ !";
+					fnValidType(obj, "", dispText, 12);
 					break;
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);	
 			};	
-		};
+		};		
 		
 		// 생년월일 특수문자 확인
 		document.getElementById("mbrBirthday").onkeyup = function() {
@@ -373,45 +325,23 @@
 			};
 		};	
 		
-		// 비밀번호 확인
-		document.getElementById("xmbrPwConfirm").onkeydown = function() {
-			if(window.event.keyCode == 13) {
-				let mbrPassword   = document.querySelector("input[name=mbrPassword]");
-				let xmbrPwConfirm = document.querySelector("input[name=xmbrPwConfirm]");
-				
-				if(mbrPassword.value === xmbrPwConfirm.value){
-					fnCallController();
-				}	
-			};
-		};	
-		
 // ============================================================================
 // function
 // ============================================================================
 		
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-				// 비밀번호 확인
-// 				if(fnPasswordValid) {
-					// 저장
-			       	form.action = goUrlSdmUpdate;
-			       	form.submit();					
-// 				};
-	       	};	
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+	       	form.action = goUrlSdmUpdate;
+	       	form.submit();					
 		};
 		
-		// 비밀번호확인
-		fnPasswordValid = function() {
-	       	form.action = goUrlSdmPassword;
-	       	form.submit();			
-		}
-				
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
 
     </script>

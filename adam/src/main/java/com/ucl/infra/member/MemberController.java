@@ -76,12 +76,6 @@ public class MemberController extends BaseController {
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")
 	public String memberSdmUpdate(MemberDto dto) throws Exception {
-		
-		// 비밀번호 암호화
-		if(dto.getMbrPassword() != "") {
-			dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
-		}
-
 		service.update(dto);
 		return "redirect:/memberSdmList";	
 	}
@@ -100,10 +94,16 @@ public class MemberController extends BaseController {
 		return "redirect:/memberSdmList";
 	}	
 	
-	// 비밀번호수정
+	// 비밀번호수정화면
 	@RequestMapping(value = "/memberSdmPass")
 	public String memberSdmPass() throws Exception {
 		return Commvar.PATH_MEMBER + "memberSdmPass";
+	}	
+	
+	// 비밀번호수정
+	@RequestMapping(value = "/memberSdmUpdatePass")
+	public String memberSdmUpdatePass() throws Exception {
+		return Commvar.PATH_HOME + "indexSdm";
 	}	
 	
 	// 로그인 아이디, 비밀번호 확인용
@@ -189,7 +189,7 @@ public class MemberController extends BaseController {
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 		
 		// 비밀번호 비교
-		if(matchesBcrypt(dto.getMbrPwConfirm(), dto.getMbrPassword(), 10)) {
+		if(matchesBcrypt(dto.getXmbrPwConfirm(), dto.getMbrPassword(), 10)) {
 			rt = "success";
 		} else {
 			rt = "fail";

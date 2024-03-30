@@ -35,7 +35,7 @@
 				        			<span class="text-gray-700 dark:text-gray-400">현재 비밀번호</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="xmbrPasswordPre" name="xmbrPasswordPre"
-				            			type="password" placeholder="현재 비밀번호"
+				            			type="password" placeholder="5자리:영문,숫자,특수문자(!@#$%^*+=-)"
 				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="xmbrPasswordPreValid" name="xmbrPasswordPreValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					현재 비밀번호 입력하세요
@@ -46,10 +46,10 @@
 				    		<!--  새 비밀번호 -->	
 				    		<div class="md:h-auto mr-3 md:w-1/2">
 				      			<label class="block text-sm">
-				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 입력가능 특수문자 @ - _ !</span>
+				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrPassword" name="mbrPassword"
-				            			type="password" placeholder="새 비밀번호"
+				            			type="password" placeholder="5자리:영문,숫자,특수문자(!@#$%^*+=-)"
 				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					새 비밀번호 입력하세요
@@ -63,10 +63,10 @@
 				        			<span class="text-gray-700 dark:text-gray-400">새 비밀번호 확인</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        			 	id="xmbrPwConfirm" name="xmbrPwConfirm"
-				            			type="password" placeholder="새 비밀번호"
+				            			type="password" placeholder="5자리:영문,숫자,특수문자(!@#$%^*+=-)"
 				        			 	onkeyup="fnOnKeyUp(this)">
 				        				<span id="xmbrPwConfirmValid" name="xmbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-				        					새 비밀번호 입력하세요
+				        					확인 비밀번호 입력하세요
 				        				</span>
 				      			</label>
 				    		</div>
@@ -117,23 +117,35 @@
 		// 단방향 암호화 SHA2('문자열', 512);
 		// 암호화를 하게 되면 해당 값은 512비트(128자)의 문자열으로 변경됩니다.
 		
-		let form = document.querySelector("form[name=form]");
-
-		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/memberSdmCreate";	/* 등록화면 */
-		let goUrlSdmInsert 	= "/memberSdmInsert";	/* 등록 */
-		let goUrlSdmUpdate 	= "/memberSdmUpdate";	/* 수정 */
-		let goUrlSdmDelete 	= "/memberSdmDelete";	/* 삭제 */
-		let goUrlSdmDelNy 	= "/memberSdmDelNy";	/* 삭제여부변경 */
-		let goUrlSdmPassword= "/memberSdmPassword";	/* 비밀번호 */
-
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-// 		let regExp = /[^\w\sㄱ-힣()0-9]/g;
+		let form					= document.querySelector("form[name=form]");
 		
+		let xmbrPasswordPre 		= document.querySelector("inupt[name=xmbrPasswordPre]");
+		let xmbrPasswordPreValid 	= document.querySelector("span[name=xmbrPasswordPreValid]");
+		
+		let mbrPassword 			= document.querySelector("inupt[name=mbrPassword]");
+		let mbrPasswordValid 		= document.querySelector("span[name=mbrPasswordValid]");
+		
+		let xmbrPwConfirm 			= document.querySelector("inupt[name=xmbrPwConfirm]");
+		let xmbrPwConfirmValid 		= document.querySelector("span[name=xmbrPwConfirmValid]");
+
+		let goUrlSdmList   		= "/memberSdmList";			/* 조회화면 */
+		let goUrlSdmForm   		= "/memberSdmForm";			/* 수정화면 */
+		let goUrlSdmCreate 		= "/memberSdmCreate";		/* 등록화면 */
+		let goUrlSdmInsert 		= "/memberSdmInsert";		/* 등록 */
+		let goUrlSdmUpdate 		= "/memberSdmUpdate";		/* 수정 */
+		let goUrlSdmDelete 		= "/memberSdmDelete";		/* 삭제 */
+		let goUrlSdmDelNy 		= "/memberSdmDelNy";		/* 삭제여부변경 */
+		let goUrlSdmPass		= "/memberSdmPass";			/* 비밀번호수정화면 */
+		let goUrlSdmUpdatePass 	= "/memberSdmUpdatePass";	/* 비밀번호수정 */
+
 		// 필수입력체크대상
-		let nameArr = ["mbrName", "mbrEmail"];
-		let textArr = ["회원명 입력하세요", "이메일 입력하세요"];
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "5자리:영문,숫자,특수문자(!@#$%^*+=-)";
+		let typeArr = [10, 10, 10];
+		let nameArr = ["xmbrPasswordPre", "mbrPassword", "xmbrPwConfirm"];
+		let textArr = [dispText, dispText, dispText];
 
 // ============================================================================
 // event
@@ -153,42 +165,21 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				// 특수문자확인
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
-				case "mbrName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
-				case "mbrEmail" :
-					regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
-					break;				
 				case "xmbrPasswordPre" :
+					fnValidType(obj, "", dispText, 10);
+					break;					
 				case "mbrPassword" :
+					fnValidType(obj, "", dispText, 10);
+					break;					
 				case "xmbrPwConfirm" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
-					text = "비밀번호 입력가능 특수문자 @ - _ !";
+					fnValidType(obj, "", dispText, 10);
 					break;
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);	
 			};	
-		};
-		
-		// 비밀번호 확인
-		document.getElementById("xmbrPwConfirm").onkeydown = function() {
-			if(window.event.keyCode == 13) {
-				let mbrPassword   = document.querySelector("input[name=mbrPassword]");
-				let xmbrPwConfirm = document.querySelector("input[name=xmbrPwConfirm]");
-				
-				if(mbrPassword.value === xmbrPwConfirm.value){
-					fnCallController();
-				}	
-			};
 		};	
 		
 // ============================================================================
@@ -197,24 +188,17 @@
 		
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-				// 저장
-			    form.action = goUrlSdmUpdate;
-			    form.submit();					
-	       	};	
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+		    form.action = goUrlSdmPass;
+		    form.submit();					
 		};
 		
-		// 비밀번호확인
-		fnPasswordValid = function() {
-	       	form.action = goUrlSdmPassword;
-	       	form.submit();			
-		}
-				
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
 
     </script>

@@ -120,10 +120,7 @@
 		UPDATE members
 		   SET mbrName     = #{mbrName}
 			 , mbrSex      = #{mbrSex}
-			 <choose>
-			 	<when test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</when>
-			 	<when test="mbrBirthday == null or mbrBirthday.equals('')">, mbrBirthday = null</when>
-			 </choose>
+			 <if test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</if>
 			 , mbrUdtDt = now()
          WHERE 1 = 1		
            AND mbrSeq = #{mbrSeq}	

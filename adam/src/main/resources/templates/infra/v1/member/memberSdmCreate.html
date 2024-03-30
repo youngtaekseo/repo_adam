@@ -71,7 +71,8 @@
 				      			<label class="block text-sm">
 				        			<span class="text-gray-700 dark:text-gray-400">생년월일</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        				id="mbrBirthday" name="mbrBirthday">
+				        				id="mbrBirthday" name="mbrBirthday"
+				        				onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrBirthdayValid" name="mbrBirthdayValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					생년월일 입력하세요
 				        				</span>
@@ -96,11 +97,11 @@
 				    		<div class="md:h-auto mr-3 md:w-1/2">
 				      			<label class="block text-sm">
 				      				<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
-				        			<span class="text-gray-700 dark:text-gray-400">비밀번호 입력가능 특수문자 @ - _ !</span>
+				        			<span class="text-gray-700 dark:text-gray-400">비밀번호</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				        				id="mbrPassword" name="mbrPassword"
-				        				onkeyup="fnOnKeyUp(this)"
-				            			type="password" placeholder="비밀번호 4자리">
+				            			type="password" placeholder="5자리:영문,숫자,특수문자(!@#$%^*+=-)"
+				            			onkeyup="fnOnKeyUp(this)">
 				        				<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					비밀번호 입력하세요
 				        				</span>
@@ -112,10 +113,10 @@
 				      				<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">비밀번호 확인</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				        			 	id="mbrPwConfirm" name="mbrPwConfirm"
-				        			 	onkeyup="fnOnKeyUp(this)"
-				            			type="password" placeholder="비밀번호 4자리">
-				        				<span id="mbrPwConfirmValid" name="mbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+				        			 	id="xmbrPwConfirm" name="xmbrPwConfirm"
+				            			type="password" placeholder="5자리:영문,숫자,특수문자(!@#$%^*+=-)"
+				            			onkeyup="fnOnKeyUp(this)">
+				        				<span id="xmbrPwConfirmValid" name="xmbrPwConfirmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        					비밀번호 입력하세요
 				        				</span>
 				      			</label>
@@ -172,12 +173,8 @@
 		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
 		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
 		
-		let form				= document.querySelector("form[name=form]");
+		let form = document.querySelector("form[name=form]");
 		
-		// 필수입력체크대상
-		let nameArr = ["mbrName", "mbrEmail", "mbrPassword", "mbrPwConfirm"];
-		let textArr = ["회원명 입력하세요", "이메일 입력하세요", "비밀번호 입력하세요", "비밀번호 입력하세요"];		
-
 		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/memberSdmCreate";	/* 등록화면 */
@@ -207,6 +204,15 @@
 		// 비밀번호확인
 		let mbrPwConfirm        = document.querySelector("input[name=mbrPwConfirm]");
 		let mbrPwConfirmValid	= document.querySelector("span[name=mbrPwConfirmValid]");
+		
+		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "5자리:영문,숫자,특수문자(!@#$%^*+=-)";
+		let typeArr = [3, 11, 12, 10, 10];		
+		let nameArr = ["mbrName", "mbrBirthday", "mbrEmail", "mbrPassword", "mbrPwConfirm"];
+		let textArr = ["", "", "", dispText, dispText];	
 
 // ============================================================================
 // event
@@ -257,36 +263,27 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "mbrName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
+					fnValidType(obj, "", "", 3);
+					break;					
+				case "mbrBirthday" :
+					fnValidType(obj, "", "", 11);
+					break;					
 				case "mbrEmail" :
-					regExp = /[/{\}\[\]\/?,;:|\)*~`!^\+<>\#$%&\\\=\(\'\"]/g;
-					break;				
+					fnValidType(obj, "", "", 12);
+					break;
 				case "mbrPassword" :
+					fnValidType(obj, "", dispText, 10);
+					break;
 				case "mbrPwConfirm" :
-					regExp= /[/{\}\[\]\/?,.;:|\)*~`^\+<>\#$%&\\\=\(\'\"]/g;
-					text = "비밀번호 입력가능 특수문자 @ - _ !";
+					fnValidType(obj, "", dispText, 10);
 					break;
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);			
 			};	
-		};
-		
-		// 생년월일 특수문자 확인
-		document.getElementById("mbrBirthday").onkeyup = function() {
-			if(window.event.keyCode != 13) {
-				let mbrBirthday = document.querySelector("input[name=mbrBirthday]");
-				fnSpecialDate(mbrBirthday);	
-			};
 		};		
 
 // ============================================================================
@@ -295,13 +292,17 @@
 		
 		// controller 호출
 		fnCallController = function() {
+			if(!fnValidation()) {return false;};
+			
+			// 저장
 			form.action = goUrlSdmInsert;
 			form.submit();
 		};	
 		
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
 
     </script>

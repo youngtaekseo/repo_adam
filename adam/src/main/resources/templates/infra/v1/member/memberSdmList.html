@@ -52,7 +52,8 @@
 									<div class="md:h-auto md:w-1/2 mr-3">
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateStart" name="shDateStart" placeholder="시작일"
-											th:value="${#strings.substring(vo.shDateStart,0,10)}">
+											th:value="${#strings.substring(vo.shDateStart,0,10)}"
+											onkeyup="fnOnKeyUp(this)">
 										<span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											시작일자를 입력하세요
 										</span>
@@ -62,7 +63,8 @@
 									<div class="md:h-auto md:w-1/2 mr-3">
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateEnd" name="shDateEnd" placeholder="종료일"
-											th:value="${#strings.substring(vo.shDateEnd,0,10)}">
+											th:value="${#strings.substring(vo.shDateEnd,0,10)}"
+											onkeyup="fnOnKeyUp(this)">
 										<span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											종료일자를 입력하세요
 										</span>
@@ -395,9 +397,6 @@
 		let shValue			= document.querySelector("input[name=shValue]");
 		let shValueValid	= document.querySelector("span[name=shValueValid]");		
 		
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-		
 		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/memberSdmCreate";	/* 등록화면 */
@@ -407,8 +406,12 @@
 		let goUrlSdmUdtDelNy= "/memberSdmUdtDelNy";	/* 삭제여부-삭제로변경 */
 		
 		// 필수입력체크대상
-		let nameArr = ["shDateStart", "shDateEnd", "shValue"];
-		let textArr = ["시작일자 입력하세요", "종료일자 입력하세요", "검색어 입력하세요"];	
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let typeArr = [11, 11];			
+		let nameArr = ["shDateStart", "shDateEnd"];
+		let textArr = ["", ""];	
 
 // ============================================================================
 // event
@@ -434,39 +437,22 @@
 			if (window.event.keyCode == 13) {
 				fnCallController();
 			};			
-		};
+		};	
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				// 특수문자확인
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
-				case "shValue" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+				case "shDateStart" :
+					fnValidType(obj, "", "", 11);
+					break;					
+				case "shDateEnd" :
+					fnValidType(obj, "", "", 11);
 					break;
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);		
-			};
-		};			
-
-		// 시작일자 특수문자 확인
-		document.getElementById("shDateStart").onkeyup = function() {
-			if(window.event.keyCode != 13) {
-				fnSpecialDate(shDateStart);	
-			};
-		};
-		
-		// 종료일자 특수문자 확인
-		document.getElementById("shDateEnd").onkeyup = function() {
-			if(window.event.keyCode != 13) {
-				fnSpecialDate(shDateEnd);	
-			};
-		};
+			};	
+		};		
 		
         // 초기화버튼 클릭
 		function fnReset() {  
@@ -486,17 +472,25 @@
 
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation() == true) {
-	       		return false;
-	       	} else {
-		       	form.action = goUrlSdmList;
-		       	form.submit();      			
-	       	};
+			if(!fnValidation()) {return false;};
+			if(!fnValidationForm()) {return false;};
+			
+			// 조회
+	       	form.action = goUrlSdmList;
+	       	form.submit(); 
 		};	
 		
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk;
+			// 검색어
+			if((shOption.value == null) || (shOption.value == "") || (shOption.value.length == 0)) {
+				validChk = true;
+			} else {
+				validChk = fnNullToEmpty(shValue, shValueValid, "검색어");
+			};
+			
+			return validChk;
 		};
 		
     </script>
