@@ -10,8 +10,8 @@ public class ProductVo extends BaseVo {
 	private Integer shRecommend   = null; 	// 1:추천, 2:비추천
 	private Integer shAccident    = null; 	// 1:무사고, 2:유사고
 	private Integer shOptionRunKm = null;	// 주행기록
-	private Integer shOptionRunKmFrom; 		// 주행기록 시작값
-	private Integer shOptionRunKmTo;   		// 주행기록 종료값
+	private Integer shOptionRunKmFrom;		// 주행기록 시작값
+	private Integer shOptionRunKmTo;		// 주행기록 종료값
 	private Integer shOptionYear  = null;	// 연식
 	private Integer shOptionYearFrom; 		// 연식(년) 시작값
 	private Integer shOptionYearTo;   		// 연식(년) 종료값
@@ -19,7 +19,7 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
 	
 //=============================================================================
-    
+	
 	public String getShSeq() {
 		return shSeq;
 	}

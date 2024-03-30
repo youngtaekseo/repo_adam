@@ -13,21 +13,29 @@ fnValidation = function() {
 		for(let i = 0; i < nameArr.length; i++) {
 			validName = nameArr[i];
 			obj = document.querySelector("input[name="+validName+"]");
-			validType = typeArr[i];
-			validText = textArr[i];
-			validName = nameArr[i]+"Valid";
-			objValid = document.querySelector("span[name="+validName+"]");
 			
-			if(!fnNullToEmpty(obj, objValid, validText)) {
-		    	validChk = false;
-		    } else {
-				// 정규식 확인
-				validChk = fnValidType(obj, objValid, validText, validType);
-		    };	
-	    			
-			if(!validChk) {
-				obj.focus();
-				break;
+			try {
+				if((obj.getAttribute("style") == null) || (obj.getAttribute("style") == "")) {
+					validType = typeArr[i];
+					validText = textArr[i];
+					validName = nameArr[i]+"Valid";
+					objValid = document.querySelector("span[name="+validName+"]");
+					
+					if(!fnNullToEmpty(obj, objValid, validText)) {
+				    	validChk = false;
+				    } else {
+						// 정규식 확인
+						validChk = fnValidType(obj, objValid, validText, validType);
+				    };	
+			    			
+					if(!validChk) {
+						obj.focus();
+						break;
+					};				
+				};				
+			}
+			catch(e) {
+				continue;
 			};
 		};		
 	};
@@ -170,15 +178,17 @@ fnEmail = function(obj, objValid, validText) {
 // 유효성 검사
 fnValidationCheck = function(obj, objValid, validText, regExp) {	
 	let objValue = obj.value.trim();
-    let dispText = "입력 항목 형식 불일치";
+    let dispText = "입력 형식 불일치";
     let validName;
     
-    if((objValue == "") || (objValid == "")) {
+    if(objValid == "" || objValid == null) {
 	    validName = obj.name+"Valid";
-		objValue = document.querySelector("span[name="+validName+"]");	
-				
+		objValid = querySelector("span[name="+validName+"]");
+	};
+    
+    if(objValue == "") {
 		obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		objValue.setAttribute("style", "visibility:hidden;");
+		objValid.setAttribute("style", "visibility:hidden;");
 		return true;		
 	} else {
 	    if(validText != "") {dispText = validText;};

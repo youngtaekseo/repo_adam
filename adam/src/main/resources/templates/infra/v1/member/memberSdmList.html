@@ -445,8 +445,6 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "shDateStart" :
-					fnValidType(obj, "", "", 11);
-					break;					
 				case "shDateEnd" :
 					fnValidType(obj, "", "", 11);
 					break;
@@ -482,7 +480,7 @@
 		
 		// 필수입력 확인
 	    fnValidationForm = function() {
-			let validChk;
+			let validChk = true;
 			// 검색어
 			if((shOption.value == null) || (shOption.value == "") || (shOption.value.length == 0)) {
 				validChk = true;

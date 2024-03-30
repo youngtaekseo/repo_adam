@@ -51,7 +51,8 @@
 				                    <div class="md:h-auto md:w-1/2 mr-3">
 				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateStart" name="shDateStart" placeholder="시작일"
-											th:value="${#strings.substring(vo.shDateStart,0,10)}">
+											th:value="${#strings.substring(vo.shDateStart,0,10)}"
+											onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 				                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				                        	시작일자를 입력하세요
 				                        </span>
@@ -61,7 +62,8 @@
 				                    <div class="md:h-auto md:w-1/2 mr-3">
 				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateEnd" name="shDateEnd" placeholder="종료일"
-											th:value="${#strings.substring(vo.shDateEnd,0,10)}">
+											th:value="${#strings.substring(vo.shDateEnd,0,10)}"
+											onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 				                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				                        	종료일자를 입력하세요
 				                        </span>
@@ -105,7 +107,7 @@
 				                        <span style="visibility:hidden;">&nbsp;</span>
 				                    </div>
 				                </div>
-			                
+
 				                <div class="flex flex-col md:flex-row">
 				                    <!-- 주행기록 -->
 				                    <div class="md:h-auto md:w-1/2 mr-3">
@@ -120,10 +122,14 @@
 				
 				                    <!-- 주행기록 시작값 -->
 				                    <div class="md:h-auto md:w-1/2 mr-3">
-				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				                            id="shOptionRunKmFrom" name="shOptionRunKmFrom" placeholder="주행기록"
-				                            th:text="${vo.shOptionRunKmFrom}"
+				                        <input th:if="${vo.shOptionRunKm == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shOptionRunKmFrom" name="shOptionRunKmFrom" placeholder="주행기록"  style="visibility:hidden;"
+				                            th:value="${vo.shOptionRunKmFrom}"				                            
 											onkeyup="fnOnKeyUp(this)">
+				                        <input th:unless="${vo.shOptionRunKm == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shOptionRunKmFrom" name="shOptionRunKmFrom" placeholder="주행기록"
+				                            th:value="${vo.shOptionRunKmFrom}"				                            
+											onkeyup="fnOnKeyUp(this)">											
 										<span id="shOptionRunKmFromValid" name="shOptionRunKmFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											주행기록 입력하세요
 										</span>                            
@@ -131,14 +137,18 @@
 				                    
 				                    <!-- 주행기록 종료값 -->
 				                    <div class="md:h-auto md:w-1/2 mr-3">
-				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				                            id="shOptionRunKmTo" name="shOptionRunKmTo" placeholder="주행기록" style="visibility:hidden;"
-				                            th:text="${vo.shOptionRunKmTo}"
+				                        <input th:if="${vo.shOptionRunKm == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shOptionRunKmTo" name="shOptionRunKmTo" placeholder="주행기록"
+				                            th:value="${vo.shOptionRunKmTo}"
 											onkeyup="fnOnKeyUp(this)">
+				                        <input th:unless="${vo.shOptionRunKm == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				                            id="shOptionRunKmTo" name="shOptionRunKmTo" placeholder="주행기록" style="visibility:hidden;"
+				                            th:value="${vo.shOptionRunKmTo}"
+											onkeyup="fnOnKeyUp(this)">											
 										<span id="shOptionRunKmToValid" name="shOptionRunKmToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											주행기록 입력하세요
 										</span>                            
-				                    </div>   
+				                    </div> 
 				                    
 				                    <div class="md:h-auto md:w-1/2 mr-3"></div>               
 				                </div>
@@ -158,20 +168,28 @@
 				                    <!-- 연식 시작값 -->
 				                    <div class="inline-flex md:h-auto md:w-1/2 mr-3">
 				                    	<div class="md:h-auto md:w-1/2 mr-3">
-					                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-					                            id="shOptionYearFrom" name="shOptionYearFrom" placeholder="연식(년)"
-					                            th:text="${vo.shOptionYearFrom}"
+					                        <input th:if="${vo.shOptionYear == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionYearFrom" name="shOptionYearFrom" placeholder="연식(년)" style="visibility:hidden;"
+					                            th:value="${vo.shOptionYearFrom}"
 												onkeyup="fnOnKeyUp(this)">
+					                        <input th:unless="${vo.shOptionYear == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionYearFrom" name="shOptionYearFrom" placeholder="연식(년)"
+					                            th:value="${vo.shOptionYearFrom}"
+												onkeyup="fnOnKeyUp(this)">												
 											<span id="shOptionYearFromValid" name="shOptionYearFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 												연식(년) 입력하세요
 											</span>                    	
 				                    	</div>
 										
 										<div class="md:h-auto md:w-1/2">
-					                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-					                            id="shOptionMonthFrom" name="shOptionMonthFrom" placeholder="연식(월)"
-					                            th:text="${vo.shOptionMonthFrom}"
+					                        <input th:if="${vo.shOptionYear == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionMonthFrom" name="shOptionMonthFrom" placeholder="연식(월)" style="visibility:hidden;"
+					                            th:value="${vo.shOptionMonthFrom}"
 												onkeyup="fnOnKeyUp(this)">
+					                        <input th:unless="${vo.shOptionYear == null}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionMonthFrom" name="shOptionMonthFrom" placeholder="연식(월)"
+					                            th:value="${vo.shOptionMonthFrom}"
+												onkeyup="fnOnKeyUp(this)">												
 											<span id="shOptionMonthFromValid" name="shOptionMonthFromValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 												연식(월) 입력하세요
 											</span> 						
@@ -181,20 +199,28 @@
 				                    <!-- 연식 종료값 -->
 				                    <div class="inline-flex md:h-auto md:w-1/2 mr-3">
 				                    	<div class="md:h-auto md:w-1/2 mr-3">
-					                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                        <input th:if="${vo.shOptionYear == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionYearTo" name="shOptionYearTo" placeholder="연식(년)"
+					                            th:value="${vo.shOptionYearTo}"
+												onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
+					                        <input th:unless="${vo.shOptionYear == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 					                            id="shOptionYearTo" name="shOptionYearTo" placeholder="연식(년)" style="visibility:hidden;"
-					                            th:text="${vo.shOptionYearTo}"
-												onkeyup="fnOnKeyUp(this)">
+					                            th:value="${vo.shOptionYearTo}"
+												onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 											<span id="shOptionYearToValid" name="shOptionYearToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 												연식(년) 입력하세요
 											</span>                            
 				                    	</div>
 				                    	
 										<div class="md:h-auto md:w-1/2">
-					                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                        <input th:if="${vo.shOptionYear == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+					                            id="shOptionMonthTo" name="shOptionMonthTo" placeholder="연식(월)"
+					                            th:value="${vo.shOptionMonthTo}"
+												onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
+					                        <input th:unless="${vo.shOptionYear == 1}" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 					                            id="shOptionMonthTo" name="shOptionMonthTo" placeholder="연식(월)" style="visibility:hidden;"
-					                            th:text="${vo.shOptionMonthTo}"
-												onkeyup="fnOnKeyUp(this)">
+					                            th:value="${vo.shOptionMonthTo}"
+												onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 											<span id="shOptionMonthToValid" name="shOptionMonthToValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 												연식(월) 입력하세요
 											</span> 						
@@ -528,6 +554,7 @@
 	
 			// 주행기록
 			let shOptionRunKm			= document.querySelector("select[name=shOptionRunKm]");
+			let shOptionRunKmFrom		= document.querySelector("input[name=shOptionRunKmFrom]");
 			let shOptionRunKmTo			= document.querySelector("input[name=shOptionRunKmTo]");
 	
 			let shOptionRunKmFromValid	= document.querySelector("span[name=shOptionRunKmFromValid]");
@@ -557,9 +584,6 @@
 			let shValue			= document.querySelector("input[name=shValue]");
 			let shValueValid	= document.querySelector("span[name=shValueValid]");		
 			
-			// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-			// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-			
 			let goUrlSdmList   	= "/productSdmList";	/* 조회화면 */
 			let goUrlSdmForm   	= "/productSdmForm";	/* 수정화면 */
 			let goUrlSdmCreate 	= "/productSdmCreate";	/* 등록화면 */
@@ -569,9 +593,12 @@
 			let goUrlSdmUdtDelNy= "/productSdmUdtDelNy";/* 삭제여부-삭제로변경 */
 			
 			// 필수입력체크대상
-			let nameArr = ["shDateStart", "shDateEnd", "shValue", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo", "shOptionMonthFrom", "shOptionMonthTo"];
-			let textArr = ["시작일자 입력하세요", "종료일자 입력하세요", "검색어 입력하세요", "주행기록 입력하세요", "주행기록 입력하세요", "연식(년) 입력하세요", "연식(년) 입력하세요", "연식(월) 입력하세요", "연식(월) 입력하세요"];	
-
+			// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+			//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+			//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+			let typeArr = [11, 11, 4, 4, 4, 4, 4, 4, 4, 4];			
+			let nameArr = ["shDateStart", "shDateEnd", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo", "shOptionMonthFrom", "shOptionMonthTo"];
+			let textArr = ["", "", "", "", "", "", "", "", "", ""];
 // ============================================================================
 // event
 // ============================================================================
@@ -599,83 +626,131 @@
 			};
 			
 			// event onkeyup
-			// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+			// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 			fnOnKeyUp = function(obj) {
 				if(window.event.keyCode != 13) {
-					// 특수문자확인
-					let regExp;
-					let text = "특수문자는 입력할 수 없습니다";
 					switch(obj.name) {
-					case "shValue" :
-						regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-						break;
+					case "shDateStart" :
+					case "shDateEnd" :
+						fnValidType(obj, "", "", 11);
+						break;						
 					case "shOptionYearFrom" :
+						fnValidType(obj, shOptionYearFromValid, "", 4);
+						break;						
 					case "shOptionMonthFrom" :
+						fnValidType(obj, shOptionMonthFromValid, "", 4);
+						break;						
 					case "shOptionYearTo" :
+						fnValidType(obj, shOptionYearToValid, "", 4);
+						break;						
 					case "shOptionMonthTo" :
+						fnValidType(obj, shOptionMonthToValid, "", 4);
+						break;						
 					case "shOptionRunKmFrom" :
-					case "shOptionRunKmTo" :
-						regExp= /[^0-9]/g;
+						fnValidType(obj, shOptionRunKmFromValid, "", 4);
 						break;
+					case "shOptionRunKmTo" :
+						fnValidType(obj, shOptionRunKmToValid, "", 4);
+						break;						
 					};
-					
-					// 특수문자확인
-				    fnSpecialCharCheck(obj, text, regExp);		
-				};
+				};	
 			};			
-	
-			// 시작일자 특수문자 확인
-			document.getElementById("shDateStart").onkeyup = function() {
-				if(window.event.keyCode != 13) {
-					fnSpecialDate(shDateStart);	
-				};
-			};
-			
-			// 종료일자 특수문자 확인
-			document.getElementById("shDateEnd").onkeyup = function() {
-				if(window.event.keyCode != 13) {
-					fnSpecialDate(shDateEnd);	
-				};
-			};
 	
 			// 주행기록
 			document.getElementById("shOptionRunKm").onchange = function() {
 				switch(shOptionRunKm.value) {
-				case "1" :
-					shOptionRunKmTo.setAttribute("style", "");
-					shOptionRunKmTo.value = "";
-					break;
 				case ""  :
-				case "2" :
-				case "3" :
+					shOptionRunKmFrom.setAttribute("style", "visibility:hidden;");
+					shOptionRunKmFrom.value = "";
+					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
+					
 					shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
 					shOptionRunKmTo.value = "";
+					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+					break;					
+				case "1" :
+					shOptionRunKmFrom.setAttribute("style", "");
+					shOptionRunKmFrom.value = "";
+					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
+					
+					shOptionRunKmTo.setAttribute("style", "");
+					shOptionRunKmTo.value = "";
+					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+					break;
+				case "2" :
+				case "3" :
+					shOptionRunKmFrom.setAttribute("style", "");
+					shOptionRunKmFrom.value = "";
+					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
+					
+					shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+					shOptionRunKmTo.value = "";
+					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
 					break;				
 				};
-			};
+			};			
 			
 			// 연식
 			document.getElementById("shOptionYear").onchange = function() {
 				switch(shOptionYear.value) {
-				case "1" :
-					shOptionYearTo.setAttribute("style", "");
-					shOptionYearTo.value = "";
-					shOptionMonthTo.setAttribute("style", "");
-					shOptionMonthTo.value = "";
-					break;
 				case ""  :
+					fnShOptionFromVisibleFalse();
+					fnShOptionToVisibleFalse();					
+					break;
+				case "1" :
+					fnShOptionFromVisibleTrue();
+					fnShOptionToVisibleTrue();
+					break;
 				case "2" :
 				case "3" :
-					shOptionYearTo.setAttribute("style", "visibility:hidden;");
-					shOptionYearTo.value = "";
-					shOptionMonthTo.setAttribute("style", "visibility:hidden;");
-					shOptionMonthTo.value = "";
+					fnShOptionFromVisibleTrue();
+					fnShOptionToVisibleFalse();
 					break;				
 				};
 			};
 			
+			fnShOptionFromVisibleTrue = function() {
+				shOptionYearFrom.setAttribute("style", "");
+				shOptionYearFrom.value = "";
+				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+				
+				shOptionMonthFrom.setAttribute("style", "");
+				shOptionMonthFrom.value = "";
+				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");			
+			};
+			
+			fnShOptionFromVisibleFalse = function() {
+				shOptionYearFrom.setAttribute("style", "visibility:hidden;");
+				shOptionYearFrom.value = "";
+				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+				
+				shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
+				shOptionMonthFrom.value = "";
+				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");				
+			};
+			
+			fnShOptionToVisibleTrue = function() {
+				shOptionYearTo.setAttribute("style", "");
+				shOptionYearTo.value = "";
+				shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+				
+				shOptionMonthTo.setAttribute("style", "");
+				shOptionMonthTo.value = "";
+				shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
+			};
+			
+			fnShOptionToVisibleFalse= function() {
+				shOptionYearTo.setAttribute("style", "visibility:hidden;");
+				shOptionYearTo.value = "";
+				shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+				
+				shOptionMonthTo.setAttribute("style", "visibility:hidden;");
+				shOptionMonthTo.value = "";
+				shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
+			};
+			
 	        // 초기화버튼 클릭
-			function fnReset() {  
+			function fnReset() { 
 				shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 				shDateStartValid.setAttribute("style", "visibility:hidden;");
 				
@@ -686,6 +761,7 @@
 				shValueValid.setAttribute("style", "visibility:hidden;");
 				
 				shOptionRunKmFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				shOptionRunKmFrom.setAttribute("style", "visibility:hidden;");
 				shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
 	
 				shOptionRunKmTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");			
@@ -693,9 +769,11 @@
 				shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
 	
 				shOptionYearFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				shOptionYearFrom.setAttribute("style", "visibility:hidden;");
 				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
 				
 				shOptionMonthFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
 				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");
 				
 				shOptionYearTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
@@ -736,20 +814,143 @@
 // function
 // ============================================================================
 
-			// controller 호출
-			fnCallController = function() {
-				if(!fnValidation() == true) {
-		       		return false;
-		       	} else {
-			       	form.action = goUrlSdmList;
-			       	form.submit();      			
-		       	};
+		// controller 호출
+		fnCallController = function() {
+			if(!fnValidation()) {return false;};
+			if(!fnValidationForm()) {return false;};
+			
+			// 조회
+	       	form.action = goUrlSdmList;
+	       	form.submit(); 
+		};		
+
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = true;
+			
+			// 검색어
+			if((shOption.value == null) || (shOption.value == "") || (shOption.value.length == 0)) {
+				validChk = true;
+			} else {
+				validChk = fnNullToEmpty(shValue, shValueValid, "");
+				if(!validChk) {return false;};
 			};
 			
-			// 입력시 필수입력 확인
-		    fnValidationIn = function(obj, text, objValid) {
-				return fnValidationUdt(obj, text, objValid);
-			};
+			// 주행기록
+/* 			if((shOptionRunKm.value == null) || (shOptionRunKm.value == "") || (shOptionRunKm.value.length == 0)) {
+				validChk = true;
+			} else {
+				switch(shOptionRunKm.value) {
+				case "1": // 범위
+					validChk = fnNullToEmpty(shOptionRunKmFrom, shOptionRunKmFromValid, "");
+					if(validChk) {
+						validChk = fnNullToEmpty(shOptionRunKmTo, shOptionRunKmToValid, "");
+						if(!validChk) {return false;};
+					} else {
+						return false;
+					};
+					
+					break;
+				case "2": // <=
+				case "3": // >=
+					validChk = fnNullToEmpty(shOptionRunKmFrom, shOptionRunKmFromValid, "");
+					if(!validChk) {return false;};					
+					break;
+				};
+			}; */
+			
+			// 연식
+/* 			if((shOptionYear.value == null) || (shOptionYear.value == "") || (shOptionYear.value.length == 0)) {
+				validChk = true;
+			} else {
+				switch(shOptionYear.value) {
+				case "1": // 범위
+				    // 공백확인
+					validChk = fnNullToEmpty(shOptionYearFrom, shOptionYearFromValid, "");
+					if(validChk) {
+						validChk = fnNullToEmpty(shOptionMonthFrom, shOptionMonthFromValid, "");
+						if(validChk) {
+							validChk = fnNullToEmpty(shOptionYearTo, shOptionYearToValid, "");
+							if(validChk) {
+								validChk = fnNullToEmpty(shOptionMonthTo, shOptionMonthToValid, "");
+								if(!validChk) {
+									shOptionMonthTo.focus();
+									return false
+								};
+							} else {
+								shOptionYearTo.focus();
+								return false;
+							}
+						} else {
+							shOptionMonthFrom.focus();
+							return false;
+						};
+					} else {
+						shOptionYearFrom.focus();
+						return false;
+					};
+					
+				    // 정규식 확인
+					validChk = fnValidType(shOptionYearFrom, shOptionYearFromValid, "", 4);
+					if(validChk) {
+						validChk = fnValidType(shOptionMonthFrom, shOptionMonthFromValid, "", 4);
+						if(validChk) {
+							validChk = fnValidType(shOptionYearTo, shOptionYearToValid, "", 4);
+							if(validChk) {
+								validChk = fnValidType(shOptionMonthTo, shOptionMonthToValid, "", 4);
+								if(!validChk) {
+									shOptionMonthTo.focus();
+									return false
+								};
+							} else {
+								shOptionYearTo.focus();
+								return false;
+							}
+						} else {
+							shOptionMonthFrom.focus();
+							return false;
+						};
+					} else {
+						shOptionYearFrom.focus();
+						return false;
+					};					
+					
+					break;
+				case "2": // <=
+				case "3": // >=
+					// 공백 확인
+					validChk = fnNullToEmpty(shOptionYearFrom, shOptionYearFromValid, "");
+					if(validChk) {
+						validChk = fnNullToEmpty(shOptionMonthFrom, shOptionMonthFromValid, "");
+						if(!validChk) {
+							shOptionMonthFrom.focus();
+							return false;							
+						};
+					} else {
+						shOptionYearFrom.focus();
+						return false;						
+					};
+					
+					// 정규식 확인
+					validChk = fnValidType(shOptionYearFrom, shOptionYearFromValid, "", 4);
+					if(validChk) {
+						validChk = fnValidType(shOptionMonthFrom, shOptionMonthFromValid, "", 4);
+						if(!validChk) {
+							shOptionMonthFrom.focus();
+							return false;							
+						};
+					} else {
+						shOptionYearFrom.focus();
+						return false;						
+					};					
+					
+					break;
+				};
+			};*/
+			
+			return validChk;
+		}; 
+		
     	</script>     
 	</body>
 </html>
