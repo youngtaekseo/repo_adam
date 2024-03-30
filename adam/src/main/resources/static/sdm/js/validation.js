@@ -83,7 +83,7 @@ fnValidType = function(obj, objValid, validText, validType) {
 // null, 공백 확인
 fnNullToEmpty = function(obj, objValid, validText) {
 	let objValue = obj.value.trim(); // replace(/\s/g, ""); // 공백제저
-    let dispText = "필수 입력 항복입니다";
+    let dispText = "입력값이 없습니다";
     
     if(validText != "") {dispText = validText;};
 

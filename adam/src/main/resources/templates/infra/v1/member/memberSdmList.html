@@ -53,7 +53,7 @@
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateStart" name="shDateStart" placeholder="시작일"
 											th:value="${#strings.substring(vo.shDateStart,0,10)}"
-											onkeyup="fnOnKeyUp(this)">
+											onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 										<span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											시작일자를 입력하세요
 										</span>
@@ -64,7 +64,7 @@
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateEnd" name="shDateEnd" placeholder="종료일"
 											th:value="${#strings.substring(vo.shDateEnd,0,10)}"
-											onkeyup="fnOnKeyUp(this)">
+											onkeyup="fnOnKeyUp(this)" onchange ="fnOnKeyUp(this)">
 										<span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											종료일자를 입력하세요
 										</span>
@@ -487,7 +487,7 @@
 			if((shOption.value == null) || (shOption.value == "") || (shOption.value.length == 0)) {
 				validChk = true;
 			} else {
-				validChk = fnNullToEmpty(shValue, shValueValid, "검색어");
+				validChk = fnNullToEmpty(shValue, shValueValid, "");
 			};
 			
 			return validChk;
