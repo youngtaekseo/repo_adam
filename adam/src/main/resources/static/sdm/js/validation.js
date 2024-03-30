@@ -207,7 +207,7 @@ fnValidationCheck = function(obj, objValid, validText, regExp) {
 
 };
 
-// 날짜항목에 대한 특수문자처리
+/*// 날짜항목에 대한 특수문자처리
 fnSpecialDate = function(obj, objValid, validText) {
 	let regExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
 	fnValidationCheck(obj, validText, regExp);
@@ -227,4 +227,4 @@ fnSpecialCharCheck = function(obj, text, regExp) {
 		obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 		objValid.setAttribute("style", "visibility:hidden;");
 	};
-};
+};*/

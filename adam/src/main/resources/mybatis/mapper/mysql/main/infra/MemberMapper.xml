@@ -48,7 +48,7 @@
 	</select>
 
     <!-- 카운팅 -->
-    <select id="getCount">
+    <select id="selectOneCount">
         SELECT COUNT(*)
       <include refid="selectCommon"/>
     </select>
@@ -69,7 +69,7 @@
            AND a.mbrSeq = #{mbrSeq}	
 	</select>
 	
-	<select id="selectLoginId" resultMap="resultMapObj">
+	<select id="selectOneLogin" resultMap="resultMapObj">
 		SELECT mbrSeq
 		     , mbrName
 		     , mbrEmail
@@ -126,7 +126,7 @@
            AND mbrSeq = #{mbrSeq}	
 	</update>
 	
-	<update id="updatePw">
+	<update id="updatePassword">
 		UPDATE members
 		   SET mbrPassword = #{mbrPassword}
 		     , mbrUdtDt = now()

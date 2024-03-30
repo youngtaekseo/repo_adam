@@ -23,6 +23,14 @@ public class MemberService {
 		return dao.selectOne(dto);
 	}
 	
+	public MemberDto selectOneLogin(MemberDto dto) {
+		return dao.selectOneLogin(dto);
+	}
+	
+	public int selectOneCount(MemberVo vo) {
+		return dao.selectOneCount(vo);
+	}	
+	
 	public int insert(MemberDto dto) {
 		return dao.insert(dto);
 	}
@@ -35,19 +43,12 @@ public class MemberService {
 		return dao.delete(dto);
 	}
 	
-	public int updatePw(MemberDto dto) {
-		return dao.updatePw(dto);
+	public int updatePassword(MemberDto dto) {
+		return dao.updatePassword(dto);
 	}
 	
 	public int updateDelNy(MemberDto dto) {
 		return dao.updateDelNy(dto);
 	}
-	
-	public int getCount(MemberVo vo) {
-		return dao.getCount(vo);
-	}	
-	
-	public MemberDto selectLoginId(MemberDto dto) {
-		return dao.selectLoginId(dto);
-	}
+		
 }

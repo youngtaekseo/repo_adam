@@ -30,7 +30,7 @@ public class MemberController extends BaseController {
 		
 		UtilFunction.setSearch(vo);
 		
-		int rowCount = service.getCount(vo);
+		int rowCount = service.selectOneCount(vo);
 		
 		if(rowCount > 0) {			
 			vo.setPagingVo(rowCount);
@@ -101,9 +101,67 @@ public class MemberController extends BaseController {
 	}	
 	
 	// 비밀번호수정
+	@ResponseBody
 	@RequestMapping(value = "/memberSdmUpdatePass")
-	public String memberSdmUpdatePass() throws Exception {
-		return Commvar.PATH_HOME + "indexSdm";
+	public Map<String, Object> memberSdmUpdatePass(MemberDto dto, HttpSession httpSession) throws Exception {
+		
+		// 결과 전달 객체
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		// 로그인 이메일 설정
+		dto.setMbrEmail((String) httpSession.getAttribute("sessMbrEmail"));
+		
+		String xmbrPasswordPreIn = dto.getXmbrPasswordPre();	// 현재비밀번호
+		String mbrPasswordIn     = dto.getMbrPassword();		// 새비밀번호
+		String xmbrPwConfirmIn   = dto.getXmbrPwConfirm();		// 새비밀번호확인
+		
+		// 로그인 이메일로 자료조회
+		MemberDto rtDto = service.selectOneLogin(dto);
+		
+		// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치여부 확인
+		String rt = passwordOldNewCheck(xmbrPasswordPreIn, rtDto.getMbrPassword());
+		
+		if(rt == "success") {
+			// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치
+			
+			// 입력받은 새비밀번호와 새비비밀전호확인 정보 비교
+			if(mbrPasswordIn.equals(xmbrPwConfirmIn)) {
+				// 입력받은 새비밀번호와 새비밀전호확인 정보 일치
+				
+				// 회원순번 설정
+				dto.setMbrSeq(rtDto.getMbrSeq());
+				
+				// 입력받은 새비밀번호 암호화
+				dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+				
+				// 비밀번호 수정
+				service.updatePassword(dto);
+				
+				returnMap.put("rt", "success");
+			} else {
+				// 입력받은 새비밀번호와 새비밀전호확인 정보 불일치
+				returnMap.put("rt", "newAndnew");				
+			};
+		} else {
+			// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 불일치
+			returnMap.put("rt", "oldAndDb");
+		};
+		
+		return returnMap;
+	}
+	
+	// 비밀번호 수정시 비밀번호 확인
+	public String passwordOldNewCheck(String passOld, String passNew) throws Exception {
+		String rt = "";
+		
+		// 비밀번호 비교
+		if(matchesBcrypt(passOld, passNew, 10)) {
+			rt = "success";
+		} else {
+			rt = "fail";
+		}
+		
+		return rt;
 	}	
 	
 	// 로그인 아이디, 비밀번호 확인용
@@ -116,7 +174,7 @@ public class MemberController extends BaseController {
 		String loginId       = dto.getMbrEmail();
 		String loginPassword = dto.getMbrPassword();
 		
-		MemberDto rtDto = service.selectLoginId(dto);
+		MemberDto rtDto = service.selectOneLogin(dto);
 		
 		if(rtDto != null) {
 			// 아이디 확인
@@ -154,20 +212,16 @@ public class MemberController extends BaseController {
 		return returnMap;
 	}
 	
-	// 수정, 등록화면 비밀번호 확인용
+	// 수정화면 비밀번호 확인용
 	@ResponseBody
 	@RequestMapping(value = "/memberSdmPwConfirm")
 	public Map<String, Object> memberSdmPassword(MemberDto dto) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		String loginId       = dto.getMbrEmail();
-		String loginPassword = dto.getMbrPassword();
+		MemberDto rtDto = service.selectOneLogin(dto);
 		
-		
-		MemberDto rtDto = service.selectLoginId(dto);
-		
-		// 신규등록일때 이메일 존재확인
+		// 신규등록 이메일 존재확인
 		if(dto.getMbrSeq() == null) {
 			if(rtDto != null) {
 				returnMap.put("rt", "email");
@@ -181,7 +235,7 @@ public class MemberController extends BaseController {
 		return returnMap;			
 	}	
 	
-	// 비밀번호 확인
+	// 신규 등록시 비밀번호 확인
 	public String passwordCheck(MemberDto dto) throws Exception {
 		String rt = "";
 		
@@ -192,7 +246,7 @@ public class MemberController extends BaseController {
 		if(matchesBcrypt(dto.getXmbrPwConfirm(), dto.getMbrPassword(), 10)) {
 			rt = "success";
 		} else {
-			rt = "fail";
+			rt = "noMatch";
 		}
 		
 		return rt;
