@@ -255,19 +255,19 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "mbrName" :
-					fnValidType(obj, "", "", 3);
+					fnValidType(obj, mbrNameValid, "", 3);
 					break;					
 				case "mbrBirthday" :
-					fnValidType(obj, "", "", 11);
+					fnValidType(obj, mbrBirthdayValid, "", 11);
 					break;					
 				case "mbrEmail" :
-					fnValidType(obj, "", "", 12);
+					fnValidType(obj, mbrEmailValid, "", 12);
 					break;
 				case "mbrPassword" :
-					fnValidType(obj, "", dispText, 10);
+					fnValidType(obj, mbrPasswordValid, dispText, 10);
 					break;
 				case "mbrPwConfirm" :
-					fnValidType(obj, "", dispText, 10);
+					fnValidType(obj, mbrPwConfirmValid, dispText, 10);
 					break;
 				};
 			};	

@@ -179,12 +179,6 @@ fnEmail = function(obj, objValid, validText) {
 fnValidationCheck = function(obj, objValid, validText, regExp) {	
 	let objValue = obj.value.trim();
     let dispText = "입력 형식 불일치";
-    let validName;
-    
-    if(objValid == "" || objValid == null) {
-	    validName = obj.name+"Valid";
-		objValid = querySelector("span[name="+validName+"]");
-	};
     
     if(objValue == "") {
 		obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");

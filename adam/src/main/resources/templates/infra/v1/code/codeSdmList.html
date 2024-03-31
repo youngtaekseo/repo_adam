@@ -409,8 +409,10 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "shDateStart" :
+					fnValidType(obj, shDateStartValid, "", 11);
+					break;	
 				case "shDateEnd" :
-					fnValidType(obj, "", "", 11);
+					fnValidType(obj, shDateEndValid, "", 11);
 					break;					
 				};
 			};	

@@ -41,7 +41,7 @@
                       <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           id="cdgName" name="cdgName"
                           th:value="${item.cdgName}"
-                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">                    
+                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)"/>                    
                       <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 						그룹코드명 입력하세요
                       </span>                    
@@ -54,11 +54,8 @@
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
                 <div class="md:h-auto sm:mt-auto md:w-1/2">
-                  <button
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Search"
-                    type="button"
-                  >         
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+                    aria-label="Search" type="button">         
                     <a th:href="@{/codeGroupSdmList}">
 						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
@@ -201,8 +198,8 @@
 // 변수선언
 // ============================================================================
 				
-		let cdgSeq			= document.querySelector("cdgSeq");
 		let form			= document.querySelector("form[name=form]");
+		let cdgSeq			= document.querySelector("cdgSeq");
 	
 		// 그룹코드명
 		let cdgName         = document.querySelector("input[name=cdgName]");
@@ -216,12 +213,14 @@
 		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
 		let goUrlSdmDelNy 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
 		
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-		
 		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "한글,영문,숫자 입력가능";
+		let typeArr = [7];		
 		let nameArr = ["cdgName"];
-		let textArr = ["그룹코드명 입력하세요"];		
+		let textArr = [dispText];		
 
 // ============================================================================
 // event
@@ -241,22 +240,16 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				// 특수문자확인
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "cdgName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
+					fnValidType(obj, cdgNameValid, dispText, 7);
+					break;					
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);	
 			};	
-		};
+		};		
 
 // ============================================================================
 // function
@@ -264,17 +257,17 @@
 
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-		       	form.action = goUrlSdmUpdate;
-		       	form.submit();
-	       	};	
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+	       	form.action = goUrlSdmUpdate;
+	       	form.submit();					
 		};
-
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
  	
     </script>  

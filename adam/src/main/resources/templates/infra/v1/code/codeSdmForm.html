@@ -229,8 +229,13 @@
 		let goUrlSdmUdtDelNy= "/codeSdmUdtDelNy";	/* 삭제여부변경 */
 
 		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "";
+		let typeArr = [7];		
 		let nameArr = ["cdcName"];
-		let textArr = ["코드명 입력하세요"];	
+		let textArr = [dispText];		
 		
 // ============================================================================
 // event
@@ -250,22 +255,16 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				// 특수문자확인
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "cdcName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
+					fnValidType(obj, cdcNameValid, dispText, 7);
+					break;					
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);	
 			};	
-		};
+		};		
 
 // ============================================================================
 // function
@@ -273,94 +272,19 @@
 
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-		       	form.action = goUrlSdmUpdate;
-		       	form.submit();
-	       	};	
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+	       	form.action = goUrlSdmUpdate;
+	       	form.submit();					
+		};
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
 
-// 		// 필수입력항목 확인
-// 		fnValidation = function() {
-// 			let obj;
-// 			let text;
-// 			let validName;
-// 			let valid;
-// 			let submitChk = true;			
-// 			let validChk = true;
-			
-// 			for(let i = 0; i < nameArr.length; i++) {
-// 				for (let j = 0; j < form.elements.length; j++) {
-// 					if (nameArr[i] == form.elements[j].name) {
-// 						obj = form.elements[j];
-// 						text = textArr[i];
-// 						validName = nameArr[i]+"Valid";
-// 						objValid = document.querySelector("span[name="+validName+"]");
-						
-// 						validChk = fnValidationIn(obj, text, objValid);
-
-// 						// 이메일
-// 						if(nameArr[i] == "mbrEmail") {
-// 							validChk = fnEmailCheck(obj, objValid);
-// 						};
-						
-// 						if(submitChk) {
-// 							submitChk = validChk;
-// 						};
-						
-// 						break;						
-// 					};
-// 				};
-// 			};
-			
-// 			return submitChk;
-// 		};
-				
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
-		};
-
-// 		// 수정시 필수입력 확인
-// 	    fnValidationUdt = function(obj, text, objValid) {
-// 		    if(!fnNullToEmpty(obj.value)) {
-// 		    	obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-// 		    	objValid.innerHTML = text;
-// 		    	objValid.setAttribute("style", "");
-// 		    	return false;
-// 		    } else {
-// 		    	obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-// 		    	objValid.setAttribute("style", "visibility:hidden;");
-// 		    	return true;
-// 		    };
-// 	    };
-	    
-// 		// 특수문자확인
-//     	fnSpecialCharCheck = function(obj, text, regExp) {
-// 			let validName = obj.name+"Valid";
-// 			let objValid = document.querySelector("span[name="+validName+"]");
-
-// 			if (regExp.test(obj.value) == true) {
-// 				obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-// 				objValid.innerHTML = text;
-// 				objValid.setAttribute("style", "");				
-// 			} else {
-// 				obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-// 				objValid.setAttribute("style", "visibility:hidden;");				
-// 			};		
-//     	};
-    	
-// 	    // null, 공백 확인
-// 	    fnNullToEmpty = function(value) {
-// 	    	let str = value.replace(/\s/g, ""); // 공백제저
-	    	
-// 	    	if((str === null) || (str.length === 0)) {
-// 	    		return false; // null 또는 공백 
-// 	    	} else {
-// 	    		return true; // 값 존재
-// 	    	}
-// 	    }; 
     </script> 
   </body>
 </html>

@@ -96,7 +96,7 @@
 			        				<input class="block w-full mt-1 form-control text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			        					id="mbrEmail" name="mbrEmail" placeholder="이메일" readonly
 			        					th:value="${item.mbrEmail}"
-			        					onkeyup="fnOnKeyUp(this)">
+			        					onkeyup="fnOnKeyUp(this)"/>
 				        			<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				이메일 업력하세요
 				        			</span>
@@ -256,6 +256,10 @@
 		let goUrlSdmPass		= "/memberSdmPass";			/* 비밀번호수정화면 */
 		let goUrlSdmUpdatePass 	= "/memberSdmUpdatePass";	/* 비밀번호수정 */
 
+		let mbrNameValid     = document.querySelector("span[name=mbrNameValid]");
+		let mbrBirthdayValid = document.querySelector("span[name=mbrBirthdayValid]");
+		let mbrEmailValid    = document.querySelector("span[name=mbrEmailValid]");
+		
 		// 필수입력체크대상
 		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
 		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
@@ -297,13 +301,13 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "mbrName" :
-					fnValidType(obj, "", dispText, 3);
+					fnValidType(obj, mbrNameValid, dispText, 7);
 					break;					
 				case "mbrBirthday" :
-					fnValidType(obj, "", dispText, 13);
+					fnValidType(obj, mbrBirthdayValid, dispText, 13);
 					break;					
 				case "mbrEmail" :
-					fnValidType(obj, "", dispText, 12);
+					fnValidType(obj, mbrEmailValid, dispText, 12);
 					break;
 				};
 			};	

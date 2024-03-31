@@ -77,7 +77,7 @@
 				                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 				                            id="shOptionGroup" name="shOptionGroup">
 				                            <option value="" th:selected="${vo.shOptionGroup == null}">코드그룹선택</option>
-				                            <option th:each="list : ${listGroupName}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == vo.shOptionGroup}">
+				                            <option th:each="list : ${listCodeGroupName}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == vo.shOptionGroup}">
 											<!--<option th:each="list : ${@codeGroupService.selectListCachedCodeGroup()}" th:value="${list.cdgSeq}" th:text="${list.cdgName}"></option>-->
 				                        </select>
 				                    </div>
@@ -402,9 +402,11 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "shDateStart" :
+					fnValidType(obj, shDateStartValid, "", 11);
+					break;	
 				case "shDateEnd" :
-					fnValidType(obj, "", "", 11);
-					break;					
+					fnValidType(obj, shDateEndValid, "", 11);
+					break;						
 				};
 			};	
 		};

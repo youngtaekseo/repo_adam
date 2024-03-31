@@ -34,6 +34,8 @@ public class CodeGroupController {
 			/* setUrl(vo); */
 		};
 		
+		model.addAttribute("listCodeGroupName", service.selectListCodeGroup());
+		
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmList";
 	}
 	

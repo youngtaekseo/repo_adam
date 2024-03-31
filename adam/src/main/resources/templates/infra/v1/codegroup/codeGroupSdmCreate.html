@@ -82,9 +82,6 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-		// 영어,한글,숫자를 제외한 다른 문자가 들어있는지 확인하는 정규식
-		// let vKorEngNumChar = /[^\w\sㄱ-힣()0-9]/g;
-		
 		let form			= document.querySelector("form[name=form]");
 		let cdgSeq			= document.querySelector("cdgSeq");
 	
@@ -101,8 +98,14 @@
 		let goUrlSdmUdtOne 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
 
 		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
+		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
+		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		let dispText = "";
+		let typeArr = [7];		
 		let nameArr = ["cdgName"];
-		let textArr = ["그룹코드명 입력하세요"];			
+		let textArr = [dispText];	
+		
 // ============================================================================
 // event
 // ============================================================================
@@ -121,21 +124,16 @@
 		};
 		
 		// event onkeyup
-		// 특수문자가 속해있는지 확인하는 정규식 /[/{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;		
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
 			if(window.event.keyCode != 13) {
-				let regExp;
-				let text = "특수문자는 입력할 수 없습니다";
 				switch(obj.name) {
 				case "cdgName" :
-					regExp = /[/{\}\[\]\/?,.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-					break;
+					fnValidType(obj, cdgNameValid, dispText, 7);
+					break;					
 				};
-				
-				// 특수문자확인
-			    fnSpecialCharCheck(obj, text, regExp);			
 			};	
-		};		
+		};	
 
 // ============================================================================
 // function
@@ -143,17 +141,17 @@
 
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {
-	       		return false;
-	       	} else {
-		       	form.action = goUrlSdmInsert;
-		       	form.submit();
-	       	};
-		};
-
-		// 입력시 필수입력 확인
-	    fnValidationIn = function(obj, text, objValid) {
-			return fnValidationUdt(obj, text, objValid);
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+			form.action = goUrlSdmInsert;
+			form.submit();
+		};	
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
 		};
 
     </script>
