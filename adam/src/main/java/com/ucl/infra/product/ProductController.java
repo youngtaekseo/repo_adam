@@ -1,11 +1,14 @@
 package com.ucl.infra.product;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,11 +34,30 @@ public class ProductController {
 			
 			model.addAttribute("list", service.selectList(vo));
 			
-			setUrl(vo);
+			/* setUrl(vo); */
 		};
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";
 	}
+	
+	// 조회화면(paging 처리용)
+	@ResponseBody
+	@RequestMapping(value = "/productSdmListPaging")
+	public Map<String, Object> productSdmListPaging(ProductVo vo) throws Exception {
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		int rowCount = service.getCount(vo);
+		
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			returnMap.put("list", service.selectList(vo));
+			returnMap.put("page", vo);
+		};
+		
+		return returnMap;
+	}	
 	
 	// 등록화면
 	@RequestMapping(value = "/productSdmCreate")
