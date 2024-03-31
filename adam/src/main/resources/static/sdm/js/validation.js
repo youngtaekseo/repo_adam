@@ -1,3 +1,12 @@
+// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+//			   20(비밀번호), 21(날짜), 22(이메일)
+//             30(특수문자), 31(필수입력아님)
+const TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+const TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+const TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+const TYPE_SP   = 30, TYPE_NOT  = 31;
+
 // 입력항목 확인
 fnValidation = function() {
 	let obj;
@@ -47,41 +56,56 @@ fnValidation = function() {
 // function(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 fnValidType = function(obj, objValid, validText, validType) {
 	// 정규식 적용
-	// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
-	//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
-	//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+	// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+	//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+	//			   20(비밀번호), 21(날짜), 22(이메일)
+	//             30(특수문자), 31(필수입력아님)
+	// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+	// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+	// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+	// TYPE_SP   = 30, TYPE_NOT  = 31;
+	
 	let rtReturn = false;
 			
 	switch(validType) {
-		case 1: // 한글
+		case TYPE_KR: // 한글
 			rtReturn = fnKorean(obj, objValid, validText);
 			break;
-		case 2: // 영문
+		case TYPE_EN: // 영문
 			rtReturn = fnEnglish(obj, objValid, validText);
 			break;
-		case 3: // 한글영문
-			rtReturn = fnKoreanEnglish(obj, objValid, validText);
-			break;
-		case 4: // 숫자
+		case TYPE_IT: // 숫자(정수)
 			rtReturn = fnNumber(obj, objValid, validText);
 			break;
-		case 5: // 한글숫자
+		case TYPE_FT: // 숫자(실수)
+			rtReturn = fnNumberPoint(obj, objValid, validText);
+			break;
+//=============================================================================
+		case TYPE_KREN: // 한글영문
+			rtReturn = fnKoreanEnglish(obj, objValid, validText);
+			break;
+		case TYPE_KRIT: // 한글숫자
 			rtReturn = fnKoreanNumber(obj, objValid, validText);
 			break;
-		case 6: // 영문숫자
+		case TYPE_ENIT: // 영문숫자
 			rtReturn = fnEnglishNumber(obj, objValid, validText);
 			break;
-		case 7: // 한글영문숫자
+		case TYPE_KRENIT: // 한글영문숫자
 			rtReturn = fnKoreanEnglishNumber(obj, objValid, validText);
 			break;			
-		case 10: // 비밀번호
+//=============================================================================
+		case TYPE_PW: // 비밀번호
 			rtReturn = fnPassword(obj, objValid, validText);
 			break;
-		case 11: // 날짜
+		case TYPE_DT: // 날짜
 			rtReturn = fnDate(obj, objValid, validText);
 			break;
-		case 12: // 이메일
+		case TYPE_EM: // 이메일
 			rtReturn = fnEmail(obj, objValid, validText);
+			break;
+//=============================================================================			
+		case TYPE_SP: // 특수문자
+			rtReturn = fnSpecialChar(obj, objValid, validText);
 			break;
 	};
 	
@@ -145,9 +169,15 @@ fnKoreanEnglish = function(obj, objValid, validText) {
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 };
  
-// 숫자
+// 숫자(정수)
 fnNumber = function(obj, objValid, validText) {
-	let regExp = /^[0-9]+$/;
+	let regExp = /^[0-9]*$/;
+	return fnValidationCheck(obj, objValid, validText, regExp);	
+};
+
+// 숫자(실수)
+fnNumberPoint = function(obj, objValid, validText) {
+	let regExp = /^[0-9]+(.)?[0-9]{1,2}$/;
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 };
  
@@ -174,6 +204,12 @@ fnEmail = function(obj, objValid, validText) {
 	let regExp = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 };
+
+// 특수문자 정규식
+fnSpecialChar = function(obj, objValid, validText) {
+	let regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+	return fnValidationCheck(obj, objValid, validText, regExp);		
+}
 
 // 유효성 검사
 fnValidationCheck = function(obj, objValid, validText, regExp) {	

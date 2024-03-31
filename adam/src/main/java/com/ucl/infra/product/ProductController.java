@@ -31,7 +31,7 @@ public class ProductController {
 			
 			model.addAttribute("list", service.selectList(vo));
 			
-			/* setUrl(vo); */
+			setUrl(vo);
 		};
 		
 		return Commvar.PATH_PRODUCT + "productSdmList";

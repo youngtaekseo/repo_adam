@@ -26,9 +26,9 @@
 			
 					<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
 						<!-- uri -->
-						<input id="uri" name="uri" th:value="${uri}"  style="display:none;">					
+						<!-- <input id="uri" name="uri" th:value="${vo.uri}" type="hidden"> -->					
 						<!-- 상품 순번 -->
-						<input id="pdtSeq" name="pdtSeq" th:value="${item.pdtSeq}"  style="display:none;">
+						<input id="pdtSeq" name="pdtSeq" th:value="${item.pdtSeq}" type="hidden">
 											
 				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
 				    		<div class="md:h-auto mr-3 md:w-1/2">
@@ -140,8 +140,8 @@
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">주행기록</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="pdtRunKm" name="pdtRunKm" type="text"
-				            			th:value="${item.pdtRunKm}"
+				            			id="pdtRunKm" name="pdtRunKm" type="text" style="text-align:right;"
+				            			th:value="${#numbers.formatInteger(item.pdtRunKm, 1)}"
 				            			onkeyup="fnOnKeyUp(this)">
 				        			<span id="pdtRunKmValid" name="pdtRunKmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				주행기록 입력하세요
@@ -154,7 +154,7 @@
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">차량가액</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="pdtPrice" name="pdtPrice" type="text"
+				            			id="pdtPrice" name="pdtPrice" type="text" style="text-align:right;"
 				            			th:value="${#numbers.formatInteger(item.pdtPrice, 1)}"
 				            			onkeyup="fnOnKeyUp(this)">
 				        			<span id="pdtPriceValid" name="pdtPriceValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
@@ -169,8 +169,9 @@
 				  			<!-- 이전 -->
 				  			<div class="md:h-auto sm:mt-auto md:w-1/2">
 				    			<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-				      				aria-label="Search" type="button">
+				      				aria-label="이전버튼" type="button">
 				      				<a th:href="@{/productSdmList}">
+				      				<!-- <a th:href="@{/productSdmList(pdtSeq=${item.pdtSeq}, pdtName=${item.pdtName}, uri=${vo.uri})}"> -->
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  						<path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
 										</svg>
@@ -182,7 +183,7 @@
 				  				<!-- 저장버튼 -->
 				    			<button id="btnSubmit" name="btnSubmit"
 				      				class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-				      				aria-label="Edit"
+				      				aria-label="저장버튼"
 				      				type="button">
 									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				  						<path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
@@ -191,7 +192,7 @@
 								
 								<!-- 삭제여부버튼 -->
 								<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-									id="btnDelNy" name="btnDelNy" aria-label="Edit" type="button">
+									id="btnDelNy" name="btnDelNy" aria-label="삭제여부저장버튼" type="button">
 									<a th:href="@{/productSdmDelNy(pdtSeq=${item.pdtSeq}, pdtDelNy=${item.pdtDelNy})}">
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 											<path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
@@ -202,7 +203,7 @@
 								
 								<!-- 삭제버튼 -->
 								<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red mr-3"
-									id="btnDelete" name="btnDelete" aria-label="Delete"
+									id="btnDelete" name="btnDelete" aria-label="삭제버튼"
 									@click="openModal"
 									type="button">
 									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -330,11 +331,17 @@
  		let pdtPriceValid    = document.querySelector("span[name=pdtPriceValid]");
 
 		// 필수입력체크대상
-		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
-		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
-		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(필수입력아님)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NOT  = 31;
+		
 		let dispText = "";
-		let typeArr = [7, 4, 4, 4, 4];		
+		let typeArr = [TYPE_KRENIT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_FT];		
 		let nameArr = ["pdtName", "pdtYear", "pdtMonth", "pdtRunKm", "pdtPrice"];
 		let textArr = [dispText, dispText, dispText, dispText, dispText];		
 
@@ -370,19 +377,19 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "pdtName" :
-					fnValidType(obj, pdtNameValid, dispText, 7);
+					fnValidType(obj, pdtNameValid, dispText, TYPE_KRENIT);
 					break;					
 				case "pdtYear" :
-					fnValidType(obj, pdtYearValid, dispText, 4);
+					fnValidType(obj, pdtYearValid, dispText, TYPE_IT);
 					break;
 				case "pdtMonth" :
-					fnValidType(obj, pdtMonthValid, dispText, 4);
+					fnValidType(obj, pdtMonthValid, dispText, TYPE_IT);
 					break;
 				case "pdtRunKm" :
-					fnValidType(obj, pdtRunKmValid, dispText, 4);
+					fnValidType(obj, pdtRunKmValid, dispText, TYPE_IT);
 					break;
 				case "pdtPrice" :
-					fnValidType(obj, pdtPriceValid, dispText, 4);
+					fnValidType(obj, pdtPriceValid, dispText, TYPE_IT);
 					break;
 				};
 			};	

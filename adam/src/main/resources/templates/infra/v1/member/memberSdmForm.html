@@ -261,11 +261,16 @@
 		let mbrEmailValid    = document.querySelector("span[name=mbrEmailValid]");
 		
 		// 필수입력체크대상
-		// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
-		//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
-		//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(필수입력아님)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NOT  = 31;
 		let dispText = "";
-		let typeArr = [3, 13, 12];		
+		let typeArr = [TYPE_KREN, TYPE_NOT, TYPE_EM];		
 		let nameArr = ["mbrName", "mbrBirthday", "mbrEmail"];
 		let textArr = ["", "", ""];
 
@@ -301,13 +306,13 @@
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "mbrName" :
-					fnValidType(obj, mbrNameValid, dispText, 7);
+					fnValidType(obj, mbrNameValid, dispText, TYPE_KRENIT);
 					break;					
 				case "mbrBirthday" :
-					fnValidType(obj, mbrBirthdayValid, dispText, 13);
+					fnValidType(obj, mbrBirthdayValid, dispText, TYPE_NOT);
 					break;					
 				case "mbrEmail" :
-					fnValidType(obj, mbrEmailValid, dispText, 12);
+					fnValidType(obj, mbrEmailValid, dispText, TYPE_EM);
 					break;
 				};
 			};	

@@ -305,8 +305,8 @@
 											<th class="px-4 py-1">차량명</th>
 											<th class="px-4 py-1">색상</th>
 											<th class="px-4 py-1">연식(년/월)</th>
-											<th class="px-4 py-1">주행기록</th>
-											<th class="px-4 py-1">판매가격</th>
+											<th class="px-4 py-1" style="text-align:right;">주행기록</th>
+											<th class="px-4 py-1" style="text-align:right;">판매가격</th>
 											<th class="px-4 py-1">사고유무</th>
 											<th class="px-4 py-1">추천여부</th>
 											<th class="px-4 py-1">삭제여부</th>
@@ -344,9 +344,10 @@
 											<!-- 연식 -->                    	
 					                    	<td class="px-4 py-1" th:text="${list.xpdtYearMonth}"></td>
 											<!-- 주행기록 -->                    	
-					                    	<td class="px-4 py-1" th:text="${list.pdtRunKm}"></td>
+					                    	<td class="px-4 py-1" th:text="${#numbers.formatInteger(list.pdtRunKm, 1, 'COMMA')}" style="text-align:right"></td>
 											<!-- 판매가격 -->                    	
-					                    	<td class="px-4 py-1" th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}"></td>
+					                    	<td class="px-4 py-1" th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" style="text-align:right"></td>
+					                    	<!-- <td class="px-4 py-1" th:text="${#numbers.formatDecimal(list.pdtPrice, 3, 1, 'COMMA')}" style="text-align:right"></td> -->
 
 											<!-- 사고유무 -->
 					                    	<td class="px-4 py-1">
@@ -376,7 +377,7 @@
 											<!-- 작업버튼 -->                    
 					                    	<td class="px-6 py-1">
 					                    	    <button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-													<a th:href="@{/productSdmForm(pdtSeq=${list.pdtSeq}, pdtName=${list.pdtName}, uri=${vo.uri})}">
+													<a th:href="@{/productSdmForm(pdtSeq=${list.pdtSeq}, pdtName=${list.pdtName})}"> <!-- , uri=${vo.uri} -->
 														<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 															<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
 															<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
@@ -518,291 +519,297 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-			let form			= document.querySelector("form[name=form]");
-			let mbrSeq			= document.querySelector("mbrSeq");
-			
-			// 날짜선택
-			let shOptionDate	= document.querySelector("select[name=shOptionDate]");
-		       
-			// 시작일자
-			let shDateStart		= document.querySelector("input[name=shDateStart]");
-			let shDateStartValid= document.querySelector("span[name=shDateStartValid]");
-		       
-			// 종료일자
-			let shDateEnd		= document.querySelector("input[name=shDateEnd]");
-			let shDateEndValid	= document.querySelector("span[name=shDateEndValid]");
+		let form			= document.querySelector("form[name=form]");
+		let mbrSeq			= document.querySelector("mbrSeq");
 		
-			// 차종
-			let shCarType		= document.querySelector("select[name=shCarType]");
-			
-			// 브랜드
-			let shCarBrand		= document.querySelector("select[name=shCarBrand]");
-			
-			// 색상
-			let shCarColor		= document.querySelector("select[name=shCarColor]");
-			
-			// 추천여부
-			let shRecommend		= document.querySelector("select[name=shRecommend]");
+		// 날짜선택
+		let shOptionDate	= document.querySelector("select[name=shOptionDate]");
+	       
+		// 시작일자
+		let shDateStart		= document.querySelector("input[name=shDateStart]");
+		let shDateStartValid= document.querySelector("span[name=shDateStartValid]");
+	       
+		// 종료일자
+		let shDateEnd		= document.querySelector("input[name=shDateEnd]");
+		let shDateEndValid	= document.querySelector("span[name=shDateEndValid]");
 	
-			// 주행기록
-			let shOptionRunKm			= document.querySelector("select[name=shOptionRunKm]");
-			let shOptionRunKmFrom		= document.querySelector("input[name=shOptionRunKmFrom]");
-			let shOptionRunKmTo			= document.querySelector("input[name=shOptionRunKmTo]");
-	
-			let shOptionRunKmFromValid	= document.querySelector("span[name=shOptionRunKmFromValid]");
-			let shOptionRunKmToValid	= document.querySelector("span[name=shOptionRunKmToValid]");
-			
-			// 연식
-			let shOptionYear			= document.querySelector("select[name=shOptionYear]");
-			let shOptionYearFrom		= document.querySelector("input[name=shOptionYearFrom]");
-			let shOptionYearFromValid	= document.querySelector("span[name=shOptionYearFromValid]");
-			
-			let shOptionYearTo			= document.querySelector("input[name=shOptionYearTo]");
-			let shOptionYearToValid		= document.querySelector("span[name=shOptionYearToValid]");
-			
-			let shOptionMonthFrom		= document.querySelector("input[name=shOptionMonthFrom]");
-			let shOptionMonthFromValid	= document.querySelector("span[name=shOptionMonthFromValid]");
-			
-			let shOptionMonthTo			= document.querySelector("input[name=shOptionMonthTo]");
-			let shOptionMonthToValid	= document.querySelector("span[name=shOptionMonthToValid]");
-			
-			// 사고유무
-			let shAccident		= document.querySelector("select[name=shAccident]");
-			
-			// 검색선택
-			let shOption		= document.querySelector("select[name=shOption]");
+		// 차종
+		let shCarType		= document.querySelector("select[name=shCarType]");
 		
-			// 검색어
-			let shValue			= document.querySelector("input[name=shValue]");
-			let shValueValid	= document.querySelector("span[name=shValueValid]");		
-			
-			let goUrlSdmList   	= "/productSdmList";	/* 조회화면 */
-			let goUrlSdmForm   	= "/productSdmForm";	/* 수정화면 */
-			let goUrlSdmCreate 	= "/productSdmCreate";	/* 등록화면 */
-			let goUrlSdmInsert 	= "/productSdmInsert";	/* 등록 */
-			let goUrlSdmUpdate 	= "/productSdmUpdate";	/* 수정 */
-			let goUrlSdmDelete 	= "/productSdmDelete";	/* 삭제 */
-			let goUrlSdmUdtDelNy= "/productSdmUdtDelNy";/* 삭제여부-삭제로변경 */
-			
-			// 필수입력체크대상
-			// validType : 1(한글), 2(영문), 3(한글영문), 4(숫자)
-			//             5(한글숫자), 6(영문숫자), 7(한글영문숫자)
-			//			   10(비밀번호), 11(날짜), 12(이메일), 13(필수입력아님)
-			let typeArr = [11, 11, 4, 4, 4, 4, 4, 4, 4, 4];			
-			let nameArr = ["shDateStart", "shDateEnd", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo", "shOptionMonthFrom", "shOptionMonthTo"];
-			let textArr = ["", "", "", "", "", "", "", "", "", ""];
+		// 브랜드
+		let shCarBrand		= document.querySelector("select[name=shCarBrand]");
+		
+		// 색상
+		let shCarColor		= document.querySelector("select[name=shCarColor]");
+		
+		// 추천여부
+		let shRecommend		= document.querySelector("select[name=shRecommend]");
+
+		// 주행기록
+		let shOptionRunKm			= document.querySelector("select[name=shOptionRunKm]");
+		let shOptionRunKmFrom		= document.querySelector("input[name=shOptionRunKmFrom]");
+		let shOptionRunKmTo			= document.querySelector("input[name=shOptionRunKmTo]");
+
+		let shOptionRunKmFromValid	= document.querySelector("span[name=shOptionRunKmFromValid]");
+		let shOptionRunKmToValid	= document.querySelector("span[name=shOptionRunKmToValid]");
+		
+		// 연식
+		let shOptionYear			= document.querySelector("select[name=shOptionYear]");
+		let shOptionYearFrom		= document.querySelector("input[name=shOptionYearFrom]");
+		let shOptionYearFromValid	= document.querySelector("span[name=shOptionYearFromValid]");
+		
+		let shOptionYearTo			= document.querySelector("input[name=shOptionYearTo]");
+		let shOptionYearToValid		= document.querySelector("span[name=shOptionYearToValid]");
+		
+		let shOptionMonthFrom		= document.querySelector("input[name=shOptionMonthFrom]");
+		let shOptionMonthFromValid	= document.querySelector("span[name=shOptionMonthFromValid]");
+		
+		let shOptionMonthTo			= document.querySelector("input[name=shOptionMonthTo]");
+		let shOptionMonthToValid	= document.querySelector("span[name=shOptionMonthToValid]");
+		
+		// 사고유무
+		let shAccident		= document.querySelector("select[name=shAccident]");
+		
+		// 검색선택
+		let shOption		= document.querySelector("select[name=shOption]");
+	
+		// 검색어
+		let shValue			= document.querySelector("input[name=shValue]");
+		let shValueValid	= document.querySelector("span[name=shValueValid]");		
+		
+		let goUrlSdmList   	= "/productSdmList";	/* 조회화면 */
+		let goUrlSdmForm   	= "/productSdmForm";	/* 수정화면 */
+		let goUrlSdmCreate 	= "/productSdmCreate";	/* 등록화면 */
+		let goUrlSdmInsert 	= "/productSdmInsert";	/* 등록 */
+		let goUrlSdmUpdate 	= "/productSdmUpdate";	/* 수정 */
+		let goUrlSdmDelete 	= "/productSdmDelete";	/* 삭제 */
+		let goUrlSdmUdtDelNy= "/productSdmUdtDelNy";/* 삭제여부-삭제로변경 */
+		
+		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(필수입력아님)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NOT  = 31;			
+		let dispText = "";
+		let typeArr = [TYPE_DT, TYPE_DT, TYPE_IT, TYPE_IT,TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT];			
+		let nameArr = ["shDateStart", "shDateEnd", "shOptionRunKmFrom", "shOptionRunKmTo", "shOptionYearFrom", "shOptionYearTo", "shOptionMonthFrom", "shOptionMonthTo"];
+		let textArr = [dispText, dispText, dispText, dispText, dispText, dispText, dispText, dispText, dispText, dispText];
 // ============================================================================
 // event
 // ============================================================================
 			
-			window.addEventListener('load', function() {
-				jQuery.datetimepicker.setLocale('ko'); // 한국어
+		window.addEventListener('load', function() {
+			jQuery.datetimepicker.setLocale('ko'); // 한국어
+	
+			$("#shDateStart, #shDateEnd").datetimepicker({
+				timepicker:false,
+				format: 'Y-m-d', //'Y-m-d' //H:i
+			});
+		});
 		
-				$("#shDateStart, #shDateEnd").datetimepicker({
-					timepicker:false,
-					format: 'Y-m-d', //'Y-m-d' //H:i
-				});
-			});
-			
-	    	// 조회버튼
-			document.getElementById("btnSubmit").onclick = function() {
+    	// 조회버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			fnCallController();
+		};
+		
+		// event onkeydown	
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
 				fnCallController();
-			};
-			
-			// event onkeydown	
-			fnOnKeyDown = function() {
-				// 엔터키(13)이면
-				if (window.event.keyCode == 13) {
-					fnCallController();
-				};			
-			};
-			
-			// event onkeyup
-			// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-			fnOnKeyUp = function(obj) {
-				if(window.event.keyCode != 13) {
-					switch(obj.name) {
-					case "shDateStart" :
-						fnValidType(obj, shDateStartValid, "", 11);
-						break;	
-					case "shDateEnd" :
-						fnValidType(obj, shDateEndValid, "", 11);
-						break;						
-					case "shOptionYearFrom" :
-						fnValidType(obj, shOptionYearFromValid, "", 4);
-						break;						
-					case "shOptionMonthFrom" :
-						fnValidType(obj, shOptionMonthFromValid, "", 4);
-						break;						
-					case "shOptionYearTo" :
-						fnValidType(obj, shOptionYearToValid, "", 4);
-						break;						
-					case "shOptionMonthTo" :
-						fnValidType(obj, shOptionMonthToValid, "", 4);
-						break;						
-					case "shOptionRunKmFrom" :
-						fnValidType(obj, shOptionRunKmFromValid, "", 4);
-						break;
-					case "shOptionRunKmTo" :
-						fnValidType(obj, shOptionRunKmToValid, "", 4);
-						break;						
-					};
-				};	
 			};			
-	
-			// 주행기록
-			document.getElementById("shOptionRunKm").onchange = function() {
-				switch(shOptionRunKm.value) {
-				case ""  :
-					shOptionRunKmFrom.setAttribute("style", "visibility:hidden;");
-					shOptionRunKmFrom.value = "";
-					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
-					
-					shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
-					shOptionRunKmTo.value = "";
-					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
-					break;					
-				case "1" :
-					shOptionRunKmFrom.setAttribute("style", "");
-					shOptionRunKmFrom.value = "";
-					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
-					
-					shOptionRunKmTo.setAttribute("style", "");
-					shOptionRunKmTo.value = "";
-					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+		};
+		
+		// event onkeyup
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				switch(obj.name) {
+				case "shDateStart" :
+					fnValidType(obj, shDateStartValid, "", TYPE_DT);
+					break;	
+				case "shDateEnd" :
+					fnValidType(obj, shDateEndValid, "", TYPE_DT);
+					break;						
+				case "shOptionYearFrom" :
+					fnValidType(obj, shOptionYearFromValid, "", TYPE_IT);
+					break;						
+				case "shOptionMonthFrom" :
+					fnValidType(obj, shOptionMonthFromValid, "", TYPE_IT);
+					break;						
+				case "shOptionYearTo" :
+					fnValidType(obj, shOptionYearToValid, "", TYPE_IT);
+					break;						
+				case "shOptionMonthTo" :
+					fnValidType(obj, shOptionMonthToValid, "", TYPE_IT);
+					break;						
+				case "shOptionRunKmFrom" :
+					fnValidType(obj, shOptionRunKmFromValid, "", TYPE_IT);
 					break;
-				case "2" :
-				case "3" :
-					shOptionRunKmFrom.setAttribute("style", "");
-					shOptionRunKmFrom.value = "";
-					shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
-					
-					shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
-					shOptionRunKmTo.value = "";
-					shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
-					break;				
+				case "shOptionRunKmTo" :
+					fnValidType(obj, shOptionRunKmToValid, "", TYPE_IT);
+					break;						
 				};
-			};			
-			
-			// 연식
-			document.getElementById("shOptionYear").onchange = function() {
-				switch(shOptionYear.value) {
-				case ""  :
-					fnShOptionFromVisibleFalse();
-					fnShOptionToVisibleFalse();					
-					break;
-				case "1" :
-					fnShOptionFromVisibleTrue();
-					fnShOptionToVisibleTrue();
-					break;
-				case "2" :
-				case "3" :
-					fnShOptionFromVisibleTrue();
-					fnShOptionToVisibleFalse();
-					break;				
-				};
-			};
-			
-			fnShOptionFromVisibleTrue = function() {
-				shOptionYearFrom.setAttribute("style", "");
-				shOptionYearFrom.value = "";
-				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
-				
-				shOptionMonthFrom.setAttribute("style", "");
-				shOptionMonthFrom.value = "";
-				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");			
-			};
-			
-			fnShOptionFromVisibleFalse = function() {
-				shOptionYearFrom.setAttribute("style", "visibility:hidden;");
-				shOptionYearFrom.value = "";
-				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
-				
-				shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
-				shOptionMonthFrom.value = "";
-				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");				
-			};
-			
-			fnShOptionToVisibleTrue = function() {
-				shOptionYearTo.setAttribute("style", "");
-				shOptionYearTo.value = "";
-				shOptionYearToValid.setAttribute("style", "visibility:hidden;");
-				
-				shOptionMonthTo.setAttribute("style", "");
-				shOptionMonthTo.value = "";
-				shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
-			};
-			
-			fnShOptionToVisibleFalse= function() {
-				shOptionYearTo.setAttribute("style", "visibility:hidden;");
-				shOptionYearTo.value = "";
-				shOptionYearToValid.setAttribute("style", "visibility:hidden;");
-				
-				shOptionMonthTo.setAttribute("style", "visibility:hidden;");
-				shOptionMonthTo.value = "";
-				shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
-			};
-			
-	        // 초기화버튼 클릭
-			function fnReset() { 
-				shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shDateStartValid.setAttribute("style", "visibility:hidden;");
-				
-				shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shDateEndValid.setAttribute("style", "visibility:hidden;");
-	
-				shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shValueValid.setAttribute("style", "visibility:hidden;");
-				
-				shOptionRunKmFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			};	
+		};			
+
+		// 주행기록
+		document.getElementById("shOptionRunKm").onchange = function() {
+			switch(shOptionRunKm.value) {
+			case ""  :
 				shOptionRunKmFrom.setAttribute("style", "visibility:hidden;");
+				shOptionRunKmFrom.value = "";
 				shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
-	
-				shOptionRunKmTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");			
+				
 				shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+				shOptionRunKmTo.value = "";
 				shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
-	
-				shOptionYearFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shOptionYearFrom.setAttribute("style", "visibility:hidden;");
-				shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+				break;					
+			case "1" :
+				shOptionRunKmFrom.setAttribute("style", "");
+				shOptionRunKmFrom.value = "";
+				shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
 				
-				shOptionMonthFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
-				shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");
+				shOptionRunKmTo.setAttribute("style", "");
+				shOptionRunKmTo.value = "";
+				shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+				break;
+			case "2" :
+			case "3" :
+				shOptionRunKmFrom.setAttribute("style", "");
+				shOptionRunKmFrom.value = "";
+				shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
 				
-				shOptionYearTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shOptionYearTo.setAttribute("style", "visibility:hidden;");
-				shOptionYearToValid.setAttribute("style", "visibility:hidden;");
-	
-				shOptionMonthTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-				shOptionMonthTo.setAttribute("style", "visibility:hidden;");
-				shOptionMonthToValid.setAttribute("style", "visibility:hidden;");
+				shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+				shOptionRunKmTo.value = "";
+				shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+				break;				
 			};
+		};			
+		
+		// 연식
+		document.getElementById("shOptionYear").onchange = function() {
+			switch(shOptionYear.value) {
+			case ""  :
+				fnShOptionFromVisibleFalse();
+				fnShOptionToVisibleFalse();					
+				break;
+			case "1" :
+				fnShOptionFromVisibleTrue();
+				fnShOptionToVisibleTrue();
+				break;
+			case "2" :
+			case "3" :
+				fnShOptionFromVisibleTrue();
+				fnShOptionToVisibleFalse();
+				break;				
+			};
+		};
+		
+		fnShOptionFromVisibleTrue = function() {
+			shOptionYearFrom.setAttribute("style", "");
+			shOptionYearFrom.value = "";
+			shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
 			
-			// 페이지 리스트 갯수 변경 이벤트
-			$("#pgRowCount").on("change", function(){
-				let url = "shDelNy="            +$("#shDelNy").val()
-					    + "&shOptionDate="      +$("#shOptionDate").val()
-					    + "&shDateStart="       +$("#shDateStart").val()
-					    + "&shDateEnd="         +$("#shDateEnd").val()
-					    + "&shCarType="         +$("#shCarType").val()
-					    + "&shCarBrand="        +$("#shCarBrand").val()
-					    + "&shCarColor="        +$("#shCarColor").val()
-					    + "&shRecommend="       +$("#shRecommend").val()
-					    + "&shOptionRunKm="     +$("#shOptionRunKm").val()
-					    + "&shOptionRunKmFrom=" +$("#shOptionRunKmFrom").val()
-					    + "&shOptionRunKmTo="   +$("#shOptionRunKmTo").val()
-					    + "&shOptionYear="      +$("#shOptionYear").val()
-					    + "&shOptionYearFrom="  +$("#shOptionYearFrom").val()
-					    + "&shOptionMonthrFrom="+$("#shOptionMonthFrom").val()
-					    + "&shOptionYearTo="    +$("#shOptionYearTo").val()
-					    + "&shOptionMonthTo="   +$("#shOptionMonthTo").val()
-					    + "&shAccident="        +$("#shAccident").val()
-					    + "&shOption="          +$("#shOption").val()
-					    + "&shValue="           +$("#shValue").val()
-					    + "&pgRowCount="        +$("#pgRowCount").val();
-				location.href="/productSdmList?"+url;
-			});
+			shOptionMonthFrom.setAttribute("style", "");
+			shOptionMonthFrom.value = "";
+			shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");			
+		};
+		
+		fnShOptionFromVisibleFalse = function() {
+			shOptionYearFrom.setAttribute("style", "visibility:hidden;");
+			shOptionYearFrom.value = "";
+			shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
+			shOptionMonthFrom.value = "";
+			shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");				
+		};
+		
+		fnShOptionToVisibleTrue = function() {
+			shOptionYearTo.setAttribute("style", "");
+			shOptionYearTo.value = "";
+			shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionMonthTo.setAttribute("style", "");
+			shOptionMonthTo.value = "";
+			shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
+		};
+		
+		fnShOptionToVisibleFalse= function() {
+			shOptionYearTo.setAttribute("style", "visibility:hidden;");
+			shOptionYearTo.value = "";
+			shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionMonthTo.setAttribute("style", "visibility:hidden;");
+			shOptionMonthTo.value = "";
+			shOptionMonthToValid.setAttribute("style", "visibility:hidden;");				
+		};
+		
+        // 초기화버튼 클릭
+		function fnReset() { 
+			shDateStart.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shDateStartValid.setAttribute("style", "visibility:hidden;");
+			
+			shDateEnd.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shDateEndValid.setAttribute("style", "visibility:hidden;");
+
+			shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shValueValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionRunKmFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionRunKmFrom.setAttribute("style", "visibility:hidden;");
+			shOptionRunKmFromValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionRunKmTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");			
+			shOptionRunKmTo.setAttribute("style", "visibility:hidden;");
+			shOptionRunKmToValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionYearFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionYearFrom.setAttribute("style", "visibility:hidden;");
+			shOptionYearFromValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionMonthFrom.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionMonthFrom.setAttribute("style", "visibility:hidden;");
+			shOptionMonthFromValid.setAttribute("style", "visibility:hidden;");
+			
+			shOptionYearTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionYearTo.setAttribute("style", "visibility:hidden;");
+			shOptionYearToValid.setAttribute("style", "visibility:hidden;");
+
+			shOptionMonthTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			shOptionMonthTo.setAttribute("style", "visibility:hidden;");
+			shOptionMonthToValid.setAttribute("style", "visibility:hidden;");
+		};
+		
+		// 페이지 리스트 갯수 변경 이벤트
+		$("#pgRowCount").on("change", function(){
+			let url = "shDelNy="            +$("#shDelNy").val()
+				    + "&shOptionDate="      +$("#shOptionDate").val()
+				    + "&shDateStart="       +$("#shDateStart").val()
+				    + "&shDateEnd="         +$("#shDateEnd").val()
+				    + "&shCarType="         +$("#shCarType").val()
+				    + "&shCarBrand="        +$("#shCarBrand").val()
+				    + "&shCarColor="        +$("#shCarColor").val()
+				    + "&shRecommend="       +$("#shRecommend").val()
+				    + "&shOptionRunKm="     +$("#shOptionRunKm").val()
+				    + "&shOptionRunKmFrom=" +$("#shOptionRunKmFrom").val()
+				    + "&shOptionRunKmTo="   +$("#shOptionRunKmTo").val()
+				    + "&shOptionYear="      +$("#shOptionYear").val()
+				    + "&shOptionYearFrom="  +$("#shOptionYearFrom").val()
+				    + "&shOptionMonthrFrom="+$("#shOptionMonthFrom").val()
+				    + "&shOptionYearTo="    +$("#shOptionYearTo").val()
+				    + "&shOptionMonthTo="   +$("#shOptionMonthTo").val()
+				    + "&shAccident="        +$("#shAccident").val()
+				    + "&shOption="          +$("#shOption").val()
+				    + "&shValue="           +$("#shValue").val()
+				    + "&pgRowCount="        +$("#pgRowCount").val();
+			location.href="/productSdmList?"+url;
+		});
 		
 // ============================================================================
 // function
