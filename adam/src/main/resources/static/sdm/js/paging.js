@@ -93,7 +93,7 @@ fnPagingProduct = function() {
                         + '</tr>';
                 };
 
-                $(".trList").html(script);
+                $(".trList").append(script);
             };
         }
         , error : function(jqXHR, textStatus, errorThrown){
