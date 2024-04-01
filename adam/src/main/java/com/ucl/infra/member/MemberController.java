@@ -118,34 +118,39 @@ public class MemberController extends BaseController {
 		// 로그인 이메일로 자료조회
 		MemberDto rtDto = service.selectOneLogin(dto);
 		
-		// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치여부 확인
-		String rt = passwordOldNewCheck(xmbrPasswordPreIn, rtDto.getMbrPassword());
-		
-		if(rt == "success") {
-			// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치
-			
-			// 입력받은 새비밀번호와 새비비밀전호확인 정보 비교
-			if(mbrPasswordIn.equals(xmbrPwConfirmIn)) {
-				// 입력받은 새비밀번호와 새비밀전호확인 정보 일치
-				
-				// 회원순번 설정
-				dto.setMbrSeq(rtDto.getMbrSeq());
-				
-				// 입력받은 새비밀번호 암호화
-				dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
-				
-				// 비밀번호 수정
-				service.updatePassword(dto);
-				
-				returnMap.put("rt", "success");
-			} else {
-				// 입력받은 새비밀번호와 새비밀전호확인 정보 불일치
-				returnMap.put("rt", "newAndnew");				
-			};
+		if(rtDto == null ) {
+			// 입력받은 새비밀번호와 새비밀전호확인 정보 불일치
+			returnMap.put("rt", "newAndnew");
 		} else {
-			// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 불일치
-			returnMap.put("rt", "oldAndDb");
-		};
+			// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치여부 확인
+			String rt = passwordOldNewCheck(xmbrPasswordPreIn, rtDto.getMbrPassword());
+			
+			if(rt == "success") {
+				// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 일치
+				
+				// 입력받은 새비밀번호와 새비비밀전호확인 정보 비교
+				if(mbrPasswordIn.equals(xmbrPwConfirmIn)) {
+					// 입력받은 새비밀번호와 새비밀전호확인 정보 일치
+					
+					// 회원순번 설정
+					dto.setMbrSeq(rtDto.getMbrSeq());
+					
+					// 입력받은 새비밀번호 암호화
+					dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+					
+					// 비밀번호 수정
+					service.updatePassword(dto);
+					
+					returnMap.put("rt", "success");
+				} else {
+					// 입력받은 새비밀번호와 새비밀전호확인 정보 불일치
+					returnMap.put("rt", "newAndnew");				
+				};
+			} else {
+				// 입력받은 현재비밀번호와 DB에 저장된 비밀번호 불일치
+				returnMap.put("rt", "oldAndDb");
+			};			
+		};		
 		
 		return returnMap;
 	}
@@ -171,28 +176,24 @@ public class MemberController extends BaseController {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		String loginId       = dto.getMbrEmail();
 		String loginPassword = dto.getMbrPassword();
+		
+		System.out.println("loginPassword: " + loginPassword);
 		
 		MemberDto rtDto = service.selectOneLogin(dto);
 		
 		if(rtDto != null) {
-			// 아이디 확인
-			if(loginId.equals(rtDto.getMbrEmail())) {
-				// 아이디 확인 정상일때
-				if(matchesBcrypt(loginPassword, rtDto.getMbrPassword(), 10)) {
-					returnMap.put("rt", "success");
-					
-					httpSession.setMaxInactiveInterval(60 * Commvar.SESSION_MINUTE_SDM); // 60second * 30 = 30minute
-					httpSession.setAttribute("sessMbrSeq", rtDto.getMbrSeq());
-					httpSession.setAttribute("sessMbrEmail", rtDto.getMbrEmail());
-					httpSession.setAttribute("sessMbrName", rtDto.getMbrName());
-				} else {
-					returnMap.put("rt", "password");
-				}
+			// 비밀번호 비교
+			if(matchesBcrypt(loginPassword, rtDto.getMbrPassword(), 10)) {
+				returnMap.put("rt", "success");
+				
+				httpSession.setMaxInactiveInterval(60 * Commvar.SESSION_MINUTE_SDM); // 60second * 30 = 30minute
+				httpSession.setAttribute("sessMbrSeq", rtDto.getMbrSeq());
+				httpSession.setAttribute("sessMbrEmail", rtDto.getMbrEmail());
+				httpSession.setAttribute("sessMbrName", rtDto.getMbrName());
 			} else {
-				returnMap.put("rt", "id");
-			}			
+				returnMap.put("rt", "password");
+			}
 		} else {
 			returnMap.put("rt", "id");
 		}
