@@ -13,8 +13,14 @@ public class IndexController {
 	public String index() throws Exception {
 		return Commvar.PATH_HOME + "index";
 	}
+
+	// 관리자메인
+	@RequestMapping(value = "/indexSdm")
+	public String indexSdm() throws Exception {
+		return Commvar.PATH_HOME + "indexSdm";
+	}
 	
-	// 사용자화면
+	// 사용자메인
 	@RequestMapping(value = "/indexUsr")
 	public String indexUsr() throws Exception {
 		return Commvar.PATH_HOME + "indexUsr";
