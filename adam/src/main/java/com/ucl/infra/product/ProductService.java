@@ -39,8 +39,8 @@ public class ProductService {
 		return dao.selectOnetDataCount(vo);
 	}
 	
-	public List<ProductDto> selectListBrandCount(ProductDto dto) {
-		return dao.selectListBrandCount(dto);
+	public List<ProductDto> selectListBrand() {
+		return dao.selectListBrand();
 	}
 	
 	public List<ProductDto> selectListCarInfo(ProductVo vo) {

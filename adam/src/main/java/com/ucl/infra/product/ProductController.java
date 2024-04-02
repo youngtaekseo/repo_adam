@@ -138,8 +138,10 @@ public class ProductController {
 
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
-	public String productUsrList(ProductDto dto, Model model) {
-		model.addAttribute("list", service.selectListBrandCount(dto));
+	public String productUsrList(ProductVo vo, Model model) {
+		
+		model.addAttribute("list", service.selectListCarInfo(vo));
+		model.addAttribute("listBrand", service.selectListBrand());
 		return Commvar.PATH_PRODUCT + "productUsrList";
 	}
 	

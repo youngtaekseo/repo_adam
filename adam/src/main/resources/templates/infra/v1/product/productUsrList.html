@@ -199,7 +199,7 @@
                                             <div class="new-item-content">
                                                 <h3 class="title-product">제조사</h3>
                                                 <ul class="scroll-product">
-													<th:block th:each="list : ${list}">
+													<th:block th:each="list : ${listBrand}">
 														<li>
 	                                                        <label class="check">
 	                                                            <input th:id="${list.xpdtIdName}" th:name="${list.xpdtIdName}" type="checkbox" th:value="${list.pdtBrandCd}">
@@ -321,367 +321,55 @@
                                         <div class="tab-content product-items">
                                             <div id="grid" class="related tab-pane fade in active show">
                                                 <div class="row">
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_05_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_05_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[제네시스]<br>G80 2.5 가솔린 터보 AWD 기본</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">5,230</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_06_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_06_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[제네시스]<br>G80 2.5 가솔린 터보 2WD</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">4,599</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_07_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_07_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[제네시스]<br>G80 3.3 GDI 프리미엄 럭셔리</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">5,090</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_08_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_08_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[기아]<br>K8 하이브리드 시그니처</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_09_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_09_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[기아]<br>K8 하이브리드 시그니처</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_10_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_10_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[기아]<br>더 뉴 K9 2세대 3.3 T-GDI AWD</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_11_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_11_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[기아]<br>더 뉴 K9 2세대 3.8 GDI AWD</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_12_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_12_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[기아]<br>더 뉴 K9 2세대 3.3 GDI AWD</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item col-md-4">
-                                                        <div class="product-miniature js-product-miniature item-one first-item">
-                                                            <div class="thumbnail-container border">
-                                                                <a href="/productUsrDetail">
-                                                                    <img class="img-fluid image-cover"     src="usr/img/product/img_13_f.jpg" alt="img">
-                                                                    <img class="img-fluid image-secondary" src="usr/img/product/img_13_b.jpg" alt="img">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-description">
-                                                                <div class="product-groups">
-                                                                    <div class="product-title">
-                                                                        <a href="/productUsrDetail">[현대]<br>그랜저 가솔린 3.5 4WD 캘리그래피</a>
-                                                                    </div>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="product-group-price">
-                                                                        <div class="product-price-and-shipping">
-                                                                            ￦<span class="price" style="font-size: 20px;">8,590</span>만원
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <!-- 찜추가 -->
-                                                                <div class="product-buttons d-flex justify-content-center">
-                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                        </a>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
+                                                	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+														<div class="item col-md-4">
+	                                                        <div class="product-miniature js-product-miniature item-one first-item">
+	                                                            <div class="thumbnail-container border">
+	                                                                <a href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+	                                                                    <img class="img-fluid image-cover"     src="${list.xpdtImgF}" alt="img">
+	                                                                    <img class="img-fluid image-secondary" src="${list.xpdtImgF}" alt="img">
+	                                                                </a>
+	                                                            </div>
+	                                                            <div class="product-description">
+	                                                                <div class="product-groups">
+	                                                                    <div class="product-title">
+	                                                                        <a href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+																				<th:block>
+																					<span th:text="${list.xpdtBrandName}"></span>
+																					<br>
+																					<span th:text="${list.pdtName}"></span>
+																				</th:block>	                                                                        
+	                                                                        </a>
+	                                                                    </div>
+	                                                                    <div class="rating">
+	                                                                        <div class="star-content">
+																				<th:block th:if="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																					<div class="star"></div>	
+																				</th:block>
+																				<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																					<div class=""></div>	
+																				</th:block>	                                                                        
+	                                                                        </div>
+	                                                                    </div>
+	                                                                    <div class="product-group-price">
+	                                                                        <div class="product-price-and-shipping">
+	                                                                            ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>만원
+	                                                                        </div>
+	                                                                    </div>
+	                                                                </div>
+	
+	                                                                <!-- 찜추가 -->
+	                                                                <div class="product-buttons d-flex justify-content-center">
+	                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+	                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
+	                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
+	                                                                        </a>
+	                                                                    </form>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>                                                	
+                                                	</th:block>
                                                 </div>
                                             </div>
                                         </div>

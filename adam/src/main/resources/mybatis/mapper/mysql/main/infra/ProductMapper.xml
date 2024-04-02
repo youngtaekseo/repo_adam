@@ -97,7 +97,7 @@
 	</select>	
 	
 	<!-- 제조사별 카운터 -->
-	<select id="selectListBrandCount" resultMap="resultMapObj">
+	<select id="selectListBrand" resultMap="resultMapObj">
 		SELECT a.pdtBrandCd
              , b.cdcName pdtName
              , CONCAT('checkbox',a.pdtBrandCd) xpdtId

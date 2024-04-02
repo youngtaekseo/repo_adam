@@ -14,7 +14,7 @@ public interface ProductDao {
 	
 	public int selectOnetDataCount(ProductVo vo);  
 	
-	public List<ProductDto> selectListBrandCount(ProductDto dto);
+	public List<ProductDto> selectListBrand();
 	
 	public List<ProductDto> selectListCarInfo(ProductVo vo);
 }
