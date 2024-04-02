@@ -1,11 +1,11 @@
 // validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
 //             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 //			   20(비밀번호), 21(날짜), 22(이메일)
-//             30(특수문자), 31(필수입력아님)
+//             30(특수문자), 31(공백체크)
 const TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
 const TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 const TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
-const TYPE_SP   = 30, TYPE_NOT  = 31;
+const TYPE_SP   = 30, TYPE_NULL = 31;
 
 // 입력항목 확인
 fnValidation = function() {
@@ -13,7 +13,6 @@ fnValidation = function() {
 	let validType;
 	let validName;
 	let validText;
-	let valid;
 	let validChk;
 
     if(nameArr.length == 0) {
@@ -59,11 +58,11 @@ fnValidType = function(obj, objValid, validText, validType) {
 	// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
 	//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 	//			   20(비밀번호), 21(날짜), 22(이메일)
-	//             30(특수문자), 31(필수입력아님)
+	//             30(특수문자), 31(공백체크)
 	// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
 	// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 	// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
-	// TYPE_SP   = 30, TYPE_NOT  = 31;
+	// TYPE_SP   = 30, TYPE_NULL = 31;
 	
 	let rtReturn = false;
 			
@@ -107,6 +106,9 @@ fnValidType = function(obj, objValid, validText, validType) {
 		case TYPE_SP: // 특수문자
 			rtReturn = fnSpecialChar(obj, objValid, validText);
 			break;
+		case TYPE_NULL: // 공백체크
+			rtReturn = fnNullToEmpty(obj, objValid, validText);
+			break;			
 	};
 	
 	return rtReturn;
