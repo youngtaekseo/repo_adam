@@ -27,6 +27,8 @@ public class ProductDto {
 	private Integer xpdtStar;
 	private String xpdtTypeName;
 	private String xpdtBrandName;
+	private String xpdtAccidentName;
+	private String xpdtColorName;
 	
 	//=============================================================================
 	public String getPdtSeq() {
@@ -167,4 +169,16 @@ public class ProductDto {
 	public void setXpdtBrandName(String xpdtBrandName) {
 		this.xpdtBrandName = xpdtBrandName;
 	}
+	public String getXpdtAccidentName() {
+		return xpdtAccidentName;
+	}
+	public void setXpdtAccidentName(String xpdtAccidentName) {
+		this.xpdtAccidentName = xpdtAccidentName;
+	}
+	public String getXpdtColorName() {
+		return xpdtColorName;
+	}
+	public void setXpdtColorName(String xpdtColorName) {
+		this.xpdtColorName = xpdtColorName;
+	}	
 }

@@ -14,12 +14,17 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
+import com.ucl.infra.review.ReviewService;
+import com.ucl.infra.review.ReviewVo;
 
 @Controller
 public class ProductController {
 
 	@Autowired
 	ProductService service;
+	
+	@Autowired
+	ReviewService reviewService;	
 	
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
@@ -140,7 +145,14 @@ public class ProductController {
 	
 	// 상세화면
 	@RequestMapping(value = "/productUsrDetail")
-	public String productUsrDetail() {
+	public String productUsrDetail(ProductVo vo, Model model) {
+		model.addAttribute("item", service.selectListCarInfo(vo));
+		
+		ReviewVo reviewVo = new ReviewVo();
+		reviewVo.setShSeq(vo.getShSeq());
+		
+		model.addAttribute("list", reviewService.selectList(reviewVo));	
+		
 		return Commvar.PATH_PRODUCT + "productUsrDetail";
 	}
 	

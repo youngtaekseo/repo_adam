@@ -181,9 +181,7 @@
                                         <div class="grouptab row">
                                             <div class="categoriestab-right col-lg-12 align-items-start d-flex flex-column col-md-12 flex-3">
                                                 <div class="block-title-content">
-                                                    <h2>
-                                                        취향저격! 추천차량
-                                                    </h2>
+                                                    <h2>취향저격! 추천차량</h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,7 +195,7 @@
 																<div class="item">
 	                                                                <div class="product-miniature first-item js-product-miniature item-one">
 	                                                                    <div class="thumbnail-container">
-	                                                                        <a href="/productUsrDetail">
+	                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
 	                                                                            <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
 	                                                                            <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
 	                                                                        </a>
@@ -205,7 +203,7 @@
 	                                                                    <div class="product-description">
 	                                                                        <div class="product-groups">
 	                                                                            <div class="product-title">
-	                                                                                <a href="/productUsrDetail">
+	                                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
 																						<th:block>
 																							<span th:text="${list.xpdtBrandName}"></span>
 																							<br>
@@ -231,6 +229,7 @@
 	                                                                                </div>
 	                                                                            </div>
 	                                                                        </div>
+	                                                                        <!-- 찜 저장 -->
 	                                                                        <div class="product-buttons d-flex justify-content-center">
 	                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
 	                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
@@ -258,9 +257,7 @@
                                         <div class="grouptab row">
                                             <div class="categoriestab-right col-lg-12 align-items-start d-flex flex-column col-md-12 flex-3">
                                                 <div class="block-title-content">
-                                                    <h2>
-                                                        최근등록차량
-                                                    </h2>
+                                                    <h2>최근등록차량</h2>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +271,7 @@
 	                                                            <div class="item">
 	                                                                <div class="product-miniature first-item js-product-miniature item-one">
 	                                                                    <div class="thumbnail-container">
-	                                                                        <a href="/productUsrDetail">
+	                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
 	                                                                            <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
 	                                                                            <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
 	                                                                        </a>
@@ -282,7 +279,7 @@
 	                                                                    <div class="product-description">
 	                                                                        <div class="product-groups">
 	                                                                            <div class="product-title">
-	                                                                                <a href="/productUsrDetail">
+	                                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
 																						<th:block>
 																							<span th:text="${list.xpdtBrandName}"></span>
 																							<br>
@@ -296,6 +293,8 @@
 	                                                                                </div>
 	                                                                            </div>
 	                                                                        </div>
+	                                                                        
+	                                                                        <!-- 찜 저장 -->
 	                                                                        <div class="product-buttons d-flex justify-content-center">
 	                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
 	                                                                                <i class="fa fa-heart" aria-hidden="true"></i>

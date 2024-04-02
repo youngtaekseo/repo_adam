@@ -120,15 +120,18 @@
 		     , CONCAT('[', e.cdcName, ']') xpdtBrandName
 		     , a.pdtName
 		     , a.pdtAccidentCd
+		     , f.cdcName xpdtAccidentName
 		     , a.pdtYear
 		     , a.pdtMonth
 		     , a.pdtRunKm
 		     , a.pdtColorCd
+		     , g.cdcName xpdtColorName 
 		     , a.pdtPrice
 		     , a.pdtRecommendCd
 		     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
 		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
              , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
+             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount 
 		  FROM product a
 		       LEFT JOIN productimg b
 		              ON b.pdtSeq = a.pdtSeq
@@ -138,7 +141,12 @@
                       ON d.cdcSeq = a.pdtTypeCd
                     JOIN code e
                       ON e.cdcSeq = a.pdtBrandCd
+                    JOIN code f
+                      ON f.cdcSeq = a.pdtAccidentCd
+                    JOIN code g
+                      ON g.cdcSeq = a.pdtColorCd
          WHERE 1 = 1
+               <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
                <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>		              
 		 GROUP BY a.pdtSeq
 		     , a.pdtTypeCd
@@ -151,7 +159,7 @@
 		     , a.pdtColorCd
 		     , a.pdtPrice
 		     , a.pdtRecommendCd
-		 ORDER BY a.pdtSeq
+		       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
                <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
 	</select>
 	

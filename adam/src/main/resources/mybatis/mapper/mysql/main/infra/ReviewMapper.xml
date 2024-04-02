@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ucl.infra.review.ReviewDao">
+
+	<resultMap id="resultMapObj" type="com.ucl.infra.review.ReviewDto"></resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT a.rvwSeq
+             , a.mbrSeq
+             , b.mbrName xmbrName
+             , a.rvwRemark
+             , a.rvwStar
+             , a.rvwDateTime
+             , a.pdtSeq
+		  FROM productreview a
+		       LEFT JOIN members b
+		         ON b.mbrSeq = a.mbrSeq
+		 WHERE 1 = 1
+		   AND a.pdtSeq = #{shSeq}	
+	</select>
+	
+<!-- 	<insert id="insert">
+		INSERT INTO product
+			( 
+			  pdtTypeCd
+			, pdtBrandCd
+			, pdtName
+			, pdtAccidentCd
+			, pdtYear
+			, pdtMonth
+			, pdtRunKm
+			, pdtColorCd
+			, pdtPrice
+			, pdtRecommendCd
+			, pdtRegDt
+			, pdtUdtDt
+			, pdtDelNy
+			)
+		VALUES
+			(
+			  #{pdtTypeCd}
+			, #{pdtBrandCd}
+			, #{pdtName}
+			, #{pdtAccidentCd}
+			, #{pdtYear}
+			, #{pdtMonth}
+			, #{pdtRunKm}
+			, #{pdtColorCd}
+			, #{pdtPrice}
+			, #{pdtRecommendCd}
+			, now()
+			, now()
+			, 0
+			)
+	</insert>
+	
+	<update id="update">
+		UPDATE product
+		   SET pdtTypeCd      = #{pdtTypeCd}
+			 , pdtBrandCd     = #{pdtBrandCd}
+			 , pdtName        = #{pdtName}
+			 , pdtAccidentCd  = #{pdtAccidentCd}
+			 , pdtYear        = #{pdtYear}
+			 , pdtMonth       = #{pdtMonth}
+			 , pdtRunKm       = #{pdtRunKm}
+			 , pdtColorCd     = #{pdtColorCd}
+			 , pdtPrice       = #{pdtPrice}
+			 , pdtRecommendCd = #{pdtRecommendCd}
+			 , pdtUdtDt       = now()
+         WHERE 1 = 1		
+           AND pdtSeq = #{pdtSeq}	
+	</update>
+	
+	<update id="updateDelNy">
+		UPDATE product
+		   SET pdtUdtDt = now()
+		   
+		   <choose>
+		   		<when test="pdtDelNy == 0">, pdtDelNy = 1</when>
+		   		<when test="pdtDelNy == 1">, pdtDelNy = 0</when>
+		   </choose>
+         WHERE 1 = 1		
+           AND pdtSeq = #{pdtSeq}
+	</update>	
+	
+	<delete id="delete">
+		DELETE FROM product
+         WHERE 1 = 1		
+           AND pdtSeq = #{pdtSeq}
+	</delete> -->	    
+
+</mapper>

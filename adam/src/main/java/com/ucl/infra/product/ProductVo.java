@@ -3,7 +3,7 @@ package com.ucl.infra.product;
 import com.ucl.common.base.BaseVo;
 
 public class ProductVo extends BaseVo {
-	private String shSeq;
+	private String  shSeq;
 	private Integer shCarType     = null; 	// 1:중형차, 2:대형차
 	private Integer shCarBrand    = null; 	// 1:현대, 2:제네시스, 3:기아
 	private Integer shCarColor    = null; 	// 1:검정색, 2:흰색
@@ -18,7 +18,7 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionMonthFrom; 		// 연식(월) 시작값
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
 	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
-	private Integer shNewRegNy = 0;             // 최근등록여부 0:해당없음, 1:최근등록조회
+	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
 	
 //=============================================================================
 	

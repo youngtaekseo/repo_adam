@@ -182,28 +182,29 @@
                                 </div>
                             </div>
                         </nav>
+                        
                         <div class="container">
                             <div class="content">
                                 <div class="row">
                                     <div class="col-sm-8 col-lg-12 col-md-12">
-                                        <div class="main-product-detail">
-                                            <h2>[현대]더 뉴 팰리세이드 디젤 2.2 4WD</h2>
+                                        <div class="main-product-detail" th:each="item : ${item}">
+                                            <h2 th:text="${item.xpdtBrandName}+' '+${item.pdtName}"></h2>
                                             <div class="product-single row">
                                                 <div class="product-detail col-xs-12 col-md-5 col-sm-5">
                                                     <div class="page-content" id="content">
                                                         <div class="images-container">
                                                             <div class="js-qv-mask mask tab-content border">
                                                                 <div id="item1" class="tab-pane fade active in show">
-                                                                    <img src="usr/img/product/img_04_f.jpg" alt="img">
+                                                                    <img th:src="${item.xpdtImgF}" alt="img">
                                                                 </div>
                                                                 <div id="item2" class="tab-pane fade">
-                                                                    <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                    <img th:src="${item.xpdtImgB}" alt="img">
                                                                 </div>
                                                                 <div id="item3" class="tab-pane fade">
-                                                                    <img src="usr/img/product/img_06_f.jpg" alt="img">
+                                                                    <img th:src="${item.xpdtImgF}" alt="img">
                                                                 </div>
                                                                 <div id="item4" class="tab-pane fade">
-                                                                    <img src="usr/img/product/img_07_f.jpg" alt="img">
+                                                                    <img th:src="${item.xpdtImgB}" alt="img">
                                                                 </div>
                                                                 <div class="layer hidden-sm-down" data-toggle="modal" data-target="#product-modal">
                                                                     <i class="fa fa-expand"></i>
@@ -212,22 +213,22 @@
                                                             <ul class="product-tab nav nav-tabs d-flex">
                                                                 <li class="active col">
                                                                     <a href="#item1" data-toggle="tab" aria-expanded="true" class="active show">
-                                                                        <img src="usr/img/product/img_04_f.jpg" alt="img">
+                                                                        <img th:src="${item.xpdtImgF}" alt="img">
                                                                     </a>
                                                                 </li>
                                                                 <li class="col">
                                                                     <a href="#item2" data-toggle="tab">
-                                                                        <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                        <img th:src="${item.xpdtImgB}" alt="img">
                                                                     </a>
                                                                 </li>
                                                                 <li class="col">
                                                                     <a href="#item3" data-toggle="tab">
-                                                                        <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                        <img th:src="${item.xpdtImgF}" alt="img">
                                                                     </a>
                                                                 </li>
                                                                 <li class="col">
                                                                     <a href="#item4" data-toggle="tab">
-                                                                        <img src="usr/img/product/img_06_f.jpg" alt="img">
+                                                                        <img th:src="${item.xpdtImgB}" alt="img">
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -243,37 +244,37 @@
                                                                                         <div class="images-container">
                                                                                             <div class="js-qv-mask mask tab-content">
                                                                                                 <div id="modal-item1" class="tab-pane fade active in show">
-                                                                                                    <img src="usr/img/product/img_04_f.jpg" alt="img">
+                                                                                                    <img th:src="${item.xpdtImgF}" alt="img">
                                                                                                 </div>
                                                                                                 <div id="modal-item2" class="tab-pane fade">
-                                                                                                    <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                                                    <img th:src="${item.xpdtImgB}" alt="img">
                                                                                                 </div>
                                                                                                 <div id="modal-item3" class="tab-pane fade">
-                                                                                                    <img src="usr/img/product/img_06_f.jpg" alt="img">
+                                                                                                    <img th:src="${item.xpdtImgB}" alt="img">
                                                                                                 </div>
                                                                                                 <div id="modal-item4" class="tab-pane fade">
-                                                                                                    <img src="usr/img/product/img_07_f.jpg" alt="img">
+                                                                                                    <img th:src="${item.xpdtImgF}" alt="img">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <ul class="product-tab nav nav-tabs">
                                                                                                 <li class="active">
                                                                                                     <a href="#modal-item1" data-toggle="tab" class=" active show">
-                                                                                                        <img src="usr/img/product/img_04_f.jpg" alt="img">
+                                                                                                        <img th:src="${item.xpdtImgF}" alt="img">
                                                                                                     </a>
                                                                                                 </li>
                                                                                                 <li>
                                                                                                     <a href="#modal-item2" data-toggle="tab">
-                                                                                                        <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                                                        <img th:src="${item.xpdtImgB}" alt="img">
                                                                                                     </a>
                                                                                                 </li>
                                                                                                 <li>
                                                                                                     <a href="#modal-item3" data-toggle="tab">
-                                                                                                        <img src="usr/img/product/img_05_f.jpg" alt="img">
+                                                                                                        <img th:src="${item.xpdtImgF}" alt="img">
                                                                                                     </a>
                                                                                                 </li>
                                                                                                 <li>
                                                                                                     <a href="#modal-item4" data-toggle="tab">
-                                                                                                        <img src="usr/img/product/img_06_f.jpg" alt="img">
+                                                                                                        <img th:src="${item.xpdtImgB}" alt="img">
                                                                                                     </a>
                                                                                                 </li>
                                                                                             </ul>
@@ -291,8 +292,8 @@
                                                 <div class="product-info col-xs-12 col-md-7 col-sm-7">
                                                     <div class="detail-description">
                                                         <div class="has-border price-del">
-                                                            ￦<span class="price">4,599</span>만원
-                                                        </div>                                                       
+                                                            ￦<span th:text="${#numbers.formatInteger(item.pdtPrice,1,'COMMA')}" class="price"></span>만원
+                                                        </div>                                                     
 
                                                         <div class="has-border">
                                                             <div class="row">
@@ -300,16 +301,16 @@
                                                                     <label style="font-size: 20px;"><b>사고유무</b></label>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <label style="font-size: 20px;"><b>무사고</b></label>
+                                                                    <b><label th:text="${item.xpdtAccidentName}" style="font-size: 20px;"></label></b>
                                                                 </div>
                                                             </div>
 
                                                             <div class="row">
                                                                 <div class="col-2">
-                                                                    <label style="font-size: 20px;"><b>연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;식</b></label>
+                                                                    <label style="font-size: 20px;"><b>연&emsp;&emsp;식</b></label>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <label style="font-size: 20px;"><b>17년 11월식(18년형)</b></label>
+                                                                    <b><label th:text="${item.pdtYear}+'년 '+${item.pdtMonth}+'월'" style="font-size: 20px;"></label></b>
                                                                 </div>                                                                                                                                 
                                                             </div>                                                            
 
@@ -318,22 +319,22 @@
                                                                     <label style="font-size: 20px;"><b>주행기록</b></label>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <label style="font-size: 20px;"><b>170,034km</b></label>
+                                                                    <b><label th:text="${#numbers.formatInteger(item.pdtRunKm, 1, 'COMMA')}+'km'" style="font-size: 20px;"></label></b>
                                                                 </div>  
                                                             </div>
 
                                                             <div class="row">
                                                                 <div class="col-2">
-                                                                    <label style="font-size: 20px;"><b>색&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상</b></label>
+                                                                    <label style="font-size: 20px;"><b>색&emsp;&emsp;상</b></label>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <label style="font-size: 20px;"><b>흰색</b></label>
+                                                                    <b><label th:text="${item.xpdtColorName}" style="font-size: 20px;"></label></b>
                                                                 </div>                                                                                                                            
                                                             </div>
 
                                                             <div class="row">
                                                                 <div class="col-2">
-                                                                    <label style="font-size: 20px;"><b>찜&nbsp;&nbsp;하&nbsp;&nbsp;기</b></label>
+                                                                    <label style="font-size: 20px;"><b>찜&ensp;하&ensp;기</b></label>
                                                                 </div>
                                                                 <div class="col">
                                                                     <label style="font-size: 20px;">                                                                        
@@ -350,18 +351,19 @@
                                                                 <span>별점 :</span>
                                                                 <div class="rating">
                                                                     <div class="star-content">
-                                                                        <div class="star"></div>
-                                                                        <div class="star"></div>
-                                                                        <div class="star"></div>
-                                                                        <div class="star"></div>
-                                                                        <div class="star"></div>
+                                                                    	<th:block th:if="${item.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, item.xpdtStar)}">
+																			<div class="star"></div>	
+																		</th:block>
+																		<th:block th:unless="${item.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, item.xpdtStar)}">
+																			<div class=""></div>	
+																		</th:block>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="read after-has-border">
                                                                 <a href="#review">
                                                                     <i class="fa fa-commenting-o color" aria-hidden="true"></i>
-                                                                    댓글<span class="reviewCount">(3)</span>
+                                                                    댓글<span th:text="'('+${item.xpdtCount}+')'" class="reviewCount"></span>
                                                                 </a>
                                                             </div>
                                                             <div class="apen after-has-border">
@@ -378,84 +380,40 @@
                                             <div class="review">
                                                 <ul class="nav nav-tabs">
                                                     <li class="active">
-                                                        <a data-toggle="tab" href="#review" class="active show">댓글 <span class="reviewCount">(3)</span></a>
+                                                        <a data-toggle="tab" href="#review" class="active show">댓글 <span th:text="'('+${item.xpdtCount}+')'" class="reviewCount"></span></a>
                                                     </li>
                                                 </ul>
 												
                                                 <div class="tab-content">													
                                                     <div id="review" class="tab-pane fade in active show">
-                                                        <div class="spr-form">
+                                                        <div class="spr-form">             
                                                             <div class="user-comment">
-
-                                                                <!-- 댓글 리스트 -->
-                                                                <div class="spr-review">
-                                                                    <div class="spr-review-header">
-                                                                        <span class="spr-review-header-byline">
-                                                                            <strong>홍길동</strong>
-                                                                            <span>2024-01-01</span>
-                                                                        </span>
-                                                                        <div class="rating">
-                                                                            <div class="star-content">
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="spr-review-content">
-                                                                        <p class="spr-review-content-body">
-                                                                            하부 진단 시 누유 / 누수 발생하는 부분 없이 깔끔한 컨디션 보유중인 차량으로 구매 후 수리하실 부분 또한 없는 차량 !!
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="spr-review preview2">
-                                                                    <div class="spr-review-header">
-                                                                        <span class="spr-review-header-byline">
-                                                                            <strong>손흥민</strong>
-                                                                            <span>2024-02-01</span>
-                                                                        </span>
-                                                                        <div class="rating">
-                                                                            <div class="star-content">
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="spr-review-content">
-                                                                        <p class="spr-review-content-body">
-                                                                            단지 내 간단한 시운전 테스트 시 하부 잡소음 및 운행 특이사항 발견되지 않은 깔끔한 주행성능을 보여주는 차량 !!
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="spr-review preview2">
-                                                                    <div class="spr-review-header">
-                                                                        <span class="spr-review-header-byline">
-                                                                            <strong>안성기</strong>
-                                                                            <span>2024-03-01</span>
-                                                                        </span>
-                                                                        <div class="rating">
-                                                                            <div class="star-content">
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                                <div class="star"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="spr-review-content">
-                                                                        <p class="spr-review-content-body">
-                                                                            성능기록부 상 단순교환 조차 없는 【 無사고 】 차량이며 그에따른 보험처리 이력 또한 1건도 없는 깔끔한 이력을 가진 차량입니다 !!
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
+                                                            	<!-- 댓글 리스트 -->
+                                                            	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+																	<div class="spr-review">
+	                                                                    <div class="spr-review-header">
+	                                                                        <span class="spr-review-header-byline">
+	                                                                            <strong th:text="${list.xmbrName}"></strong>
+	                                                                            <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
+	                                                                        </span>
+	                                                                        <div class="rating">
+	                                                                            <div class="star-content">
+																					<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																						<div class="star"></div>	
+																					</th:block>
+																					<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																						<div class=""></div>	
+																					</th:block>
+	                                                                            </div>
+	                                                                        </div>
+	                                                                    </div>
+	                                                                    
+	                                                                    <!-- 댓글내용 -->
+	                                                                    <div class="spr-review-content">
+	                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
+	                                                                    </div>
+	                                                                </div>                                                            	
+                                                            	</th:block>
                                                             </div>
                                                         </div>
 
