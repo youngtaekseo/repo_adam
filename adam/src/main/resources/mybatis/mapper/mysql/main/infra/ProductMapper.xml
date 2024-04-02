@@ -71,7 +71,7 @@
 	</select>
 	
     <!-- 카운팅 -->
-    <select id="getCount">
+    <select id="selectOnetDataCount">
         SELECT COUNT(*)
       <include refid="selectCommon"/>
     </select>		
@@ -95,6 +95,65 @@
 		 WHERE 1 = 1		
            AND a.pdtSeq = #{pdtSeq}
 	</select>	
+	
+	<!-- 제조사별 카운터 -->
+	<select id="selectListBrandCount" resultMap="resultMapObj">
+		SELECT a.pdtBrandCd
+             , b.cdcName pdtName
+             , CONCAT('checkbox',a.pdtBrandCd) xpdtId
+             , CONCAT('(',COUNT(*),')') xpdtGroupCount
+          FROM product a          
+               LEFT JOIN code b
+                      ON b.cdcSeq = a.pdtBrandCd
+         WHERE 1 = 1
+         GROUP BY a.pdtBrandCd
+             , b.cdcName
+         ORDER BY a.pdtBrandCd
+	</select>
+
+	<!-- 추천, 최근등록 차량 -->
+	<select id="selectListCarInfo" resultMap="resultMapObj">
+		SELECT a.pdtSeq
+		     , a.pdtTypeCd
+		     , d.cdcName xpdtTypeName
+		     , a.pdtBrandCd
+		     , CONCAT('[', e.cdcName, ']') xpdtBrandName
+		     , a.pdtName
+		     , a.pdtAccidentCd
+		     , a.pdtYear
+		     , a.pdtMonth
+		     , a.pdtRunKm
+		     , a.pdtColorCd
+		     , a.pdtPrice
+		     , a.pdtRecommendCd
+		     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
+		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
+             , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
+		  FROM product a
+		       LEFT JOIN productimg b
+		              ON b.pdtSeq = a.pdtSeq
+               LEFT JOIN productreview c
+                      ON c.pdtSeq = a.pdtSeq
+                    JOIN code d
+                      ON d.cdcSeq = a.pdtTypeCd
+                    JOIN code e
+                      ON e.cdcSeq = a.pdtBrandCd
+         WHERE 1 = 1
+               <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>		              
+		 GROUP BY a.pdtSeq
+		     , a.pdtTypeCd
+		     , a.pdtBrandCd
+		     , a.pdtName
+		     , a.pdtAccidentCd
+		     , a.pdtYear
+		     , a.pdtMonth
+		     , a.pdtRunKm
+		     , a.pdtColorCd
+		     , a.pdtPrice
+		     , a.pdtRecommendCd
+		 ORDER BY a.pdtSeq
+               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO product

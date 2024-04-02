@@ -78,7 +78,7 @@
 			                            id="shOptionGroup" name="shOptionGroup">
 			                            <option value="" th:selected="${vo.shOptionGroup == null}">코드그룹선택</option>
 			                            <option th:each="list : ${listCodeGroupName}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == vo.shOptionGroup}">
-										<!-- <option th:each="list : ${@codeGroupService.selectListCachedCodeGroup()}" th:value="${list.cdgSeq}" th:text="${list.cdgName}"></option> -->
+										<!-- <option th:each="list : ${@codeGroupService.selectListCachedCodeGroup()}" th:value="${list.cdgSeq}" th:text="${list.cdcName}"></option> -->
 			                        </select>
 			                    </div>
 			                                    

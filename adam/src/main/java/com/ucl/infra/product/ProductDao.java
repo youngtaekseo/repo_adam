@@ -12,5 +12,9 @@ public interface ProductDao {
 	
 	public int updateDelNy(ProductDto dto);
 	
-	public int getCount(ProductVo vo);   	
+	public int selectOnetDataCount(ProductVo vo);  
+	
+	public List<ProductDto> selectListBrandCount(ProductDto dto);
+	
+	public List<ProductDto> selectListCarInfo(ProductVo vo);
 }

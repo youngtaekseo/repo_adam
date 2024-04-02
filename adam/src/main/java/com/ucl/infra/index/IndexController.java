@@ -1,12 +1,19 @@
 package com.ucl.infra.index;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.infra.product.ProductService;
+import com.ucl.infra.product.ProductVo;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	ProductService productService;
 
 	// 메인화면
 	@RequestMapping(value = "/index")
@@ -22,7 +29,17 @@ public class IndexController {
 	
 	// 사용자메인
 	@RequestMapping(value = "/indexUsr")
-	public String indexUsr() throws Exception {
+	public String indexUsr(ProductVo vo, Model model) throws Exception {
+		// 추천차량
+		vo.setShNewRegNy(0);
+		vo.setShRecommend(17);
+		model.addAttribute("listRecommend", productService.selectListCarInfo(vo));
+		
+		// 최근등록차량
+		vo.setShNewRegNy(1);
+		vo.setShRecommend(null);
+		model.addAttribute("listNewReg", productService.selectListCarInfo(vo));
+		
 		return Commvar.PATH_HOME + "indexUsr";
 	}
 }

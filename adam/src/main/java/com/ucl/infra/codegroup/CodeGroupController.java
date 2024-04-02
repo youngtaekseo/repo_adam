@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -34,6 +33,7 @@ public class CodeGroupController {
 			/* setUrl(vo); */
 		};
 		
+		// 코드그룹 select option 쿼리
 		model.addAttribute("listCodeGroupName", service.selectListCodeGroup());
 		
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmList";

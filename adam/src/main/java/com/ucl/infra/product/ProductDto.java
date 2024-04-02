@@ -20,7 +20,14 @@ public class ProductDto {
 	
 	private Integer xpdtCount;
 	private String xpdtYearMonth;
-
+	private String xpdtGroupCount;
+	private String xpdtIdName;
+	private String xpdtImgF;
+	private String xpdtImgB;
+	private Integer xpdtStar;
+	private String xpdtTypeName;
+	private String xpdtBrandName;
+	
 	//=============================================================================
 	public String getPdtSeq() {
 		return pdtSeq;
@@ -117,5 +124,47 @@ public class ProductDto {
 	}
 	public void setXpdtYearMonth(String xpdtYearMonth) {
 		this.xpdtYearMonth = xpdtYearMonth;
+	}
+	public String getXpdtGroupCount() {
+		return xpdtGroupCount;
+	}
+	public void setXpdtGroupCount(String xpdtGroupCount) {
+		this.xpdtGroupCount = xpdtGroupCount;
 	}	
+	public String getXpdtIdName() {
+		return xpdtIdName;
+	}
+	public void setXpdtIdName(String xpdtIdName) {
+		this.xpdtIdName = xpdtIdName;
+	}
+	public String getXpdtImgF() {
+		return xpdtImgF;
+	}
+	public void setXpdtImgF(String xpdtImgF) {
+		this.xpdtImgF = xpdtImgF;
+	}
+	public String getXpdtImgB() {
+		return xpdtImgB;
+	}
+	public void setXpdtImgB(String xpdtImgB) {
+		this.xpdtImgB = xpdtImgB;
+	}
+	public Integer getXpdtStar() {
+		return xpdtStar;
+	}
+	public void setXpdtStar(Integer xpdtStar) {
+		this.xpdtStar = xpdtStar;
+	}
+	public String getXpdtTypeName() {
+		return xpdtTypeName;
+	}
+	public void setXpdtTypeName(String xpdtTypeName) {
+		this.xpdtTypeName = xpdtTypeName;
+	}
+	public String getXpdtBrandName() {
+		return xpdtBrandName;
+	}
+	public void setXpdtBrandName(String xpdtBrandName) {
+		this.xpdtBrandName = xpdtBrandName;
+	}
 }

@@ -35,7 +35,15 @@ public class ProductService {
 		return dao.updateDelNy(dto);
 	}
 	
-	public int getCount(ProductVo vo) {
-		return dao.getCount(vo);
-	}	
+	public int selectOnetDataCount(ProductVo vo) {
+		return dao.selectOnetDataCount(vo);
+	}
+	
+	public List<ProductDto> selectListBrandCount(ProductDto dto) {
+		return dao.selectListBrandCount(dto);
+	}
+	
+	public List<ProductDto> selectListCarInfo(ProductVo vo) {
+		return dao.selectListCarInfo(vo);
+	}
 }

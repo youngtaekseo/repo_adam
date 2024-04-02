@@ -27,7 +27,7 @@ public class ProductController {
 		
 		UtilFunction.setSearch(vo);
 		
-		int rowCount = service.getCount(vo);
+		int rowCount = service.selectOnetDataCount(vo);
 		
 		if(rowCount > 0) {			
 			vo.setPagingVo(rowCount);
@@ -47,7 +47,7 @@ public class ProductController {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		int rowCount = service.getCount(vo);
+		int rowCount = service.selectOnetDataCount(vo);
 		
 		if(rowCount > 0) {			
 			vo.setPagingVo(rowCount);
@@ -126,4 +126,22 @@ public class ProductController {
 				.build();
 		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
 	}	
+	
+// ============================================================================
+// 사용자
+// ============================================================================
+
+	// 조회화면
+	@RequestMapping(value = "/productUsrList")
+	public String productUsrList(ProductDto dto, Model model) {
+		model.addAttribute("list", service.selectListBrandCount(dto));
+		return Commvar.PATH_PRODUCT + "productUsrList";
+	}
+	
+	// 상세화면
+	@RequestMapping(value = "/productUsrDetail")
+	public String productUsrDetail() {
+		return Commvar.PATH_PRODUCT + "productUsrDetail";
+	}
+	
 }

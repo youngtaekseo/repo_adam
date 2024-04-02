@@ -3,42 +3,9 @@
 <!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <!--<![endif]-->
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-
-<!-- index06:45-->
-<head>
-    <!-- Basic Page Needs -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>중고조아</title>
-
-    <meta name="keywords" content="중고차, OldCar">
-    <meta name="description" content="중고조아 - 중고차 쇼핑몰">
-    <!-- <meta name="author" content="tivatheme"> -->
-
-    <!-- Mobile Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
-
-    <!-- Vendor CSS -->
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
-
-    <link rel="stylesheet" href="usr/libs/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="usr/libs/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="usr/libs/font-material/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="usr/libs/nivo-slider/css/nivo-slider.css">
-    <link rel="stylesheet" href="usr/libs/nivo-slider/css/animate.css">
-    <link rel="stylesheet" href="usr/libs/nivo-slider/css/style.css">
-    <link rel="stylesheet" href="usr/libs/owl-carousel/assets/owl.carousel.min.css">
-
-    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>-->        
-    <!-- Template CSS -->
-    <link rel="stylesheet" type="text/css" href="usr/css/style.css">
-    <link rel="stylesheet" type="text/css" href="usr/css/reponsive.css">
-</head>
+<div th:replace="~{infra/v1/include/headUsr :: head}"></div>
 
 <body id="home">
     <header>
@@ -226,11 +193,58 @@
                                                 <div class="tab-content">
                                                     <div id="new" class="tab-pane fade in active show">
                                                         <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag">
-                                                            
-                                                            <div class="item">
+                                                            <th:block th:each="list : ${listRecommend}">
+																<div class="item">
+	                                                                <div class="product-miniature first-item js-product-miniature item-one">
+	                                                                    <div class="thumbnail-container">
+	                                                                        <a href="/productUsrList">
+	                                                                            <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
+	                                                                            <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
+	                                                                        </a>
+	                                                                    </div>
+	                                                                    <div class="product-description">
+	                                                                        <div class="product-groups">
+	                                                                            <div class="product-title">
+	                                                                                <a href="product-detail.html">
+																						<th:block>
+																							<span th:text="${list.xpdtBrandName}"></span>
+																							<br>
+																							<span th:text="${list.pdtName}"></span>
+																						</th:block>
+																					</a>
+	                                                                            </div>
+	                                                                            
+	                                                                            <div class="rating">
+	                                                                                <div class="star-content">
+																						<th:block th:if="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																							<div class="star"></div>	
+																						</th:block>
+																						<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																							<div class=""></div>	
+																						</th:block>
+	                                                                                </div>
+	                                                                            </div>
+	                                                                            
+	                                                                            <div class="product-group-price">
+	                                                                                <div class="product-price-and-shipping">
+	                                                                                    ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>만원
+	                                                                                </div>
+	                                                                            </div>
+	                                                                        </div>
+	                                                                        <div class="product-buttons d-flex justify-content-center">
+	                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
+	                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
+	                                                                            </a>
+	                                                                        </div>
+	                                                                    </div>
+	                                                                </div>
+                                                            	</div>
+															</th:block>
+															
+                                                            <!--<div class="item">
                                                                 <div class="product-miniature first-item js-product-miniature item-one">
                                                                     <div class="thumbnail-container">
-                                                                        <a href="product-detail.html">
+                                                                        <a href="/productUsrList">
                                                                             <img class="img-fluid image-cover"     src="usr/img/product/img_13_f.jpg" alt="img">
                                                                             <img class="img-fluid image-secondary" src="usr/img/product/img_13_b.jpg" alt="img">
                                                                         </a>
@@ -262,81 +276,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="item">
-                                                                <div class="product-miniature js-product-miniature item-one first-item">
-                                                                    <div class="thumbnail-container">
-                                                                        <a href="product-detail.html">
-                                                                            <img class="img-fluid image-cover"     src="usr/img/product/img_14_f.jpg" alt="img">
-                                                                            <img class="img-fluid image-secondary" src="usr/img/product/img_14_b.jpg" alt="img">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="product-description">
-                                                                        <div class="product-groups">
-                                                                            <div class="product-title">
-                                                                                <a href="product-detail.html">[현대]<br>그랜저 (GN7) 가솔린 2.5 2WD 익스클루시브</a>
-                                                                            </div>
-                                                                            <div class="rating">
-                                                                                <div class="star-content">
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="product-group-price">
-                                                                                <div class="product-price-and-shipping">
-                                                                                    ￦<span class="price" style="font-size: 20px;">4,099</span>만원
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="product-buttons d-flex justify-content-center">
-                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="item">
-                                                                <div class="product-miniature js-product-miniature item-one first-item">
-                                                                    <div class="thumbnail-container">
-                                                                        <a href="product-detail.html">
-                                                                            <img class="img-fluid image-cover"     src="usr/img/product/img_16_f.jpg" alt="img">
-                                                                            <img class="img-fluid image-secondary" src="usr/img/product/img_16_b.jpg" alt="img">
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="product-description">
-                                                                        <div class="product-groups">
-                                                                            <div class="product-title">
-                                                                                <a href="product-detail.html">[현대]<br>그랜저 (GN7) 가솔린 2.5 2WD 캘리그래피</a>
-                                                                            </div>
-                                                                            <div class="rating">
-                                                                                <div class="star-content">
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                    <div class="star"></div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="product-group-price">
-                                                                                <div class="product-price-and-shipping">
-                                                                                    ￦<span class="price" style="font-size: 20px;">4,480</span>만원
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="product-buttons d-flex justify-content-center">
-                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
-                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            </div>-->
                                                         </div>
                                                     </div>
                                                 </div>

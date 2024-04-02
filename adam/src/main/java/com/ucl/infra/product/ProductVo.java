@@ -17,6 +17,8 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionYearTo;   		// 연식(년) 종료값
 	private Integer shOptionMonthFrom; 		// 연식(월) 시작값
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
+	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
+	private Integer shNewRegNy = 0;             // 최근등록여부 0:해당없음, 1:최근등록조회
 	
 //=============================================================================
 	
@@ -103,5 +105,17 @@ public class ProductVo extends BaseVo {
 	}
 	public void setShOptionMonthTo(Integer shOptionMonthTo) {
 		this.shOptionMonthTo = shOptionMonthTo;
+	}
+	public Integer getShDispCount() {
+		return shDispCount;
+	}
+	public void setShDispCount(Integer shDispCount) {
+		this.shDispCount = shDispCount;
+	}
+	public Integer getShNewRegNy() {
+		return shNewRegNy;
+	}
+	public void setShNewRegNy(Integer shNewRegNy) {
+		this.shNewRegNy = shNewRegNy;
 	}
 }
