@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="~{infra/v1/include/headUsr :: head}"></div>
+
+<body class="user-register blog">
+    <header>
+        <!-- header desktop -->
+        <div class="header-top d-xs-none ">
+            <div class="container">
+                <div class="row">
+                    <!-- logo -->
+                    <div class="col-1 d-flex align-items-center">
+                        <div id="logo">
+                            <a href="/indexUsr">
+                                <!-- <img class="img-fluid" src="img/home/logo.png" alt="logo"> -->
+                                <b style="font-size: 16px;">중고조아</b>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- menu -->
+                    <div class="main-menu col-2 align-items-center justify-content-center navbar-expand-md">
+                        <div class="menu navbar collapse navbar-collapse">
+                            <ul class="menu-top navbar-nav">
+                                <li><a href="/indexUsr" class="parent" style="color: red;">Home</a></li>
+                                <li><a href="/productUsrList" class="parent">차량조회</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="search_widget" class="col-9 align-items-center justify-content-end d-flex">
+                        <a class="login" href="/loginUsr" rel="nofollow" title="로그인">
+                            <i class="fa fa-sign-in"></i>
+                            <span>로그인</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <div class="main-content">
+        <div class="wrap-banner">
+
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li><a href="/indexUsr"><span>Home</span></a></li>
+                            <li><span>회원가입</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="container">
+                <div class="row">
+                    <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+                        <div id="main">
+                            <div id="content" class="page-content">
+                                <div class="register-form text-center">
+                                    <h1 class="text-center title-page">회원가입</h1>
+                                    <form id="form" name="form" class="js-customer-form" method="post" autocomplete="off">
+                                        <div>
+                                        	<input id="mbrType" name="mbrType" type="hidden" value="2" /> <!-- 1:관리자 2:사용자 -->
+                                            <!-- 이름 -->
+                                            <div class="form-group mb-4">
+                                                <div>
+                                                    <input class="form-control"
+                                                    	id="mbrName" name="mbrName" type="text" placeholder="이름"
+                                                    	onkeyup="fnOnKeyUp(this)"/>
+                                                    <span id="mbrNameValid" name="mbrNameValid" style="float: left; color: red; visibility:hidden;"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 성별 -->
+                                            <div class="form-group mb-4">
+                                                <select class="form-select form-control"
+                                                	id="mbrSex" name="mbrSex">
+                                                    <option value="" selected>성별</option>
+                                                    <option value="12">남자</option>
+                                                    <option value="33">여자</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- 생년월일 -->
+                                            <div class="form-group">
+                                                <div class="form-group mb-4">
+                                                    <div>
+                                                        <input class="form-control"
+                                                        	id="mbrBirthday" name="mbrBirthday" type="text" placeholder="생년월일"
+                                                        	onkeyup="fnOnKeyUp(this)"/>
+                                                        <span id="mbrBirthdayValid" name="mbrBirthdayValid" style="float: left; color: red; visibility:hidden;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 이메일 -->
+                                            <div class="form-group mb-4">
+                                                <div>
+                                                    <input class="form-control"
+                                                    	id="mbrEmail" name="mbrEmail" placeholder="이메일"
+                                                    	onkeyup="fnOnKeyUp(this)"/>
+                                                    <span id="mbrEmailValid" name="mbrEmailValid" style="float: left; color: red; visibility:hidden;"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 비밀번호 -->
+                                            <div class="form-group mb-4">
+                                                <div>
+                                                    <div class="input-group js-parent-focus">
+                                                        <input class="form-control js-child-focus js-visible-password"
+                                                        id="mbrPassword" name="mbrPassword"
+				            							type="password" placeholder="비밀번호 5자리:영문,숫자,특수문자(!@#$%^*+=-)"
+				            							onkeyup="fnOnKeyUp(this)"/>
+                                                    </div>
+                                                </div>
+                                                <span id="mbrPasswordValid" name="mbrPasswordValid" style="float: left; color: red; visibility:hidden;"></span>                                                
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div>
+                                                    <div class="input-group js-parent-focus">
+                                                        <input class="form-control js-child-focus js-visible-password"
+                                                        	id="xmbrPwConfirm" name="xmbrPwConfirm" type="password"
+				            								placeholder="비밀번호 5자리:영문,숫자,특수문자(!@#$%^*+=-)"
+				            								onkeyup="fnOnKeyUp(this)"/>
+                                                    </div>
+                                                </div>
+                                                <span id="xmbrPwConfirmValid" name="xmbrPwConfirmValid" style="float: left; color: red; visibility:hidden;"></span>                                                
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div>
+                                                <button class="btn btn-primary" data-link-action="sign-in"
+                                                	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
+                                                    등&emsp;&emsp;록
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="~{infra/v1/include/headUsr :: footer}"></div>
+
+    <!-- back top top -->
+    <div class="back-to-top">
+        <a href="#">
+            <i class="fa fa-long-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- Vendor JS -->
+    <script src="usr/libs/jquery/jquery.min.js"></script>
+    <script src="usr/libs/popper/popper.min.js"></script>
+    <script src="usr/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="usr/libs/nivo-slider/js/jquery.nivo.slider.js"></script>
+    <script src="usr/libs/owl-carousel/owl.carousel.min.js"></script>
+    <script src="usr/libs/slider-range/js/tmpl.js"></script>
+    <script src="usr/libs/slider-range/js/jquery.dependClass-0.1.js"></script>
+    <script src="usr/libs/slider-range/js/draggable-0.1.js"></script>
+    <script src="usr/libs/slider-range/js/jquery.slider.js"></script>
+    <script src="usr/libs/slick-slider/js/slick.min.js"></script>
+
+    <!-- Template JS -->
+    <script src="usr/js/theme.js"></script>
+    
+    <script type="text/javascript">
+// ============================================================================
+// 변수선언
+// ============================================================================
+		let form = document.querySelector("form[name=form]");
+		
+		let goUrlUsrList   	= "/memberUsrList";		/* 조회화면 */
+		let goUrlUsrForm   	= "/memberUsrPass";		/* 수정화면 */
+		let goUrlUsrCreate 	= "/memberUsrCreate";	/* 등록화면 */
+		let goUrlUsrInsert 	= "/memberUsrInsert";	/* 등록 */
+		let goUrlUsrUpdate 	= "/memberUsrUpdate";	/* 수정 */
+		let goUrlUsrDelete 	= "/memberUsrDelete";	/* 삭제 */
+
+		// 회원명
+		let mbrName         	= document.querySelector("input[name=mbrName]");
+		let mbrNameValid    	= document.querySelector("span[name=mbrNameValid]");
+		
+		// 생년월일
+		let mbrBirthday        	= document.querySelector("input[name=mbrBirthday]");
+		let mbrBirthdayValid   	= document.querySelector("input[name=mbrBirthdayValid]");
+		
+		// 이메일
+		let mbrEmail         	= document.querySelector("input[name=mbrEmail]");
+		let mbrEmailValid    	= document.querySelector("span[name=mbrEmailValid]");
+		
+		// 비밀번호
+		let mbrPassword         = document.querySelector("input[name=mbrPassword]");
+		let mbrPasswordValid    = document.querySelector("span[name=mbrPasswordValid]");
+		
+		// 비밀번호확인
+		let mbrPwConfirm        = document.querySelector("input[name=mbrPwConfirm]");
+		let mbrPwConfirmValid	= document.querySelector("span[name=mbrPwConfirmValid]");
+		
+		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(공백체크)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NULL = 31;
+		let dispText = "";
+		let typeArr = [TYPE_KREN, TYPE_EM, TYPE_PW, TYPE_PW];		
+		let nameArr = ["mbrName", "mbrEmail", "mbrPassword", "mbrPwConfirm"];
+		let textArr = [dispText, dispText, dispText, dispText];	
+
+// ============================================================================
+// event
+// ============================================================================
+
+		window.addEventListener('load', function() {
+			jQuery.datetimepicker.setLocale('ko'); // 한국어
+
+			$("#mbrBirthday").datetimepicker({
+				timepicker:false,
+				format: 'Y-m-d', //'Y-m-d' //H:i
+			});
+		});
+
+    	// 저장버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			
+			if(!fnValidation()) return false;
+	       	
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"mbrEmail":$("#mbrEmail").val(), "mbrPassword":$("#mbrPassword").val(), "xmbrPwConfirm":$("#xmbrPwConfirm").val()}
+				, url: "/memberSdmPwConfirm"
+				, success: function(response) {
+					if(response.rt == "success") {
+						fnCallController();
+					} else if(response.rt == "email"){
+						alert("같은 이메일이 존재합니다");
+					} else if(response.rt == "noMatch"){
+						alert("비밀번호 불일치");
+					};
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		};
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				if(!fnValidation()) return false;
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				switch(obj.name) {
+				case "mbrName" :
+					fnValidType(obj, mbrNameValid, "", TYPE_KREN);
+					break;					
+				case "mbrEmail" :
+					fnValidType(obj, mbrEmailValid, "", TYPE_EM);
+					break;
+				case "mbrPassword" :
+					fnValidType(obj, mbrPasswordValid, dispText, TYPE_PW);
+					break;
+				case "mbrPwConfirm" :
+					fnValidType(obj, mbrPwConfirmValid, dispText, TYPE_PW);
+					break;
+				};
+			};	
+		};		
+
+// ============================================================================
+// function
+// ============================================================================
+		
+		// controller 호출
+		fnCallController = function() {
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+			form.action = goUrlUsrInsert;
+			form.submit();
+		};	
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
+		};
+
+    </script>
+	    
+</body>
+
+</html>

@@ -5,7 +5,7 @@ import java.util.Date;
 public class MemberDto {
 	
 	private String mbrSeq;
-	private Integer mbrType; // 0:관리자, 1:사용자
+	private Integer mbrType; // 1:관리자, 2:사용자
 	private String mbrName;
 	private Integer mbrSex;
 	private String mbrBirthday;

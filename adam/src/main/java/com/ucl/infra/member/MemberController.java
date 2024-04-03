@@ -55,7 +55,7 @@ public class MemberController extends BaseController {
 		return Commvar.PATH_MEMBER + "memberSdmCreate";
 	}
 	
-	// 등록
+	// 관리자등록
 	@RequestMapping(value = "/memberSdmInsert")
 	public String memberSdmInsert(MemberDto dto) throws Exception {
 		
@@ -268,4 +268,25 @@ public class MemberController extends BaseController {
 				.build();
 		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
 	}
+	
+	//=========================================================================
+	// 사용자
+	//=========================================================================
+	
+	// 사용자 회원가입
+	@RequestMapping(value = "/memberUsrCreate")
+	public String memberUsrCreate() {
+		return Commvar.PATH_MEMBER + "memberUsrCreate";
+	}
+	
+	// 사용자등록
+	@RequestMapping(value = "/memberUsrInsert")
+	public String memberUsrInsert(MemberDto dto) throws Exception {
+		
+		// 비밀번호 암호화
+		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+
+		service.insert(dto);
+		return Commvar.PATH_LOGIN + "loginUsr";		
+	}	
 }

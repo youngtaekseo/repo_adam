@@ -51,7 +51,7 @@
 	
 	        <!-- 회원가입 -->
 	        <div class="mr-4" th:if="${session.sessMbrName == null or session.sessMbrName.equals('')}">
-	            <a class="register" href="user-register.html" rel="nofollow" title="회원가입">
+	            <a class="register" href="/memberUsrCreate" rel="nofollow" title="회원가입">
 	                <i class="fa fa-user"></i>
 	                <span>회원가입</span>
 	            </a>
@@ -61,7 +61,7 @@
 	        <div th:if="${session.sessMbrName != null and session.sessMbrName != ''}">
 	            <div id="block_myaccount_infos" class="hidden-sm-down dropdown">
 	                <div class="myaccount-title">
-	                    <a href="#acount" data-toggle="collapse" class="acount">
+	                    <a href="#account" data-toggle="collapse" class="account">
 	                        <i class="fa fa-user" aria-hidden="true"></i>
 							<span>[[${session.sessMbrName}]]</span>	
 	                        <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -70,21 +70,21 @@
 	                <div id="acount" class="collapse">
 	                    <div class="account-list-content">
 	                        <div>
-	                            <a href="user-passward-edit.html" rel="nofollow" title="비밀번호 변경">
+	                            <a href="/memberUsrPass" rel="nofollow" title="비밀번호 변경">
 	                                <i class="fa fa-edit" aria-hidden="true"></i>
 	                                <span>비밀번호 변경</span>
 	                            </a>
 	                        </div>
 	
 	                        <div>
-	                            <a class="check-out" href="product-checkout.html" rel="nofollow" title="결제하기">
+	                            <a class="check-out" href="/productUsrCheckOut" rel="nofollow" title="결제하기">
 	                                <i class="fa fa-check" aria-hidden="true"></i>
 	                                <span>결제하기</span>
 	                            </a>
 	                        </div>
 	
 	                        <div>
-	                            <a href="user-wishlist.html" title="찜 내역">
+	                            <a href="/productUsrWishlist" title="찜 내역">
 	                                <i class="fa fa-heart" aria-hidden="true" style="color: pink;"></i>
 	                                <span> 찜 내역</span>
 	                            </a>
