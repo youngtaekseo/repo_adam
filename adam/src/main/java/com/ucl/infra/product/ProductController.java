@@ -17,6 +17,9 @@ import com.ucl.common.util.UtilFunction;
 import com.ucl.infra.review.ReviewService;
 import com.ucl.infra.review.ReviewVo;
 
+import jakarta.servlet.http.HttpSession;
+
+
 @Controller
 public class ProductController {
 
@@ -32,7 +35,7 @@ public class ProductController {
 		
 		UtilFunction.setSearch(vo);
 		
-		int rowCount = service.selectOnetDataCount(vo);
+		int rowCount = service.selectOneDataCount(vo);
 		
 		if(rowCount > 0) {			
 			vo.setPagingVo(rowCount);
@@ -52,7 +55,7 @@ public class ProductController {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		int rowCount = service.selectOnetDataCount(vo);
+		int rowCount = service.selectOneDataCount(vo);
 		
 		if(rowCount > 0) {			
 			vo.setPagingVo(rowCount);
@@ -138,10 +141,16 @@ public class ProductController {
 
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
-	public String productUsrList(ProductVo vo, Model model) {
+	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model) {
+		int rowCount = service.selectOneUsrDataCount(vo);
 		
-		model.addAttribute("list", service.selectListCarInfo(vo));
-		model.addAttribute("listBrand", service.selectListBrand());
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			model.addAttribute("list", service.selectListCarInfo(vo));
+			model.addAttribute("listBrand", service.selectListBrand());
+		};
+
 		return Commvar.PATH_PRODUCT + "productUsrList";
 	}
 	
@@ -157,5 +166,19 @@ public class ProductController {
 		
 		return Commvar.PATH_PRODUCT + "productUsrDetail";
 	}
+	
+	// 구매내역
+	@RequestMapping(value = "/productUsrSale")
+	public String productUsrSale(ProductVo vo, Model model, HttpSession httpSession) {
+		
+		// 로그인 회원순번 설정
+		vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		// 구매내역조회
+		model.addAttribute("list", service.selectListSale(vo));
+		
+		return Commvar.PATH_PRODUCT + "productUsrSale";
+	}
+	
 	
 }

@@ -9,6 +9,7 @@ public class ProductVo extends BaseVo {
 	private Integer shCarColor    = null; 	// 1:검정색, 2:흰색
 	private Integer shRecommend   = null; 	// 1:추천, 2:비추천
 	private Integer shAccident    = null; 	// 1:무사고, 2:유사고
+	
 	private Integer shOptionRunKm = null;	// 주행기록
 	private Integer shOptionRunKmFrom;		// 주행기록 시작값
 	private Integer shOptionRunKmTo;		// 주행기록 종료값

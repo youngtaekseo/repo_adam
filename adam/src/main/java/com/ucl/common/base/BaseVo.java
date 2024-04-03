@@ -13,6 +13,9 @@ public class BaseVo {
 	private int     pgPage      = 1;  // 시작페이지
 	private int     pgRowCount  = 5;  // 한 페이지 당 보여줄 게시물 개수
 	private int     pgPageCount = 5;  // 한 블럭에 몇 개의 페이지 개수
+	private int     pgRowCountUsr  = 9;  // 한 페이지 당 보여줄 게시물 개수
+	private int     pgPageCountUsr = 5;  // 한 블럭에 몇 개의 페이지 개수	
+
 	private int     pgTotalCount;     // 총 게시물 개수
 	
 	private int     pgStartPage = 1;  // 한 블럭의 시작 페이지: 기본 값 1 // ex) 1 2 3 4 5 일 때 1을 의미.
@@ -140,9 +143,21 @@ public class BaseVo {
 	public void setPgRowCount(int pgRowCount) {
 		this.pgRowCount = pgRowCount;
 	}
+	
+	public int getPgRowCountUsr() {
+		return pgRowCountUsr;
+	}
+	
+	public void setPgRowCountUsr(int pgRowCountUsr) {
+		this.pgRowCountUsr = pgRowCountUsr;
+	}
 
 	public int getPgPageCount() {
 		return pgPageCount;
+	}
+	
+	public int getPgPageCountUsr() {
+		return pgPageCountUsr;
 	}
 
 	public int getPgTotalCount() {

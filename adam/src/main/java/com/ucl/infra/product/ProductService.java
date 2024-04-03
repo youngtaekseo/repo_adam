@@ -35,8 +35,12 @@ public class ProductService {
 		return dao.updateDelNy(dto);
 	}
 	
-	public int selectOnetDataCount(ProductVo vo) {
-		return dao.selectOnetDataCount(vo);
+	public int selectOneDataCount(ProductVo vo) {
+		return dao.selectOneDataCount(vo);
+	}
+	
+	public int selectOneUsrDataCount(ProductVo vo) {
+		return dao.selectOneUsrDataCount(vo);
 	}
 	
 	public List<ProductDto> selectListBrand() {
@@ -45,5 +49,10 @@ public class ProductService {
 	
 	public List<ProductDto> selectListCarInfo(ProductVo vo) {
 		return dao.selectListCarInfo(vo);
+	}
+	
+	// 구매목록
+	public List<ProductDto> selectListSale(ProductVo vo) {
+		return dao.selectListSale(vo);
 	}
 }

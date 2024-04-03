@@ -12,8 +12,15 @@ public class LoginController {
 	@Autowired
 	LoginService service;
 	
-	@RequestMapping(value = "loginSdm")
-	public String login() throws Exception {
+	// 관리자 로그인
+	@RequestMapping(value = "/loginSdm")
+	public String loginSdm() throws Exception {
 		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
+	
+	// 사용자 로그인
+	@RequestMapping(value = "/loginUsr")
+	public String loginUsr() throws Exception {
+		return Commvar.PATH_LOGIN + "loginUsr";
+	}
 }

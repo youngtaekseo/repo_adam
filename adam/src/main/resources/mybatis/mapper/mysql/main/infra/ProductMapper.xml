@@ -71,7 +71,7 @@
 	</select>
 	
     <!-- 카운팅 -->
-    <select id="selectOnetDataCount">
+    <select id="selectOneDataCount">
         SELECT COUNT(*)
       <include refid="selectCommon"/>
     </select>		
@@ -111,56 +111,131 @@
          ORDER BY a.pdtBrandCd
 	</select>
 
-	<!-- 추천, 최근등록 차량 -->
-	<select id="selectListCarInfo" resultMap="resultMapObj">
-		SELECT a.pdtSeq
-		     , a.pdtTypeCd
-		     , d.cdcName xpdtTypeName
-		     , a.pdtBrandCd
-		     , CONCAT('[', e.cdcName, ']') xpdtBrandName
-		     , a.pdtName
-		     , a.pdtAccidentCd
-		     , f.cdcName xpdtAccidentName
-		     , a.pdtYear
-		     , a.pdtMonth
-		     , a.pdtRunKm
-		     , a.pdtColorCd
-		     , g.cdcName xpdtColorName 
-		     , a.pdtPrice
-		     , a.pdtRecommendCd
-		     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
-		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
-             , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
-             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount 
-		  FROM product a
-		       LEFT JOIN productimg b
-		              ON b.pdtSeq = a.pdtSeq
-               LEFT JOIN productreview c
-                      ON c.pdtSeq = a.pdtSeq
-                    JOIN code d
-                      ON d.cdcSeq = a.pdtTypeCd
-                    JOIN code e
-                      ON e.cdcSeq = a.pdtBrandCd
-                    JOIN code f
-                      ON f.cdcSeq = a.pdtAccidentCd
-                    JOIN code g
-                      ON g.cdcSeq = a.pdtColorCd
+    <!-- 사용자 차량조회용 카운팅 -->
+    <select id="selectOneUsrDataCount">
+        SELECT COUNT(*)
+          FROM product a
          WHERE 1 = 1
-               <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
-               <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>		              
-		 GROUP BY a.pdtSeq
-		     , a.pdtTypeCd
-		     , a.pdtBrandCd
-		     , a.pdtName
-		     , a.pdtAccidentCd
-		     , a.pdtYear
-		     , a.pdtMonth
-		     , a.pdtRunKm
-		     , a.pdtColorCd
-		     , a.pdtPrice
-		     , a.pdtRecommendCd
-		       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
-               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
+           AND a.pdtDelNy = 0
+    </select>	
+    
+	<!-- 사용자 차량조회 -->
+	<select id="selectListCarInfo" resultMap="resultMapObj">
+		SELECT * 
+		  FROM (
+				SELECT a.pdtSeq
+				     , a.pdtTypeCd
+				     , d.cdcName xpdtTypeName
+				     , a.pdtBrandCd
+				     , CONCAT('[', e.cdcName, ']') xpdtBrandName
+				     , a.pdtName
+				     , a.pdtAccidentCd
+				     , f.cdcName xpdtAccidentName
+				     , a.pdtYear
+				     , a.pdtMonth
+				     , a.pdtRunKm
+				     , a.pdtColorCd
+				     , g.cdcName xpdtColorName 
+				     , a.pdtPrice
+				     , a.pdtRecommendCd
+				     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
+				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
+		             , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
+		             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount 
+				  FROM product a
+				       LEFT JOIN productimg b
+				              ON b.pdtSeq = a.pdtSeq
+		               LEFT JOIN productreview c
+		                      ON c.pdtSeq = a.pdtSeq
+		                    JOIN code d
+		                      ON d.cdcSeq = a.pdtTypeCd
+		                    JOIN code e
+		                      ON e.cdcSeq = a.pdtBrandCd
+		                    JOIN code f
+		                      ON f.cdcSeq = a.pdtAccidentCd
+		                    JOIN code g
+		                      ON g.cdcSeq = a.pdtColorCd
+		         WHERE 1 = 1
+		           AND a.pdtDelNy = 0
+		               <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
+		               <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>		              
+				 GROUP BY a.pdtSeq
+				     , a.pdtTypeCd
+				     , d.cdcName
+				     , a.pdtBrandCd
+				     , CONCAT('[', e.cdcName, ']')
+				     , a.pdtName
+				     , a.pdtAccidentCd
+				     , f.cdcName
+				     , a.pdtYear
+				     , a.pdtMonth
+				     , a.pdtRunKm
+				     , a.pdtColorCd
+				     , g.cdcName
+				     , a.pdtPrice
+				     , a.pdtRecommendCd
+				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
+		               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
+               ) a
+    	 LIMIT #{pgRowCountUsr}
+    	OFFSET #{pgOffset}                       
+	</select>
+	
+	<!-- 구매내역 -->
+	<select id="selectListSale" resultMap="resultMapObj">
+		SELECT a.mbrSeq
+		     , a.mbrName
+		     , c.pdtSeq
+		     , c.buyDateTime xbuyDateTime
+		     , c.buyPrice pdtPrice
+		     , d.pdtTypeCd
+		     , e.cdcName xpdtTypeName
+		     , d.pdtBrandCd
+		     , CONCAT('[', f.cdcName, ']') xpdtBrandName
+		     , d.pdtName
+		     , d.pdtAccidentCd
+		     , g.cdcName xpdtAccidentName
+		     , d.pdtColorCd
+			 , h.cdcName xpdtColorName 
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
+		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
+			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB
+		  FROM members a
+		       JOIN memberpayment b
+		         ON b.mbrSeq = a.mbrSeq
+		       JOIN productbuy c
+		         ON c.paySeq = c.paySeq
+		       JOIN product d
+		         ON d.pdtSeq = c.pdtSeq
+		       JOIN code e
+		         ON e.cdcSeq = d.pdtTypeCd
+		       JOIN code f
+		         ON f.cdcSeq = d.pdtBrandCd
+		       JOIN code g
+		         ON g.cdcSeq = d.pdtAccidentCd
+		       JOIN code h
+		         ON h.cdcSeq = d.pdtColorCd
+		       JOIN productimg j
+		         ON j.pdtSeq = d.pdtSeq
+		 WHERE 1 = 1
+		   AND a.mbrSeq = #{shSeq}
+		 GROUP BY a.mbrSeq
+		     , a.mbrName
+		     , c.pdtSeq
+		     , c.buyDateTime
+		     , c.buyPrice
+		     , d.pdtTypeCd
+		     , e.cdcName
+		     , d.pdtBrandCd
+		     , CONCAT('[', f.cdcName, ']')
+		     , d.pdtName
+		     , d.pdtAccidentCd
+		     , g.cdcName
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
 	</select>
 	
 	<insert id="insert">

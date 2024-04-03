@@ -12,9 +12,10 @@ public interface ProductDao {
 	
 	public int updateDelNy(ProductDto dto);
 	
-	public int selectOnetDataCount(ProductVo vo);  
-	
+	public int selectOneDataCount(ProductVo vo);  
+	public int selectOneUsrDataCount(ProductVo vo);
 	public List<ProductDto> selectListBrand();
 	
 	public List<ProductDto> selectListCarInfo(ProductVo vo);
+	public List<ProductDto> selectListSale(ProductVo vo);
 }
