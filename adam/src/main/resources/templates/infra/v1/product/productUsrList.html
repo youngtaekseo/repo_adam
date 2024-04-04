@@ -79,7 +79,12 @@
 	                            <div class="content">
 	                                <div class="row">
 										<!-- 체크박스 조건담을 태그 -->
-										<input id="shCheckboxArray" name="shCheckboxArray" type="hidden" />
+										<input id="shCheckboxTypeArray"  name="shCheckboxTypeArray"  type="hidden" />
+										<input id="shCheckboxBrandArray" name="shCheckboxBrandArray" type="hidden" />
+                                       	<!-- 가격전달 태그 -->
+                                       	<input id="shPrice" name="shPrice" type="hidden"/>										
+                                       	<!-- 색상전달 태그 -->
+                                       	<input id="shCheckboxColorArray" name="shCheckboxColorArray" type="hidden"/>										
 										
 	                                    <div class="sidebar-3 sidebar-collection col-lg-3 col-md-4 col-sm-4">
 	                                        <!-- best seller -->
@@ -91,7 +96,8 @@
 														<th:block th:each="list : ${@codeService.selectListCachedCode(3)}">
 															<li>
 		                                                        <label class="check">
-		                                                            <input th:id="'checkboxSeq_'+${list.cdcSeq}" name="checkboxSeq" type="checkbox" th:value="${list.cdcSeq}"
+		                                                            <input th:id="'checkboxSeq_'+${list.cdcSeq}" name="checkboxTypeSeq" type="checkbox" th:value="${list.cdcSeq}"
+		                                                            	th:checked="${list.cdcSeq} == ${vo.shCarType}"
 		                                                            	onclick="fnCheckboxClick()">
 		                                                            <span class="checkmark"></span>
 		                                                        </label>
@@ -106,7 +112,9 @@
 														<th:block th:each="list : ${listBrand}">
 															<li>
 		                                                        <label class="check">
-		                                                            <input th:id="${list.xpdtIdName}" th:name="${list.xpdtIdName}" type="checkbox" th:value="${list.pdtBrandCd}">
+		                                                            <input th:id="'checkboxBrand'+${list.pdtBrandCd}" name="checkboxBrandSeq" type="checkbox" th:value="${list.pdtBrandCd}"
+		                                                            	th:checked="${list.pdtBrandCd} == ${vo.shCarBrand}"
+		                                                            	onclick="fnCheckboxClick()">
 		                                                            <span class="checkmark"></span>
 		                                                        </label>
 		                                                        <label th:for="${list.xpdtIdName}">
@@ -122,20 +130,20 @@
 	                                            <div class="new-item-content">
 	                                                <h3 class="title-product">연식</h3>
 	                                                <div class="d-flex justify-content-lg-center justify-content-md-center">
-	                                                    <select class="form-select">
-	                                                        <option value="">2024년</option>
-	                                                        <option value="">2023년</option>
-	                                                        <option value="">2022년</option>
-	                                                        <option value="">2021년</option>
-	                                                        <option value="">2020년</option>
+	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom">
+	                                                        <option value="2024">2024년</option>
+	                                                        <option value="2023">2023년</option>
+	                                                        <option value="2022">2022년</option>
+	                                                        <option value="2021">2021년</option>
+	                                                        <option value="2020">2020년</option>
 	                                                    </select>
 	                                                    <span style="margin-left: 20px; margin-right: 20px; padding-top: 8px;">~</span>
-	                                                    <select class="form-select">
-	                                                        <option value="">2024년</option>
-	                                                        <option value="">2023년</option>
-	                                                        <option value="">2022년</option>
-	                                                        <option value="">2021년</option>
-	                                                        <option value="">2020년</option>
+	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo">
+	                                                        <option value="2024">2024년</option>
+	                                                        <option value="2023">2023년</option>
+	                                                        <option value="2022">2022년</option>
+	                                                        <option value="2021">2021년</option>
+	                                                        <option value="2020">2020년</option>
 	                                                    </select>                                                                                                                    
 	                                                </div>                                               
 	                                            </div>    
@@ -146,35 +154,35 @@
 	                                                <div>
 	                                                    <div class="row gy-1">
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">5백</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="5000000" onclick="fnClick(this)">5백</button>
 	                                                        </div>
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">1천5백</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="15000000" onclick="fnClick(this)">1천5백</button>
 	                                                        </div>
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">2천</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="20000000" onclick="fnClick(this)">2천</button>
 	                                                        </div>
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">2천5백</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="25000000" onclick="fnClick(this)">2천5백</button>
 	                                                        </div>  
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">3천</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="30000000" onclick="fnClick(this)">3천</button>
 	                                                        </div>  
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">3천5백</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="35000000" onclick="fnClick(this)">3천5백</button>
 	                                                        </div>            
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">4천</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="40000000" onclick="fnClick(this)">4천</button>
 	                                                        </div>  
 	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;">4천5백</button>
+	                                                            <button type="button" class="btn" style="width: 100%;" value="45000000" onclick="fnClick(this)">4천5백</button>
 	                                                        </div>  
 	                                                        <div class="col mt-3">
 	                                                            <div class="input-group mb-3">
-	                                                                <input type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" value="0">
+	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" value="0">
 	                                                                <span class="input-group-text" id="basic-addon2">만원</span>
 	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">~</span>
-	                                                                <input type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" value="0">
+	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" value="0">
 	                                                                <span class="input-group-text" id="basic-addon2">만원</span>                                                                
 	                                                            </div>
 	                                                        </div>                                                                                                                   
@@ -190,7 +198,7 @@
 	                                                        <ul class="scroll-product">
 	                                                            <li>                                                                
 	                                                                <label class="check">
-	                                                                    <input id="checkboxBlack" type="checkbox">
+	                                                                    <input id="checkboxBlack" name="checkboxColorSeq" type="checkbox" onclick="fnCheckboxClick()">
 	                                                                    <span class="checkmark"></span>
 	                                                                    <span>
 	                                                                        <label class="ml-5" for="checkboxBlack" style="border: 1 solid black; height: 20px; width: 20px; background-color: black;"></label>
@@ -200,7 +208,7 @@
 	                                                            </li>
 	                                                            <li>
 	                                                                <label class="check">
-	                                                                    <input id="checkboxWhite" type="checkbox">
+	                                                                    <input id="checkboxWhite" name="checkboxColorSeq" type="checkbox" onclick="fnCheckboxClick()">
 	                                                                    <span class="checkmark"></span>
 	                                                                    <span>
 	                                                                        <label class="ml-5"  for="checkboxWhite" style="border: 1 solid black; height: 20px; width: 20px; background-color: whitesmoke;"></label>
@@ -288,7 +296,7 @@
 	                                                    <div class="page-list col col-xs-12">
 	                                                        <ul>
 																<!-- 이전 블록으로 이동하는 버튼 --> 
-																<li>
+																<!-- <li>
 																	<span th:if="${vo.pgIsPrev == true}">
 																		<a class="previous disabled js-search-link" th:onclick="javascript:fnGoList([[${vo.pgStartPage - 1}]])|">
 																			<svg class="w-4 h-4 fill-current"  data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -311,7 +319,7 @@
 																			</a>
 																		</span>
 																	</li>
-																</th:block>															
+																</th:block> -->															
 	                                                            <!--<li>
 	                                                                <a rel="prev" href="#" class="previous disabled js-search-link">
 	                                                                    이전
@@ -404,17 +412,39 @@
 		// 검색조건 조회		
 		fnCheckboxClick = function() {	
 			// 체크된 항목 저장 변수
+			let checkboxTypeCheckedArray = [];
+			let checkboxBrandCheckedArray = [];
 			let checkboxCheckedArray = [];
 			
-			// 체크된 항목만큼 배열선언
-			let checkboxArr = document.querySelectorAll("input[name='checkboxSeq']");
+			// 차종 체크된 항목만큼 배열선언
+			let checkboxTypeArr = document.querySelectorAll("input[name='checkboxTypeSeq']");
 			
-			for(let i = 0; i < checkboxArr.length; i++) {
-				if(checkboxArr[i].checked) checkboxCheckedArray.push(checkboxArr[i].value);
+			for(let i = 0; i < checkboxTypeArr.length; i++) {
+				if(checkboxTypeArr[i].checked) checkboxTypeCheckedArray.push(checkboxTypeArr[i].value);
 			}
 			
-			document.querySelector("input[name='shCheckboxArray']").value = checkboxCheckedArray;
+			document.querySelector("input[name='shCheckboxTypeArray']").value = checkboxTypeCheckedArray;
 			
+			// 제조사 체크된 항목만큼 배열선언
+			let checkboxBrandArr = document.querySelectorAll("input[name='checkboxBrandSeq']");
+			
+			for(let i = 0; i < checkboxBrandArr.length; i++) {
+				if(checkboxBrandArr[i].checked) checkboxBrandCheckedArray.push(checkboxBrandArr[i].value);
+			}			
+			
+			document.querySelector("input[name='shCheckboxBrandArray']").value = checkboxBrandCheckedArray;
+			
+			// 색상 체크된 항목만큼 배열선언
+			let checkboxColordArr = document.querySelectorAll("input[name='checkboxColorSeq']");
+			
+			for(let i = 0; i < checkboxColordArr.length; i++) {
+				if(checkboxColordArr[i].checked) checkboxCheckedArray.push(checkboxColordArr[i].value);
+			}			
+			
+			document.querySelector("input[name='shCheckboxColorArray']").value = checkboxCheckedArray;
+			
+			
+			// controller 호출
 			fnCallController();
 		}
 		

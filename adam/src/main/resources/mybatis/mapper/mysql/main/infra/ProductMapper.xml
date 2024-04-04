@@ -100,7 +100,6 @@
 	<select id="selectListBrand" resultMap="resultMapObj">
 		SELECT a.pdtBrandCd
              , b.cdcName pdtName
-             , CONCAT('checkbox',a.pdtBrandCd) xpdtId
              , CONCAT('(',COUNT(*),')') xpdtGroupCount
           FROM product a          
                LEFT JOIN code b
@@ -157,14 +156,22 @@
 		                      ON g.cdcSeq = a.pdtColorCd
 		         WHERE 1 = 1
 		           AND a.pdtDelNy = 0
-		               <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
-		               <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
-		               <if test="shCheckboxArray != null">
-		                 AND a.pdtTypeCd IN
-		                 <foreach collection="shCheckboxArray" item="arr" index="idx" open="(" close=")" separator=",">
-			               #{arr[idx]}
-						 </foreach> 		               
-		               </if>		
+		           <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
+		           <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
+		               
+	               <if test="shCheckboxTypeArray != null">
+						AND a.pdtTypeCd IN
+	                 	<foreach collection="shCheckboxTypeArray" item="type" open="(" close=")" separator=",">
+		               		#{type}
+					 	</foreach> 		               
+	               </if>
+		               	
+	               <if test="shCheckboxBrandArray != null">
+	                 	AND a.pdtBrandCd IN
+	                 	<foreach collection="shCheckboxBrandArray" item="brand" open="(" close=")" separator=",">
+		               		#{brand}
+					 	</foreach> 		               
+	               </if>		               	
              
 				 GROUP BY a.pdtSeq
 				     , a.pdtTypeCd

@@ -1,7 +1,5 @@
 package com.ucl.infra.product;
 
-import java.util.Map;
-
 import com.ucl.common.base.BaseVo;
 
 public class ProductVo extends BaseVo {
@@ -20,20 +18,18 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionYearTo;   		// 연식(년) 종료값
 	private Integer shOptionMonthFrom; 		// 연식(월) 시작값
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
+	private Integer shPrice;   				// 판매가액
+	private Integer shPriceFrom;   			// 판매가액 시작값
+	private Integer shPriceTo;   			// 판매가액 종료값
 	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
 	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
-	
-	private String[] shCheckboxArray;
-	private Map<String, Object> shArrMap;
+
+	private String[] shCheckboxTypeArray;  // 차종
+	private String[] shCheckboxBrandArray; // 브랜드
+	private String[] shCheckboxColorArray; // 색상
 	
 //=============================================================================
 
-	public Map<String, Object> getShArrMap() {
-		return shArrMap;
-	}
-	public void setShArrMap(Map<String, Object> shArrMap) {
-		this.shArrMap = shArrMap;
-	}
 	public String getShSeq() {
 		return shSeq;
 	}
@@ -130,10 +126,40 @@ public class ProductVo extends BaseVo {
 	public void setShNewRegNy(Integer shNewRegNy) {
 		this.shNewRegNy = shNewRegNy;
 	}
-	public String[] getShCheckboxArray() {
-		return shCheckboxArray;
+	public String[] getShCheckboxTypeArray() {
+		return shCheckboxTypeArray;
 	}
-	public void setShCheckboxArray(String[] shCheckboxArray) {
-		this.shCheckboxArray = shCheckboxArray;
+	public void setShCheckboxTypeArray(String[] shCheckboxTypeArray) {
+		this.shCheckboxTypeArray = shCheckboxTypeArray;
 	}
+	public String[] getShCheckboxBrandArray() {
+		return shCheckboxBrandArray;
+	}
+	public void setShCheckboxBrandArray(String[] shCheckboxBrandArray) {
+		this.shCheckboxBrandArray = shCheckboxBrandArray;
+	}
+	public Integer getShPrice() {
+		return shPrice;
+	}
+	public void setShPrice(Integer shPrice) {
+		this.shPrice = shPrice;
+	}
+	public Integer getShPriceFrom() {
+		return shPriceFrom;
+	}
+	public void setShPriceFrom(Integer shPriceFrom) {
+		this.shPriceFrom = shPriceFrom;
+	}
+	public Integer getShPriceTo() {
+		return shPriceTo;
+	}
+	public void setShPriceTo(Integer shPriceTo) {
+		this.shPriceTo = shPriceTo;
+	}
+	public String[] getShCheckboxColorArray() {
+		return shCheckboxColorArray;
+	}
+	public void setShCheckboxColorArray(String[] shCheckboxColorArray) {
+		this.shCheckboxColorArray = shCheckboxColorArray;
+	}	
 }
