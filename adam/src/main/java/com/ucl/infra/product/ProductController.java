@@ -141,7 +141,17 @@ public class ProductController {
 
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
-	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model) {
+	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
+		if(vo.getShCheckboxArray() != null) {
+			Map<String, Object> arrMap = new HashMap<String, Object>();
+			for(String arr : vo.getShCheckboxArray()) {
+				arrMap.put("seq", arr);
+				System.out.println("shCheckboxArray: " + arr);
+			}
+			
+			vo.setShArrMap(arrMap);
+		}		
+		
 		int rowCount = service.selectOneUsrDataCount(vo);
 		
 		if(rowCount > 0) {			
@@ -154,9 +164,9 @@ public class ProductController {
 		return Commvar.PATH_PRODUCT + "productUsrList";
 	}
 	
-	// 상세화면
+	// 사용자 상세화면
 	@RequestMapping(value = "/productUsrDetail")
-	public String productUsrDetail(ProductVo vo, Model model) {
+	public String productUsrDetail(ProductVo vo, Model model) throws Exception {
 		model.addAttribute("item", service.selectListCarInfo(vo));
 		
 		ReviewVo reviewVo = new ReviewVo();
@@ -167,9 +177,9 @@ public class ProductController {
 		return Commvar.PATH_PRODUCT + "productUsrDetail";
 	}
 	
-	// 구매내역
+	// 사용자 구매내역
 	@RequestMapping(value = "/productUsrSale")
-	public String productUsrSale(ProductVo vo, Model model, HttpSession httpSession) {
+	public String productUsrSale(ProductVo vo, Model model, HttpSession httpSession) throws Exception {
 		
 		// 로그인 회원순번 설정
 		vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
@@ -180,5 +190,49 @@ public class ProductController {
 		return Commvar.PATH_PRODUCT + "productUsrSale";
 	}
 	
+	// 찜목록
+	@RequestMapping(value = "/productUsrWishlist")
+	public String productUsrWishlist(@ModelAttribute("vo") ProductVo vo, HttpSession httpSession, Model model) throws Exception {
+		// 로그인 회원순번 설정
+		vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		// 자료조회
+		model.addAttribute("list", service.selectListWishList(vo));
+		
+		return Commvar.PATH_PRODUCT + "productUsrWishlist";
+	}
 	
+	// 찜목록 삭제
+	@RequestMapping(value = "/productUsrWishlistDelete")
+	public String productUsrWishlistDelete(ProductVo vo) throws Exception {
+		service.deleteWishList(vo);
+		return "redirect:/productUsrWishlist";
+	}
+	
+	// 찜목록 삭제(ajax)
+	/*
+	 * @RequestMapping(value = "/productUsrWishlistDelete2") public Map<String,
+	 * Object> productUsrWishlistDelete2(ProductVo vo) throws Exception {
+	 * Map<String, Object> returnMap = new HashMap<String, Object>();
+	 * 
+	 * if(service.deleteWishList(vo) == 1) { returnMap.put("rt", "success"); } else
+	 * { returnMap.put("rt", "fail"); }
+	 * 
+	 * return returnMap; }
+	 */
+	
+	// 결제하기
+	/*
+	 * @RequestMapping(value = "/productUsrCheckOut") public String
+	 * productUsrCheckOut(@ModelAttribute("vo") ProductVo vo, HttpSession
+	 * httpSession, Model model) throws Exception { // 로그인 회원순번 설정
+	 * vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
+	 * 
+	 * // 자료조회 model.addAttribute("list", service.selectListWishList(vo));
+	 * 
+	 * // 찜내역 건수 및 합계금액 model.addAttribute("item",
+	 * service.selectOneWisilistCount(vo));
+	 * 
+	 * return Commvar.PATH_PRODUCT + "productUsrCheckOut"; }
+	 */
 }

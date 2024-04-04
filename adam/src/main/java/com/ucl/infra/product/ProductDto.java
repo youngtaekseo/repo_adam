@@ -29,7 +29,8 @@ public class ProductDto {
 	private String xpdtBrandName;
 	private String xpdtAccidentName;
 	private String xpdtColorName;
-	private Date   xbuyDateTime;
+	private Date   xDateTime;
+	private String xwshSeq;
 	
 	//=============================================================================
 	
@@ -182,11 +183,16 @@ public class ProductDto {
 	}
 	public void setXpdtColorName(String xpdtColorName) {
 		this.xpdtColorName = xpdtColorName;
-	}	
-	public Date getXbuyDateTime() {
-		return xbuyDateTime;
+	}		public Date getxDateTime() {
+		return xDateTime;
 	}
-	public void setXbuyDateTime(Date xbuyDateTime) {
-		this.xbuyDateTime = xbuyDateTime;
+	public void setxDateTime(Date xDateTime) {
+		this.xDateTime = xDateTime;
+	}
+	public String getXwshSeq() {
+		return xwshSeq;
+	}
+	public void setXwshSeq(String xwshSeq) {
+		this.xwshSeq = xwshSeq;
 	}
 }

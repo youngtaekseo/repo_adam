@@ -1,5 +1,7 @@
 package com.ucl.infra.product;
 
+import java.util.Map;
+
 import com.ucl.common.base.BaseVo;
 
 public class ProductVo extends BaseVo {
@@ -21,8 +23,17 @@ public class ProductVo extends BaseVo {
 	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
 	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
 	
-//=============================================================================
+	private String[] shCheckboxArray;
+	private Map<String, Object> shArrMap;
 	
+//=============================================================================
+
+	public Map<String, Object> getShArrMap() {
+		return shArrMap;
+	}
+	public void setShArrMap(Map<String, Object> shArrMap) {
+		this.shArrMap = shArrMap;
+	}
 	public String getShSeq() {
 		return shSeq;
 	}
@@ -118,5 +129,11 @@ public class ProductVo extends BaseVo {
 	}
 	public void setShNewRegNy(Integer shNewRegNy) {
 		this.shNewRegNy = shNewRegNy;
+	}
+	public String[] getShCheckboxArray() {
+		return shCheckboxArray;
+	}
+	public void setShCheckboxArray(String[] shCheckboxArray) {
+		this.shCheckboxArray = shCheckboxArray;
 	}
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ucl.infra.checkout.CheckOutDao">
+
+	<resultMap id="resultMapObj" type="com.ucl.infra.checkout.CheckOutDto"></resultMap>
+	
+	<!-- 찜내역 공통 쿼리 -->
+	<sql id="selectCommonProductSelect">
+		SELECT a.mbrSeq
+		     , a.mbrName
+		     , d.pdtTypeCd
+		     , e.cdcName xpdtTypeName
+		     , d.pdtBrandCd
+		     , CONCAT('[', f.cdcName, ']') xpdtBrandName
+		     , d.pdtName
+		     , d.pdtAccidentCd
+		     , g.cdcName xpdtAccidentName
+		     , d.pdtColorCd
+			 , h.cdcName xpdtColorName 
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
+		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
+			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB	
+	</sql>
+	
+	<sql id="selectCommonProductFrom">
+		       JOIN code e
+		         ON e.cdcSeq = d.pdtTypeCd
+		       JOIN code f
+		         ON f.cdcSeq = d.pdtBrandCd
+		       JOIN code g
+		         ON g.cdcSeq = d.pdtAccidentCd
+		       JOIN code h
+		         ON h.cdcSeq = d.pdtColorCd
+		       JOIN productimg j
+		         ON j.pdtSeq = d.pdtSeq
+	</sql>
+	
+	<sql id="selectCommonProductGroup">
+		     , d.pdtTypeCd
+		     , e.cdcName
+		     , d.pdtBrandCd
+		     , CONCAT('[', f.cdcName, ']')
+		     , d.pdtName
+		     , d.pdtAccidentCd
+		     , g.cdcName
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
+	</sql>
+	
+	<!-- 찜내역 공통 쿼리 끝 -->
+	
+	<!-- 찜 내역 -->
+	<select id="selectListWishList" resultMap="resultMapObj">
+		<include refid="selectCommonProductSelect"/>
+		     , b.wshSeq xwshSeq
+		     , b.wshDt xDateTime
+		  FROM members a
+		       JOIN productwishlist b
+		         ON b.mbrSeq = a.mbrSeq
+		        AND b.wshDelNy = 0 
+		       JOIN product d
+		         ON d.pdtSeq = b.pdtSeq
+		        AND d.pdtDelNy = 0
+		       <include refid="selectCommonProductFrom"/>
+		 WHERE 1 = 1
+		   AND a.mbrSeq = #{shSeq}
+		 GROUP BY a.mbrSeq
+		     , a.mbrName
+		     , b.wshSeq
+		     , b.wshDt
+		     , d.pdtPrice
+		       <include refid="selectCommonProductGroup"/>
+	</select>
+	
+	<!-- 찜내역 건수 및 합계금액 -->
+	<select id="selectOneWisilistCount" resultMap="resultMapObj">
+		SELECT COUNT(*) xpdtCount
+		     , SUM(b.pdtPrice) pdtPrice
+		  FROM productwishlist a
+		       JOIN product b
+		         ON b.pdtSeq = a.pdtSeq
+		 WHERE 1 = 1
+		   AND a.mbrSeq = #{shSeq}
+		   AND a.wshDelNy = 0		   
+	</select>
+	
+	<!-- 찜 내역 삭제 -->
+	<delete id="deleteWishList">
+		DELETE
+		  FROM productwishlist
+		 WHERE 1 = 1
+		   AND wshSeq = #{shSeq}
+	</delete>	
+
+</mapper>

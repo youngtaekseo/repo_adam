@@ -45,8 +45,6 @@ public class CodeService {
 	// @PostConstruct : 서버가 구동되면 자동적으로 실행되는 어노테이션
     @PostConstruct
 	public void selectListCachedCodeArrayList() throws Exception {
-//		List<CodeDto> codeListFromDb = dao.selectListCachedCodeArrayList();
-//		codeListFromDb = (ArrayList<Code>) dao.selectListCachedCodeArrayList();
 		CodeDto.cachedCodeArrayList.clear(); 
 		CodeDto.cachedCodeArrayList.addAll(dao.selectListCachedCodeArrayList());
 		System.out.println("cachedCodeArrayList: " + CodeDto.cachedCodeArrayList.size() + " chached !");
