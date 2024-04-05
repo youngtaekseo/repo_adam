@@ -139,12 +139,21 @@
 	                                                                                </div>
 	                                                                            </div>
 	                                                                        </div>
-	                                                                        <!-- 찜 저장 -->
-	                                                                        <div class="product-buttons d-flex justify-content-center">
-	                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
-	                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
-	                                                                            </a>
-	                                                                        </div>
+	                                                                        
+																			<!-- 찜추가 -->
+			                                                                <div class="product-buttons d-flex justify-content-center">
+			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+			                                                                        <input th:name="'wishlistBest'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+			                                                                        
+			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
+			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
+			                                                                        
+			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="#" data-rel="1" th:onclick="fnClickWishlistBest(this)">
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
+			                                                                        </a>
+			                                                                    </form>
+			                                                                </div>	                                                                        
 	                                                                    </div>
 	                                                                </div>
                                                             	</div>
@@ -204,12 +213,20 @@
 	                                                                            </div>
 	                                                                        </div>
 	                                                                        
-	                                                                        <!-- 찜 저장 -->
-	                                                                        <div class="product-buttons d-flex justify-content-center">
-	                                                                            <a class="addToWishlist" href="#" data-rel="1" onclick="">
-	                                                                                <i class="fa fa-heart" aria-hidden="true"></i>
-	                                                                            </a>
-	                                                                        </div>
+	                                                                        <!-- 찜추가 -->
+			                                                                <div class="product-buttons d-flex justify-content-center">
+			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+			                                                                        <input th:name="'wishlistNew'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+			                                                                        
+			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
+			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
+			                                                                        
+			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="#" data-rel="1" th:onclick="fnClickWishlistNew(this)">
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
+			                                                                        </a>
+			                                                                    </form>
+			                                                                </div>	
 	                                                                    </div>
 	                                                                </div>
 	                                                            </div>
@@ -250,6 +267,100 @@
 
     <!-- Template JS -->
     <script src="usr/js/theme.js"></script>
+    
+    <script type="text/javascript">
+// ============================================================================
+// 변수선언
+// ============================================================================
+	
+// ============================================================================
+// 이벤트
+// ============================================================================    
+		// 찜클릭(추천차량)
+		fnClickWishlistBest = function(obj) {
+			// 제품순번
+			let wishlist = document.querySelector("input[name="+obj.name+"]");
+			let pdtSeq   = wishlist.value;
+			let heart    = document.querySelector("i[name="+obj.name+"]");
+			
+			// 찜순번
+			let wishlistWshSeq = document.querySelector("input[name="+obj.name+"_]");
+			let wshSeq         = wishlistWshSeq.value;
+			
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"pdtSeq":pdtSeq, "wshSeq":wshSeq}
+				, url: "/insertWishlist"
+				, success: function(response) {
+					if(response.rt == "success") {
+						alert("찜 등록 성공");
+						heart.setAttribute("style", "color:pink;");
+						wishlistWshSeq.setAttribute("value", response.wshSeq);
+					} else if(response.rt == "fail") {
+						alert("찜 등록시 오류가 있습니다");
+					} else if(response.rt == "exist") {
+						alert("찜 등록 취소");
+						wishlistWshSeq.setAttribute("value", "x");
+						heart.setAttribute("style", "");
+					}
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+		
+		// 찜클릭(최근등록차량)
+		fnClickWishlistNew = function(obj) {
+			// 제품순번
+			let wishlist = document.querySelector("input[name="+obj.name+"]");
+			let pdtSeq   = wishlist.value;
+			let heart    = document.querySelector("i[name="+obj.name+"]");
+			
+			// 찜순번
+			let wishlistWshSeq = document.querySelector("input[name="+obj.name+"_]");
+			let wshSeq         = wishlistWshSeq.value;
+			
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"pdtSeq":pdtSeq, "wshSeq":wshSeq}
+				, url: "/insertWishlist"
+				, success: function(response) {
+					if(response.rt == "success") {
+						alert("찜 등록 성공");
+						heart.setAttribute("style", "color:pink;");
+						wishlistWshSeq.setAttribute("value", response.wshSeq);
+					} else if(response.rt == "fail") {
+						alert("찜 등록시 오류가 있습니다");
+					} else if(response.rt == "exist") {
+						alert("찜 등록 취소");
+						wishlistWshSeq.setAttribute("value", "x");
+						heart.setAttribute("style", "");
+					}
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+		
+// ============================================================================
+// function
+// ============================================================================
+
+		// controller 호출
+		fnCallController = function() {
+			// 조회
+	       	form.action = goUrlUsrList;
+	       	form.submit(); 
+		};
+				
+	</script>		
+		    
 </body>
 
 

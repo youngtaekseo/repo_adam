@@ -12,5 +12,5 @@ public class WishlistVo extends BaseVo {
 	}
 	public void setShSeq(String shSeq) {
 		this.shSeq = shSeq;
-	}
+	}	
 }

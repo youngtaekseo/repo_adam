@@ -140,7 +140,11 @@
 				     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
 				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
 		             , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
-		             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount 
+		             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount
+		               <choose>
+		               		<when test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq xwshSeq</when>
+		             		<otherwise>, null xwshSeq</otherwise>
+		               </choose>
 				  FROM product a
 				       LEFT JOIN productimg b
 				              ON b.pdtSeq = a.pdtSeq
@@ -154,6 +158,12 @@
 		                      ON f.cdcSeq = a.pdtAccidentCd
 		                    JOIN code g
 		                      ON g.cdcSeq = a.pdtColorCd
+		                      
+					   <if test="shMbrSeq != null and !shMbrSeq.equals('')">
+		               LEFT JOIN productWishlist h
+		                      ON h.pdtSeq = a.pdtSeq
+		                     AND h.mbrSeq = #{shMbrSeq}					   
+					   </if>
 		         WHERE 1 = 1
 		           AND a.pdtDelNy = 0
 				   <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
@@ -208,6 +218,7 @@
 				     , g.cdcName
 				     , a.pdtPrice
 				     , a.pdtRecommendCd
+				       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
 				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
 		               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
                ) a

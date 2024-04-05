@@ -9,6 +9,8 @@ import com.ucl.common.constants.Commvar;
 import com.ucl.infra.product.ProductService;
 import com.ucl.infra.product.ProductVo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class IndexController {
 	
@@ -29,7 +31,10 @@ public class IndexController {
 	
 	// 사용자메인
 	@RequestMapping(value = "/indexUsr")
-	public String indexUsr(ProductVo vo, Model model) throws Exception {
+	public String indexUsr(ProductVo vo, Model model, HttpSession httpSession) throws Exception {
+		// 로그인 회원순번 설정
+		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
 		// 추천차량
 		vo.setShNewRegNy(0);
 		vo.setShRecommend(17);

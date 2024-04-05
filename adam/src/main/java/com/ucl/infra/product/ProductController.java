@@ -140,7 +140,7 @@ public class ProductController {
 
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
-	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
+	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) throws Exception {
 
 		// 현재년도
 		if(vo.getShFromYear() == null) {			
@@ -151,6 +151,9 @@ public class ProductController {
 		if(vo.getShToYear() == null) {	
 			vo.setShToYear(vo.getShFromYear() - vo.getShRange());
 		}
+		
+		// 로그인 회원순번 설정
+		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
 		// 전체자료건수
 		int rowCount = service.selectOneUsrDataCount(vo);
@@ -209,32 +212,4 @@ public class ProductController {
 		wishlistService.deleteWishlist(wvo);
 		return "redirect:/productUsrWishlist";
 	}
-	 
-
-	// 찜목록 삭제(ajax)
-	/*
-	 * @RequestMapping(value = "/productUsrWishlistDelete2") public Map<String,
-	 * Object> productUsrWishlistDelete2(ProductVo vo) throws Exception {
-	 * Map<String, Object> returnMap = new HashMap<String, Object>();
-	 * 
-	 * if(service.deleteWishList(vo) == 1) { returnMap.put("rt", "success"); } else
-	 * { returnMap.put("rt", "fail"); }
-	 * 
-	 * return returnMap; }
-	 */
-
-	// 결제하기
-	/*
-	 * @RequestMapping(value = "/productUsrCheckOut") public String
-	 * productUsrCheckOut(@ModelAttribute("vo") ProductVo vo, HttpSession
-	 * httpSession, Model model) throws Exception { // 로그인 회원순번 설정
-	 * vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
-	 * 
-	 * // 자료조회 model.addAttribute("list", service.selectListWishList(vo));
-	 * 
-	 * // 찜내역 건수 및 합계금액 model.addAttribute("item",
-	 * service.selectOneWisilistCount(vo));
-	 * 
-	 * return Commvar.PATH_PRODUCT + "productUsrCheckOut"; }
-	 */
 }

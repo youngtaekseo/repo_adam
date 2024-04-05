@@ -10,7 +10,7 @@ public class WishlistService {
 	WishlistDao dao;
 	
 	// 등록여부확인
-	public int selectOneCount(WishlistDto dto) {
+	public WishlistDto selectOneCount(WishlistDto dto) {
 		return dao.selectOneCount(dto);
 	}
 		

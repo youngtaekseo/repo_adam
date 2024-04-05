@@ -275,9 +275,14 @@
 		                                                                <!-- 찜추가 -->
 		                                                                <div class="product-buttons d-flex justify-content-center">
 		                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-		                                                                        <input th:id="'wishlist'+${list.pdtSeq}" th:name="'wishlist'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+		                                                                        <input th:name="'wishlist'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+		                                                                        
+		                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
+		                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
+		                                                                        
 		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="#" data-rel="1" th:onclick="fnClickWishlist(this)">
-		                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
+		                                                                            <i th:if="${list.xwshSeq != null}"     th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
 		                                                                        </a>
 		                                                                    </form>
 		                                                                </div>
@@ -477,27 +482,38 @@
 		
 		// 찜클릭
 		fnClickWishlist = function(obj) {
+			// 제품순번
 			let wishlist = document.querySelector("input[name="+obj.name+"]");
-			let pdtSeq = wishlist.value;
+			let pdtSeq   = wishlist.value;
+			let heart    = document.querySelector("i[name="+obj.name+"]");
+			
+			// 찜순번
+			let wishlistWshSeq = document.querySelector("input[name="+obj.name+"_]");
+			let wshSeq         = wishlistWshSeq.value;
 			
 			$.ajax({
 				async: true
 				, cache: false
 				, type: "post"
-				, data: {"pdtSeq":pdtSeq}
+				, data: {"pdtSeq":pdtSeq, "wshSeq":wshSeq}
 				, url: "/insertWishlist"
 				, success: function(response) {
 					if(response.rt == "success") {
 						alert("찜 등록 성공");
+						heart.setAttribute("style", "color:pink;");
+						wishlistWshSeq.setAttribute("value", response.wshSeq);
 					} else if(response.rt == "fail") {
 						alert("찜 등록시 오류가 있습니다");
+					} else if(response.rt == "exist") {
+						alert("찜 등록 취소");
+						wishlistWshSeq.setAttribute("value", "x");
+						heart.setAttribute("style", "");
 					}
 				}
 				, error : function(jqXHR, textStatus, errorThrown){
 					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}
 			});
-			
 		}
 		
 // ============================================================================

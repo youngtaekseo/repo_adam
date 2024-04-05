@@ -19,21 +19,29 @@ public class WishlistController {
 	// 찜 등록
 	@ResponseBody
 	@RequestMapping(value = "/insertWishlist")
-	public Map<String, Object> insertWishlist(WishlistDto dto, HttpSession httpSession) {
+	public Map<String, Object> insertWishlist(WishlistVo vo, WishlistDto dto, HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		// 로그인 사용자 순번 설정
 		dto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
 		// 등록여부 확인
-		if(service.selectOneCount(dto) == 0) {
+		String result = dto.getWshSeq();
+		
+		if(result.equals("x")) {
 			if(service.insertWishlist(dto) == 1) {
 				returnMap.put("rt", "success");
+				returnMap.put("wshSeq", dto.getWshSeq());
 			} else {
 				returnMap.put("rt", "fail");
 			}
 		} else {
-			returnMap.put("rt", "exist");
+			vo.setShSeq(result);
+			if(service.deleteWishlist(vo) == 1) {
+				returnMap.put("rt", "exist");
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		}
 		
 		return returnMap;

@@ -23,6 +23,7 @@ public class ProductVo extends BaseVo {
 	private Integer shPriceTo;   			// 판매가액 종료값
 	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
 	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
+	private String  shMbrSeq;               // 회원순번
 
 	private String[] shCheckboxTypeArray;  // 차종
 	private String[] shCheckboxBrandArray; // 브랜드
@@ -184,4 +185,10 @@ public class ProductVo extends BaseVo {
 	public void setShRange(Integer shRange) {
 		this.shRange = shRange;
 	}
+	public String getShMbrSeq() {
+		return shMbrSeq;
+	}
+	public void setShMbrSeq(String shMbrSeq) {
+		this.shMbrSeq = shMbrSeq;
+	}	
 }
