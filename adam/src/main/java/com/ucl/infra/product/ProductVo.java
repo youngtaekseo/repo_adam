@@ -28,6 +28,10 @@ public class ProductVo extends BaseVo {
 	private String[] shCheckboxBrandArray; // 브랜드
 	private String[] shCheckboxColorArray; // 색상
 	
+	private Integer shFromYear;  // 현재년도
+	private Integer shToYear;    // 현재년도 - shRange 결과 년도
+	private Integer shRange = 20; // 현재년도 이전 몇년까지 표시할것이가 : 예) 2024 - 3 하면 2024, 2023, 2022
+	
 //=============================================================================
 
 	public String getShSeq() {
@@ -161,5 +165,23 @@ public class ProductVo extends BaseVo {
 	}
 	public void setShCheckboxColorArray(String[] shCheckboxColorArray) {
 		this.shCheckboxColorArray = shCheckboxColorArray;
-	}	
+	}
+	public Integer getShFromYear() {
+		return shFromYear;
+	}
+	public void setShFromYear(Integer shFromYear) {
+		this.shFromYear = shFromYear;
+	}
+	public Integer getShToYear() {
+		return shToYear;
+	}
+	public void setShToYear(Integer shToYear) {
+		this.shToYear = shToYear;
+	}
+	public Integer getShRange() {
+		return shRange;
+	}
+	public void setShRange(Integer shRange) {
+		this.shRange = shRange;
+	}
 }

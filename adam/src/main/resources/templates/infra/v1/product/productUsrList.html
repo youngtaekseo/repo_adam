@@ -79,11 +79,11 @@
 	                            <div class="content">
 	                                <div class="row">
 										<!-- 체크박스 조건담을 태그 -->
+										<!-- 차종 -->
 										<input id="shCheckboxTypeArray"  name="shCheckboxTypeArray"  type="hidden" />
+										<!-- 제조사 -->
 										<input id="shCheckboxBrandArray" name="shCheckboxBrandArray" type="hidden" />
-                                       	<!-- 가격전달 태그 -->
-                                       	<input id="shPrice" name="shPrice" type="hidden"/>										
-                                       	<!-- 색상전달 태그 -->
+                                       	<!-- 색상전 -->
                                        	<input id="shCheckboxColorArray" name="shCheckboxColorArray" type="hidden"/>										
 										
 	                                    <div class="sidebar-3 sidebar-collection col-lg-3 col-md-4 col-sm-4">
@@ -106,6 +106,7 @@
 														</th:block>
 	                                                </ul>
 	                                            </div>
+	                                            
 	                                            <div class="new-item-content">
 	                                                <h3 class="title-product">제조사</h3>
 	                                                <ul class="scroll-product">
@@ -130,20 +131,18 @@
 	                                            <div class="new-item-content">
 	                                                <h3 class="title-product">연식</h3>
 	                                                <div class="d-flex justify-content-lg-center justify-content-md-center">
-	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom">
-	                                                        <option value="2024">2024년</option>
-	                                                        <option value="2023">2023년</option>
-	                                                        <option value="2022">2022년</option>
-	                                                        <option value="2021">2021년</option>
-	                                                        <option value="2020">2020년</option>
+	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom" onchange="fhChange(this)">
+	                                                        <option value="" th:selected="${vo.shOptionYearFrom == null}">시작</option>
+	                                                        <th:block th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
+																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearFrom)}"></option>
+															</th:block>
 	                                                    </select>
 	                                                    <span style="margin-left: 20px; margin-right: 20px; padding-top: 8px;">~</span>
-	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo">
-	                                                        <option value="2024">2024년</option>
-	                                                        <option value="2023">2023년</option>
-	                                                        <option value="2022">2022년</option>
-	                                                        <option value="2021">2021년</option>
-	                                                        <option value="2020">2020년</option>
+	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo" onchange="fhChange(this)">
+															<option value="" th:selected="${vo.shOptionYearTo == null}">종료</option>
+															<th:block th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
+																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearTo)}"></option>
+															</th:block>
 	                                                    </select>                                                                                                                    
 	                                                </div>                                               
 	                                            </div>    
@@ -151,7 +150,6 @@
 	                                            <!-- 가격 -->
 	                                            <div>
 	                                                <h3 class="title-product">가격</h3>
-	                                                <div>
 	                                                    <div class="row gy-1">
 	                                                        <div class="col">
 	                                                            <button type="button" class="btn" style="width: 100%;" value="5000000" onclick="fnClick(this)">5백</button>
@@ -179,15 +177,17 @@
 	                                                        </div>  
 	                                                        <div class="col mt-3">
 	                                                            <div class="input-group mb-3">
-	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" value="0">
+	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" value="0">
 	                                                                <span class="input-group-text" id="basic-addon2">만원</span>
-	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">~</span>
-	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" value="0">
-	                                                                <span class="input-group-text" id="basic-addon2">만원</span>                                                                
+	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
+	                                                            </div>
+	                                                            <div class="input-group mb-3">
+	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" value="0">
+	                                                                <span class="input-group-text" id="basic-addon2">만원</span>                           
+	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
 	                                                            </div>
 	                                                        </div>                                                                                                                   
 	                                                    </div>
-	                                                </div>                                              
 	                                            </div>                                           
 	
 	                                            <!-- 색상 -->
@@ -196,26 +196,27 @@
 	                                                    <h3 class="title-product">색상</h3>
 	                                                    <div class="sidebar-block">
 	                                                        <ul class="scroll-product">
-	                                                            <li>                                                                
-	                                                                <label class="check">
-	                                                                    <input id="checkboxBlack" name="checkboxColorSeq" type="checkbox" onclick="fnCheckboxClick()">
-	                                                                    <span class="checkmark"></span>
-	                                                                    <span>
-	                                                                        <label class="ml-5" for="checkboxBlack" style="border: 1 solid black; height: 20px; width: 20px; background-color: black;"></label>
-	                                                                        검정색
-	                                                                    </span>
-	                                                                </label>
-	                                                            </li>
-	                                                            <li>
-	                                                                <label class="check">
-	                                                                    <input id="checkboxWhite" name="checkboxColorSeq" type="checkbox" onclick="fnCheckboxClick()">
-	                                                                    <span class="checkmark"></span>
-	                                                                    <span>
-	                                                                        <label class="ml-5"  for="checkboxWhite" style="border: 1 solid black; height: 20px; width: 20px; background-color: whitesmoke;"></label>
-	                                                                        흰색
-	                                                                    </span>
-	                                                                </label>
-	                                                            </li>
+																<th:block th:each="list : ${@codeService.selectListCachedCode(5)}">
+		                                                            <li>          
+																		<label class="check">
+		                                                                    <input th:id="'checkboxColor'+${list.cdcSeq}" name="checkboxColorSeq" type="checkbox" th:value="${list.cdcSeq}" onclick="fnCheckboxClick()"/>
+		                                                                    <span class="checkmark"></span>
+																			
+																			<th:block th:switch="${list.cdcSeq}">
+			                                                                    <span th:case="10">
+			                                                                        <label class="ml-5" th:for="'checkboxColor'+${list.cdcSeq}" style="border: 1 solid black; height: 20px; width: 20px; background-color: black;"></label>
+			                                                                    </span>
+			                                                                    <span th:case="11">
+			                                                                        <label class="ml-5" th:for="'checkboxColor'+${list.cdcSeq}" style="border: 1 solid black; height: 20px; width: 20px; background-color: whitesmoke;"></label>
+			                                                                    </span>
+																			</th:block>
+																			
+		                                                                    <span>
+		                                                                        <b th:text="${list.cdcName}"></b>
+																			</span>
+		                                                                </label>
+		                                                            </li>
+																</th:block>
 	                                                        </ul>                                                    
 	                                                    </div> 
 	                                                </div>                                             
@@ -274,7 +275,8 @@
 		                                                                <!-- 찜추가 -->
 		                                                                <div class="product-buttons d-flex justify-content-center">
 		                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-		                                                                        <a class="addToWishlist" href="#" data-rel="1" onclick="">
+		                                                                        <input th:id="'wishlist'+${list.pdtSeq}" th:name="'wishlist'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="#" data-rel="1" th:onclick="fnClickWishlist(this)">
 		                                                                            <i class="fa fa-heart" aria-hidden="true"></i>
 		                                                                        </a>
 		                                                                    </form>
@@ -409,43 +411,93 @@
 // ============================================================================
 // 이벤트
 // ============================================================================
-		// 검색조건 조회		
+		// 차종, 제조사 클릭		
 		fnCheckboxClick = function() {	
 			// 체크된 항목 저장 변수
-			let checkboxTypeCheckedArray = [];
-			let checkboxBrandCheckedArray = [];
-			let checkboxCheckedArray = [];
+			let checkboxTypeCheckedArray  = []; // 차종
+			let checkboxBrandCheckedArray = []; // 제조사
+			let checkboxCheckedArray      = []; // 색상
 			
 			// 차종 체크된 항목만큼 배열선언
 			let checkboxTypeArr = document.querySelectorAll("input[name='checkboxTypeSeq']");
-			
 			for(let i = 0; i < checkboxTypeArr.length; i++) {
 				if(checkboxTypeArr[i].checked) checkboxTypeCheckedArray.push(checkboxTypeArr[i].value);
 			}
-			
+			// 차종 체크된값 저장
 			document.querySelector("input[name='shCheckboxTypeArray']").value = checkboxTypeCheckedArray;
 			
 			// 제조사 체크된 항목만큼 배열선언
 			let checkboxBrandArr = document.querySelectorAll("input[name='checkboxBrandSeq']");
-			
 			for(let i = 0; i < checkboxBrandArr.length; i++) {
 				if(checkboxBrandArr[i].checked) checkboxBrandCheckedArray.push(checkboxBrandArr[i].value);
 			}			
-			
+			// 제조사 체크된값 저장
 			document.querySelector("input[name='shCheckboxBrandArray']").value = checkboxBrandCheckedArray;
 			
 			// 색상 체크된 항목만큼 배열선언
 			let checkboxColordArr = document.querySelectorAll("input[name='checkboxColorSeq']");
-			
 			for(let i = 0; i < checkboxColordArr.length; i++) {
 				if(checkboxColordArr[i].checked) checkboxCheckedArray.push(checkboxColordArr[i].value);
 			}			
-			
+			// 색상 체크된값 저장
 			document.querySelector("input[name='shCheckboxColorArray']").value = checkboxCheckedArray;
-			
 			
 			// controller 호출
 			fnCallController();
+		}
+		
+		// 금액클릭
+		fnClick = function(obj) {
+			$("#shPriceFrom").val(obj.value);
+			$("#shPriceTo").val(obj.value);
+			
+			// controller 호출
+			fnCallController();
+		}
+		
+		// 연식클릭
+		fhChange = function(obj) {
+			if(obj.name == "shOptionYearFrom") {				
+				let value = $("#shOptionYearFrom option:selected").val();
+				console.log(value);
+				$("#shOptionYearTo").val(value);
+			};
+			
+			let valueFrom = $("#shOptionYearFrom option:selected").val();
+			let valueTo   = $("#shOptionYearTo option:selected").val();
+			
+			if(valueFrom > valueTo) {
+				alert("종료 연식이 시작 연식 보다 작을 수 없습니다");
+				$("#shOptionYearTo").val(valueFrom);
+			} {
+				// controller 호출
+				fnCallController();	
+			}
+		}
+		
+		// 찜클릭
+		fnClickWishlist = function(obj) {
+			let wishlist = document.querySelector("input[name="+obj.name+"]");
+			let pdtSeq = wishlist.value;
+			
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"pdtSeq":pdtSeq}
+				, url: "/insertWishlist"
+				, success: function(response) {
+					if(response.rt == "success") {
+						alert("찜 등록 성공");
+					} else if(response.rt == "fail") {
+						alert("찜 등록시 오류가 있습니다");
+					}
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+			
 		}
 		
 // ============================================================================
@@ -462,6 +514,4 @@
 	</script>
 </body>
 
-
-<!-- product-grid-sidebar-left10:55-->
 </html>

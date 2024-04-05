@@ -72,9 +72,9 @@ public class ProductService {
 	}
 	
 	// 찜삭제
-	public int deleteWishList(ProductVo vo) {
-		return dao.deleteWishList(vo);
-	}
+	/*
+	 * public int deleteWishList(ProductVo vo) { return dao.deleteWishList(vo); }
+	 */
 	
 	// 찜내역 건수 및 합계금액
 	public ProductDto selectOneWisilistCount(ProductVo vo) {

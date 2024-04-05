@@ -153,4 +153,11 @@ public class UtilDateTime {
 		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy"));
 		return localDateTimeString;
 	}	
+	
+	// 리턴값 : 현재년도
+	public static Integer nowYearInteger() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		Integer localDateTimeInteger = localDateTime.getYear();
+		return localDateTimeInteger;
+	}
 }

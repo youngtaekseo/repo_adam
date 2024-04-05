@@ -156,23 +156,43 @@
 		                      ON g.cdcSeq = a.pdtColorCd
 		         WHERE 1 = 1
 		           AND a.pdtDelNy = 0
-		           <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
+				   <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
 		           <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
 		               
-	               <if test="shCheckboxTypeArray != null">
+		           <!-- 차종 -->
+	               <if test="shCheckboxTypeArray != null and shCheckboxTypeArray.length != 0">
 						AND a.pdtTypeCd IN
 	                 	<foreach collection="shCheckboxTypeArray" item="type" open="(" close=")" separator=",">
 		               		#{type}
 					 	</foreach> 		               
 	               </if>
 		               	
-	               <if test="shCheckboxBrandArray != null">
+		           <!-- 제조사 -->
+	               <if test="shCheckboxBrandArray != null and shCheckboxBrandArray.length != 0">
 	                 	AND a.pdtBrandCd IN
 	                 	<foreach collection="shCheckboxBrandArray" item="brand" open="(" close=")" separator=",">
 		               		#{brand}
 					 	</foreach> 		               
-	               </if>		               	
+	               </if>	
+	               
+	               <!-- 색상 -->
+	               <if test="shCheckboxColorArray != null and shCheckboxColorArray.length != 0">
+	               		AND a.pdtColorCd IN
+	               		<foreach collection="shCheckboxColorArray" item="color" open="(" close=")" separator=",">
+	               			#{color}
+	               		</foreach>
+	               </if>	
              
+             	   <!-- 연식 -->
+		           <if test="shOptionYearFrom != null and !shOptionYearFrom.equals('') and shOptionYearTo != null and !shOptionYearTo.equals('')">
+		           		AND a.pdtYear BETWEEN #{shOptionYearFrom} AND #{shOptionYearTo}
+		           </if>
+		           
+		           <!-- 판매가액 -->
+		           <if test="shPriceFrom != null and shPriceFrom != 0 and shPriceTo != null and shPriceTo != 0">
+		           		AND a.pdtPrice BETWEEN #{shPriceFrom} AND #{shPriceTo}
+		           </if>
+		           
 				 GROUP BY a.pdtSeq
 				     , a.pdtTypeCd
 				     , d.cdcName
@@ -305,13 +325,14 @@
 	</select>
 	
 	<!-- 찜 내역 삭제 -->
-	<delete id="deleteWishList">
+<!--	<delete id="deleteWishList">
 		DELETE
 		  FROM productwishlist
 		 WHERE 1 = 1
 		   AND wshSeq = #{shSeq}
-	</delete>
+	</delete>-->
 	
+	<!-- 제품등록 -->
 	<insert id="insert">
 		INSERT INTO product
 			( 

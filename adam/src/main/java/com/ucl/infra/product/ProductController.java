@@ -13,9 +13,12 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilDateTime;
 import com.ucl.common.util.UtilFunction;
 import com.ucl.infra.review.ReviewService;
 import com.ucl.infra.review.ReviewVo;
+import com.ucl.infra.wishlist.WishlistService;
+import com.ucl.infra.wishlist.WishlistVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,13 +27,13 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
-
+	
 	@Autowired
 	ReviewService reviewService;
-
-	/*
-	 * @Autowired ReviewVo reviewVo;
-	 */
+	
+	@Autowired
+	WishlistService wishlistService;
+	
 
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
@@ -138,24 +141,16 @@ public class ProductController {
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
 	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
-		System.out.println("==============================================================================");
-		if(vo.getShCheckboxTypeArray() != null) {
-			for(String arr : vo.getShCheckboxTypeArray()) {
-				System.out.println("vo.getShCheckboxTypeArray(): ----->>>>>" + arr + "<<<<<-----");
-			}			
-		} else {
-			vo.setShCheckboxTypeArray(null);
-		}
 
-		if(vo.getShCheckboxBrandArray() != null) {			
-			for(String arr : vo.getShCheckboxBrandArray()) {
-				System.out.println("vo.getShCheckboxBrandArray(): ----->>>>>" + arr + "<<<<<-----");
-			}		
-		} else {
-			vo.setShCheckboxBrandArray(null);
+		// 현재년도
+		if(vo.getShFromYear() == null) {			
+			vo.setShFromYear(UtilDateTime.nowYearInteger());
 		}
 		
-		System.out.println("==============================================================================");
+		// 과거년도
+		if(vo.getShToYear() == null) {	
+			vo.setShToYear(vo.getShFromYear() - vo.getShRange());
+		}
 		
 		// 전체자료건수
 		int rowCount = service.selectOneUsrDataCount(vo);
@@ -172,13 +167,11 @@ public class ProductController {
 
 	// 사용자 상세화면
 	@RequestMapping(value = "/productUsrDetail")
-	public String productUsrDetail(ProductVo vo, Model model) throws Exception {
+	public String productUsrDetail(ProductVo vo, ReviewVo rvo, Model model) throws Exception {
 		model.addAttribute("item", service.selectListCarInfo(vo));
-
-		ReviewVo reviewVo = new ReviewVo();
-		reviewVo.setShSeq(vo.getShSeq());
-
-		model.addAttribute("list", reviewService.selectList(reviewVo));
+		
+		rvo.setShSeq(vo.getShSeq());
+		model.addAttribute("list", reviewService.selectList(rvo));
 
 		return Commvar.PATH_PRODUCT + "productUsrDetail";
 	}
@@ -211,10 +204,12 @@ public class ProductController {
 
 	// 찜목록 삭제
 	@RequestMapping(value = "/productUsrWishlistDelete")
-	public String productUsrWishlistDelete(ProductVo vo) throws Exception {
-		service.deleteWishList(vo);
+	public String productUsrWishlistDelete(ProductVo vo, WishlistVo wvo) throws Exception {
+		wvo.setShSeq(vo.getShSeq());
+		wishlistService.deleteWishlist(wvo);
 		return "redirect:/productUsrWishlist";
 	}
+	 
 
 	// 찜목록 삭제(ajax)
 	/*
