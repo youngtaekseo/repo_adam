@@ -58,6 +58,7 @@
 		<include refid="selectCommonProductSelect"/>
 		     , b.wshSeq xwshSeq
 		     , b.wshDt xDateTime
+		     , d.pdtPrice
 		  FROM members a
 		       JOIN productwishlist b
 		         ON b.mbrSeq = a.mbrSeq
@@ -78,8 +79,8 @@
 	
 	<!-- 찜내역 건수 및 합계금액 -->
 	<select id="selectOneWisilistCount" resultMap="resultMapObj">
-		SELECT COUNT(*) xpdtCount
-		     , SUM(b.pdtPrice) pdtPrice
+		SELECT COUNT(*) ckoCount
+		     , SUM(b.pdtPrice) ckoPrice
 		  FROM productwishlist a
 		       JOIN product b
 		         ON b.pdtSeq = a.pdtSeq

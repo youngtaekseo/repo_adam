@@ -48,7 +48,7 @@
                                             <ul class="cart-items">
 												<th:block th:if="${#lists.isEmpty(list)}">
 													<li class="cart-item">
-														<div>찜 목록이 없습니다</div>
+														<div>찜 내역이 없습니다</div>
 													</li>
 												</th:block>
 												
@@ -115,7 +115,7 @@
 	                                                            <div class="row">
 	                                                            	<input th:name="'wishlist'+${list.xwshSeq}+'_'" th:value="${list.xwshSeq}" type="hidden" />
                                                                     <a th:name="'wishlist'+${list.xwshSeq}" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
-                                                                    	href="javascript:void(0)" onclick="fnWishlistDelete(this);">
+                                                                    	href="javascript:void(0);" onclick="fnWishlistDelete(this);">
                                                                         <div><b style="color: red;">삭제</b></div>
                                                                         <i class="fa fa-trash-o" aria-hidden="true" style="color: red;"></i>
                                                                     </a>

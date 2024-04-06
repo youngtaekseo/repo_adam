@@ -41,11 +41,11 @@
                                 <div class="col-md-12 col-xs-12 check-info">
                                     <h1 class="title-page">결제목록</h1>
                                     <div class="cart-container">
-                                        <div class="cart-overview js-cart">
+                                        <div class="cart-overview js-cart" id="list">
                                             <ul class="cart-items">
 												<th:block th:if="${#lists.isEmpty(list)}">
 													<li class="cart-item">
-														<div>결제대상 목록이 없습니다</div>
+														<div>결제대상이 없습니다</div>
 													</li>
 												</th:block>
 												
@@ -109,10 +109,11 @@
 															<!-- 삭제 -->
 	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-1 mt-5">
 	                                                            <div class="row">
-                                                                    <a id="deleteWsh" name="deleteWsh" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
-                                                                    	th:href="@{/productUsrWishlistDelete(shSeq=${list.xwshSeq})}">
+	                                                            	<input th:name="'wishlist'+${list.xwshSeq}" th:value="${list.xwshSeq}" type="hidden" />
+                                                                    <a th:name="'wishlist'+${list.xwshSeq}" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
+                                                                    	href="javascript:void(0);" onclick="fnWishlistDelete(this);">
                                                                         <div><b style="color: red;">삭제</b></div>
-                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-trash-o" aria-hidden="true" style="color: red;"></i>
                                                                     </a>
 	                                                            </div>
 	                                                        </div>
@@ -123,87 +124,126 @@
                                         </div>
                                     </div>
 
-                                    <div class="cart-grid-right row justify-content-between">
-                                        <div class="col-xs-12 col-lg-12">
-                                            <div class="cart-summary">
-                                                <div class="cart-detailed-totals">
-                                                    <div class="cart-summary-products">
-                                                        <div class="summary-label">결제품목 <span>2</span>개</div>
-                                                    </div>
-                                                    <div class="cart-summary-line cart-total">
-                                                        <span class="label">결제금액 </span>
-                                                        ￦<span class="price" style="font-size: 17px; color: yellow;">4,599</span>만원
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-5 container">
-                                        <div class="form-group text-center">
-                                            <h3>결제정보</h3>
-                                        </div>             
-
-                                        <div class="row justify-content-center">
-                                            <div class="col-6">                                                
-                                                <form action="" method="post" autocomplete="off">
-                                                    <div class="form-group row pl-3 pr-3">
-                                                        <select class="form-select form-control">
-                                                            <option value="1" selected>카드결제</option>
-                                                        </select>
-                                                    </div>
-                                                    
-                                                    <div class="form-group row pl-3 pr-3">
-                                                        <select class="form-select form-control">
-                                                            <option value="0" selected>카드사</option>
-                                                            <option value="1">삼성카드</option>
-                                                            <option value="2">현대카드</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="영문명">
-                                                        </div>
-                                                    </div> 
-
-                                                    <div class="form-group row">
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="카드번호 숫자만(4자리)">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="카드번호 숫자만(4자리)">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="카드번호 숫자만(4자리)">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="카드번호 숫자만(4자리)">
-                                                        </div>
-                                                    </div>     
-
-                                                    <div class="form-group row">
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="유효기간(월) 숫자만(2자리)">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input class="form-control js-child-focus" name="" type="text" placeholder="유효기간(년) 숫자만(2자리)">
-                                                        </div>
-                                                    </div>        
-
-                                                    <div class="form-group row pl-3 pr-3">
-                                                        <input class="form-control js-child-focus" name="" type="text" placeholder="카드 인증 값(CVC) 숫자만">
-                                                    </div>                                              
-
-                                                    <div class="form-group row pl-3 pr-3">
-                                                        <button class="continue btn btn-primary pull-xs-right" name="continue" data-link-action="sign-in" type="submit" value="1" style="font-size: 15px;">
-                                                            결제진행
-                                                        </button>
-                                                    </div>  
-                                                </form>
-                                            </div>
-                                        </div>                                     
-                                    </div>
+									<div id="item">
+										<th:block th:if="${item.ckoCount == 0}"></th:block>
+										<th:block th:unless="${item.ckoCount == 0}">
+		                                    <div class="cart-grid-right row justify-content-between">
+		                                        <div class="col-xs-12 col-lg-12">
+		                                            <div class="cart-summary">
+		                                                <div class="cart-detailed-totals">
+		                                                    <div class="cart-summary-products">
+		                                                        <div class="summary-label">결제품목 <span id="quantity" name="quantity" th:text="${item.ckoCount}+'개'"></span></div>
+		                                                    </div>
+		                                                    <div class="cart-summary-line cart-total">
+		                                                    	<input id="price" name="price" th:value="${item.ckoPrice}" type="hidden" />
+		                                                        <span class="label">결제금액 </span>
+		                                                        ￦<span class="price" style="font-size: 17px; color: yellow;" th:text="${#numbers.formatInteger(item.ckoPrice, 1, 'COMMA')}"></span>만원
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                    
+		                                    <div class="mt-5 container">
+		                                        <div class="form-group text-center">
+		                                            <h3>결제정보</h3>
+		                                        </div>             
+		
+		                                        <div class="row justify-content-center">
+		                                            <div class="col-6">                                                
+		                                                <form id="form" name="form" method="post" autocomplete="off">
+		                                                	<!-- 결제금액 -->
+		                                                	<input id="payTotal" name="payTotal" th:value="${item.ckoPrice}" type="hidden" />
+		                                                    
+		                                                    <div class="form-group pl-3 pr-3 mb-4">
+		                                                        <select class="form-select form-control">
+		                                                            <option value="" th:selected="${vo.shPayType == null}">결제종류</option>
+		                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(1)}">
+		                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shPayType}"></option>
+		                                                            </th:block>
+		                                                        </select>
+		                                                    </div>
+		                                                    
+		                                                    <div class="form-group pl-3 pr-3 mb-4">
+		                                                        <select class="form-select form-control"
+		                                                        	id="payTypeCd" name="payTypeCd">
+		                                                            <option value="" th:selected="${vo.shCardType == null}">카드사</option>
+		                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(2)}">
+		                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shCardType}"></option>
+		                                                            </th:block>
+		                                                        </select>
+		                                                    </div>
+		
+		                                                    <div class="form-group mb-4">
+		                                                        <div class="col">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payOwnerEng" name="payOwnerEng" type="text" placeholder="영문명"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                        	<span id="payOwnerEngValid" name="payOwnerEngValid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                    </div> 
+		
+		                                                    <div class="form-group mb-4">
+		                                                        <div class="col-3">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardNo1" name="payCardNo1" type="text" placeholder="카드번호"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardNo1Valid" name="payCardNo1Valid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                        <div class="col-3">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardNo2" name="payCardNo2" type="text" placeholder="카드번호"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardNo2Valid" name="payCardNo2Valid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                        <div class="col-3">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardNo3" name="payCardNo3" type="text" placeholder="카드번호"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardNo3Valid" name="payCardNo3Valid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                        <div class="col-3">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardNo4" name="payCardNo4" type="text" placeholder="카드번호"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardNo4Valid" name="payCardNo4Valid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                    </div>     
+		
+		                                                    <div class="form-group mb-4">
+		                                                        <div class="col">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardMonth" name="payCardMonth" type="text" placeholder="유효기간(월)"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardMonthValid" name="payCardMonthValid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                        <div class="col">
+		                                                            <input class="form-control js-child-focus"
+		                                                            	id="payCardYear" name="payCardYear" type="text" placeholder="유효기간(년)"
+		                                                            	onkeyup="fnOnKeyUp(this)">
+		                                                            <span id="payCardYearValid" name="payCardYearValid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                        </div>
+		                                                    </div>        
+		
+		                                                    <div class="form-group pl-3 pr-3 mb-4">
+		                                                        <input class="form-control js-child-focus"
+		                                                        	id="payCardCvc" name="payCardCvc" type="text" placeholder="카드 인증 값(CVC)"
+		                                                        	onkeyup="fnOnKeyUp(this)">
+		                                                        <span id="payCardCvcValid" name="payCardCvcValid" style="float: left; color: red; visibility:hidden;"></span>
+		                                                    </div>                                              
+		
+		                                                    <div class="form-group pl-3 pr-3">
+		                                                        <button class="continue btn btn-primary pull-xs-right"
+		                                                        	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
+		                                                            결&ensp;제&ensp;진&ensp;행
+		                                                        </button>
+		                                                    </div>  
+		                                                </form>
+		                                            </div>
+		                                        </div>                                     
+		                                    </div>
+										</th:block>
+									</div>
                                 </div>
                             </div>
                         </section>
@@ -237,8 +277,171 @@
 
     <!-- Template JS -->
     <script src="usr/js/theme.js"></script>
+    
+    <script type="text/javascript">
+// ============================================================================
+// 변수선언
+// ============================================================================
+ 		let form = document.querySelector("form[name=form]");
+ 		
+		let goUrlUsrList   	= "/memberUsrList";		/* 조회화면 */
+		let goUrlUsrForm   	= "/memberUsrPass";		/* 수정화면 */
+		let goUrlUsrCreate 	= "/memberUsrCreate";	/* 등록화면 */
+		let goUrlUsrInsert 	= "/memberUsrInsert";	/* 등록 */
+		let goUrlUsrUpdate 	= "/memberUsrUpdate";	/* 수정 */
+		let goUrlUsrDelete 	= "/memberUsrDelete";	/* 삭제 */
+
+		let xmbrPasswordPre 		= document.querySelector("inupt[name=xmbrPasswordPre]");
+		let xmbrPasswordPreValid 	= document.querySelector("span[name=xmbrPasswordPreValid]");
+		
+		let mbrPassword 			= document.querySelector("inupt[name=mbrPassword]");
+		let mbrPasswordValid 		= document.querySelector("span[name=mbrPasswordValid]");
+		
+		let xmbrPwConfirm 			= document.querySelector("inupt[name=xmbrPwConfirm]");
+		let xmbrPwConfirmValid 		= document.querySelector("span[name=xmbrPwConfirmValid]");
+		
+		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(공백체크)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NULL = 31;
+		let dispText = "숫자만(4자리)";
+		let typeArr = [TYPE_EN, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_IT];		
+		let nameArr = ["payOwnerEng", "payCardNo1", "payCardNo2", "payCardNo3", "payCardNo4", "payCardMonth", "payCardYear", "payCardCvc"];
+		let textArr = [dispText, dispText, dispText, dispText, dispText, "숫자만(2자리)", "숫자만(2자리)", "숫자만(3자리)"];
+// ============================================================================
+// event
+// ============================================================================
+    	// 저장버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			fnCallController();
+		};
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				if(!fnValidation()) return false;
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				switch(obj.name) {
+				case "payOwnerEng" :
+					fnValidType(obj, xmbrPasswordPreValid, dispText, TYPE_EN);
+					break;					
+				case "payCardNo1" :
+					fnValidType(obj, mbrPasswordValid, dispText, TYPE_IT);
+					break;					
+				case "payCardNo2" :
+					fnValidType(obj, xmbrPwConfirmValid, dispText, TYPE_IT);
+					break;
+				case "payCardNo3" :
+					fnValidType(obj, xmbrPasswordPreValid, dispText, TYPE_IT);
+					break;					
+				case "payCardNo4" :
+					fnValidType(obj, mbrPasswordValid, dispText, TYPE_IT);
+					break;					
+				case "payCardMonth" :
+					fnValidType(obj, xmbrPwConfirmValid, dispText, TYPE_IT);
+					break;
+				case "payCardYear" :
+					fnValidType(obj, mbrPasswordValid, dispText, TYPE_IT);
+					break;					
+				case "payCardCvc" :
+					fnValidType(obj, xmbrPwConfirmValid, dispText, TYPE_IT);
+					break;						
+				};
+			};	
+		};
+		
+    	// 삭제버튼 클릭
+    	fnWishlistDelete = function(obj) {
+     		// 찜순번
+    		let shSeq = document.querySelector("input[name="+obj.name+"]").value;
+     		
+     		// 삭제
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"shSeq":shSeq}
+				, url: "/checkoutWishlistDelete"
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			}).done(function(fragment){
+				$("#list").replaceWith(fragment);
+				
+				// 합계조회
+				fnSumReload();
+			});
+    	}
+    	
+    	// 합계조회
+    	fnSumReload = function() {
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {}
+				, url: "/checkoutWishlistReload"
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			}).done(function(fragment){
+				$("#item").replaceWith(fragment);
+				$("#payTotal").val($("#price").val());
+			});    		
+    	}
+    	
+// ============================================================================
+// function
+// ============================================================================
+		
+		// controller 호출
+		fnCallController = function() {
+			if(!fnValidation()) {return false;}
+			
+			// 전송자료생성
+			let params = jQuery("#form").serialize();
+			
+			// 저장
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, date: params
+				, url: "/paymentUsrInsert"
+				, success: function(response) {
+					if(response.rt == "success") {
+						alert("결제 저장 완료");
+						location.href = "/indexUsr";
+					} else {
+						alert("결제 저장중 오류가 있습니다");
+					};
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}				
+			});
+
+		};	
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
+		};    	
+    </script>
 </body>
 
-
-<!-- product-cart07:12-->
 </html>

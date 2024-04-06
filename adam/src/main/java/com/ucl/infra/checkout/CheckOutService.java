@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ucl.infra.product.ProductDto;
-
 @Service
 public class CheckOutService {
 
@@ -14,7 +12,7 @@ public class CheckOutService {
 	CheckOutDao dao;
 	
 	// 찜목록
-	public List<ProductDto> selectListWishList(CheckOutVo vo){
+	public List<CheckOutDto> selectListWishList(CheckOutVo vo){
 		return dao.selectListWishList(vo);
 	}
 	
@@ -24,7 +22,7 @@ public class CheckOutService {
 	}
 	
 	// 찜내역 건수 및 합계금액
-	public ProductDto selectOneWisilistCount(CheckOutVo vo) {
+	public CheckOutDto selectOneWisilistCount(CheckOutVo vo) {
 		return dao.selectOneWisilistCount(vo);
 	}	
 }

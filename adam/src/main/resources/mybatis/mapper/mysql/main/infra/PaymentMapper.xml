@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ucl.infra.payment.PaymentDao">
+
+	<resultMap id="resultMapObj" type="com.ucl.infra.payment.PaymentDto"></resultMap>
+	
+	<!-- 결제등록 -->
+	<insert id="paymentInsert">
+		INSERT INTO memberpayment
+			(
+			  payDate
+			, payTypeCd
+			, payOwnerEng
+			, payCardNo1
+			, payCardNo2
+			, payCardNo3
+			, payCardNo4
+			, payCardCvc
+			, payCardYear
+			, payCardMonth
+			, payTotal
+			, mbrSeq
+			)
+		VALUES
+			(
+			  now()
+			, #{payTypeCd}
+			, #{payOwnerEng}
+			, #{payCardNo1}
+			, #{payCardNo2}
+			, #{payCardNo3}
+			, #{payCardNo4}
+			, #{payCardCvc}
+			, #{payCardYear}
+			, #{payCardMonth}
+			, #{payTotal}
+			, #{mbrSeq}		
+			)
+	</insert>	
+
+</mapper>

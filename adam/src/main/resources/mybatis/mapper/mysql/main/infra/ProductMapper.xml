@@ -306,6 +306,7 @@
 		     , b.pdtSeq
 		     , b.wshSeq xwshSeq
 		     , b.wshDt xDateTime
+		     , d.pdtPrice
 		  FROM members a
 		       JOIN productwishlist b
 		         ON b.mbrSeq = a.mbrSeq
