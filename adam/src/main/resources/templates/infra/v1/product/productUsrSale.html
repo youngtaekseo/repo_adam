@@ -13,7 +13,7 @@
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
             <div class="container">
-                <div th:replace="~{infra/v1/include/bodyUsr :: topMenu}"></div>
+                <div th:replace="~{infra/v1/include/bodyUsr :: topMenu(2)}"></div>
             </div>
         </div>
     </header>
@@ -27,14 +27,8 @@
                 <div class="container no-index">
                     <div class="breadcrumb">
                         <ol>
-                            <li>
-                                <a href="/indexUsr">
-                                    <span>Home</span>
-                                </a>
-                            </li>
-                            <li>
-                                <span>구매내역</span>
-                            </li>
+                            <li><a href="/indexUsr"><span>Home</span></a></li>
+                            <li><span><b>구매내역</b></span></li>
                         </ol>
                     </div>
                 </div>

@@ -288,5 +288,11 @@ public class MemberController extends BaseController {
 
 		service.insert(dto);
 		return Commvar.PATH_LOGIN + "loginUsr";		
+	}
+	
+	// 사용자 비밀번호수정화면
+	@RequestMapping(value = "/memberUsrPass")
+	public String memberUsrPass() throws Exception {
+		return Commvar.PATH_MEMBER + "memberUsrPass";
 	}	
 }

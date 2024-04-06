@@ -159,6 +159,9 @@ public class ProductController {
 		int rowCount = service.selectOneUsrDataCount(vo);
 
 		if (rowCount > 0) {
+			vo.setPgRowCount(vo.getPgRowCountUsr());
+			vo.setPgPageCount(vo.getPgPageCountUsr());
+			
 			vo.setPagingVo(rowCount);
 
 			model.addAttribute("list", service.selectListCarInfo(vo));
@@ -206,10 +209,19 @@ public class ProductController {
 	}
 
 	// 찜목록 삭제
+	// ResponseBody 어노테이션은 쓰지 않습니다
+	// ResponseBody 사용시 return 값의 String이 고대로 출력되는 일 발생됨
 	@RequestMapping(value = "/productUsrWishlistDelete")
-	public String productUsrWishlistDelete(ProductVo vo, WishlistVo wvo) throws Exception {
+	public String productUsrWishlistDelete(ProductVo vo, WishlistVo wvo, Model model, HttpSession httpSession) throws Exception {
 		wvo.setShSeq(vo.getShSeq());
 		wishlistService.deleteWishlist(wvo);
-		return "redirect:/productUsrWishlist";
+		
+		// 로그인 회원순번 설정
+		vo.setShSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		model.addAttribute("list", service.selectListWishList(vo));
+		
+		// :: #list -> productUsrWishlist 소스에서 id값으로 이동한다
+		return Commvar.PATH_PRODUCT + "productUsrWishlist :: #list"; 
 	}
 }

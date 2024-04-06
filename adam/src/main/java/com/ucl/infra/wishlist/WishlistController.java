@@ -25,24 +25,28 @@ public class WishlistController {
 		// 로그인 사용자 순번 설정
 		dto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
-		// 등록여부 확인
-		String result = dto.getWshSeq();
-		
-		if(result.equals("x")) {
-			if(service.insertWishlist(dto) == 1) {
-				returnMap.put("rt", "success");
-				returnMap.put("wshSeq", dto.getWshSeq());
+		if(dto.getMbrSeq() != null && !dto.getMbrSeq().equals("")) {
+			// 등록여부 확인
+			String result = dto.getWshSeq();
+			
+			if(result.equals("x")) {
+				if(service.insertWishlist(dto) == 1) {
+					returnMap.put("rt", "success");
+					returnMap.put("wshSeq", dto.getWshSeq());
+				} else {
+					returnMap.put("rt", "fail");
+				}
 			} else {
-				returnMap.put("rt", "fail");
-			}
+				vo.setShSeq(result);
+				if(service.deleteWishlist(vo) == 1) {
+					returnMap.put("rt", "exist");
+				} else {
+					returnMap.put("rt", "fail");
+				}
+			}			
 		} else {
-			vo.setShSeq(result);
-			if(service.deleteWishlist(vo) == 1) {
-				returnMap.put("rt", "exist");
-			} else {
-				returnMap.put("rt", "fail");
-			}
-		}
+			returnMap.put("rt", "login");
+		}		
 		
 		return returnMap;
 	}

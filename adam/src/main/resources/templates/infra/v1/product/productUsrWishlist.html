@@ -13,7 +13,7 @@
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
             <div class="container">
-				<div th:replace="~{infra/v1/include/bodyUsr :: topMenu}"></div>
+				<div th:replace="~{infra/v1/include/bodyUsr :: topMenu(2)}"></div>
             </div>
         </div>
     </header>
@@ -27,14 +27,10 @@
                 <div class="container no-index">
                     <div class="breadcrumb">
                         <ol>
-                            <li>
-                                <a href="/indexUsr">
-                                    <span>Home</span>
-                                </a>
-                            </li>
+                            <li><a href="/indexUsr"><span>Home</span></a></li>
                             <li>
                                 <i class="fa fa-heart" aria-hidden="true" style="color: pink;"></i>
-                                <span> 찜 내역</span>
+                                <span><b>찜 내역</b></span>
                             </li>
                         </ol>
                     </div>
@@ -48,7 +44,7 @@
                                 <div class="col-md-12 col-xs-12 check-info">
                                     <h1 class="title-page"><i class="fa fa-heart" style="color: pink;" aria-hidden="true"></i> 찜 목록</h1>
                                     <div class="cart-container">
-                                        <div class="cart-overview js-cart">
+                                        <div class="cart-overview js-cart" id="list">
                                             <ul class="cart-items">
 												<th:block th:if="${#lists.isEmpty(list)}">
 													<li class="cart-item">
@@ -57,7 +53,8 @@
 												</th:block>
 												
 												<th:block th:unless="${#lists.isEmpty(list)}" th:each="list : ${list}">
-													<li class="cart-item">
+													<li class="cart-item"  th:id="'wishlist'+${list.xwshSeq}" th:name="'wishlist'+${list.xwshSeq}">
+														<input type="hidden" th:name="'wishlist'+${list.xwshSeq}" th:value="${list.pdtSeq}" />
 	                                                    <div class="product-line-grid row justify-content-between">
 	                                                        <!-- 차량이미지 -->
 	                                                        <div class="product-line-grid-left col-md-2">
@@ -116,10 +113,11 @@
 															<!-- 삭제 -->
 	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-1 mt-5">
 	                                                            <div class="row">
-                                                                    <a id="deleteWsh" name="deleteWsh" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
-                                                                    	th:href="@{/productUsrWishlistDelete(shSeq=${list.xwshSeq})}">
+	                                                            	<input th:name="'wishlist'+${list.xwshSeq}+'_'" th:value="${list.xwshSeq}" type="hidden" />
+                                                                    <a th:name="'wishlist'+${list.xwshSeq}" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
+                                                                    	href="javascript:void(0)" onclick="fnWishlistDelete(this);">
                                                                         <div><b style="color: red;">삭제</b></div>
-                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                        <i class="fa fa-trash-o" aria-hidden="true" style="color: red;"></i>
                                                                     </a>
 	                                                            </div>
 	                                                        </div>
@@ -170,29 +168,25 @@
     <script src="usr/js/theme.js"></script>
     
     <script type="text/javascript">
-		fnDeleteWishlist = function(obj) {
-			let tagName = obj.name+"Seq";
-			document.querySelector("input[name="+tagName+"]");
+    	fnWishlistDelete = function(obj) {
+			// 제품순번
+			// let pdtSeq = document.querySelector("input[name="+obj.name+"]").value;
+			
+			// 찜순번
+			let shSeq = document.querySelector("input[name="+obj.name+"_]").value;
 			
 			$.ajax({
 				async: true
 				, cache: false
 				, type: "post"
-				, data: {"shSeq":$("#")}
+				, data: {"shSeq":shSeq}
 				, url: "/productUsrWishlistDelete"
-				, success: function(response) {
-					if(response.rt == "success") {
-						location.href = "/indexUsr";
-					} else if(response.rt == "id") {
-						alert("아이디가 일치하지 않습니다");
-					} else if(response.rt == "password") {
-						alert("비밀번호가 일치하지 않습니다");
-					}
-				}
 				, error : function(jqXHR, textStatus, errorThrown){
 					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}
-			});
+			}).done(function(fragment){
+				$("#list").replaceWith(fragment);
+			});	
 		};
 	</script>
 </body>

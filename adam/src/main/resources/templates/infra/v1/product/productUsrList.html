@@ -38,6 +38,11 @@
     <!-- Template CSS -->
     <link rel="stylesheet" type="text/css" href="usr/css/style.css">
     <link rel="stylesheet" type="text/css" href="usr/css/reponsive.css">
+    
+    <!-- 함수 스크립트 -->
+    <script src="usr/js/validation.js"></script>
+    <script src="usr/js/paging.js"></script>
+    <script src="sdm/js/common.js"></script>     
 </head>
 
 <body id="product-sidebar-left" class="product-grid-sidebar-left">
@@ -45,12 +50,15 @@
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
             <div class="container">
-                <div th:replace="~{infra/v1/include/bodyUsr :: topMenu}"></div>
+                <div th:replace="~{infra/v1/include/bodyUsr :: topMenu(1)}"></div>
             </div>
         </div>
     </header>
     
 	<form id="form" name="form" method="get">
+		<!-- 페이지 번호 -->
+		<input type="hidden" id="pgPage" name="pgPage" th:value="${vo.pgPage}" default="1">
+		
 	    <!-- main content -->
 	    <div class="main-content">
 	        <div id="wrapper-site">
@@ -62,14 +70,8 @@
 	                            <div class="container no-index">
 	                                <div class="breadcrumb">
 	                                    <ol>
-	                                        <li>
-	                                            <a href="/indexUsr">
-	                                                <span>Home</span>
-	                                            </a>
-	                                        </li>
-	                                        <li>
-	                                            <span>차량조회</span>
-	                                        </li>
+	                                        <li><a href="/indexUsr"><span>Home</span></a></li>
+	                                        <li><span><b>차량조회</b></span></li>
 	                                    </ol>
 	                                </div>
 	                            </div>
@@ -280,7 +282,7 @@
 		                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
 		                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 		                                                                        
-		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="#" data-rel="1" th:onclick="fnClickWishlist(this)">
+		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" th:onclick="fnClickWishlist(this);">
 		                                                                            <i th:if="${list.xwshSeq != null}"     th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
 		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
 		                                                                        </a>
@@ -295,85 +297,55 @@
 	                                        </div>
 	
 	                                        <!-- pagination -->
-	                                        <!--<div th:replace="~{infra/v1/include/bodySmd :: bodyPagingBtn}"></div>-->
-	                                        
 	                                        <div class="pagination">
 	                                            <div class="js-product-list-top ">
 	                                                <div class="d-flex justify-content-around row">
 	                                                    <div class="page-list col col-xs-12">
 	                                                        <ul>
 																<!-- 이전 블록으로 이동하는 버튼 --> 
-																<!-- <li>
-																	<span th:if="${vo.pgIsPrev == true}">
-																		<a class="previous disabled js-search-link" th:onclick="javascript:fnGoList([[${vo.pgStartPage - 1}]])|">
-																			<svg class="w-4 h-4 fill-current"  data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-																				<path clip-rule="evenodd" fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"></path>
-																			</svg>
-																		</a>
-																	</span>
+																<li th:if="${vo.pgIsPrev == true}" style="cursor: pointer;"
+																	th:onclick="javascript:fnGoList([[${vo.pgStartPage - 1}]])">
+																	<a rel="prev" href="javascript:void(0)" class="previous disabled js-search-link" th:onclick="javascript:fnGoList([[${vo.pgStartPage - 1}]])">
+																		<i class="fa fa-chevron-left"></i>
+																	</a>
 																</li>
-																<th:block th:if="${vo.pgTotalCount} > 0">
-																	<li th:each="pageNum : ${#numbers.sequence(vo.pgStartPage, vo.pgEndPage)}">
-																		<span th:if="${vo.pgPage == pageNum}">
-																		<a class="current active" th:onclick="javascript:fnGoList([[${pageNum}]])"
+																<li th:unless="${vo.pgIsPrev == true}" style="cursor: not-allowed;">
+																	<i class="fa fa-chevron-left"></i>
+																</li>
+																
+																
+																<th:block th:if="${vo.pgTotalCount} > 0" th:each="pageNum : ${#numbers.sequence(vo.pgStartPage, vo.pgEndPage)}">
+																	<li th:if="${vo.pgPage == pageNum}" style="background-color: purple; cursor: pointer;"
+																		th:onclick="javascript:fnGoList([[${pageNum}]]);">
+																		<a rel="nofollow" class="current active disabled js-search-link" href="javascript:void(0)" th:onclick="javascript:fnGoList([[${pageNum}]]);"
 																			th:text="|${pageNum}|">
 																		</a>
-																		</span>
-											
-																		<span th:unless="${vo.pgPage == pageNum}">
-																			<a th:onclick="javascript:fnGoList([[${pageNum}]])"
-																				th:text="|${pageNum}|">
-																			</a>
-																		</span>
 																	</li>
-																</th:block> -->															
-	                                                            <!--<li>
-	                                                                <a rel="prev" href="#" class="previous disabled js-search-link">
-	                                                                    이전
-	                                                                </a>
-	                                                            </li>
-	                                                            <li class="current active">
-	                                                                <a rel="nofollow" href="#" class="disabled js-search-link">
-	                                                                    1
-	                                                                </a>
-	                                                            </li>
-	                                                            <li>
-	                                                                <a rel="nofollow" href="#" class="disabled js-search-link">
-	                                                                    2
-	                                                                </a>
-	                                                            </li>
-	                                                            <li>
-	                                                                <a rel="nofollow" href="#" class="disabled js-search-link">
-	                                                                    3
-	                                                                </a>
-	                                                            </li>
-	
-	                                                            <li>
-	                                                                <a rel="next" href="#" class="next disabled js-search-link">
-	                                                                    4
-	                                                                </a>
-	                                                            </li>
-	
-	                                                            <li>
-	                                                                <a rel="next" href="#" class="next disabled js-search-link">
-	                                                                    5
-	                                                                </a>
-	                                                            </li>
-	
-	                                                            <li>
-	                                                                <a rel="next" href="#" class="next disabled js-search-link">
-	                                                                    다음
-	                                                                </a>
-	                                                            </li>-->
+																	<li th:unless="${vo.pgPage == pageNum}" style="cursor: pointer;"
+																		th:onclick="javascript:fnGoList([[${pageNum}]]);">
+																		<a rel="nofollow" class="disabled js-search-link" href="javascript:void(0)"
+																			th:onclick="javascript:fnGoList([[${pageNum}]]);"
+																			th:text="|${pageNum}|">
+																		</a>																	
+																	</li>
+																</th:block>	
+																
+																<!-- 다음 블록으로 이동하는 버튼 --> 
+																<li th:if="${vo.pgIsNext == true}" style="cursor: pointer;"
+																	th:onclick="javascript:fnGoList([[${vo.pgEndPage + 1}]])">
+																	<a rel="next" href="javascript:void(0)" class="next disabled js-search-link" th:onclick="javascript:fnGoList([[${vo.pgEndPage + 1}]])">
+																		<i class="fa fa-chevron-right"></i>
+																	</a>
+																</li>
+																<li th:unless="${vo.pgIsNext == true}" style="cursor: not-allowed;">
+																	<i class="fa fa-chevron-right"></i>
+																</li>																	
 	                                                        </ul>
 	                                                    </div>
 	                                                </div>
 	                                            </div>
 	                                        </div>
-	                                        
 	                                    </div>
-	
-	                                    <!-- end col-md-9-1 -->
 	                                </div>
 	                            </div>
 	                        </div>
@@ -412,7 +384,7 @@
 // 변수선언
 // ============================================================================
 		let form = document.querySelector("form[name=form]");		
-		let goUrlUsrList   	= "/productUsrList";	/* 조회화면 */ 
+		let goUrlUsrList = "/productUsrList";	/* 조회화면 */ 
 // ============================================================================
 // 이벤트
 // ============================================================================
@@ -451,7 +423,7 @@
 			fnCallController();
 		}
 		
-		// 금액클릭
+		// 금액 클릭
 		fnClick = function(obj) {
 			$("#shPriceFrom").val(obj.value);
 			$("#shPriceTo").val(obj.value);
@@ -460,7 +432,7 @@
 			fnCallController();
 		}
 		
-		// 연식클릭
+		// 연식 클릭
 		fhChange = function(obj) {
 			if(obj.name == "shOptionYearFrom") {				
 				let value = $("#shOptionYearFrom option:selected").val();
@@ -484,7 +456,7 @@
 		fnClickWishlist = function(obj) {
 			// 제품순번
 			let wishlist = document.querySelector("input[name="+obj.name+"]");
-			let pdtSeq   = wishlist.value;
+			let pdtSeq   = wishlist.value;			
 			let heart    = document.querySelector("i[name="+obj.name+"]");
 			
 			// 찜순번

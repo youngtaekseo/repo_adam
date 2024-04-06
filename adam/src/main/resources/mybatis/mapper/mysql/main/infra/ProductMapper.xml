@@ -222,7 +222,7 @@
 				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
 		               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
                ) a
-    	 LIMIT #{pgRowCountUsr}
+    	 LIMIT #{pgRowCount}
     	OFFSET #{pgOffset}                       
 	</select>
 	
@@ -303,6 +303,7 @@
 	<!-- 찜 내역 -->
 	<select id="selectListWishList" resultMap="resultMapObj">
 		<include refid="selectCommonProductSelect"/>
+		     , b.pdtSeq
 		     , b.wshSeq xwshSeq
 		     , b.wshDt xDateTime
 		  FROM members a
@@ -334,14 +335,6 @@
 		   AND a.mbrSeq = #{shSeq}
 		   AND a.wshDelNy = 0		   
 	</select>
-	
-	<!-- 찜 내역 삭제 -->
-<!--	<delete id="deleteWishList">
-		DELETE
-		  FROM productwishlist
-		 WHERE 1 = 1
-		   AND wshSeq = #{shSeq}
-	</delete>-->
 	
 	<!-- 제품등록 -->
 	<insert id="insert">

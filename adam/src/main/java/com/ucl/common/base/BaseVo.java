@@ -11,21 +11,23 @@ public class BaseVo {
 
 	// paging
 	private int     pgPage      = 1;  // 시작페이지
+	
 	private int     pgRowCount  = 5;  // 한 페이지 당 보여줄 게시물 개수
 	private int     pgPageCount = 5;  // 한 블럭에 몇 개의 페이지 개수
-	private int     pgRowCountUsr  = 9;  // 한 페이지 당 보여줄 게시물 개수
-	private int     pgPageCountUsr = 5;  // 한 블럭에 몇 개의 페이지 개수	
+	
+	private int     pgRowCountUsr  = 9;  // 한 페이지 당 보여줄 게시물 개수 - 사용자용
+	private int     pgPageCountUsr = 5;  // 한 블럭에 몇 개의 페이지 개수	 - 사용자용
 
 	private int     pgTotalCount;     // 총 게시물 개수
 	
 	private int     pgStartPage = 1;  // 한 블럭의 시작 페이지: 기본 값 1 // ex) 1 2 3 4 5 일 때 1을 의미.
 	private int     pgEndPage;        // 한 블럭의 끝 페이지
 
-	private int     pgTotalPageCount; // 총 페이지 개수
+	private int     pgTotalPageCount;    // 총 페이지 개수
 
 	private boolean pgIsPrev = false; // 다음 페이지로 이동하는 버튼 유무
 	private boolean pgIsNext = false; // 이전 페이지로 이동하는 버튼 유무
-
+	
 	private int		pgOffset;         // 얼만큼 끊어서 가져올 것인가.
 	
 	private String 	uri;
@@ -133,7 +135,7 @@ public class BaseVo {
 
     // offset 구하기 // 쿼리 select 시 끊어서 가져오기
     private void setPgOffset() {
-    	pgOffset = (pgPage - 1) * pgRowCount;		
+    	pgOffset = (pgPage - 1) * pgRowCount;
     }
 
 	public int getPgRowCount() {
@@ -142,6 +144,10 @@ public class BaseVo {
 
 	public void setPgRowCount(int pgRowCount) {
 		this.pgRowCount = pgRowCount;
+	}
+	
+	public void setPgPageCount(int pgPageCount) {
+		this.pgPageCount = pgPageCount;
 	}
 	
 	public int getPgRowCountUsr() {
