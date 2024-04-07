@@ -3,12 +3,12 @@ package com.ucl.infra.review;
 import java.util.Date;
 
 public class ReviewDto {
-	private String rvwSeq;
-	private String mbrSeq;
-	private String rvwRemark;
+	private String  rvwSeq;
+	private String  mbrSeq;
+	private String  rvwRemark;
 	private Integer rvwStar;
-	private Date rvwDateTime;
-	private String pdtSeq;
+	private Date    rvwDateTime;
+	private String  pdtSeq;
 	
 	private Integer xrvwCount;
 	private String xmbrName;

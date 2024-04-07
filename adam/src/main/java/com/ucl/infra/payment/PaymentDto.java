@@ -2,10 +2,14 @@ package com.ucl.infra.payment;
 
 import java.util.Date;
 
-public class PaymentDto {
+import com.ucl.infra.product.ProductDto;
+
+public class PaymentDto extends ProductDto {
+	// 결제정보
 	private String  paySeq;
 	private Date    payDate;
 	private Integer payTypeCd;
+	private Integer payCardCd;
 	private String  payOwnerEng;
 	private String  payCardNo1;
 	private String  payCardNo2;
@@ -15,10 +19,18 @@ public class PaymentDto {
 	private String  payCardYear;
 	private String  payCardMonth;
 	private Integer payTotal;
-	private Integer mbrSeq;
+	private String  mbrSeq;
+	
+	// 영수증
+	private String  xpayTypeName;
+	private String  xpayCardName;
+	private Date    xbuyDateTime;
+	private Integer xbuyCount;
+	private Integer xbuyPrice;
 	
 //=============================================================================	
-	
+// 결제정보
+//=============================================================================	
 	public String getPaySeq() {
 		return paySeq;
 	}
@@ -36,6 +48,12 @@ public class PaymentDto {
 	}
 	public void setPayTypeCd(Integer payTypeCd) {
 		this.payTypeCd = payTypeCd;
+	}
+	public Integer getPayCardCd() {
+		return payCardCd;
+	}
+	public void setPayCardCd(Integer payCardCd) {
+		this.payCardCd = payCardCd;
 	}
 	public String getPayOwnerEng() {
 		return payOwnerEng;
@@ -91,10 +109,45 @@ public class PaymentDto {
 	public void setPayTotal(Integer payTotal) {
 		this.payTotal = payTotal;
 	}
-	public Integer getMbrSeq() {
+	public String getMbrSeq() {
 		return mbrSeq;
 	}
-	public void setMbrSeq(Integer mbrSeq) {
+	public void setMbrSeq(String mbrSeq) {
 		this.mbrSeq = mbrSeq;
 	}
+	
+//=============================================================================
+// 영수증
+//=============================================================================
+		
+	public String getXpayTypeName() {
+		return xpayTypeName;
+	}
+	public void setXpayTypeName(String xpayTypeName) {
+		this.xpayTypeName = xpayTypeName;
+	}
+	public String getXpayCardName() {
+		return xpayCardName;
+	}
+	public void setXpayCardName(String xpayCardName) {
+		this.xpayCardName = xpayCardName;
+	}
+	public Date getXbuyDateTime() {
+		return xbuyDateTime;
+	}
+	public void setXbuyDateTime(Date xbuyDateTime) {
+		this.xbuyDateTime = xbuyDateTime;
+	}
+	public Integer getXbuyCount() {
+		return xbuyCount;
+	}
+	public void setXbuyCount(Integer xbuyCount) {
+		this.xbuyCount = xbuyCount;
+	}	
+	public Integer getXbuyPrice() {
+		return xbuyPrice;
+	}
+	public void setXbuyPrice(Integer xbuyPrice) {
+		this.xbuyPrice = xbuyPrice;
+	}	
 }

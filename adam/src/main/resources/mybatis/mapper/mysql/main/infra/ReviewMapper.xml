@@ -20,74 +20,23 @@
 		   AND a.pdtSeq = #{shSeq}	
 	</select>
 	
-<!-- 	<insert id="insert">
-		INSERT INTO product
+ 	<insert id="insertReview">
+		INSERT INTO productreview
 			( 
-			  pdtTypeCd
-			, pdtBrandCd
-			, pdtName
-			, pdtAccidentCd
-			, pdtYear
-			, pdtMonth
-			, pdtRunKm
-			, pdtColorCd
-			, pdtPrice
-			, pdtRecommendCd
-			, pdtRegDt
-			, pdtUdtDt
-			, pdtDelNy
+			  mbrSeq
+			, rvwRemark
+			, rvwStar
+			, rvwDateTime
+			, pdtSeq
 			)
 		VALUES
 			(
-			  #{pdtTypeCd}
-			, #{pdtBrandCd}
-			, #{pdtName}
-			, #{pdtAccidentCd}
-			, #{pdtYear}
-			, #{pdtMonth}
-			, #{pdtRunKm}
-			, #{pdtColorCd}
-			, #{pdtPrice}
-			, #{pdtRecommendCd}
+			  #{mbrSeq}
+			, #{rvwRemark}
+			, #{rvwStar}
 			, now()
-			, now()
-			, 0
+			, #{pdtSeq}
 			)
-	</insert>
-	
-	<update id="update">
-		UPDATE product
-		   SET pdtTypeCd      = #{pdtTypeCd}
-			 , pdtBrandCd     = #{pdtBrandCd}
-			 , pdtName        = #{pdtName}
-			 , pdtAccidentCd  = #{pdtAccidentCd}
-			 , pdtYear        = #{pdtYear}
-			 , pdtMonth       = #{pdtMonth}
-			 , pdtRunKm       = #{pdtRunKm}
-			 , pdtColorCd     = #{pdtColorCd}
-			 , pdtPrice       = #{pdtPrice}
-			 , pdtRecommendCd = #{pdtRecommendCd}
-			 , pdtUdtDt       = now()
-         WHERE 1 = 1		
-           AND pdtSeq = #{pdtSeq}	
-	</update>
-	
-	<update id="updateDelNy">
-		UPDATE product
-		   SET pdtUdtDt = now()
-		   
-		   <choose>
-		   		<when test="pdtDelNy == 0">, pdtDelNy = 1</when>
-		   		<when test="pdtDelNy == 1">, pdtDelNy = 0</when>
-		   </choose>
-         WHERE 1 = 1		
-           AND pdtSeq = #{pdtSeq}
-	</update>	
-	
-	<delete id="delete">
-		DELETE FROM product
-         WHERE 1 = 1		
-           AND pdtSeq = #{pdtSeq}
-	</delete> -->	    
+	</insert>	    
 
 </mapper>

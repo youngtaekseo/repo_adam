@@ -139,8 +139,8 @@
 				     , a.pdtRecommendCd
 				     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
 				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
-		             , IFNULL(ROUND(AVG(c.rvwStar)),0) xpdtStar 
-		             , IFNULL(COUNT(c.rvwSeq),0) xpdtCount
+		             , IFNULL(c.xpdtStar ,0) xpdtStar 
+		             , IFNULL(c.xpdtCount,0) xpdtCount
 		               <choose>
 		               		<when test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq xwshSeq</when>
 		             		<otherwise>, null xwshSeq</otherwise>
@@ -148,7 +148,12 @@
 				  FROM product a
 				       LEFT JOIN productimg b
 				              ON b.pdtSeq = a.pdtSeq
-		               LEFT JOIN productreview c
+		               LEFT JOIN (SELECT pdtSeq
+		                               , ROUND(AVG(rvwStar)) xpdtStar
+		                               , COUNT(*)            xpdtCount
+		                            FROM productreview
+		                           GROUP BY pdtSeq
+		                         ) c
 		                      ON c.pdtSeq = a.pdtSeq
 		                    JOIN code d
 		                      ON d.cdcSeq = a.pdtTypeCd
@@ -280,6 +285,7 @@
 		     , c.pdtSeq
 		     , c.buyDateTime xDateTime
 		     , c.buyPrice pdtPrice
+		     , c.buySeq
 		  FROM members a
 		       JOIN memberpayment b
 		         ON b.mbrSeq = a.mbrSeq
@@ -297,7 +303,9 @@
 		     , c.pdtSeq
 		     , c.buyDateTime
 		     , c.buyPrice
+		     , c.buySeq
 		       <include refid="selectCommonProductGroup"/>
+		 ORDER BY c.buyDateTime DESC, c.buySeq
 	</select>
 	
 	<!-- 찜 내역 -->
@@ -323,6 +331,7 @@
 		     , b.wshDt
 		     , d.pdtPrice
 		       <include refid="selectCommonProductGroup"/>
+		 ORDER BY b.wshDt DESC, b.wshSeq
 	</select>
 	
 	<!-- 찜내역 건수 및 합계금액 -->

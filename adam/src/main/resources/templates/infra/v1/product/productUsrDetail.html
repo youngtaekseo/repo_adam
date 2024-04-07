@@ -243,9 +243,41 @@
                                                 <div class="tab-content">													
                                                     <div id="review" class="tab-pane fade in active show">
                                                         <div class="spr-form">             
-                                                            <div class="user-comment">
+                                                            <div class="user-comment" id="list" >
                                                             	<!-- 댓글 리스트 -->
+                                                            	<!-- <ul class="cart-items">
+                                                            		<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+	                                                            		<li class="cart-item">
+	                                                            			<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${list.pdtSeq}" />
+		                                                            		<div class="spr-review">
+		                                                                    <div class="spr-review-header">
+		                                                                        <span class="spr-review-header-byline">
+		                                                                            <strong th:text="${list.xmbrName}"></strong>
+		                                                                            <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
+		                                                                        </span>
+		                                                                        <div class="rating">
+		                                                                            <div class="star-content">
+																						<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																							<div class="star"></div>	
+																						</th:block>
+																						<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																							<div class=""></div>	
+																						</th:block>
+		                                                                            </div>
+		                                                                        </div>
+		                                                                    </div>
+		                                                                    
+		                                                                    댓글내용
+		                                                                    <div class="spr-review-content">
+		                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
+		                                                                    </div>
+		                                                                </div>
+	                                                            		</li>
+                                                            		</th:block>	
+                                                            	</ul> -->
+                                                            	
                                                             	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+																	<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${list.pdtSeq}" />                                                            		
 																	<div class="spr-review">
 	                                                                    <div class="spr-review-header">
 	                                                                        <span class="spr-review-header-byline">
@@ -263,8 +295,6 @@
 	                                                                            </div>
 	                                                                        </div>
 	                                                                    </div>
-	                                                                    
-	                                                                    <!-- 댓글내용 -->
 	                                                                    <div class="spr-review-content">
 	                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
 	                                                                    </div>
@@ -274,51 +304,58 @@
                                                         </div>
 
                                                         <!-- 댓글작성 -->
-                                                        <form method="post" action="#" class="new-review-form">
+                                                        <form method="post" class="new-review-form">
                                                             <input type="hidden" name="review[rating]" value="3">
                                                             <input type="hidden" name="product_id">
                                                             <h3 class="spr-form-title">댓글작성</h3>
                                                             <fieldset>
                                                                 <div class="spr-form-review-rating">
                                                                     <label class="spr-form-label">[[${session.sessMbrName}]]</label>
+                                                                    <input id="rvwStar" name="rvwStar" type="hidden" value="0" />
                                                                     <fieldset class="ratings">
-                                                                        <input type="radio" id="star5" name="rating" value="5" />
-                                                                        <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                        <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                        <input type="radio" id="star4" name="rating" value="4" />
-                                                                        <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                        <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                        <input type="radio" id="star3" name="rating" value="3" />
-                                                                        <label class="full" for="star3" title="Meh - 3 stars"></label>
+                                                                        <input type="radio" id="star5" name="rating" value="5" onclick="fnClickStar(this);" />
+                                                                        <label class="full" for="star5"></label>
+                                                                        <input type="radio" id="star4half" name="rating" value="4 and a half" onclick="fnClickStar(this);" />
+                                                                        <input type="radio" id="star4" name="rating" value="4" onclick="fnClickStar(this);" />
+                                                                        <label class="full" for="star4"></label>
+                                                                        <input type="radio" id="star3half" name="rating" value="3 and a half" onclick="fnClickStar(this);" />
+                                                                        <input type="radio" id="star3" name="rating" value="3" onclick="fnClickStar(this);" />
+                                                                        <label class="full" for="star3"></label>
                                                                         <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                        <input type="radio" id="star2" name="rating" value="2" />
-                                                                        <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                                                                        <input type="radio" id="star2" name="rating" value="2" onclick="fnClickStar(this);" />
+                                                                        <label class="full" for="star2"></label>
                                                                         <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                        <input type="radio" id="star1" name="rating" value="1" />
-                                                                        <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                                                                        <input type="radio" id="star1" name="rating" value="1" onclick="fnClickStar(this);" />
+                                                                        <label class="full" for="star1"></label>
                                                                         <input type="radio" id="starhalf" name="rating" value="half" />
                                                                     </fieldset>
                                                                 </div>
                                                             </fieldset>
-                                                            <fieldset class="spr-form-contact">
+                                                            <!-- <fieldset class="spr-form-contact">
                                                                 <div class="spr-form-contact-name">
                                                                     <input class="spr-form-input spr-form-input-text form-control" value="" placeholder="이름">
                                                                 </div>
                                                                 <div class="spr-form-contact-email">
                                                                     <input class="spr-form-input spr-form-input-email form-control" value="" placeholder="이메일">
                                                                 </div>
-                                                            </fieldset>
+                                                            </fieldset> -->
                                                             <fieldset>
                                                                 <div class="spr-form-review-body">
                                                                     <div class="spr-form-input">
-                                                                        <textarea class="spr-form-input-textarea" rows="10" placeholder="댓글내용"></textarea>
+                                                                        <textarea class="spr-form-input-textarea" rows="10"
+                                                                        	id="rvwRemark" name="rvwRemark" placeholder="댓글내용"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </fieldset>
 
                                                             <!-- 작성완료 -->
                                                             <div class="submit">
-                                                                <input type="submit" name="addComment" id="submitComment" class="btn btn-default" style="font-size: 15px;" value="작성완료">
+                                                                <input type="button" name="btnSubmit" id="btnSubmit" class="btn btn-default" style="font-size: 15px;" value="작&ensp;성&ensp;완&ensp;료"
+                                                                	onclick="fnClick(this);">
+                                                                <!-- <button class="continue btn btn-primary pull-xs-right"
+		                                                        	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
+		                                                            작&ensp;성&ensp;완&ensp;료
+		                                                        </button> -->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -358,8 +395,54 @@
 
     <!-- Template JS -->
     <script src="usr/js/theme.js"></script>
+    
+    <script type="text/javascript">
+    
+    	// 별점 클릭
+    	fnClickStar = function(obj) {
+    		$("#rvwStar").val(obj.value);
+    	}
+    	
+    	// 작성완료 클릭
+    	fnClick = function(obj) {
+    		$.ajax({
+    			async: true
+    			, cache: false
+    			, type: "post"
+    			, data: {"rvwRemark":$("#rvwRemark").val(), "rvwStar":$("#rvwStar").val(), "pdtSeq":$("#pdtSeq").val()}
+    			, url: "/reviewUsrInsert"
+    			, success: function(response) {
+    				if(response.rt == "success") {
+    					alert("댓글 등록 완료");
+    					
+    					// 댓글 제조회
+    					fhReviewReload();
+    				} else {
+    					alert("댓글 등록 오류");
+    				}
+    			}
+   				, error : function(jqXHR, textStatus, errorThrown){
+   					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+   				}    			
+    		});
+    	}
+    	
+    	// 댓글 재조회
+    	fhReviewReload = function() {
+    		$.ajax({
+    			async: true
+    			, cache: false
+    			, type: "post"
+    			, data: {"pdtSeq":$("#pdtSeq").val()}
+    			, url: "/reviewUsrReload"
+   				, error : function(jqXHR, textStatus, errorThrown){
+   					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+   				}    			
+    		}).done(function(fragment){
+    			$("#list").replaceWith(fragment);
+    		});
+    	}
+    </script>
 </body>
 
-
-<!-- product-detail07:06-->
 </html>

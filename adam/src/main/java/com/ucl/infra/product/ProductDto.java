@@ -3,34 +3,34 @@ package com.ucl.infra.product;
 import java.util.Date;
 
 public class ProductDto {
-	private String pdtSeq;
+	private String  pdtSeq;
 	private Integer pdtTypeCd;
 	private Integer pdtBrandCd;
-	private String pdtName;
+	private String  pdtName;
 	private Integer pdtAccidentCd;
 	private Integer pdtYear;
 	private Integer pdtMonth;
-	private Double pdtRunKm;
+	private Double  pdtRunKm;
 	private Integer pdtColorCd;
-	private Double pdtPrice;
+	private Double  pdtPrice;
 	private Integer pdtRecommendCd;
-	private Date pdtRegDt;
-	private Date pdtUdtDt;
+	private Date    pdtRegDt;
+	private Date    pdtUdtDt;
 	private Integer pdtDelNy;
 	
 	private Integer xpdtCount;
-	private String xpdtYearMonth;
-	private String xpdtGroupCount;
-	private String xpdtIdName;
-	private String xpdtImgF;
-	private String xpdtImgB;
+	private String  xpdtYearMonth;
+	private String  xpdtGroupCount;
+	private String  xpdtIdName;
+	private String  xpdtImgF;
+	private String  xpdtImgB;
 	private Integer xpdtStar;
-	private String xpdtTypeName;
-	private String xpdtBrandName;
-	private String xpdtAccidentName;
-	private String xpdtColorName;
-	private Date   xDateTime;
-	private String xwshSeq;
+	private String  xpdtTypeName;
+	private String  xpdtBrandName;
+	private String  xpdtAccidentName;
+	private String  xpdtColorName;
+	private Date    xDateTime;
+	private String  xwshSeq;
 	
 	//=============================================================================
 	

@@ -4,8 +4,8 @@ import com.ucl.common.base.BaseVo;
 
 public class CheckOutVo extends BaseVo {
 	private String  shSeq;
-	private Integer shPayType = null;  // 결제구분
-	private Integer shCardType = null; // 카드종류
+	private Integer shPayType  = 1;  // 결제구분
+	private Integer shCardType = 2; // 카드종류
 
 //=============================================================================	
 	

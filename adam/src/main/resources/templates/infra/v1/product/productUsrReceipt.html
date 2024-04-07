@@ -3,7 +3,7 @@
 <!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <!--<![endif]-->
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- head -->
 <div th:replace="~{infra/v1/include/headUsr :: head}"></div>
@@ -13,7 +13,7 @@
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
             <div class="container">
-				<div th:replace="~{infra/v1/include/bodyUsr :: topMenu(2)}"></div>
+            	<div th:replace="~{infra/v1/include/bodyUsr :: topMenu(2)}"></div>
             </div>
         </div>
     </header>
@@ -28,10 +28,7 @@
                     <div class="breadcrumb">
                         <ol>
                             <li><a href="/indexUsr"><span>Home</span></a></li>
-                            <li>
-                                <i class="fa fa-heart" aria-hidden="true" style="color: pink;"></i>
-                                <span><b>찜 내역</b></span>
-                            </li>
+                            <li><span><b>결제확인</b></span></li>
                         </ol>
                     </div>
                 </div>
@@ -42,25 +39,24 @@
                         <section id="main">
                             <div class="cart-grid row">
                                 <div class="col-md-12 col-xs-12 check-info">
-                                    <h1 class="title-page"><i class="fa fa-heart" style="color: pink;" aria-hidden="true"></i> 찜 목록</h1>
+                                    <h1 class="title-page">결제목록</h1>
                                     <div class="cart-container">
-                                        <div class="cart-overview js-cart" id="list">
+                                        <div class="cart-overview js-cart">
                                             <ul class="cart-items">
 												<th:block th:if="${#lists.isEmpty(list)}">
 													<li class="cart-item">
-														<div>찜 내역이 없습니다</div>
+														<div>결제목록이 없습니다</div>
 													</li>
 												</th:block>
 												
 												<th:block th:unless="${#lists.isEmpty(list)}" th:each="list : ${list}">
-													<li class="cart-item"  th:id="'wishlist'+${list.xwshSeq}" th:name="'wishlist'+${list.xwshSeq}">
-														<input type="hidden" th:name="'wishlist'+${list.xwshSeq}" th:value="${list.pdtSeq}" />
+	                                                <li class="cart-item">
 	                                                    <div class="product-line-grid row justify-content-between">
 	                                                        <!-- 차량이미지 -->
 	                                                        <div class="product-line-grid-left col-md-2">
 	                                                            <span class="product-image media-middle">
 	                                                                <a th:href="@{/productUsrDetail(pdtSeq=${list.pdtSeq})}">
-	                                                                    <img class="img-fluid" th:src="${list.xpdtImgF}" th:alt="${list.xpdtBrandName}+' '+${list.pdtName}">
+	                                                                    <img class="img-fluid" th:src="${list.xpdtImgF}" th:alt="${list.xpdtBrandName}+' '+${item.pdtName}">
 	                                                                </a>
 	                                                            </span>
 	                                                        </div>
@@ -76,15 +72,18 @@
 																		</th:block>
 	                                                                </a>
 	                                                            </div>
+	                                                            
+	                                                            <!-- 구매금액 -->
 	                                                            <div class="product-line-info product-price mt-2">
-	                                                                ￦<span class="price" th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" style="font-size: 15px;"></span>만원
+	                                                                ￦<span class="price" th:text="${#numbers.formatInteger(list.xbuyPrice, 1, 'COMMA')}" style="font-size: 15px;"></span>만원
 	                                                            </div>
 	                                                            <div class="product-line-info product-price mt-2">
-	                                                                <span style="font-size: 15px;">찜일시 </span>
-	                                                                <span style="font-size: 15px;" th:text="${#dates.format(list.xDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	                                                                <span style="font-size: 15px;">구매일시 </span>
+	                                                                <span style="font-size: 15px;" th:text="${#dates.format(list.xbuyDateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
 	                                                            </div>
 	                                                        </div>
-	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-5">
+	                                                        
+	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-6">
 	                                                            <div class="row">
 	                                                                <div class="col">
 	                                                                    <div class="label"><b>사고유무</b></div>
@@ -109,33 +108,66 @@
 																	</div>
 	                                                            </div>
 	                                                        </div>
-	
-															<!-- 삭제 -->
-	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-1 mt-5">
-	                                                            <div class="row">
-	                                                            	<input th:name="'wishlist'+${list.xwshSeq}+'_'" th:value="${list.xwshSeq}" type="hidden" />
-                                                                    <a th:name="'wishlist'+${list.xwshSeq}" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
-                                                                    	href="javascript:void(0);" onclick="fnWishlistDelete(this);">
-                                                                        <div><b style="color: red;">삭제</b></div>
-                                                                        <i class="fa fa-trash-o" aria-hidden="true" style="color: red;"></i>
-                                                                    </a>
-	                                                            </div>
-	                                                        </div>
 	                                                    </div>
 	                                                </li>
-												</th:block>
+                                                </th:block>
                                             </ul>
                                         </div>
                                     </div>
 
-									<th:block th:if="${#lists.isEmpty(list)}"></th:block>
-									<th:block th:unless="${#lists.isEmpty(list)}">	
-	                                    <div class="mt-3">
-	                                        <a href="/productUsrCheckOut" class="continue btn btn-primary pull-xs-right" style="font-size: 20px;">
-	                                            결제하기
-	                                        </a>
+									<th:block th:if    ="${#lists.isEmpty(item)}"></th:block>
+									<th:block th:unless="${#lists.isEmpty(item)}">
+	                                    <div class="cart-grid-right row justify-content-between">
+	                                        <div class="col-xs-12 col-lg-12">
+	                                            <div class="cart-summary">
+	                                                <div class="cart-detailed-totals">
+	                                                    <div class="cart-summary-products">
+	                                                        <div class="summary-label">결제품목 <span th:text="${item.xbuyCount}+'개'"></span></div>
+	                                                    </div>
+	                                                    <div class="cart-summary-line cart-total">
+	                                                        <span class="label">결제금액 </span>
+	                                                        ￦<span class="price" style="font-size: 17px; color: yellow;" th:text="${#numbers.formatInteger(item.xbuyPrice, 1, 'COMMA')}"></span>만원
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
 	                                    </div>
+	
+	                                    <div class="">
+	                                        <div class="">
+	                                            <div id="main">
+	                                                <h1 class="title-page">결제결과</h1>
+	                                                <div class="content" id="">
+	                                                    <table class="table">
+	                                                        <tbody>
+	                                                            <tr>
+	                                                                <th class="first_item">결제일시</th>
+	                                                                <td th:text="${#dates.format(item.payDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+	                                                            </tr>                                                            
+	                                                            <tr>
+	                                                                <th class="first_item">결제구분</th>
+	                                                                <td th:text="${item.xpayTypeName}"></td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">카드사</th>
+	                                                                <td th:text="${item.xpayCardName}"></td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">카드번호</th>
+	                                                                <td th:text="${item.payCardNo1}+'-****-****-'+${item.payCardNo4}"></td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">결제금액</th>
+	                                                                <td>￦<span class="price" th:text="${#numbers.formatIteger(item.xbuyPrice, 1, 'COMMA')}"></span>만원</td>
+	                                                            </tr>
+	                                                        </tbody>
+	                                                    </table>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>  
                                     </th:block>
+                                                                       
                                 </div>
                             </div>
                         </section>
@@ -169,29 +201,6 @@
 
     <!-- Template JS -->
     <script src="usr/js/theme.js"></script>
-    
-    <script type="text/javascript">
-    	fnWishlistDelete = function(obj) {
-			// 제품순번
-			// let pdtSeq = document.querySelector("input[name="+obj.name+"]").value;
-			
-			// 찜순번
-			let shSeq = document.querySelector("input[name="+obj.name+"_]").value;
-			
-			$.ajax({
-				async: true
-				, cache: false
-				, type: "post"
-				, data: {"shSeq":shSeq}
-				, url: "/productUsrWishlistDelete"
-				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				}
-			}).done(function(fragment){
-				$("#list").replaceWith(fragment);
-			});	
-		};
-	</script>
 </body>
 
 </html>

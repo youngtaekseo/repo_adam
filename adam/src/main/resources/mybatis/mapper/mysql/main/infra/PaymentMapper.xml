@@ -11,6 +11,7 @@
 			(
 			  payDate
 			, payTypeCd
+			, payCardCd
 			, payOwnerEng
 			, payCardNo1
 			, payCardNo2
@@ -26,6 +27,7 @@
 			(
 			  now()
 			, #{payTypeCd}
+			, #{payCardCd}
 			, #{payOwnerEng}
 			, #{payCardNo1}
 			, #{payCardNo2}
@@ -37,6 +39,145 @@
 			, #{payTotal}
 			, #{mbrSeq}		
 			)
-	</insert>	
+		<selectKey resultType="String" keyProperty="paySeq" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<!-- 구매내역등록 -->
+	<insert id="insertProductbuy">
+		INSERT INTO productbuy 
+			(
+			  buyDateTime
+			, buyPrice
+			, buyRegDt
+			, buyUdtDt
+			, buyDelNy
+			, paySeq
+			, pdtSeq			  
+			)
+		SELECT (SELECT aa.payDate FROM memberpayment aa WHERE aa.paySeq = #{paySeq}) 
+			, b.pdtPrice
+			, now()
+			, now()
+			, 0
+			, #{paySeq}
+			, a.pdtSeq
+		FROM productwishlist a
+		     JOIN product b
+		       ON b.pdtSeq = a.pdtSeq
+	   WHERE a.mbrSeq = #{mbrSeq}
+	</insert>
+	
+	<!-- 찜 삭제 -->
+	<delete id="deleteWishlist">
+		DELETE
+		  FROM productwishlist
+		 WHERE 1 = 1
+		   AND mbrSeq = #{mbrSeq}	
+	</delete>	
+	
+	<!-- 영수증 조회 -->
+	<select id="selectListBuy" resultMap="resultMapObj">
+		SELECT a.mbrSeq
+		     , e.cdcName xpdtTypeName
+		     , CONCAT('[', f.cdcName, ']') xpdtBrandName
+		     , d.pdtName
+		     , g.cdcName xpdtAccidentName
+			 , h.cdcName xpdtColorName 
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
+		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
+			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB	
+		     , b.paySeq
+		     , k.buyDateTime xbuyDateTime
+		     , k.buyPrice    xbuyPrice
+		  FROM members a
+		       JOIN memberpayment b
+		         ON b.mbrSeq = a.mbrSeq
+		        AND b.paySeq = #{shPaySeq} 
+		       JOIN productbuy k
+		         ON k.paySeq = b.paySeq
+		       JOIN product d
+		         ON d.pdtSeq = k.pdtSeq
+		        AND d.pdtDelNy = 0
+		       JOIN code e
+		         ON e.cdcSeq = d.pdtTypeCd
+		       JOIN code f
+		         ON f.cdcSeq = d.pdtBrandCd
+		       JOIN code g
+		         ON g.cdcSeq = d.pdtAccidentCd
+		       JOIN code h
+		         ON h.cdcSeq = d.pdtColorCd
+		       JOIN productimg j
+		         ON j.pdtSeq = d.pdtSeq
+		 WHERE 1 = 1
+		   AND a.mbrSeq = #{shMbrSeq}
+		 GROUP BY a.mbrSeq
+		     , a.mbrName
+		     , b.paySeq
+		     , k.buyDateTime
+		     , k.buyPrice
+		     , d.pdtTypeCd
+		     , e.cdcName
+		     , d.pdtBrandCd
+		     , CONCAT('[', f.cdcName, ']')
+		     , d.pdtName
+		     , d.pdtAccidentCd
+		     , g.cdcName
+		     , d.pdtColorCd
+		     , d.pdtYear
+		     , d.pdtMonth
+		     , d.pdtRunKm
+	</select>
+	
+	<!-- 영수증에 표시할 구매건수, 합계금액, 결제카드정보 -->
+	<select id="selectOneCountSumCard" resultMap="resultMapObj">
+		SELECT a.payDate
+			 , a.payTypeCd
+			 , b.cdcName xpayTypeName
+			 , a.payCardCd
+			 , c.cdcName xpayCardName
+			 , a.payOwnerEng
+			 , a.payCardNo1
+			 , a.payCardNo2
+			 , a.payCardNo3
+			 , a.payCardNo4
+			 , a.payCardCvc
+			 , a.payCardYear
+			 , a.payCardMonth
+			 , a.payTotal
+			 , a.mbrSeq
+			 , d.xbuyCount
+			 , d.xbuyPrice
+		  FROM memberpayment a
+		       JOIN code b
+		         ON b.cdcSeq = a.payTypeCd
+			   JOIN code c
+		         ON c.cdcSeq = a.payCardCd
+		       JOIN (SELECT paySeq
+		       			  , COUNT(*)      xbuyCount
+		       			  , SUM(buyPrice) xbuyPrice
+		               FROM productbuy
+		              WHERE paySeq = #{shPaySeq}
+		              GROUP BY paySeq
+		            ) d
+		         ON d.paySeq = a.paySeq
+		 WHERE a.mbrSeq = #{shMbrSeq}
+		   AND a.paySeq = #{shPaySeq}
+	</select>
+	
+	<!-- 영수증에 표시할 구매내역 건수 및 합계금액 -->
+	<select id="selectOneBuyCount" resultMap="resultMapObj">
+		SELECT COUNT(*) xbuyCount
+		     , SUM(a.buyPrice) xbuyPrice
+		  FROM productbuy a
+		       JOIN memberpayment b
+		         ON b.paySeq = a.paySeq
+		        AND b.mbrSeq = #{shMbrSeq}
+		        AND b.paySeq = #{shPaySeq}
+		 WHERE 1 = 1		   
+	</select>	
 
 </mapper>

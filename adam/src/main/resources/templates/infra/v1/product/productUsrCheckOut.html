@@ -156,7 +156,8 @@
 		                                                	<input id="payTotal" name="payTotal" th:value="${item.ckoPrice}" type="hidden" />
 		                                                    
 		                                                    <div class="form-group pl-3 pr-3 mb-4">
-		                                                        <select class="form-select form-control">
+		                                                        <select class="form-select form-control"
+		                                                        	id="payTypeCd" name="payTypeCd">
 		                                                            <option value="" th:selected="${vo.shPayType == null}">결제종류</option>
 		                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(1)}">
 		                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shPayType}"></option>
@@ -166,7 +167,7 @@
 		                                                    
 		                                                    <div class="form-group pl-3 pr-3 mb-4">
 		                                                        <select class="form-select form-control"
-		                                                        	id="payTypeCd" name="payTypeCd">
+		                                                        	id="payCardCd" name="payCardCd">
 		                                                            <option value="" th:selected="${vo.shCardType == null}">카드사</option>
 		                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(2)}">
 		                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shCardType}"></option>
@@ -183,26 +184,26 @@
 		                                                        </div>
 		                                                    </div> 
 		
-		                                                    <div class="form-group mb-4">
-		                                                        <div class="col-3">
+		                                                    <div class="form-group">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardNo1" name="payCardNo1" type="text" placeholder="카드번호"
 		                                                            	onkeyup="fnOnKeyUp(this)">
 		                                                            <span id="payCardNo1Valid" name="payCardNo1Valid" style="float: left; color: red; visibility:hidden;"></span>
 		                                                        </div>
-		                                                        <div class="col-3">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardNo2" name="payCardNo2" type="text" placeholder="카드번호"
 		                                                            	onkeyup="fnOnKeyUp(this)">
 		                                                            <span id="payCardNo2Valid" name="payCardNo2Valid" style="float: left; color: red; visibility:hidden;"></span>
 		                                                        </div>
-		                                                        <div class="col-3">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardNo3" name="payCardNo3" type="text" placeholder="카드번호"
 		                                                            	onkeyup="fnOnKeyUp(this)">
 		                                                            <span id="payCardNo3Valid" name="payCardNo3Valid" style="float: left; color: red; visibility:hidden;"></span>
 		                                                        </div>
-		                                                        <div class="col-3">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardNo4" name="payCardNo4" type="text" placeholder="카드번호"
 		                                                            	onkeyup="fnOnKeyUp(this)">
@@ -210,14 +211,14 @@
 		                                                        </div>
 		                                                    </div>     
 		
-		                                                    <div class="form-group mb-4">
-		                                                        <div class="col">
+		                                                    <div class="form-group">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardMonth" name="payCardMonth" type="text" placeholder="유효기간(월)"
 		                                                            	onkeyup="fnOnKeyUp(this)">
 		                                                            <span id="payCardMonthValid" name="payCardMonthValid" style="float: left; color: red; visibility:hidden;"></span>
 		                                                        </div>
-		                                                        <div class="col">
+		                                                        <div class="col mb-4">
 		                                                            <input class="form-control js-child-focus"
 		                                                            	id="payCardYear" name="payCardYear" type="text" placeholder="유효기간(년)"
 		                                                            	onkeyup="fnOnKeyUp(this)">
@@ -409,22 +410,33 @@
 		
 		// controller 호출
 		fnCallController = function() {
-			if(!fnValidation()) {return false;}
+			// if(!fnValidation()) {return false;}
 			
 			// 전송자료생성
-			let params = jQuery("#form").serialize();
+			// let params = jQuery("#form").serialize();
 			
 			// 저장
 			$.ajax({
 				async: true
 				, cache: false
 				, type: "post"
-				, date: params
+				, data: { "payTypeCd"   :$("#payTypeCd").val()
+					    , "payCardCd"   :$("#payCardCd").val()
+					    , "payOwnerEng" :$("#payOwnerEng").val()
+					    , "payCardNo1"  :$("#payCardNo1").val()
+					    , "payCardNo2"  :$("#payCardNo2").val()
+					    , "payCardNo3"  :$("#payCardNo3").val()
+					    , "payCardNo4"  :$("#payCardNo4").val()
+					    , "payCardMonth":$("#payCardMonth").val()
+					    , "payCardYear" :$("#payCardYear").val()
+					    , "payCardCvc"  :$("#payCardCvc").val()
+					    , "payTotal"    :$("#payTotal").val()
+					    }
 				, url: "/paymentUsrInsert"
 				, success: function(response) {
 					if(response.rt == "success") {
-						alert("결제 저장 완료");
-						location.href = "/indexUsr";
+						alert("결제 완료");
+						location.href = "/productUsrReceipt?shPaySeq="+response.paySeq;
 					} else {
 						alert("결제 저장중 오류가 있습니다");
 					};

@@ -174,8 +174,11 @@ public class ProductController {
 	// 사용자 상세화면
 	@RequestMapping(value = "/productUsrDetail")
 	public String productUsrDetail(ProductVo vo, ReviewVo rvo, Model model) throws Exception {
+		
+		// 상세조회
 		model.addAttribute("item", service.selectListCarInfo(vo));
 		
+		// 댓글조회
 		rvo.setShSeq(vo.getShSeq());
 		model.addAttribute("list", reviewService.selectList(rvo));
 

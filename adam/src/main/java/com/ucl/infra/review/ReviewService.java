@@ -11,8 +11,14 @@ public class ReviewService {
 	@Autowired
 	ReviewDao dao;
 	
+	// 댓글조회
 	public List<ReviewDto> selectList(ReviewVo vo) {
 		return dao.selectList(vo);
 	}
+	
+	// 댓글등록
+	public int insertReview(ReviewDto dto) {
+		return dao.insertReview(dto);
+	};	
 
 }
