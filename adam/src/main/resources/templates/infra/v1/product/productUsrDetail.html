@@ -194,8 +194,10 @@
                                                                 </div>
                                                                 <div class="col">
                                                                     <label style="font-size: 20px;">                                                                        
-                                                                        <a class="addToWishlist" href="#Wishlist">
-                                                                        <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                                        <a class="addToWishlist" href="javascript:void(0)">
+																		<i th:if    ="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink; cursor: default;"></i>
+			                                                            <i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="cursor: default;"></i>																			
+                                                                        <!--<i class="fa fa-heart-o" aria-hidden="true"></i>-->
                                                                         </a>
                                                                     </label>
                                                                 </div>                                                                
@@ -243,35 +245,34 @@
                                                 <div class="tab-content">													
                                                     <div id="review" class="tab-pane fade in active show">
                                                         <div class="spr-form">             
-                                                            <div class="user-comment" id="list" >
+                                                            <div class="user-comment">
                                                             	<!-- 댓글 리스트 -->
                                                             	<!-- <ul class="cart-items">
                                                             		<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 	                                                            		<li class="cart-item">
 	                                                            			<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${list.pdtSeq}" />
 		                                                            		<div class="spr-review">
-		                                                                    <div class="spr-review-header">
-		                                                                        <span class="spr-review-header-byline">
-		                                                                            <strong th:text="${list.xmbrName}"></strong>
-		                                                                            <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
-		                                                                        </span>
-		                                                                        <div class="rating">
-		                                                                            <div class="star-content">
-																						<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
-																							<div class="star"></div>	
-																						</th:block>
-																						<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
-																							<div class=""></div>	
-																						</th:block>
-		                                                                            </div>
-		                                                                        </div>
-		                                                                    </div>
-		                                                                    
-		                                                                    댓글내용
-		                                                                    <div class="spr-review-content">
-		                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
-		                                                                    </div>
-		                                                                </div>
+			                                                                    <div class="spr-review-header">
+			                                                                        <span class="spr-review-header-byline">
+			                                                                            <strong th:text="${list.xmbrName}"></strong>
+			                                                                            <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
+			                                                                        </span>
+			                                                                        <div class="rating">
+			                                                                            <div class="star-content">
+																							<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																								<div class="star"></div>	
+																							</th:block>
+																							<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+																								<div class=""></div>	
+																							</th:block>
+			                                                                            </div>
+			                                                                        </div>
+			                                                                    </div>
+			                                                                    
+			                                                                    <div class="spr-review-content">
+			                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
+			                                                                    </div>
+		                                                                	</div>
 	                                                            		</li>
                                                             		</th:block>	
                                                             	</ul> -->
