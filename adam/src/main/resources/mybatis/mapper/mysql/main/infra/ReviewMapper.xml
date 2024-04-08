@@ -13,6 +13,10 @@
              , a.rvwStar
              , a.rvwDateTime
              , a.pdtSeq
+             , (SELECT COUNT(*) 
+		          FROM productreview aa
+		         WHERE aa.pdtSeq = a.pdtSeq		              
+		       ) xpdtCount
 		  FROM productreview a
 		       LEFT JOIN members b
 		         ON b.mbrSeq = a.mbrSeq

@@ -179,7 +179,7 @@ public class ProductController {
 		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
 		// 상세조회
-		model.addAttribute("item", service.selectListCarInfo(vo));
+		model.addAttribute("item", service.selectOneCarInfo(vo));
 		
 		// 댓글조회
 		rvo.setShSeq(vo.getShSeq());

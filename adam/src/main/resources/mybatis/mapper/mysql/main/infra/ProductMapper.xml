@@ -231,6 +231,76 @@
     	OFFSET #{pgOffset}                       
 	</select>
 	
+	<!-- 사용자 차량상세조회 -->
+	<select id="selectOneCarInfo" resultMap="resultMapObj">
+		SELECT a.pdtSeq
+		     , a.pdtTypeCd
+		     , d.cdcName xpdtTypeName
+		     , a.pdtBrandCd
+		     , CONCAT('[', e.cdcName, ']') xpdtBrandName
+		     , a.pdtName
+		     , a.pdtAccidentCd
+		     , f.cdcName xpdtAccidentName
+		     , a.pdtYear
+		     , a.pdtMonth
+		     , a.pdtRunKm
+		     , a.pdtColorCd
+		     , g.cdcName xpdtColorName 
+		     , a.pdtPrice
+		     , a.pdtRecommendCd
+		     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
+		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
+             , IFNULL(c.xpdtStar ,0) xpdtStar 
+             , IFNULL(c.xpdtCount,0) xpdtCount
+               <choose>
+               		<when test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq xwshSeq</when>
+             		<otherwise>, null xwshSeq</otherwise>
+               </choose>
+		  FROM product a
+		       LEFT JOIN productimg b
+		              ON b.pdtSeq = a.pdtSeq
+               LEFT JOIN (SELECT pdtSeq
+                               , ROUND(AVG(rvwStar)) xpdtStar
+                               , COUNT(*)            xpdtCount
+                            FROM productreview
+                           GROUP BY pdtSeq
+                         ) c
+                      ON c.pdtSeq = a.pdtSeq
+                    JOIN code d
+                      ON d.cdcSeq = a.pdtTypeCd
+                    JOIN code e
+                      ON e.cdcSeq = a.pdtBrandCd
+                    JOIN code f
+                      ON f.cdcSeq = a.pdtAccidentCd
+                    JOIN code g
+                      ON g.cdcSeq = a.pdtColorCd
+                      
+			   <if test="shMbrSeq != null and !shMbrSeq.equals('')">
+               LEFT JOIN productWishlist h
+                      ON h.pdtSeq = a.pdtSeq
+                     AND h.mbrSeq = #{shMbrSeq}					   
+			   </if>
+         WHERE 1 = 1
+           AND a.pdtDelNy = 0
+		   AND a.pdtSeq = #{shSeq}
+		 GROUP BY a.pdtSeq
+		     , a.pdtTypeCd
+		     , d.cdcName
+		     , a.pdtBrandCd
+		     , CONCAT('[', e.cdcName, ']')
+		     , a.pdtName
+		     , a.pdtAccidentCd
+		     , f.cdcName
+		     , a.pdtYear
+		     , a.pdtMonth
+		     , a.pdtRunKm
+		     , a.pdtColorCd
+		     , g.cdcName
+		     , a.pdtPrice
+		     , a.pdtRecommendCd
+		       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
+	</select>	
+	
 	<!-- 구매내역, 찜내역 공통 쿼리 -->
 	<sql id="selectCommonProductSelect">
 		SELECT a.mbrSeq

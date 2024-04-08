@@ -55,10 +55,15 @@ public class ProductService {
 	public List<ProductDto> selectListBrand() {
 		return dao.selectListBrand();
 	}
-	
+
 	// 차량정보
 	public List<ProductDto> selectListCarInfo(ProductVo vo) {
 		return dao.selectListCarInfo(vo);
+	}
+	
+	// 차량상세정보
+	public ProductDto selectOneCarInfo(ProductVo vo) {
+		return dao.selectOneCarInfo(vo);
 	}
 	
 	// 구매목록

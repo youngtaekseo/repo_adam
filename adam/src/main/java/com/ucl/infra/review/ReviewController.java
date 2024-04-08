@@ -42,10 +42,9 @@ public class ReviewController {
 	// 댓글 재조회
 	@RequestMapping(value = "/reviewUsrReload")
 	public String reviewUsrReload(ReviewVo vo, Model model) {
-		
 		// 댓글조회
 		model.addAttribute("list", service.selectList(vo));
 		
-		return Commvar.PATH_PRODUCT + "productUsrDetail :: list";
+		return Commvar.PATH_PRODUCT + "productUsrDetail :: reviewList";
 	}
 }

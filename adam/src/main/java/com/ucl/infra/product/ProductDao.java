@@ -18,6 +18,8 @@ public interface ProductDao {
 	
 	// 차량정보
 	public List<ProductDto> selectListCarInfo(ProductVo vo);
+	// 차량상세정보
+	public ProductDto selectOneCarInfo(ProductVo vo);	
 	// 구매목록
 	public List<ProductDto> selectListSale(ProductVo vo);
 	// 찜목록

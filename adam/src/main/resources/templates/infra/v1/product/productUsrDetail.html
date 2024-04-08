@@ -43,7 +43,8 @@
                             <div class="content">
                                 <div class="row">
                                     <div class="col-sm-8 col-lg-12 col-md-12">
-                                        <div class="main-product-detail" th:each="item : ${item}">
+                                        <div class="main-product-detail">
+                                        	<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${item.pdtSeq}" />
                                             <h2 th:text="${item.xpdtBrandName}+' '+${item.pdtName}"></h2>
                                             <div class="product-single row">
                                                 <div class="product-detail col-xs-12 col-md-5 col-sm-5">
@@ -145,6 +146,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="product-info col-xs-12 col-md-7 col-sm-7">
                                                     <div class="detail-description">
                                                         <div class="has-border price-del">
@@ -196,7 +198,7 @@
                                                                     <label style="font-size: 20px;">                                                                        
                                                                         <a class="addToWishlist" href="javascript:void(0)">
 																		<i th:if    ="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink; cursor: default;"></i>
-			                                                            <i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="cursor: default;"></i>																			
+			                                                            <i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart-o" aria-hidden="true" style="cursor: default;"></i>																			
                                                                         <!--<i class="fa fa-heart-o" aria-hidden="true"></i>-->
                                                                         </a>
                                                                     </label>
@@ -234,52 +236,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-											
+                                            
                                             <div class="review">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active">
-                                                        <a data-toggle="tab" href="#review" class="active show">댓글 <span th:text="'('+${item.xpdtCount}+')'" class="reviewCount"></span></a>
-                                                    </li>
-                                                </ul>
+                                                <div><h3>댓글<span th:text="'('+${item.xpdtCount}+')'"></span></h3></div>
 												
                                                 <div class="tab-content">													
                                                     <div id="review" class="tab-pane fade in active show">
                                                         <div class="spr-form">             
                                                             <div class="user-comment">
-                                                            	<!-- 댓글 리스트 -->
-                                                            	<!-- <ul class="cart-items">
-                                                            		<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
-	                                                            		<li class="cart-item">
-	                                                            			<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${list.pdtSeq}" />
-		                                                            		<div class="spr-review">
-			                                                                    <div class="spr-review-header">
-			                                                                        <span class="spr-review-header-byline">
-			                                                                            <strong th:text="${list.xmbrName}"></strong>
-			                                                                            <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
-			                                                                        </span>
-			                                                                        <div class="rating">
-			                                                                            <div class="star-content">
-																							<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
-																								<div class="star"></div>	
-																							</th:block>
-																							<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
-																								<div class=""></div>	
-																							</th:block>
-			                                                                            </div>
-			                                                                        </div>
-			                                                                    </div>
-			                                                                    
-			                                                                    <div class="spr-review-content">
-			                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
-			                                                                    </div>
-		                                                                	</div>
-	                                                            		</li>
-                                                            		</th:block>	
-                                                            	</ul> -->
-                                                            	
-                                                            	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
-																	<input id="pdtSeq" name="pdtSeq" type="hidden" th:value="${list.pdtSeq}" />                                                            		
+                                                            	<!-- 댓글 리스트 -->      
 																	<div class="spr-review">
+																	<div id="reviewList">
+                                                            	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 	                                                                    <div class="spr-review-header">
 	                                                                        <span class="spr-review-header-byline">
 	                                                                            <strong th:text="${list.xmbrName}"></strong>
@@ -299,8 +267,9 @@
 	                                                                    <div class="spr-review-content">
 	                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
 	                                                                    </div>
-	                                                                </div>                                                            	
                                                             	</th:block>
+                                                            	</div>
+	                                                                </div>                                                            	
                                                             </div>
                                                         </div>
 
@@ -398,7 +367,9 @@
     <script src="usr/js/theme.js"></script>
     
     <script type="text/javascript">
-    
+    	// 제품순번
+    	let pdtSeq = $("#pdtSeq").val();
+    	
     	// 별점 클릭
     	fnClickStar = function(obj) {
     		$("#rvwStar").val(obj.value);
@@ -410,7 +381,7 @@
     			async: true
     			, cache: false
     			, type: "post"
-    			, data: {"rvwRemark":$("#rvwRemark").val(), "rvwStar":$("#rvwStar").val(), "pdtSeq":$("#pdtSeq").val()}
+    			, data: {"rvwRemark":$("#rvwRemark").val(), "rvwStar":$("#rvwStar").val(), "pdtSeq":pdtSeq}
     			, url: "/reviewUsrInsert"
     			, success: function(response) {
     				if(response.rt == "success") {
@@ -434,13 +405,15 @@
     			async: true
     			, cache: false
     			, type: "post"
-    			, data: {"pdtSeq":$("#pdtSeq").val()}
+    			, data: {"shSeq":pdtSeq}
     			, url: "/reviewUsrReload"
+    			, success: function(fragment) {
+    				//$("#reviewList").replaceWith(fragment);
+    				$("#reviewList").append(fragment);
+    			}
    				, error : function(jqXHR, textStatus, errorThrown){
    					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
    				}    			
-    		}).done(function(fragment){
-    			$("#list").replaceWith(fragment);
     		});
     	}
     </script>

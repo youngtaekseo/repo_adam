@@ -29,8 +29,8 @@ public class ProductVo extends BaseVo {
 	private String[] shCheckboxBrandArray; // 브랜드
 	private String[] shCheckboxColorArray; // 색상
 	
-	private Integer shFromYear;  // 현재년도
-	private Integer shToYear;    // 현재년도 - shRange 결과 년도
+	private Integer shFromYear;   // 현재년도
+	private Integer shToYear;     // 현재년도 - shRange 결과 년도
 	private Integer shRange = 20; // 현재년도 이전 몇년까지 표시할것이가 : 예) 2024 - 3 하면 2024, 2023, 2022
 	
 //=============================================================================
