@@ -33,8 +33,9 @@
        <!-- search -->
 	<div id="search_widget" class="col-sm-7 col-md-8 align-items-center justify-content-end d-flex">
         <form method="get">
-            <input type="text" name="s" value="" placeholder="차량을 검색하세요" class="ui-autocomplete-input" autocomplete="off">
-            <button type="button">
+            <input type="text" id="shPdtName" name="shPdtName" value="" placeholder="차량을 검색하세요" class="ui-autocomplete-input" autocomplete="off"
+            	onkeyup="fnKeyup(this);">
+            <button type="button" onclick="fnSearch();">
                 <i class="fa fa-search"></i>
             </button>
         </form>
@@ -42,7 +43,7 @@
         <!-- 로그인 -->
         <div class="mr-4">
 			<th:block th:if="${session.sessMbrName != null and session.sessMbrName != ''}">
-                <a class="" href="#" rel="nofollow" title="로그아웃" style="border: none;" th:onclick="javascript:fnLogoutUsr()">
+                <a class="" href="javascript:void(0)" rel="nofollow" title="로그아웃" style="border: none;" th:onclick="javascript:fnLogoutUsr()">
                     <i class="fa fa-sign-out"></i>
                     <span>로그아웃</span>
                 </a>								

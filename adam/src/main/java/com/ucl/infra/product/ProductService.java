@@ -61,6 +61,12 @@ public class ProductService {
 		return dao.selectListCarInfo(vo);
 	}
 	
+	// 차량명으로 검색
+	public List<ProductDto> selectListCarName(ProductVo vo) {
+		return dao.selectListCarName(vo);
+	}
+	
+	
 	// 차량상세정보
 	public ProductDto selectOneCarInfo(ProductVo vo) {
 		return dao.selectOneCarInfo(vo);

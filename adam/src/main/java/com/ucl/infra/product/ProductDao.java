@@ -15,9 +15,11 @@ public interface ProductDao {
 	public int selectOneDataCount(ProductVo vo);  
 	public int selectOneUsrDataCount(ProductVo vo);
 	public List<ProductDto> selectListBrand();
-	
+
 	// 차량정보
 	public List<ProductDto> selectListCarInfo(ProductVo vo);
+	// 차량명으로 검색
+	public List<ProductDto> selectListCarName(ProductVo vo);
 	// 차량상세정보
 	public ProductDto selectOneCarInfo(ProductVo vo);	
 	// 구매목록

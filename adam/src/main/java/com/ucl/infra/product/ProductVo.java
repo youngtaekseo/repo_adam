@@ -24,10 +24,11 @@ public class ProductVo extends BaseVo {
 	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
 	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
 	private String  shMbrSeq;               // 회원순번
+	private String  shPdtName;				// 차량명
 
-	private String[] shCheckboxTypeArray;  // 차종
-	private String[] shCheckboxBrandArray; // 브랜드
-	private String[] shCheckboxColorArray; // 색상
+	private String[] shCheckboxTypeArray  = null; // 차종
+	private String[] shCheckboxBrandArray = null; // 브랜드
+	private String[] shCheckboxColorArray = null; // 색상
 	
 	private Integer shFromYear;   // 현재년도
 	private Integer shToYear;     // 현재년도 - shRange 결과 년도
@@ -190,5 +191,11 @@ public class ProductVo extends BaseVo {
 	}
 	public void setShMbrSeq(String shMbrSeq) {
 		this.shMbrSeq = shMbrSeq;
+	}
+	public String getShPdtName() {
+		return shPdtName;
+	}
+	public void setShPdtName(String shPdtName) {
+		this.shPdtName = shPdtName;
 	}	
 }

@@ -245,9 +245,8 @@
                                                         <div class="spr-form">             
                                                             <div class="user-comment">
                                                             	<!-- 댓글 리스트 -->      
-																	<div class="spr-review">
-																	<div id="reviewList">
-                                                            	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+																<div class="spr-review" id="reviewList">
+                                                        			<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 	                                                                    <div class="spr-review-header">
 	                                                                        <span class="spr-review-header-byline">
 	                                                                            <strong th:text="${list.xmbrName}"></strong>
@@ -267,9 +266,8 @@
 	                                                                    <div class="spr-review-content">
 	                                                                        <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
 	                                                                    </div>
-                                                            	</th:block>
-                                                            	</div>
-	                                                                </div>                                                            	
+                                                        			</th:block>
+                                                                </div>                                                            	
                                                             </div>
                                                         </div>
 
@@ -381,14 +379,18 @@
     			async: true
     			, cache: false
     			, type: "post"
-    			, data: {"rvwRemark":$("#rvwRemark").val(), "rvwStar":$("#rvwStar").val(), "pdtSeq":pdtSeq}
+    			, data: {"rvwRemark":$("#rvwRemark").val()
+    					,"rvwStar"  :$("#rvwStar"  ).val()
+    					,"pdtSeq"   :pdtSeq
+    					}
     			, url: "/reviewUsrInsert"
     			, success: function(response) {
     				if(response.rt == "success") {
     					alert("댓글 등록 완료");
     					
+    					location.href="/productUsrDetail?shSeq="+pdtSeq;
     					// 댓글 제조회
-    					fhReviewReload();
+    					// fhReviewReload();
     				} else {
     					alert("댓글 등록 오류");
     				}
@@ -408,8 +410,7 @@
     			, data: {"shSeq":pdtSeq}
     			, url: "/reviewUsrReload"
     			, success: function(fragment) {
-    				//$("#reviewList").replaceWith(fragment);
-    				$("#reviewList").append(fragment);
+    				$("#reviewList").replaceWith(fragment);
     			}
    				, error : function(jqXHR, textStatus, errorThrown){
    					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);

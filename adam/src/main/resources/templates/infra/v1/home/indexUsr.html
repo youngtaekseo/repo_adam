@@ -149,7 +149,7 @@
 			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 																					
 			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnClickWishlist(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}+'__'" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}+'__'" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
 			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}+'__'" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart-o" aria-hidden="true" style=""></i>
 			                                                                        </a>
 			                                                                    <!--</form>-->
@@ -222,8 +222,8 @@
 			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 			                                                                        
 			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnClickWishlist(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style=""></i>
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart-o" aria-hidden="true" style=""></i>
 			                                                                        </a>
 			                                                                    <!--</form>-->
 			                                                                </div>	

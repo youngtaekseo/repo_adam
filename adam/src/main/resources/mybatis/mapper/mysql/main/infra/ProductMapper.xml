@@ -35,7 +35,7 @@
 			<when test="shOptionYear == 2">AND a.pdtMonth <![CDATA[<=]]> #{shOptionMonthFrom}</when>
 			<when test="shOptionYear == 3">AND a.pdtMonth >= #{shOptionMonthFrom}</when>
 		</choose>			
-
+		
 		<if test="shCarType   != null and !shCarType.equals('')">  AND a.pdtTypeCd      = #{shCarType}</if>
 		<if test="shCarBrand  != null and !shCarBrand.equals('')"> AND a.pdtBrandCd     = #{shCarBrand}</if>
 		<if test="shCarColor  != null and !shCarColor.equals('')"> AND a.pdtColorCd     = #{shCarColor}</if>
@@ -171,6 +171,7 @@
 					   </if>
 		         WHERE 1 = 1
 		           AND a.pdtDelNy = 0
+		           <if test="shPdtName != null and !shPdtName.equals('')">AND a.pdtName LIKE CONCAT('%', #{shPdtName},'%')</if>
 				   <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
 		           <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
 		               
@@ -299,8 +300,8 @@
 		     , a.pdtPrice
 		     , a.pdtRecommendCd
 		       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
-	</select>	
-	
+	</select>
+		
 	<!-- 구매내역, 찜내역 공통 쿼리 -->
 	<sql id="selectCommonProductSelect">
 		SELECT a.mbrSeq
