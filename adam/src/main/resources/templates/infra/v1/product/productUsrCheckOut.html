@@ -43,6 +43,8 @@
                                     <div class="cart-container">
                                         <div class="cart-overview js-cart" id="list">
                                             <ul class="cart-items">
+                                            	<input id="wishlistDeleteSeq" value="" type="hidden" />
+                                            
 												<th:block th:if="${#lists.isEmpty(list)}">
 													<li class="cart-item">
 														<div>결제대상이 없습니다</div>
@@ -109,12 +111,13 @@
 															<!-- 삭제 -->
 	                                                        <div class="product-line-grid-right text-center product-line-actions col-md-1 mt-5">
 	                                                            <div class="row">
-	                                                            	<input th:name="'wishlist'+${list.xwshSeq}" th:value="${list.xwshSeq}" type="hidden" />
-                                                                    <a th:name="'wishlist'+${list.xwshSeq}" rel="nofollow" data-link-action="delete-from-cart" data-id-product="1"
-                                                                    	href="javascript:void(0);" onclick="fnWishlistDelete(this);">
-                                                                        <div><b style="color: red;">삭제</b></div>
-                                                                        <i class="fa fa-trash-o" aria-hidden="true" style="color: red;"></i>
-                                                                    </a>
+	                                                            	<input th:name="'wishlist'+${list.xwshSeq}+'_'" th:value="${list.xwshSeq}" type="hidden" />
+                                                                    <button th:name="'wishlist'+${list.xwshSeq}" type="button" class="btn btn-primary"
+                                                                    	data-bs-toggle="modal" data-bs-target="#modalFormDelete"
+																		style="font-size: 13px;" onclick="fnButtonNameChange(this);">
+																	  <i class="fa fa-trash-o" aria-hidden="true"></i>
+																	  삭제
+																	</button>
 	                                                            </div>
 	                                                        </div>
 	                                                    </div>
@@ -263,6 +266,12 @@
             <i class="fa fa-long-arrow-up"></i>
         </a>
     </div>
+    
+    <!-- modalFormDelete(버튼명1, 버튼명2) -->
+    <div th:replace="~{infra/v1/include/modalSdm :: modalFormDelete('취소', '삭제')}"></div>
+    
+    <!-- modalFormOneBtn(타이틀, 내용, 버튼명) -->
+    <div th:replace="~{infra/v1/include/modalSdm :: modalFormOneBtn('확인', '', '확인')}"></div>        
 
     <!-- Vendor JS -->
     <script src="usr/libs/jquery/jquery.min.js"></script>
@@ -364,10 +373,16 @@
 			};	
 		};
 		
+		// 삭제버튼 클릭
+    	fnButtonNameChange = function(obj) {
+    		let objValue = document.querySelector("input[name="+obj.name+"_]").value;
+    		$("#wishlistDeleteSeq").val(objValue);
+    	}
+    	
     	// 삭제버튼 클릭
-    	fnWishlistDelete = function(obj) {
+    	fnDataDelete = function() {
      		// 찜순번
-    		let shSeq = document.querySelector("input[name="+obj.name+"]").value;
+    		let shSeq = $("#wishlistDeleteSeq").val(); //document.querySelector("input[name="+obj.name+"]").value;
      		
      		// 삭제
 			$.ajax({
@@ -377,7 +392,7 @@
 				, data: {"shSeq":shSeq}
 				, url: "/checkoutWishlistDelete"
 				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}
 			}).done(function(fragment){
 				$("#list").replaceWith(fragment);
@@ -396,7 +411,8 @@
 				, data: {}
 				, url: "/checkoutWishlistReload"
 				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					
 				}
 			}).done(function(fragment){
 				$("#item").replaceWith(fragment);
@@ -435,18 +451,20 @@
 				, url: "/paymentUsrInsert"
 				, success: function(response) {
 					if(response.rt == "success") {
-						alert("결제 완료");
+						/* alert("결제 완료"); */
+						fnModalFormOneBtnShow("결제확인", "결제 완료");
 						location.href = "/productUsrReceipt?shPaySeq="+response.paySeq;
 					} else {
-						alert("결제 저장중 오류가 있습니다");
+						/* alert("결제 저장중 오류가 있습니다"); */
+						fnModalFormOneBtnShow("결제확인", "결제 저장중 오류가 있습니다");
 					};
 				}
 				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}				
 			});
 
-		};	
+		};
 		
 		// 필수입력 확인
 	    fnValidationForm = function() {

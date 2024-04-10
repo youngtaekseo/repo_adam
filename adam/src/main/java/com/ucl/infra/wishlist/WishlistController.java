@@ -37,6 +37,9 @@ public class WishlistController {
 					returnMap.put("rt", "fail");
 				}
 			} else {
+				// 로그인 사용자 순번 설정
+				vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+				// 찜 순번
 				vo.setShSeq(result);
 				if(service.deleteWishlist(vo) == 1) {
 					returnMap.put("rt", "exist");
@@ -54,8 +57,12 @@ public class WishlistController {
 	// 찜 삭제
 	@ResponseBody
 	@RequestMapping(value = "/deleteWishlist")
-	public Map<String, Object> deleteWishlist(WishlistVo vo) {
+	public Map<String, Object> deleteWishlist(WishlistVo vo, HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		// 로그인 회원순번 설정
+		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
 		if(service.deleteWishlist(vo) == 1) {
 			returnMap.put("rt", "success");
 		} else {

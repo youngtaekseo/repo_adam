@@ -1,6 +1,6 @@
 
 // 차량조회
-fnKeyup = function(obj) {
+fnKeyupSearch = function() {
 	if(window.event.keyCode == 13) {
 		fnSearch();
 	}

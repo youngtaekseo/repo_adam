@@ -205,7 +205,7 @@
 		           </if>
 		           
 		           <!-- 판매가액 -->
-		           <if test="shPriceFrom != null and shPriceFrom != 0 and shPriceTo != null and shPriceTo != 0">
+		           <if test="shPriceFrom != null and shPriceTo != null and shPriceTo != 0">
 		           		AND a.pdtPrice BETWEEN #{shPriceFrom} AND #{shPriceTo}
 		           </if>
 		           

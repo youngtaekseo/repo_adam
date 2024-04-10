@@ -25,7 +25,7 @@
 				  , url: "/memberSdmLogOut"
 				  , success: function(response){
 					  if(response.rt == "success") {
-						  location.href = "/loginUsr";
+						  location.href = "/indexUsr";
 					  } else {
 						  alert("로그아웃 실패");
 					  }

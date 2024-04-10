@@ -42,7 +42,6 @@ public class ProductController {
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
 	public String productSdmList(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
-
 		UtilFunction.setSearch(vo);
 
 		int rowCount = service.selectOneDataCount(vo);
@@ -145,11 +144,9 @@ public class ProductController {
 	// 조회화면
 	@RequestMapping(value = "/productUsrList")
 	public String productUsrList(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) throws Exception {
-		
-		System.out.println("vo.getShPdtName(): " +vo.getShPdtName());
-		
+
 		// 현재년도
-		if(vo.getShFromYear() == null) {			
+		if(vo.getShFromYear() == null) {
 			vo.setShFromYear(UtilDateTime.nowYearInteger());
 		}
 		
@@ -171,40 +168,7 @@ public class ProductController {
 			vo.setPagingVo(rowCount);
 
 			model.addAttribute("list", service.selectListCarInfo(vo));
-			model.addAttribute("listBrand", service.selectListBrand());
-		}
-
-		return Commvar.PATH_PRODUCT + "productUsrList";
-	}
-	
-	// 차량명으로 조회
-	@RequestMapping(value = "/productUsrListSearch")
-	public String productUsrListSearch(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) throws Exception {
-		
-		// 현재년도
-		if(vo.getShFromYear() == null) {			
-			vo.setShFromYear(UtilDateTime.nowYearInteger());
-		}
-		
-		// 과거년도
-		if(vo.getShToYear() == null) {	
-			vo.setShToYear(vo.getShFromYear() - vo.getShRange());
-		}
-		
-		// 로그인 회원순번 설정
-		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
-		
-		// 전체자료건수
-		int rowCount = service.selectOneUsrDataCount(vo);
-
-		if (rowCount > 0) {
-			vo.setPgRowCount(vo.getPgRowCountUsr());
-			vo.setPgPageCount(vo.getPgPageCountUsr());
-			
-			vo.setPagingVo(rowCount);
-
-			model.addAttribute("list", service.selectListCarInfo(vo));
-			model.addAttribute("listBrand", service.selectListBrand());
+			//model.addAttribute("listBrand", service.selectListBrand());
 		}
 
 		return Commvar.PATH_PRODUCT + "productUsrList";
@@ -213,7 +177,7 @@ public class ProductController {
 	// 차량재조회
 	@RequestMapping(value = "/selectListReload")
 	public String selectListReload(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) throws Exception {
-		
+
 		// 로그인 회원순번 설정
 		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
@@ -229,7 +193,7 @@ public class ProductController {
 			model.addAttribute("list", service.selectListCarInfo(vo));
 		}
 
-		return Commvar.PATH_PRODUCT + "productUsrList :: listCar";
+		return Commvar.PATH_PRODUCT + "productUsrList"; // :: listCar";
 	}
 
 	// 사용자 상세화면
@@ -282,6 +246,9 @@ public class ProductController {
 	public String productUsrWishlistDelete(ProductVo vo, WishlistVo wvo, Model model, HttpSession httpSession) throws Exception {
 		
 		// 찜 삭제
+		// 로그인 회원순번 설정
+		wvo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		// 찜 순번
 		wvo.setShSeq(vo.getShSeq());
 		wishlistService.deleteWishlist(wvo);
 		

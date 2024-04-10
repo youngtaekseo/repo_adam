@@ -43,6 +43,9 @@ public class CheckOutController {
 	public String checkoutWishlistDelete(@ModelAttribute("vo") CheckOutVo vo, WishlistVo wvo, Model model, HttpSession httpSession) throws Exception {
 		
 		// 찜 삭제
+		// 로그인 회원순번 설정
+		wvo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		//찜 순번
 		wvo.setShSeq(vo.getShSeq());
 		wishlistService.deleteWishlist(wvo);
 		

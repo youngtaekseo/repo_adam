@@ -14,8 +14,8 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionRunKmFrom;		// 주행기록 시작값
 	private Integer shOptionRunKmTo;		// 주행기록 종료값
 	private Integer shOptionYear  = null;	// 연식
-	private Integer shOptionYearFrom; 		// 연식(년) 시작값
-	private Integer shOptionYearTo;   		// 연식(년) 종료값
+	private Integer shOptionYearFrom = null;// 연식(년) 시작값
+	private Integer shOptionYearTo   = null;// 연식(년) 종료값
 	private Integer shOptionMonthFrom; 		// 연식(월) 시작값
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
 	private Integer shPrice;   				// 판매가액

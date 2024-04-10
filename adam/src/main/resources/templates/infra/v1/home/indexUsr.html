@@ -255,6 +255,9 @@
             <i class="fa fa-long-arrow-up"></i>
         </a>
     </div>
+    
+    <!-- modalFormOneBtn(타이틀, 내용, 버튼명) -->
+    <div th:replace="~{infra/v1/include/modalSdm :: modalFormOneBtn('확인', '', '확인')}"></div>      
 
 	<script src="sdm/js/common.js"></script>
 	
@@ -299,21 +302,21 @@
 				, url: "/insertWishlist"
 				, success: function(response) {
 					if(response.rt == "success") {
-						alert("찜 등록 성공");
+						fnModalFormOneBtnShow("등록", "찜 등록 성공");
 						heart.setAttribute("style", "color:pink;");
 						wishlistWshSeq.setAttribute("value", response.wshSeq);
 					} else if(response.rt == "fail") {
-						alert("찜 등록중 오류가 있습니다");
+						fnModalFormOneBtnShow("등록", "찜 등록중 오류가 있습니다");
 					} else if(response.rt == "exist") {
-						alert("찜 등록 삭제");
+						fnModalFormOneBtnShow("취소", "찜 등록 취소");
 						wishlistWshSeq.setAttribute("value", "x");
 						heart.setAttribute("style", "");
 					} else if(response.rt == "login") {
-						alert("로그인 후 진행 가능합니다");
+						fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
 					}
 				}
 				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}
 			});
 		}
@@ -322,13 +325,6 @@
 // function
 // ============================================================================
 
-		// controller 호출
-		fnCallController = function() {
-			// 조회
-	       	form.action = goUrlUsrList;
-	       	form.submit(); 
-		};
-				
 	</script>		
 		    
 </body>

@@ -43,6 +43,7 @@
 		  FROM productwishlist
 		 WHERE 1 = 1
 		   AND wshSeq = #{shSeq}
+		   AND mbrSeq = #{shMbrSeq}
 	</delete>   
 
 </mapper>
