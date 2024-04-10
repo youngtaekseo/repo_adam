@@ -127,18 +127,17 @@
 	                                                    </div>
 	                                                </li>
 												</th:block>
+												
+												<th:block th:unless="${#lists.isEmpty(list)}">	
+				                                    <div class="mt-3">
+				                                        <a href="/productUsrCheckOut" class="continue btn btn-primary pull-xs-right" style="font-size: 20px;">
+				                                            결제하기
+				                                        </a>
+				                                    </div>
+			                                    </th:block>												
                                             </ul>
                                         </div>
                                     </div>
-
-									<th:block th:if="${#lists.isEmpty(list)}"></th:block>
-									<th:block th:unless="${#lists.isEmpty(list)}">	
-	                                    <div class="mt-3">
-	                                        <a href="/productUsrCheckOut" class="continue btn btn-primary pull-xs-right" style="font-size: 20px;">
-	                                            결제하기
-	                                        </a>
-	                                    </div>
-                                    </th:block>
                                 </div>
                             </div>
                         </section>
