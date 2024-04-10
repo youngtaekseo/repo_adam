@@ -149,8 +149,8 @@
 			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 																					
 			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnClickWishlist(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}+'__'" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}+'__'" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart-o" aria-hidden="true" style=""></i>
+			                                                                            <i th:if    ="${list.xwshSeq != null}"  th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}"  th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart-o" aria-hidden="true" style></i>
 			                                                                        </a>
 			                                                                    <!--</form>-->
 			                                                                </div>	                                                                        
@@ -215,17 +215,17 @@
 	                                                                        
 	                                                                        <!-- 찜추가 -->
 			                                                                <div class="product-buttons d-flex justify-content-center">
-			                                                                    <!--<form action="#addToWishlist" method="post" class="formAddToWishlist">-->
+			                                                                    <!-- <form action="#addToWishlist" method="post" class="formAddToWishlist"> -->
 			                                                                        <input th:name="'wishlistNew'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
 			                                                                        
 			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
 			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 			                                                                        
-			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnClickWishlist(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart-o" aria-hidden="true" style=""></i>
+			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="2" th:onclick="fnClickWishlist(this);">
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:id="'wishlistNew'+${list.pdtSeq}+'__'" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}" th:id="'wishlistNew'+${list.pdtSeq}+'__'" class="fa fa-heart-o" aria-hidden="true" style></i>
 			                                                                        </a>
-			                                                                    <!--</form>-->
+			                                                                    <!-- </form> -->
 			                                                                </div>	
 	                                                                    </div>
 	                                                                </div>
@@ -284,15 +284,15 @@
 			// 제품순번
 			let wishlist = document.querySelector("input[name="+obj.name+"]");
 			let pdtSeq   = wishlist.value;
-			let heart    = document.querySelector("i[id="+obj.name+"__]");
+			
+			// 하트 이미지
+			let heart = document.querySelector("i[id="+obj.name+"__]");
 			
 			// 찜순번
 			let wishlistWshSeq = document.querySelector("input[name="+obj.name+"_]");
 			let wshSeq         = wishlistWshSeq.value;
 			
-			//alert("wishlist.name: "+wishlist.name);
-			//alert("heart.name: "+heart.id);
-			//alert("wishlistWshSeq.name: "+wishlistWshSeq.name);
+			//alert("제품순번: "+wishlist.name+", 하트이미지: "+heart.id+", 찜순번: "+wshSeq);
 			
 			$.ajax({
 				async: true
@@ -302,15 +302,17 @@
 				, url: "/insertWishlist"
 				, success: function(response) {
 					if(response.rt == "success") {
-						fnModalFormOneBtnShow("등록", "찜 등록 성공");
-						heart.setAttribute("style", "color:pink;");
+						heart.setAttribute("class", "fa fa-heart");
+						heart.style.color = "pink";
 						wishlistWshSeq.setAttribute("value", response.wshSeq);
+						fnModalFormOneBtnShow("등록", "찜 등록 성공");
 					} else if(response.rt == "fail") {
 						fnModalFormOneBtnShow("등록", "찜 등록중 오류가 있습니다");
 					} else if(response.rt == "exist") {
-						fnModalFormOneBtnShow("취소", "찜 등록 취소");
+						heart.setAttribute("class", "fa fa-heart-o");
+						heart.style.color = "";
 						wishlistWshSeq.setAttribute("value", "x");
-						heart.setAttribute("style", "");
+						fnModalFormOneBtnShow("취소", "찜 등록 취소");
 					} else if(response.rt == "login") {
 						fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
 					}

@@ -164,6 +164,9 @@
             <i class="fa fa-long-arrow-up"></i>
         </a>
     </div>
+    
+    <!-- modalFormOneBtn(타이틀, 내용, 버튼명) -->
+    <div th:replace="~{infra/v1/include/modalSdm :: modalFormOneBtn('확인', '', '확인')}"></div>    
 
     <!-- Vendor JS -->
     <script src="usr/libs/jquery/jquery.min.js"></script>
@@ -255,13 +258,13 @@
 					if(response.rt == "success") {
 						fnCallController();
 					} else if(response.rt == "email"){
-						alert("같은 이메일이 존재합니다");
+						fnModalFormOneBtnShow("확인", "같은 이메일이 존재합니다");
 					} else if(response.rt == "noMatch"){
-						alert("비밀번호 불일치");
+						fnModalFormOneBtnShow("확인", "비밀번호 불일치");
 					};
 				}
 				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 				}
 			});
 		};
