@@ -124,7 +124,7 @@
 	                                                                            
 	                                                                            <div class="rating">
 	                                                                                <div class="star-content">
-																						<th:block th:if="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																						<th:block th:if    ="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
 																							<div class="star"></div>	
 																						</th:block>
 																						<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
@@ -142,17 +142,17 @@
 	                                                                        
 																			<!-- 찜추가 -->
 			                                                                <div class="product-buttons d-flex justify-content-center">
-			                                                                    <!--<form method="post" class="formAddToWishlist">-->
+			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
 			                                                                        <input th:name="'wishlistBest'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
 			                                                                        
 			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
 			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 																					
 			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnClickWishlist(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}"  th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart"   aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}"  th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart-o" aria-hidden="true" style></i>
+			                                                                            <i th:if    ="${list.xwshSeq != null}" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                                            <i th:unless="${list.xwshSeq != null}" th:id="'wishlistBest'+${list.pdtSeq}+'__'" class="fa fa-heart" aria-hidden="true"></i>
 			                                                                        </a>
-			                                                                    <!--</form>-->
+			                                                                    </form>
 			                                                                </div>	                                                                        
 	                                                                    </div>
 	                                                                </div>
