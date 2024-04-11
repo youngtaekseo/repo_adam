@@ -159,6 +159,9 @@
                   
                   				<!-- 조회결과 리스트 내용 -->					
                   				<tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  					<!-- 체크된 항목 담을 태그 -->
+                  					<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
+                  						
                   					<tr th:if="${#lists.isEmpty(list)}">
                   						<td colspan="9" class="text-center text-purple-600"> 
 											There is no data !!!
@@ -167,8 +170,9 @@
                   
 				                  	<tr id="dataList" class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 				                  		<td class="px-2 py-1">
-				                  			<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+				                  			<input th:if="${list.cdcSeq} != null" class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
 				                  				id = "checkbox" name="checkbox" type="checkbox"
+				                  				th:value="${list.cdgSeq+list.cdcSeq}"
 				                        		style="height: 15px; width: 15px">
 				                    	</td>
 				                    	
@@ -326,7 +330,8 @@
           		</button>
           		<button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
             		@click="closeModal"
-            		id="lineDelete" name="lineDelete">
+            		id="lineDelete" name="lineDelete"
+            		onclick="fnSelectedDelete();"/>
 					<!-- <a th:href="@{/codeSdmDelete(cdcSeq=${item.cdcSeq})}">삭제</a> -->
 					삭제
           		</button>            
@@ -462,6 +467,46 @@
 			
 			return validChk;
 		};
+		
+		// 선택된 자료 삭제
+		fnSelectedDelete = function() {
+			
+			// 체크된 항목 담을 배열변수
+			let checkedArray = [];
+			
+			let checkedList = document.querySelectorAll("input[name=checkbox]");
+			
+			for(let i = 0; i < checkedList.length; i++) {
+				if(checkedList[i].checked) {
+					checkedArray[i] = checkedList[i].value;
+				} 
+			}
+			
+			document.querySelector("input[name='shCheckedArray']").value = checkedArray;
+			
+			if(checkedArray.length > 0) {
+				$.ajax({
+					async: true
+					, cache: false
+					, tpye: "post"
+					, data: {"shCheckedArray":$("#shCheckedArray").val()}
+					, url: "/codeSdmListDelete"
+					, success: function(response) {
+						if(response.rt == "success") {
+							// Controller 호출
+							fnCallController();
+						} else {
+							alert("삭제중 오류");
+						}
+					}
+					, error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+			} else {
+				alert("선택된 자료가 없습니다");
+			}
+		}
 
     </script>
      

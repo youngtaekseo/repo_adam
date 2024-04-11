@@ -4,10 +4,12 @@ public class BaseVo {
 	// list
 	private Integer shDelNy = 0; 	// 삭제여부	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
 	private Integer shOptionDate=0;	// 날짜조건 	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private String shDateStart;		// 시작일자
-	private String shDateEnd;		// 종료일자
+	private String  shDateStart;	// 시작일자
+	private String  shDateEnd;		// 종료일자
 	private Integer shOption;		// 검색어조건	/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
-	private String shValue;			// 검색어
+	private String  shValue;		// 검색어
+	
+	private String[] shCheckedArray = null; // 체크항목 삭제자료 담을 변수
 
 	// paging
 	private int     pgPage      = 1;  // 시작페이지
@@ -83,6 +85,14 @@ public class BaseVo {
 		this.shValue = shValue;
 	}
 	
+	public String[] getShCheckedArray() {
+		return shCheckedArray;
+	}
+
+	public void setShCheckedArray(String[] shCheckedArray) {
+		this.shCheckedArray = shCheckedArray;
+	}
+
 	// paging
 	//=========================================================================
 	public void setPagingVo(int totalCount) {

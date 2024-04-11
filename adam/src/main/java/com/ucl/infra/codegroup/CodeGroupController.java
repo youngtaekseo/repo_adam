@@ -1,10 +1,14 @@
 package com.ucl.infra.codegroup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -78,6 +82,21 @@ public class CodeGroupController {
 	public String codeGroupSdmUdtDelNy(CodeGroupDto dto) throws Exception {
 		service.updateDelNy(dto);
 		return "redirect:/codeGroupSdmList";
+	}
+	
+	// 다중 선택자료 삭제
+	@ResponseBody
+	@RequestMapping(value = "/codeGroupSdmListDelete")
+	public Map<String, Object> codeGroupSdmListDelete(CodeGroupVo vo) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.deleteList(vo) > 0) { 
+			returnMap.put("rt", "success"); 
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		  
+		return returnMap;
 	}
 	
 	// 조회조건 및 페이징정보 포함된 url 생성

@@ -73,4 +73,9 @@ public class CodeService {
 		}
 		return rt;
 	}	
+	
+	// 다중선택자료 삭제
+	public int deleteList(CodeVo vo) {
+		return dao.deleteList(vo);
+	};
 }

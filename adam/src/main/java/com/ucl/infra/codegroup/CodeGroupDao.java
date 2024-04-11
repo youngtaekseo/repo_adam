@@ -20,4 +20,7 @@ public interface CodeGroupDao {
 	public int updateDelNy(CodeGroupDto dto);
 	
 	public int getCount(CodeGroupVo vo); 
+	
+	// 다중선택 삭제
+	public int deleteList(CodeGroupVo vo);
 }

@@ -39,7 +39,7 @@
 		     		 , b.cdcRegDt
 		     		 , b.cdcUdtDt
 			  <include refid="selectCommon"/>			 
-		         ORDER BY a.cdgSeq, b.cdcSeq         
+		         ORDER BY a.cdgSeq DESC, b.cdcSeq         
 				 LIMIT 99999999999
                ) aa
     	 LIMIT #{pgRowCount}
@@ -120,6 +120,17 @@
 		  FROM code
 		 WHERE 1=1
 		   AND cdcDelNy = 0
-   </select>  
+   </select> 
+    
+    <!-- 다중선택자료 삭제 -->
+    <delete id="deleteList">
+    	DELETE
+    	  FROM code
+    	 WHERE 1 = 1
+    	   AND CONCAT(cdgSeq, cdcSeq) IN 
+    	       <foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+    	         #{list}
+    	       </foreach>
+    </delete> 
 
 </mapper>

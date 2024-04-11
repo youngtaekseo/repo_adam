@@ -84,4 +84,9 @@ public class CodeGroupService {
 		}
 		return rt;
 	}    
+	
+	// 다중선택 삭제
+	public int deleteList(CodeGroupVo vo) {
+		return dao.deleteList(vo);
+	}
 }

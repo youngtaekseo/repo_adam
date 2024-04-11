@@ -17,5 +17,8 @@ public interface CodeDao {
 	public List<CodeDto> selectListCachedCodeArrayList();
 	
 	public int getCount(CodeVo vo); 
+	
+	// 다중선택자료 삭제
+	public int deleteList(CodeVo vo);
 
 }

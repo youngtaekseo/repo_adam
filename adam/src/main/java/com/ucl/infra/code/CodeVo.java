@@ -3,7 +3,7 @@ package com.ucl.infra.code;
 import com.ucl.common.base.BaseVo;
 
 public class CodeVo extends BaseVo {
-	private String seq;
+	private String  seq;
 	private Integer shOptionGroup;
 
 //	-------
@@ -15,7 +15,7 @@ public class CodeVo extends BaseVo {
 	public void setSeq(String seq) {
 		this.seq = seq;
 	}
-	
+
 	public Integer getShOptionGroup() {
 		return shOptionGroup;
 	}

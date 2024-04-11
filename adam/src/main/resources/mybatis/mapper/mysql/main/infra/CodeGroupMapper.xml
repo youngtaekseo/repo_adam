@@ -121,5 +121,16 @@
            AND cdgDelNy = 0
          ORDER BY cdgSeq            
     </select>    
+    
+    <!-- 다중선택자료 삭제 -->
+    <delete id="deleteList">
+    	DELETE
+    	  FROM codegroup
+    	 WHERE 1 = 1
+    	   AND cdgSeq IN 
+    	       <foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+    	         #{list}
+    	       </foreach>
+    </delete>
 	  
 </mapper>
