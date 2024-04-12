@@ -63,7 +63,7 @@
                           id="cdcName" name="cdcName"
                           autofocus="on"
                           th:value="${item.cdcName}"
-                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">                    
+                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">                    
                       <span id="cdcNameValid" name="cdcNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 						코드명 입력하세요          
                       </span>                    
@@ -259,9 +259,9 @@
 			};				
 		};
 		
-		// event onkeyup
+		// event fnOnChange
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-		fnOnKeyUp = function(obj) {
+		fnOnChange = function(obj) {
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "cdcName" :

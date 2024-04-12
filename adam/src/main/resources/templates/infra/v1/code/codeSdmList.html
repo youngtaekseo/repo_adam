@@ -53,7 +53,7 @@
 			                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			                            id="shDateStart" name="shDateStart" placeholder="시작일"
 			                            th:value="${#strings.substring(vo.shDateStart,0,10)}"
-			                            onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
+			                            onchange="fnOnChange(this)">
 			                        <span id="shDateStartValid" name="shDateStartValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 			                        	시작일자를 입력하세요!
 			                        </span>
@@ -64,7 +64,7 @@
 			                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			                            id="shDateEnd" name="shDateEnd" placeholder="종료일"
 			                            th:value="${#strings.substring(vo.shDateEnd,0,10)}"
-			                            onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
+			                            onchange="fnOnChange(this)">
 			                        <span id="shDateEndValid" name="shDateEndValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 			                        	종료일자를 입력하세요!
 			                        </span>
@@ -98,7 +98,7 @@
 			                    <div class="md:h-auto md:w-1/2 mr-3">
 			                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			                            id="shValue" name="shValue" placeholder="검색어"
-			                        	onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
+			                        	onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">
 				                    <span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				                    	검색어 입력하세요
 				                    </span> 
@@ -414,9 +414,9 @@
 			};			
 		};
 
-		// event onkeyup
+		// event fnOnChange
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-		fnOnKeyUp = function(obj) {
+		fnOnChange = function(obj) {
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "shDateStart" :

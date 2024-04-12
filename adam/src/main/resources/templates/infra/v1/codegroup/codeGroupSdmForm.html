@@ -41,7 +41,7 @@
                       <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           id="cdgName" name="cdgName"
                           th:value="${item.cdgName}"
-                          onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)"/>                    
+                          onchange="fnOnChange(this)"/>                    
                       <span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 						그룹코드명 입력하세요
                       </span>                    
@@ -244,9 +244,8 @@
 			};				
 		};
 		
-		// event onkeyup
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-		fnOnKeyUp = function(obj) {
+		fnOnChange = function(obj) {
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "cdgName" :

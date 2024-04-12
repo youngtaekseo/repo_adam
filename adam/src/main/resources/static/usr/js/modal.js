@@ -1,7 +1,14 @@
 
 // 모달폼 띄우기
-fnModalFormOneBtnShow = function(paramTitle, paramcontent) {
+fnModalFormOneBtnShow = function(paramTitle, paramContent) {
 	$("#title").html(paramTitle);
-	$("#content").html(paramcontent);
+	$("#content").html(paramContent);
 	$("#modalFormOneBtn").modal('show');
+}
+
+// 모달폼 내용 수정
+fnModalCaption = function(paramTitle, paramContent, paramButton) {
+	$("#title").html(paramTitle);
+	$("#content").html(paramContent);
+	$("#btnName1").html(paramButton);
 }

@@ -167,7 +167,7 @@ fnEnglish = function(obj, objValid, validText) {
 
 // 한글영문
 fnKoreanEnglish = function(obj, objValid, validText) {
-	let regExp = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/;
+	let regExp = /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/;
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 };
  
