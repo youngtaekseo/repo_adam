@@ -14,4 +14,7 @@ public interface MemberDao {
 	public int delete(MemberDto dto);
 	public int updatePassword(MemberDto dto);
 	public int updateDelNy(MemberDto dto);
+	
+	// 다중선택자료 삭제
+	public int deleteList(MemberVo vo);
 }

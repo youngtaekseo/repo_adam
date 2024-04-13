@@ -91,4 +91,9 @@ public class ProductService {
 	public ProductDto selectOneWisilistCount(ProductVo vo) {
 		return dao.selectOneWisilistCount(vo);
 	}
+	
+	// 다중선택자료 삭제
+	public int deleteList(ProductVo vo) {
+		return dao.deleteList(vo);
+	};	
 }

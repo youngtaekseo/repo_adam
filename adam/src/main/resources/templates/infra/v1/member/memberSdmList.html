@@ -178,6 +178,7 @@
                   							<td class="px-2 py-1">
                   								<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
                   									id = "checkbox" name="checkbox" type="checkbox"
+                  									th:value="${list.mbrSeq}"
                   									style="height: 15px; width: 15px">
                     						</td>
 											<!-- 순번 -->
@@ -266,7 +267,8 @@
                 				<span class="flex items-center col-span-3">
                   					<button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"                    
                     					@click="openModal"
-                    					aria-label="Delete">
+                    					aria-label="Delete"
+                    					id="btnDelete" name="btnDelete">
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  						<path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
 										</svg>
@@ -303,66 +305,9 @@
         		</main>
       		</div>
     	</div>
-    
-    	<!-- Modal backdrop. This what you want to place close to the closing body tag -->
-    	<div class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-      		x-show="isModalOpen"
-      		x-transition:enter="transition ease-out duration-150"
-      		x-transition:enter-start="opacity-0"
-      		x-transition:enter-end="opacity-100"
-      		x-transition:leave="transition ease-in duration-150"
-      		x-transition:leave-start="opacity-100"
-      		x-transition:leave-end="opacity-0">
-      		<!-- Modal -->
-      		<div class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
-        		x-show="isModalOpen"
-        		x-transition:enter="transition ease-out duration-150"
-        		x-transition:enter-start="opacity-0 transform translate-y-1/2"
-        		x-transition:enter-end="opacity-100"
-        		x-transition:leave="transition ease-in duration-150"
-        		x-transition:leave-start="opacity-100"
-        		x-transition:leave-end="opacity-0  transform translate-y-1/2"
-        		@click.away="closeModal"
-        		@keydown.escape="closeModal"
-        		role="dialog"
-        		id="modal">
-        		<!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
-        		<header class="flex justify-end">
-          			<button class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
-            			aria-label="close"
-            			@click="closeModal">
-            			<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" role="img" aria-hidden="true">
-              				<path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
-            			</svg>
-          			</button>
-        		</header>
 
-        		<!-- Modal body -->
-        		<div class="mt-4 mb-6">
-          			<!-- Modal title -->
-          			<p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-            			삭제확인
-          			</p>
-          			<!-- Modal description -->
-          			<p class="text-sm text-gray-700 dark:text-gray-400">
-            			삭제을 진행 하시겠습니까?
-          			</p>
-        		</div>
-        	<footer class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
-          		<button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 border bg-purple-600 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:bg-purple-700 focus:outline-none active:bg-purple-600 focus:outline-none focus:shadow-outline-gray"
-            		@click="closeModal">
-            		취소
-          		</button>
-          		<button class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
-            		@click="closeModal"
-            		id="lineDelete" name="lineDelete">
-					<!-- <a th:href="@{/memberSdmDelete(mbrSeq=${list.mbrSeq})}">삭제</a> -->
-					삭제
-          		</button>
-        	</footer>
-      	</div>
-    </div>
-    <!-- End of modal backdrop -->  
+	    <!-- modalFormSdm(btnName1, btnName2) -->  
+	    <div th:replace="~{infra/v1/include/modalSdm :: modalFormSdm('취소', '삭제')}"></div>
     
     <script type="text/javascript">
 // ============================================================================
@@ -427,6 +372,19 @@
     	// 조회버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
+		};		
+		
+    	// 삭제버튼
+		document.getElementById("btnDelete").onclick = function() {
+    		// 선택된 체크박스 확인
+    		let countCheckBox = fhDeleteChkeckBox();
+    		
+			// fnModalCaptionChange(구분[0:확인,1:삭제], 제목, 내용)
+			if(countCheckBox == 0 || countCheckBox == null) {
+				fnModalCaptionChange(0,"확인", "선택된 자료가 없습니다");
+			} else {
+				fnModalCaptionChange(1,"", "");	
+			}
 		};
 		
 		// event onkeydown	
@@ -490,6 +448,42 @@
 			
 			return validChk;
 		};
+		
+		// 선택된 자료 삭제
+		fnSelectedDelete = function() {
+			
+			// 체크된 항목 담을 배열변수
+			let checkedArray = [];
+			
+			let checkedList = document.querySelectorAll("input[name=checkbox]");
+			
+			for(let i = 0; i < checkedList.length; i++) {
+				if(checkedList[i].checked) {
+					checkedArray[i] = checkedList[i].value;
+				} 
+			}
+			
+			document.querySelector("input[name='shCheckedArray']").value = checkedArray;
+			
+			$.ajax({
+				async: true
+				, cache: false
+				, tpye: "post"
+				, data: {"shCheckedArray":$("#shCheckedArray").val()}
+				, url: "/memberSdmListDelete"
+				, success: function(response) {
+					if(response.rt == "success") {
+						// Controller 호출
+						fnCallController();
+					} else {
+						fnModalCaptionChange(0,"오류", "삭제중 오류");
+					}
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					fnModalCaptionChange(0,"오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}		
 		
     </script>
     

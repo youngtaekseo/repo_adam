@@ -30,4 +30,6 @@ public interface ProductDao {
 	public int deleteWishList(ProductVo vo);
 	// 찜내역 건수 및 합계금액
 	public ProductDto selectOneWisilistCount(ProductVo vo);
+	// 다중선택자료 삭제
+	public int deleteList(ProductVo vo);
 }

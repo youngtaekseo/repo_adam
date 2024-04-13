@@ -119,6 +119,21 @@ public class ProductController {
 		service.updateDelNy(dto);
 		return "redirect:/productSdmList";
 	}
+	
+	// 다중 선택자료 삭제
+	@ResponseBody
+	@RequestMapping(value = "/productSdmListDelete")
+	public Map<String, Object> codeSdmListDelete(ProductVo vo) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.deleteList(vo) > 0) { 
+			returnMap.put("rt", "success"); 
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		  
+		return returnMap;
+	}	
 
 	// 조회조건 및 페이징정보 포함된 url 생성
 	public void setUrl(ProductVo vo) throws Exception {

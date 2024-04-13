@@ -153,5 +153,16 @@
          WHERE 1 = 1		
            AND mbrSeq = #{mbrSeq}
 	</delete>
+	
+    <!-- 다중선택자료 삭제 -->
+    <delete id="deleteList">
+    	DELETE
+    	  FROM members
+    	 WHERE 1 = 1
+    	   AND mbrSeq IN 
+    	       <foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+    	         #{list}
+    	       </foreach>
+    </delete> 	
 
 </mapper>

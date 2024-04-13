@@ -51,4 +51,8 @@ public class MemberService {
 		return dao.updateDelNy(dto);
 	}
 		
+	// 다중선택자료 삭제
+	public int deleteList(MemberVo vo) {
+		return dao.deleteList(vo);
+	};	
 }
