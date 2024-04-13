@@ -3,6 +3,7 @@ package com.ucl.infra.index;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
@@ -15,6 +16,9 @@ import jakarta.servlet.http.HttpSession;
 public class IndexController {
 	
 	@Autowired
+	IndexService service;
+	
+	@Autowired
 	ProductService productService;
 
 	// 메인화면
@@ -25,7 +29,23 @@ public class IndexController {
 
 	// 관리자메인
 	@RequestMapping(value = "/indexSdm")
-	public String indexSdm() throws Exception {
+	public String indexSdm(@ModelAttribute("vo") IndexVo vo, Model model) throws Exception {
+		
+		System.out.println("vo.getPgStartPage(): " + vo.getPgStartPage());
+		
+		// 판매현황(합계)
+		model.addAttribute("item", service.selectOneSaleInfo());
+		
+		// 판매현황(자료수)
+		int rowCount = service.selectOneCount();
+		
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			// 판매현황(리스트)
+			model.addAttribute("list", service.selectListSaleList(vo));
+		};
+		
 		return Commvar.PATH_HOME + "indexSdm";
 	}
 	

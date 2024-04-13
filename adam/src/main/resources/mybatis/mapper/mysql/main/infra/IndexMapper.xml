@@ -98,5 +98,89 @@
         WHERE 1 = 1		
           AND seq = #{seq}	
 	</update>
+	
+	<!-- 판매현황(계) -->
+	<select id="selectOneSaleInfo" resultMap="resultMapObj">
+		SELECT MAX(brandH) brandH, SUM(priceH) priceH, SUM(countH) countH
+		     , MAX(brandG) brandG, SUM(priceG) priceG, SUM(countG) countG
+		     , MAX(brandK) brandK, SUM(priceK) priceK, SUM(countK) countK
+		     , SUM(priceH) + SUM(priceG) + SUM(priceK) priceTot
+		     , SUM(countH) + SUM(countG) + SUM(countK) countTot
+		  FROM (     
+				SELECT c.cdcName brandH, SUM(a.buyPrice) priceH, COUNT(*) countH
+				     , NULL brandG, 0 priceG, 0 countG
+				     , NULL brandK, 0 priceK, 0 countK
+				  FROM productbuy a
+				       JOIN product b
+				         ON b.pdtSeq = a.pdtSeq        
+				       JOIN code c
+				         ON c.cdcSeq = b.pdtBrandCd
+				 WHERE 1 = 1
+				   AND b.pdtBrandCd = 7
+				 GROUP BY c.cdcName
+				UNION
+				SELECT NULL, 0, 0
+				     , c.cdcName, SUM(a.buyPrice) buyPrice, COUNT(*) cnt
+				     , NULL, 0, 0
+				  FROM productbuy a
+				       JOIN product b
+				         ON b.pdtSeq = a.pdtSeq
+				       JOIN code c
+				         ON c.cdcSeq = b.pdtBrandCd
+				 WHERE 1 = 1
+				   AND b.pdtBrandCd = 8         
+				 GROUP BY c.cdcName
+				UNION 
+				SELECT NULL, 0, 0
+				     , NULL, 0, 0     
+				     , c.cdcName, SUM(a.buyPrice) buyPrice, COUNT(*) cnt
+				  FROM productbuy a
+				       JOIN product b
+				         ON b.pdtSeq = a.pdtSeq
+				       JOIN code c
+				         ON c.cdcSeq = b.pdtBrandCd
+				 WHERE 1 = 1
+				   AND b.pdtBrandCd = 9         
+				 GROUP BY c.cdcName 
+			   ) a	
+	</select>
+	
+	<sql id="selectCommon">
+		SELECT c.cdcName typeName
+		     , d.cdcName brandName
+		     , e.cdcName colorName
+		     , concat(b.pdtYear, "년 ", b.pdtMonth, "월") yearMonth
+		     , b.pdtName
+		     , a.buyPrice
+		     , a.buyDateTime
+		  FROM productbuy a
+		       JOIN product b
+		         ON b.pdtSeq = a.pdtSeq        
+		       JOIN code c
+		         ON c.cdcSeq = b.pdtTypeCd
+		       JOIN code d
+		         ON d.cdcSeq = b.pdtBrandCd
+		       JOIN code e
+		         ON e.cdcSeq = b.pdtColorCd
+		 WHERE 1 = 1	
+	</sql>
+	
+    <!-- 판매현황(자료수) -->
+    <select id="selectOneCount">
+        SELECT COUNT(*)
+          FROM (
+      			<include refid="selectCommon"/>
+      		   ) a
+    </select>	
+	
+	<!-- 판매현황(리스트) -->
+	<select id="selectListSaleList" resultMap="resultMapObj">
+		SELECT *
+		  FROM (
+				<include refid="selectCommon"/>
+		       ) a
+    	 LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset} 		 
+	</select>	
 
 </mapper>
