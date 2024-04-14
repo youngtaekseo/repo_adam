@@ -66,6 +66,17 @@ public class MemberController extends BaseController {
 		return "redirect:/memberSdmList";		
 	}
 	
+	// 관리자 로그인화면에서 회원가입클릭 후 저장
+	@RequestMapping(value = "/memberSdmLoginInsert")
+	public String memberSdmLoginInsert(MemberDto dto) throws Exception {
+		
+		// 비밀번호 암호화
+		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
+
+		service.insert(dto);
+		return Commvar.PATH_LOGIN + "/loginSdm";		
+	}	
+	
 	// 수정화면
 	@RequestMapping(value = "/memberSdmForm")
 	public String memberSdmForm(MemberDto dto, Model model) throws Exception {

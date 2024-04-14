@@ -18,6 +18,12 @@ public class LoginController {
 		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
 	
+	// 관리자 로그인 화면에서 회원가입 클릭
+	@RequestMapping(value = "/loginSdmMemberCreate")
+	public String loginSdmMemberCreate() throws Exception {
+		return Commvar.PATH_LOGIN + "loginSdmMemberCreate";
+	}	
+	
 	// 사용자 로그인
 	@RequestMapping(value = "/loginUsr")
 	public String loginUsr() throws Exception {

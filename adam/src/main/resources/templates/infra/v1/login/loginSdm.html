@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html :class="{'theme-dark': dark}" x-data="data()" lang="en">
+	
 	<div th:replace="~{infra/v1/include/headSdm :: head}"></div>
 	
 	<body>
@@ -62,7 +63,7 @@
 
 							<p class="mt-6">
 								<a class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-									th:href="@{/memberSdmCreate}">
+									th:href="@{/loginSdmMemberCreate}">
 									회원가입
 								</a>
 							</p>
