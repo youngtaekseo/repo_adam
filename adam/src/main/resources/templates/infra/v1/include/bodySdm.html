@@ -196,7 +196,7 @@
 					 <!-- 맨 처음 페이지로 이동하는 버튼 --> 
 					<li>
 						<button class="px-2 py-2 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple mr-2"
-							th:if="${vo.pgStartPage > 1}"
+							th:if="${vo.pgStartPage &gt; 1}"
 							th:onclick="javascript:fnGoList('1')">
 							<svg class="w-4 h-4 fill-current" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path clip-rule="evenodd" fill-rule="evenodd" d="M4.72 9.47a.75.75 0 0 0 0 1.06l4.25 4.25a.75.75 0 1 0 1.06-1.06L6.31 10l3.72-3.72a.75.75 0 1 0-1.06-1.06L4.72 9.47Zm9.25-4.25L9.72 9.47a.75.75 0 0 0 0 1.06l4.25 4.25a.75.75 0 1 0 1.06-1.06L11.31 10l3.72-3.72a.75.75 0 0 0-1.06-1.06Z"></path>
@@ -218,16 +218,14 @@
 					<!-- 페이지번호 클릭 --> 					
 					<th:block th:if="${vo.pgTotalCount} &gt; 0">
 						<li th:each="pageNum : ${#numbers.sequence(vo.pgStartPage, vo.pgEndPage)}">
-							<button class="px-1 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
-								th:if="${vo.pgPage == pageNum}"
-								th:onclick="javascript:fnGoList([[${pageNum}]])"
-								th:text="|&emsp;${pageNum}&emsp;|">
+							<button class="px-1 py-1 text-md text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
+								th:if="${vo.pgPage == pageNum}">
+								<a class="page-link" th:onclick="javascript:fnGoList([[${pageNum}]])" th:text="|&emsp;${pageNum}&emsp;|"></a>
 							</button>
 
-							<button class="px-1 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
-								th:unless="${vo.pgPage == pageNum}"
-								th:onclick="javascript:fnGoList([[${pageNum}]])"
-								th:text="|&emsp;${pageNum}&emsp;|">
+							<button class="px-1 py-1 text-md rounded-md focus:outline-none focus:shadow-outline-purple"
+								th:unless="${vo.pgPage == pageNum}">
+								<a class="page-link" th:onclick="javascript:fnGoList([[${pageNum}]])" th:text="|&emsp;${pageNum}&emsp;|"></a>
 							</button>
 						</li>
 					</th:block>
