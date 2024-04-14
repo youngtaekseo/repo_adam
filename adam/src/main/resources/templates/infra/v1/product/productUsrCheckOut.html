@@ -75,7 +75,7 @@
 	                                                                </a>
 	                                                            </div>
 	                                                            <div class="product-line-info product-price mt-2">
-	                                                                ￦<span class="price" th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" style="font-size: 15px;"></span>만원
+	                                                                ￦<span class="price" th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" style="font-size: 15px;"></span>원
 	                                                            </div>
 	                                                            <div class="product-line-info product-price mt-2">
 	                                                                <span style="font-size: 15px;">찜일시 </span>
@@ -140,7 +140,7 @@
 		                                                    <div class="cart-summary-line cart-total">
 		                                                    	<input id="price" name="price" th:value="${item.ckoPrice}" type="hidden" />
 		                                                        <span class="label">결제금액 </span>
-		                                                        ￦<span class="price" style="font-size: 17px; color: yellow;" th:text="${#numbers.formatInteger(item.ckoPrice, 1, 'COMMA')}"></span>만원
+		                                                        ￦<span class="price" style="font-size: 17px; color: yellow;" th:text="${#numbers.formatInteger(item.ckoPrice, 1, 'COMMA')}"></span>원
 		                                                    </div>
 		                                                </div>
 		                                            </div>
@@ -472,10 +472,10 @@
 				, url: "/paymentUsrInsert"
 				, success: function(response) {
 					if(response.rt == "success") {
-						fnModalFormOneBtnShow("결제확인", "결제 완료");
+						fnModalFormOneBtnShow("결제", "결제 완료");
 						location.href = "/productUsrReceipt?shPaySeq="+response.paySeq;
 					} else {
-						fnModalFormOneBtnShow("결제확인", "결제 저장중 오류가 있습니다");
+						fnModalFormOneBtnShow("오류", "결제 저장중 오류가 있습니다");
 					};
 				}
 				, error : function(jqXHR, textStatus, errorThrown){

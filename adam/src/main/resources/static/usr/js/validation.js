@@ -159,9 +159,9 @@ fnKorean = function(obj, objValid, validText) {
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 }; 
 
-// 영문
+// 영문,공백포함
 fnEnglish = function(obj, objValid, validText) {
-	let regExp = /^[a-zA-Z]+$/;
+	let regExp = /^[a-zA-Z\s]*$/;
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 }; 
 

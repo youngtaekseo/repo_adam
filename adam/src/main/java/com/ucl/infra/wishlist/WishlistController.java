@@ -21,7 +21,6 @@ public class WishlistController {
 	@RequestMapping(value = "/insertWishlist")
 	public Map<String, Object> insertWishlist(WishlistVo vo, WishlistDto dto, HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
 		// 로그인 사용자 순번 설정
 		dto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		

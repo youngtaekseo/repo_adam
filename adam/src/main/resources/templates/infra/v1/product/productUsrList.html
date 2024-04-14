@@ -146,13 +146,13 @@
 	                                                        <div class="col mt-3">
 	                                                            <div class="input-group mb-3">
 	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${vo.shPriceFrom}">
-	                                                                <span class="input-group-text" id="basic-addon2">만원</span>
+	                                                                <span class="input-group-text" id="basic-addon2"></span>
 	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
 	                                                            </div>
 	                                                            <div class="input-group mb-3">
 	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${vo.shPriceTo}"
 	                                                                	> <!-- onkeyup="fnKeyup();" -->
-	                                                                <span class="input-group-text" id="basic-addon2">만원</span>                           
+	                                                                <span class="input-group-text" id="basic-addon2"></span>                           
 	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
 	                                                            </div>
 	                                                        </div>                                                                                                                   
@@ -240,7 +240,7 @@
 		                                                                    </div>
 		                                                                    <div class="product-group-price">
 		                                                                        <div class="product-price-and-shipping">
-		                                                                            ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>만원
+		                                                                            ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>원
 		                                                                        </div>
 		                                                                    </div>
 		                                                                </div>
@@ -441,7 +441,7 @@
 		document.getElementById("shPriceTo").onkeydown = function() {
 			if(window.event.keyCode == 13) {
 				if(Number($("#shPriceFrom").val()) > Number($("#shPriceTo").val())) {
-					fnModalFormOneBtnShow("조건확인", "시작 금액이 큽니다. 다시 입력 바랍니다");
+					fnModalFormOneBtnShow("조건", "시작 금액이 큽니다. 다시 입력 바랍니다");
 					$("#shPriceFrom").focus();
 				} else {
 					// controller 호출
@@ -453,7 +453,7 @@
 		fnKeyup = function() {
 			if(window.event.keyCode == 13) {
 				if(Number($("#shPriceFrom").val()) > Number($("#shPriceTo").val())) {
-					fnModalFormOneBtnShow("조건확인", "시작 금액이 큽니다. 다시 입력 바랍니다");
+					fnModalFormOneBtnShow("조건", "시작 금액이 큽니다. 다시 입력 바랍니다");
 					$("#shPriceFrom").focus();
 				} else {
 					// controller 호출
@@ -473,7 +473,7 @@
 			let valueTo   = $("#shOptionYearTo option:selected").val();
 			
 			if(valueFrom > valueTo) {
-				fnModalFormOneBtnShow("조건확인", "종료 연식이 시작 연식 보다 작을 수 없습니다");
+				fnModalFormOneBtnShow("조건", "종료 연식이 시작 연식 보다 작을 수 없습니다");
 				$("#shOptionYearTo").val(valueFrom);
 			} {
 				// controller 호출
@@ -506,9 +506,12 @@
 					} else if(response.rt == "fail") {
 						fnModalFormOneBtnShow("등록", "찜 등록중 오류가 있습니다");
 					} else if(response.rt == "exist") {
+						heart.setAttribute("class", "fa fa-heart");
 						fnModalFormOneBtnShow("취소", "찜 등록 취소");
-						wishlistWshSeq.setAttribute("value", "x");
 						heart.setAttribute("style", "");
+						wishlistWshSeq.setAttribute("value", "x");
+					} else if(response.rt == "login") {
+						fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
 					}
 				}
 				, error : function(jqXHR, textStatus, errorThrown){
