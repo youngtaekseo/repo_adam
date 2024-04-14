@@ -26,6 +26,7 @@
 						<form id="form" name="form" method="get" autocomplete="off">
 							<!-- 페이지 번호 -->
 						 	<input type="hidden" id="pgPage" name="pgPage" th:value="${vo.pgPage}" default="1">
+						 	
 			              	<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
 			                	<div class="flex flex-col md:flex-row">
 			                    	<!-- 삭제여부 -->
@@ -456,8 +457,8 @@
       		</div>
     	</div>
 
-	    <!-- modalFormSdm(btnName1, btnName2) -->  
-	    <div th:replace="~{infra/v1/include/modalSdm :: modalFormSdm('취소', '삭제')}"></div>
+	    <!-- modalFormSdm -->  
+	    <div th:replace="~{infra/v1/include/modalSdm :: modalFormSdm}"></div>
     
     	<script type="text/javascript">
 // ============================================================================
@@ -797,8 +798,8 @@
 			return validChk;
 		}; 
 		
-		// 선택된 자료 삭제
-		fnSelectedDelete = function() {
+		// 자료삭제
+		fnDataDelete = function() {
 			// 체크된 항목 담을 배열변수
 			let checkedArray = [];
 			

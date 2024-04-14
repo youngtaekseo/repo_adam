@@ -76,17 +76,25 @@ public class CodeController {
 	}	
 	
 //	코드삭제
+	@ResponseBody
 	@RequestMapping(value = "/codeSdmDelete")
-	public String codeSdmDelete(CodeDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/codeSdmList";
+	public Map<String, Object> codeSdmDelete(CodeDto dto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.delete(dto) == 1) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		};
+		
+		return returnMap;
 	}
 	
 //	코드 삭제여부 변경
 	@RequestMapping(value = "/codeSdmUdtDelNy")
 	public String codeSdmUdtDelNy(CodeDto dto) throws Exception {
-		service.updateDelNy(dto);
-		return "redirect:/codeSdmList";
+		service.updateDelNy(dto);		
+		return "redirect:/codeSdmList";	
 	}
 	
 	// 다중 선택자료 삭제
