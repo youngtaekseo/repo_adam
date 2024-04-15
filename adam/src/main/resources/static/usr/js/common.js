@@ -20,7 +20,7 @@
 // 로그인확인
 fnLoginChecked = function() {
 	let returnChk;
-	let loginId = sessionStorage.getItem("sessMbrSeq");
+	let loginId = window.sessionStorage.getItem("sessMbrSeq");
 	
 	if(loginId == null || loginId.length == 0) {
 		fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
@@ -33,13 +33,14 @@ fnLoginChecked = function() {
 }
  	
 // 찜클릭		
-fnDataDelete = function(obj) {
-	// 로그인확인
-	if(!fnLoginChecked()) {return;}
-			
+fnWishlistClick = function(obj) {
+	//if(!fnLoginChecked()) {return false;};
+	
 	// 제품순번
 	let wishlist = document.querySelector("input[name="+obj.name+"]");
-	let pdtSeq   = wishlist.value;			
+	let pdtSeq   = wishlist.value;
+	
+	// 하트이미지			
 	let heart    = document.querySelector("i[name="+obj.name+"]");
 	
 	// 찜순번
@@ -55,14 +56,14 @@ fnDataDelete = function(obj) {
 		, success: function(response) {
 			if(response.rt == "success") {
 				fnModalFormOneBtnShow("등록", "찜 등록 성공");
-				heart.setAttribute("style", "color:pink;");
+				heart.style.color = "pink"; // setAttribute("style", "color:pink;");
 				wishlistWshSeq.setAttribute("value", response.wshSeq);
 			} else if(response.rt == "fail") {
 				fnModalFormOneBtnShow("등록", "찜 등록중 오류가 있습니다");
 			} else if(response.rt == "exist") {
-				heart.setAttribute("class", "fa fa-heart");
+				//heart.setAttribute("class", "fa fa-heart");
 				fnModalFormOneBtnShow("취소", "찜 등록 취소");
-				heart.setAttribute("style", "");
+				heart.style.color = ""; //heart.setAttribute("style", "");
 				wishlistWshSeq.setAttribute("value", "x");
 			} else if(response.rt == "login") {
 				fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");

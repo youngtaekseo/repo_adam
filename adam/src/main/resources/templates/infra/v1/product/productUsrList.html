@@ -254,7 +254,7 @@
 		                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 		                                                                        
 		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" 
-		                                                                        		th:onclick="fnDataDelete(this);">
+		                                                                        		th:onclick="fnWishlistClick(this);">
 		                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
 		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
 		                                                                        </a>		                                                                        

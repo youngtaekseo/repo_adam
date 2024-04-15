@@ -194,21 +194,21 @@
                                                                 <div class="col-2">
                                                                     <label style="font-size: 20px;"><b>찜&ensp;하&ensp;기</b></label>
                                                                 </div>
-                                                                <div class="col">
+                                                                
+                                                                <div class="col product-buttons">
                                                                     <label style="font-size: 20px;">     
 																		<input th:name="'wishlist'+${item.pdtSeq}" th:value="${item.pdtSeq}" type="hidden"/>
 		                                                                        
 		                                                                <input th:if    ="${item.xwshSeq} != null" th:name="'wishlist'+${item.pdtSeq}+'_'" th:value="${item.xwshSeq}" type="hidden"/>
 		                                                                <input th:unless="${item.xwshSeq} != null" th:name="'wishlist'+${item.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 		                                                                                                                                           
-                                                                        <a th:name="'wishlist'+${item.pdtSeq}" class="addToWishlist" href="javascript:void(0)" th:onclick="fnDataDelete(this);">
-																			<i th:if    ="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
-			                                                            	<i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>																			
-                                                                        	<!--<i class="fa fa-heart-o" aria-hidden="true"></i>-->
+                                                                        <a th:name="'wishlist'+${item.pdtSeq}" class="addToWishlist" href="javascript:void(0)" th:onclick="fnWishlistClick(this);" data-rel="1">
+																			<i th:if    ="${item.xwshSeq != null}" th:name="'wishlist'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                            	<i th:unless="${item.xwshSeq != null}" th:name="'wishlist'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>																			
                                                                         </a>
                                                                     </label>
                                                                 </div>                                                                
-                                                            </div>                                                            
+                                                            </div>  
                                                         </div>
 
                                                         <div class="rating-comment has-border d-flex">
@@ -288,19 +288,19 @@
                                                                     <fieldset class="ratings">
                                                                         <input type="radio" id="star5" name="rating" value="5" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star5"></label>
-                                                                        <input type="radio" id="star4half" name="rating" value="4 and a half" onclick="fnClickStar(this);" />
+                                                                        <!--<input type="radio" id="star4half" name="rating" value="4" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star4" name="rating" value="4" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star4"></label>
-                                                                        <input type="radio" id="star3half" name="rating" value="3 and a half" onclick="fnClickStar(this);" />
+                                                                        <!--<input type="radio" id="star3half" name="rating" value="3" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star3" name="rating" value="3" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star3"></label>
-                                                                        <input type="radio" id="star2half" name="rating" value="2 and a half" />
+                                                                        <!--<input type="radio" id="star2half" name="rating" value="2" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star2" name="rating" value="2" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star2"></label>
-                                                                        <input type="radio" id="star1half" name="rating" value="1 and a half" />
+                                                                        <!--<input type="radio" id="star1half" name="rating" value="1" />-->
                                                                         <input type="radio" id="star1" name="rating" value="1" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star1"></label>
-                                                                        <input type="radio" id="starhalf" name="rating" value="half" />
+                                                                        <!--<input type="radio" id="starhalf" name="rating" value="half" />-->
                                                                     </fieldset>
                                                                 </div>
                                                             </fieldset>
@@ -384,7 +384,7 @@
     	// 작성완료 클릭
     	fnClick = function(obj) {
 			// 로그인확인
-			if(!fnLoginChecked()) {return;}
+			//if(!fnLoginChecked()) {return;}
 			
 			// 댓글내용
 			let reviewContents = $("#rvwRemark").val();
@@ -412,6 +412,8 @@
 	    					// fhReviewReload();
 	    				} else if(response.rt == "fail") {
 	    					fnModalFormOneBtnShow("등록", "댓글 등록 오류");
+						} else if(response.rt == "login") {
+	    					fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
 						}
 	    			}
 	   				, error : function(jqXHR, textStatus, errorThrown){

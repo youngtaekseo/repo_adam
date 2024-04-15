@@ -189,8 +189,6 @@ public class MemberController extends BaseController {
 		
 		String loginPassword = dto.getMbrPassword();
 		
-		System.out.println("loginPassword: " + loginPassword);
-		
 		MemberDto rtDto = service.selectOneLogin(dto);
 		
 		if(rtDto != null) {
@@ -199,9 +197,9 @@ public class MemberController extends BaseController {
 				returnMap.put("rt", "success");
 				
 				httpSession.setMaxInactiveInterval(60 * Commvar.SESSION_MINUTE_SDM); // 60second * 30 = 30minute
-				httpSession.setAttribute("sessMbrSeq", rtDto.getMbrSeq());
+				httpSession.setAttribute("sessMbrSeq",   rtDto.getMbrSeq());
 				httpSession.setAttribute("sessMbrEmail", rtDto.getMbrEmail());
-				httpSession.setAttribute("sessMbrName", rtDto.getMbrName());
+				httpSession.setAttribute("sessMbrName",  rtDto.getMbrName());
 			} else {
 				returnMap.put("rt", "password");
 			}
