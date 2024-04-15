@@ -259,8 +259,6 @@
     <!-- modalFormOneBtn(타이틀, 내용, 버튼명) -->
     <div th:replace="~{infra/v1/include/modalSdm :: modalFormOneBtn('확인', '', '확인')}"></div>      
 
-	<script src="sdm/js/common.js"></script>
-	
     <!-- Vendor JS -->
     <script src="usr/libs/jquery/jquery.min.js"></script>
     <script src="usr/libs/popper/popper.min.js"></script>
@@ -281,6 +279,9 @@
 // ============================================================================    
 		// 찜클릭
 		fnClickWishlist = function(obj) {
+			// 로그인확인
+			if(!fnLoginChecked()) {return;}
+			
 			// 제품순번
 			let wishlist = document.querySelector("input[name="+obj.name+"]");
 			let pdtSeq   = wishlist.value;
@@ -291,8 +292,6 @@
 			// 찜순번
 			let wishlistWshSeq = document.querySelector("input[name="+obj.name+"_]");
 			let wshSeq         = wishlistWshSeq.value;
-			
-			//alert("제품순번: "+wishlist.name+", 하트이미지: "+heart.id+", 찜순번: "+wshSeq);
 			
 			$.ajax({
 				async: true

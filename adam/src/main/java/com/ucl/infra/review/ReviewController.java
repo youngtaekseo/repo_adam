@@ -30,10 +30,14 @@ public class ReviewController {
 		// 로그인 회원순번 설정
 		dto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));		
 		
-		if(service.insertReview(dto) == 1) {
-			returnMap.put("rt", "success");
+		if(dto.getMbrSeq() != null && !dto.getMbrSeq().equals("")) {
+			if(service.insertReview(dto) == 1) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		} else {
-			returnMap.put("rt", "fail");
+			returnMap.put("rt", "login");
 		}
 		
 		return returnMap;

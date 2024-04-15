@@ -1,37 +1,18 @@
-		 fnLogout = function() {
-			  $.ajax({
-				  async: true
-				  , cache: false
-				  , type: "post"
-				  , url: "/memberSdmLogOut"
-				  , success: function(response){
-					  if(response.rt == "success") {
-						  location.href = "/loginSdm";
-					  } else {
-						  alert("로그아웃 실패");
-					  }
-				  }
-				  , error : function(jqXHR, textStatus, errorThrown){
-				 	  alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				  }
-			  });			 
-		 }
-		 
-		 fnLogoutUsr = function() {
-			  $.ajax({
-				  async: true
-				  , cache: false
-				  , type: "post"
-				  , url: "/memberSdmLogOut"
-				  , success: function(response){
-					  if(response.rt == "success") {
-						  location.href = "/indexUsr";
-					  } else {
-						  alert("로그아웃 실패");
-					  }
-				  }
-				  , error : function(jqXHR, textStatus, errorThrown){
-				 	  alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				  }
-			  });			 
-		 }		 
+ fnLogout = function() {
+	  $.ajax({
+		  async: true
+		  , cache: false
+		  , type: "post"
+		  , url: "/memberSdmLogOut"
+		  , success: function(response){
+			  if(response.rt == "success") {
+				  location.href = "/loginSdm";
+			  } else {
+				  alert("로그아웃 실패");
+			  }
+		  }
+		  , error : function(jqXHR, textStatus, errorThrown){
+		 	  alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		  }
+	  });			 
+ } 

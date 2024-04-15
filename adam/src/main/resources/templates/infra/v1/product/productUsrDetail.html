@@ -195,11 +195,16 @@
                                                                     <label style="font-size: 20px;"><b>찜&ensp;하&ensp;기</b></label>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <label style="font-size: 20px;">                                                                        
-                                                                        <a class="addToWishlist" href="javascript:void(0)">
-																		<i th:if    ="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink; cursor: default;"></i>
-			                                                            <i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart-o" aria-hidden="true" style="cursor: default;"></i>																			
-                                                                        <!--<i class="fa fa-heart-o" aria-hidden="true"></i>-->
+                                                                    <label style="font-size: 20px;">     
+																		<input th:name="'wishlist'+${item.pdtSeq}" th:value="${item.pdtSeq}" type="hidden"/>
+		                                                                        
+		                                                                <input th:if    ="${item.xwshSeq} != null" th:name="'wishlist'+${item.pdtSeq}+'_'" th:value="${item.xwshSeq}" type="hidden"/>
+		                                                                <input th:unless="${item.xwshSeq} != null" th:name="'wishlist'+${item.pdtSeq}+'_'" th:value="x"               type="hidden"/>
+		                                                                                                                                           
+                                                                        <a th:name="'wishlist'+${item.pdtSeq}" class="addToWishlist" href="javascript:void(0)" th:onclick="fnDataDelete(this);">
+																			<i th:if    ="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+			                                                            	<i th:unless="${item.xwshSeq != null}" th:name="'wishlistNew'+${item.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>																			
+                                                                        	<!--<i class="fa fa-heart-o" aria-hidden="true"></i>-->
                                                                         </a>
                                                                     </label>
                                                                 </div>                                                                
@@ -378,30 +383,44 @@
     	
     	// 작성완료 클릭
     	fnClick = function(obj) {
-    		$.ajax({
-    			async: true
-    			, cache: false
-    			, type: "post"
-    			, data: {"rvwRemark":$("#rvwRemark").val()
-    					,"rvwStar"  :$("#rvwStar"  ).val()
-    					,"pdtSeq"   :pdtSeq
-    					}
-    			, url: "/reviewUsrInsert"
-    			, success: function(response) {
-    				if(response.rt == "success") {
-    					fnModalFormOneBtnShow("등록", "댓글 등록 완료");
-    					
-    					location.href="/productUsrDetail?shSeq="+pdtSeq;
-    					// 댓글 제조회
-    					// fhReviewReload();
-    				} else {
-    					fnModalFormOneBtnShow("등록", "댓글 등록 오류");
-    				}
-    			}
-   				, error : function(jqXHR, textStatus, errorThrown){
-   					fnModalFormOneBtnShow("등록", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-   				}    			
-    		});
+			// 로그인확인
+			if(!fnLoginChecked()) {return;}
+			
+			// 댓글내용
+			let reviewContents = $("#rvwRemark").val();
+			if(reviewContents == null || reviewContents == "") {
+				fnModalFormOneBtnShow("확인", "댓글 내용 입력 후 진행 바랍니다");
+				return;
+			}
+			
+			if(reviewContents != null && reviewContents != "") {
+	    		$.ajax({
+	    			async: true
+	    			, cache: false
+	    			, type: "post"
+	    			, data: {"rvwRemark":reviewContents
+	    					,"rvwStar"  :$("#rvwStar"  ).val()
+	    					,"pdtSeq"   :pdtSeq
+	    					}
+	    			, url: "/reviewUsrInsert"
+	    			, success: function(response) {
+	    				if(response.rt == "success") {
+	    					fnModalFormOneBtnShow("등록", "댓글 등록 완료");
+	    					
+	    					location.href="/productUsrDetail?shSeq="+pdtSeq;
+	    					// 댓글 제조회
+	    					// fhReviewReload();
+	    				} else if(response.rt == "fail") {
+	    					fnModalFormOneBtnShow("등록", "댓글 등록 오류");
+						}
+	    			}
+	   				, error : function(jqXHR, textStatus, errorThrown){
+	   					fnModalFormOneBtnShow("등록", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+	   				}    			
+	    		});
+			} else {
+				fnModalFormOneBtnShow("확인", "댓글 내용 입력 후 진행 바랍니다");
+			}
     	}
     	
     	// 댓글 재조회

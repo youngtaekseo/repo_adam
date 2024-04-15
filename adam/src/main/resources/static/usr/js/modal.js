@@ -2,7 +2,7 @@
 // 모달폼 띄우기
 fnModalFormOneBtnShow = function(paramTitle, paramContent) {
 	$("#title").html(paramTitle);
-	$("#content").html(paramContent);
+	$("#modalFormOneBtnContent").html(paramContent);
 	$("#modalFormOneBtn").modal('show');
 }
 
