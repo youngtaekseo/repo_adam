@@ -43,6 +43,8 @@
 	                        <div class="container">
 	                            <div class="content">
 	                                <div class="row">
+										<!-- 세션정보 -->
+										<input type="hidden" id="sessMbrSeq" name="sessMbrSeq" th:value="${session.sessMbrSeq}" />
 										<!-- 체크박스 조건담을 태그 -->
 										<!-- 차종 -->
 										<input id="shCheckboxTypeArray"  name="shCheckboxTypeArray"  type="hidden" />
@@ -249,9 +251,6 @@
 		                                                                <div class="product-buttons d-flex justify-content-center">
 		                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
 		                                                                        <input th:name="'wishlist'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
-		                                                                        
-		                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
-		                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlist'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 		                                                                        
 		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" 
 		                                                                        		th:onclick="fnWishlistClick(this);">
@@ -480,8 +479,6 @@
 				fnCheckboxClick();	
 			}
 		}
-				
-		
 		
 // ============================================================================
 // function

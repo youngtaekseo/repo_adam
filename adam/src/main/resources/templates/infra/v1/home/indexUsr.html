@@ -9,6 +9,9 @@
 <div th:replace="~{infra/v1/include/headUsr :: head}"></div>
 
 <body id="home">
+	<!-- 세션정보 -->
+	<input type="hidden" id="sessMbrSeq" name="sessMbrSeq" th:value="${session.sessMbrSeq}" />
+    
     <header>
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
@@ -144,9 +147,6 @@
 			                                                                <div class="product-buttons d-flex justify-content-center">
 			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
 			                                                                        <input th:name="'wishlistBest'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
-			                                                                        
-			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
-			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistBest'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 																					
 			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnWishlistClick(this);">
 			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
@@ -217,10 +217,8 @@
 	                                                                        <!-- 찜추가 -->
 			                                                                <div class="product-buttons d-flex justify-content-center">
 			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+																					<!-- controller 전달용 상품순번 -->
 			                                                                        <input th:name="'wishlistNew'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
-			                                                                        
-			                                                                        <input th:if    ="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="${list.xwshSeq}" type="hidden"/>
-			                                                                        <input th:unless="${list.xwshSeq} != null" th:name="'wishlistNew'+${list.pdtSeq}+'_'" th:value="x"               type="hidden"/>
 			                                                                        
 			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnWishlistClick(this);">
 			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>

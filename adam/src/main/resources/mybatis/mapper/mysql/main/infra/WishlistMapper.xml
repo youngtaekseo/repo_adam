@@ -6,7 +6,7 @@
 	<resultMap id="resultMapObj" type="com.ucl.infra.wishlist.WishlistDto"></resultMap>
 	
 	<!-- 1건조회 -->
-	<select id="selectOneCount" resultMap="resultMapObj">
+	<select id="selectOneWishlist" resultMap="resultMapObj">
 		SELECT wshSeq
 		  FROM productwishlist
 		 WHERE mbrSeq = #{mbrSeq}

@@ -3,7 +3,7 @@ package com.ucl.infra.wishlist;
 public interface WishlistDao {
 
 	// 등록여부확인
-	public WishlistDto selectOneCount(WishlistDto dto);
+	public WishlistDto selectOneWishlist(WishlistDto dto);
 	
 	// 찜 입력
 	public int insertWishlist(WishlistDto dto);

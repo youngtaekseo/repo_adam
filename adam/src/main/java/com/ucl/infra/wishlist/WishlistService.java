@@ -10,8 +10,8 @@ public class WishlistService {
 	WishlistDao dao;
 	
 	// 등록여부확인
-	public WishlistDto selectOneCount(WishlistDto dto) {
-		return dao.selectOneCount(dto);
+	public WishlistDto selectOneWishlist(WishlistDto dto) {
+		return dao.selectOneWishlist(dto);
 	}
 		
 	// 등록
