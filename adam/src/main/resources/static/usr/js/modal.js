@@ -7,7 +7,7 @@ fnModalFormOneBtnShow = function(paramTitle, paramContent) {
 }
 
 // 모달폼 내용 수정
-fnModalCaption = function(paramTitle, paramContent, paramButton) {
+fnModalCaptionChange = function(paramTitle, paramContent, paramButton) {
 	$("#title").html(paramTitle);
 	$("#content").html(paramContent);
 	$("#btnName1").html(paramButton);
