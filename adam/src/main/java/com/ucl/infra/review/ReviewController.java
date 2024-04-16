@@ -47,8 +47,9 @@ public class ReviewController {
 	@RequestMapping(value = "/reviewUsrReload")
 	public String reviewUsrReload(ReviewVo vo, Model model) {
 		// 댓글조회
-		model.addAttribute("list", service.selectList(vo));
+		model.addAttribute("listReview", service.selectList(vo));
+		model.addAttribute("itemReview", service.selectListCount(vo));
 		
-		return Commvar.PATH_PRODUCT + "productUsrDetail :: reviewList";
+		return Commvar.PATH_PRODUCT + "productUsrDetailAjax";
 	}
 }

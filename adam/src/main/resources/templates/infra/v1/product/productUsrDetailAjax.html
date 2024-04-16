@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div id="listReview">
+		<!-- 리뷰 갯수 -->
+		<input type="hidden" id="countReviewNew" name="countReviewNew" th:value="'('+${itemReview.xrvwCount}+')'" />
+		<!-- 별점 평균 -->
+		<input type="hidden" id="countStarwNew"  name="countStarNew"   th:value="'('+${itemReview.xrvwStar}+')'" />
+
+		<th:block th:if="${!#lists.isEmpty(listReview)}" th:each="list : ${listReview}">
+            <div class="spr-review-header">
+                <span class="spr-review-header-byline">
+                    <strong th:text="${list.xmbrName}"></strong>
+                    <span th:text="${#dates.format(list.rvwDateTime, 'yyyy-MM-dd')}"></span>
+                </span>
+                <div class="rating">
+                    <div class="star-content">
+						<th:block th:if="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+							<div class="star"></div>	
+						</th:block>
+						<th:block th:unless="${list.rvwStar > 0}" th:each="num : ${#numbers.sequence(1, list.rvwStar)}">
+							<div class=""></div>	
+						</th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="spr-review-content">
+                <p th:text="${list.rvwRemark}" class="spr-review-content-body"></p>
+            </div>
+		</th:block>
+    </div>
+</body>
+
+</html>

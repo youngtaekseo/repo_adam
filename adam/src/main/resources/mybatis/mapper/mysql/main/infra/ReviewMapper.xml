@@ -16,13 +16,25 @@
              , (SELECT COUNT(*) 
 		          FROM productreview aa
 		         WHERE aa.pdtSeq = a.pdtSeq		              
-		       ) xpdtCount
+		       ) xrvwCount
+		     , (SELECT ROUND(AVG(rvwStar)) 
+		          FROM productreview bb
+		         WHERE bb.pdtSeq = a.pdtSeq		              
+		       ) xrvwStar
 		  FROM productreview a
 		       LEFT JOIN members b
 		         ON b.mbrSeq = a.mbrSeq
 		 WHERE 1 = 1
 		   AND a.pdtSeq = #{shSeq}	
 	</select>
+	
+	<select id="selectListCount" resultMap="resultMapObj">
+		SELECT COUNT(*) xrvwCount
+		     , ROUND(AVG(rvwStar)) xrvwStar
+		  FROM productreview 
+		 WHERE 1 = 1
+		   AND pdtSeq = #{shSeq}	
+	</select>	
 	
  	<insert id="insertReview">
 		INSERT INTO productreview

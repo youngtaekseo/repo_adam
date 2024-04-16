@@ -11,6 +11,7 @@ public class ReviewDto {
 	private String  pdtSeq;
 	
 	private Integer xrvwCount;
+	private Integer xrvwStar;
 	private String xmbrName;
 
 	//=============================================================================
@@ -71,6 +72,14 @@ public class ReviewDto {
 		this.xrvwCount = xrvwCount;
 	}
 	
+	public Integer getXrvwStar() {
+		return xrvwStar;
+	}
+
+	public void setXrvwStar(Integer xrvwStar) {
+		this.xrvwStar = xrvwStar;
+	}
+
 	public String getXmbrName() {
 		return xmbrName;
 	}

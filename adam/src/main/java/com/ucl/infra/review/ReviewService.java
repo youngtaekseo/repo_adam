@@ -16,6 +16,11 @@ public class ReviewService {
 		return dao.selectList(vo);
 	}
 	
+	// 댓글갯수, 별점평균
+	public ReviewDto selectListCount(ReviewVo vo) {
+		return dao.selectListCount(vo);
+	};
+	
 	// 댓글등록
 	public int insertReview(ReviewDto dto) {
 		return dao.insertReview(dto);

@@ -229,7 +229,7 @@
                                                             <div class="read after-has-border">
                                                                 <a href="#review">
                                                                     <i class="fa fa-commenting-o color" aria-hidden="true"></i>
-                                                                    댓글<span th:text="'('+${item.xpdtCount}+')'" class="reviewCount"></span>
+                                                                    댓글<span id="countReview" name="countReview" th:text="'('+${item.xpdtCount}+')'" class="reviewCount"></span>
                                                                 </a>
                                                             </div>
                                                             <div class="apen after-has-border">
@@ -244,7 +244,7 @@
                                             </div>
                                             
                                             <div class="review">
-                                                <div><h3>댓글<span th:text="'('+${item.xpdtCount}+')'"></span></h3></div>
+                                                <div><h3>댓글<span id="countReviewTitle" name="countReviewTitle" th:text="'('+${item.xpdtCount}+')'"></span></h3></div>
 												
                                                 <div class="tab-content">													
                                                     <div id="review" class="tab-pane fade in active show">
@@ -289,30 +289,17 @@
                                                                     <fieldset class="ratings">
                                                                         <input type="radio" id="star5" name="rating" value="5" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star5"></label>
-                                                                        <!--<input type="radio" id="star4half" name="rating" value="4" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star4" name="rating" value="4" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star4"></label>
-                                                                        <!--<input type="radio" id="star3half" name="rating" value="3" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star3" name="rating" value="3" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star3"></label>
-                                                                        <!--<input type="radio" id="star2half" name="rating" value="2" onclick="fnClickStar(this);" />-->
                                                                         <input type="radio" id="star2" name="rating" value="2" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star2"></label>
-                                                                        <!--<input type="radio" id="star1half" name="rating" value="1" />-->
                                                                         <input type="radio" id="star1" name="rating" value="1" onclick="fnClickStar(this);" />
                                                                         <label class="full" for="star1"></label>
-                                                                        <!--<input type="radio" id="starhalf" name="rating" value="half" />-->
                                                                     </fieldset>
                                                                 </div>
                                                             </fieldset>
-                                                            <!-- <fieldset class="spr-form-contact">
-                                                                <div class="spr-form-contact-name">
-                                                                    <input class="spr-form-input spr-form-input-text form-control" value="" placeholder="이름">
-                                                                </div>
-                                                                <div class="spr-form-contact-email">
-                                                                    <input class="spr-form-input spr-form-input-email form-control" value="" placeholder="이메일">
-                                                                </div>
-                                                            </fieldset> -->
                                                             <fieldset>
                                                                 <div class="spr-form-review-body">
                                                                     <div class="spr-form-input">
@@ -326,10 +313,6 @@
                                                             <div class="submit">
                                                                 <input type="button" name="btnSubmit" id="btnSubmit" class="btn btn-default" style="font-size: 15px;" value="작&ensp;성&ensp;완&ensp;료"
                                                                 	onclick="fnClick(this);">
-                                                                <!-- <button class="continue btn btn-primary pull-xs-right"
-		                                                        	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
-		                                                            작&ensp;성&ensp;완&ensp;료
-		                                                        </button> -->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -374,6 +357,7 @@
     <script src="usr/js/theme.js"></script>
     
     <script type="text/javascript">
+		
     	// 제품순번
     	let pdtSeq = $("#pdtSeq").val();
     	
@@ -406,11 +390,12 @@
 	    			, url: "/reviewUsrInsert"
 	    			, success: function(response) {
 	    				if(response.rt == "success") {
-	    					fnModalFormOneBtnShow("등록", "댓글 등록 완료");
+	    					//fnModalFormOneBtnShow("등록", "댓글 등록 완료");
 	    					
-	    					location.href="/productUsrDetail?shSeq="+pdtSeq;
-	    					// 댓글 제조회
-	    					// fhReviewReload();
+	    					//location.href="/productUsrDetail?shSeq="+pdtSeq;
+	    					
+	    					// 댓글 재조회
+	    					fhReviewReload();
 	    				} else if(response.rt == "fail") {
 	    					fnModalFormOneBtnShow("등록", "댓글 등록 오류");
 						} else if(response.rt == "login") {
@@ -433,14 +418,19 @@
     			, cache: false
     			, type: "post"
     			, data: {"shSeq":pdtSeq}
-    			, url: "/reviewUsrReload"
-    			, success: function(fragment) {
-    				$("#reviewList").replaceWith(fragment);
-    			}
-   				, error : function(jqXHR, textStatus, errorThrown){
-   					fnModalFormOneBtnShow("등록", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-   				}    			
-    		});
+    			, url: "/reviewUsrReload"		
+    		})
+    		.done(function(fragment) {
+				$("#reviewList").replaceWith(fragment);
+				$("#countReviewTitle").html($("#countReviewNew").val());
+				$("#countReview").html($("#countReviewNew").val());
+				$("#rvwStar").val('0');
+				$("#rvwRemark").val('');
+				$('input[type="radio"]').prop("checked",false); // 별 초기화
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				fnModalFormOneBtnShow("등록", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			})
     	}
     </script>
 </body>
