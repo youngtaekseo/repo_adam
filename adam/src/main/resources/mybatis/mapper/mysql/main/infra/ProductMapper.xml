@@ -226,9 +226,13 @@
 				     , a.pdtRecommendCd
 				       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
 				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
-		               <if test="shNewRegNy == 1">LIMIT #{shDispCount}</if> <!-- 최근등록조회경우 화면표시 갯수제한 -->
                ) a
-    	 LIMIT #{pgRowCount}
+               
+         <choose>
+         	<when test="shNewRegNy == 0">LIMIT #{pgRowCount}</when>
+         	<when test="shNewRegNy == 1">LIMIT #{shDispCount}</when><!-- 메인화면 화면표시 갯수제한 -->
+         </choose>
+    	 
     	OFFSET #{pgOffset}                       
 	</select>
 	

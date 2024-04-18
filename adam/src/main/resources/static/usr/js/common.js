@@ -51,14 +51,13 @@ fnWishlistClick = function(obj) {
 		, url: "/insertWishlist"
 		, success: function(response) {
 			if(response.rt == "success") {
+				$(heart).css("color", "pink");
 				fnModalFormOneBtnShow("등록", "찜 등록 성공");
-				heart.style.color = "pink"; // setAttribute("style", "color:pink;");
 			} else if(response.rt == "fail") {
 				fnModalFormOneBtnShow("등록", "찜 등록중 오류가 있습니다");
 			} else if(response.rt == "exist") {
-				//heart.setAttribute("class", "fa fa-heart");
+				$(heart).css("color", "");
 				fnModalFormOneBtnShow("취소", "찜 등록 취소");
-				heart.style.color = ""; //heart.setAttribute("style", "");
 			} else if(response.rt == "login") {
 				fnModalFormOneBtnShow("확인", "로그인 후 진행 가능합니다");
 			}
@@ -67,4 +66,5 @@ fnWishlistClick = function(obj) {
 			fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 		}
 	});
-} 		 
+}
+		 

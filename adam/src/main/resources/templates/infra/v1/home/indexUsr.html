@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<!--<![endif]-->
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <!-- head -->
@@ -93,76 +90,79 @@
                                         <div class="grouptab row">
                                             <div class="categoriestab-right col-lg-12 align-items-start d-flex flex-column col-md-12 flex-3">
                                                 <div class="block-title-content">
-                                                    <h2>취향저격! 추천차량</h2>
+                                                    <h2>추천차량</h2>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="grouptab row">
-                                            <div class="categoriestab-left product-tab col-md-12 flex-9">
-                                                <div class="tab-content">
-                                                    <div id="new" class="tab-pane fade in active show">
-                                                        <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag">
-                                                            <!-- 추천자료 리스트 -->
-                                                            <th:block th:each="list : ${listRecommend}">
-																<div class="item">
-	                                                                <div class="product-miniature first-item js-product-miniature item-one">
-	                                                                    <div class="thumbnail-container">
-	                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
-	                                                                            <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
-	                                                                            <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
-	                                                                        </a>
-	                                                                    </div>
-	                                                                    <div class="product-description">
-	                                                                        <div class="product-groups">
-	                                                                            <div class="product-title">
-	                                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
-																						<th:block>
-																							<span th:text="${list.xpdtBrandName}"></span>
-																							<br>
-																							<span th:text="${list.pdtName}"></span>
-																						</th:block>
-																					</a>
-	                                                                            </div>
-	                                                                            
-	                                                                            <div class="rating">
-	                                                                                <div class="star-content">
-																						<th:block th:if    ="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
-																							<div class="star"></div>	
-																						</th:block>
-																						<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
-																							<div class=""></div>	
-																						</th:block>
-	                                                                                </div>
-	                                                                            </div>
-	                                                                            
-	                                                                            <div class="product-group-price">
-	                                                                                <div class="product-price-and-shipping">
-	                                                                                    ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>원
-	                                                                                </div>
-	                                                                            </div>
-	                                                                        </div>
-	                                                                        
-																			<!-- 찜추가 -->
-			                                                                <div class="product-buttons d-flex justify-content-center">
-			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-			                                                                        <input th:name="'wishlistBest'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
-																					
-			                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnWishlistClick(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style></i>
-			                                                                        </a>
-			                                                                    </form>
-			                                                                </div>	                                                                        
-	                                                                    </div>
-	                                                                </div>
-                                                            	</div>
-															</th:block>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
+										<div class="product-container">
+	                                        <div class="tab-content product-items">
+	                                            <div id="grid" class="related tab-pane fade in active show">
+	                                                <div class="row">
+														<!-- 추천자료 리스트 -->
+	                                                	<th:block th:if="${!#lists.isEmpty(listRecommend)}" th:each="list : ${listRecommend}">
+															<div class="item col-md-4">
+		                                                        <div class="product-miniature js-product-miniature item-one first-item">
+		                                                            <div class="thumbnail-container border">
+		                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+		                                                                    <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
+		                                                                    <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
+		                                                                </a>
+		                                                            </div>
+		                                                            <div class="product-description">
+		                                                                <div class="product-groups">
+		                                                                    <div class="product-title">
+		                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+																					<th:block>
+																						<span th:text="${list.xpdtBrandName}"></span>
+																						<br>
+																						<span th:text="${list.pdtName}"></span>
+																					</th:block>	                                                                        
+		                                                                        </a>
+		                                                                    </div>
+		                                                                    <div class="rating">
+		                                                                        <div class="star-content">
+																					<th:block th:if="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																						<div class="star"></div>	
+																					</th:block>
+																					<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																						<div class=""></div>	
+																					</th:block>	                                                                        
+		                                                                        </div>
+		                                                                    </div>
+		                                                                    <div class="product-group-price">
+		                                                                        <div class="product-price-and-shipping">
+		                                                                            ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>원
+		                                                                        </div>
+		                                                                    </div>
+		                                                                </div>
+		
+		                                                                <!-- 찜추가 -->
+		                                                                <div class="product-buttons d-flex justify-content-center">
+		                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+		                                                                        <input th:name="'wishlistBest'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+		                                                                        
+		                                                                        <a th:name="'wishlistBest'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" 
+		                                                                        		th:onclick="javascript:fnWishlistClick(this);">
+		                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistBest'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
+		                                                                        </a>		                                                                        
+		                                                                    </form>
+		                                                                </div>
+		                                                            </div>
+		                                                        </div>
+		                                                    </div>                                                	
+	                                                	</th:block>
+	                                                	
+				                                        <th:block th:unless="${!#lists.isEmpty(listRecommend)}">
+				                                        	<div class="mt-3 d-flex justify-content-center">
+				                                        		<h2><span style="color: purple;">추천차량이 없습니다</span></h2>
+				                                        	</div>
+				                                        </th:block>
+	                                                </div>
+	                                            </div>
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -181,60 +181,74 @@
                                             </div>
                                         </div>
 
-                                        <div class="grouptab row">
-                                            <div class="categoriestab-left product-tab col-md-12 flex-9">
-                                                <div class="tab-content">
-                                                    <div id="new" class="tab-pane fade in active show">
-                                                        <div class="category-product-index owl-carousel owl-theme owl-loaded owl-drag">
-                                                            <!-- 최근등록자료 리스트 -->
-                                                            <th:block th:each="list : ${listNewReg}">
-	                                                            <div class="item">
-	                                                                <div class="product-miniature first-item js-product-miniature item-one">
-	                                                                    <div class="thumbnail-container">
-	                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
-	                                                                            <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
-	                                                                            <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
-	                                                                        </a>
-	                                                                    </div>
-	                                                                    <div class="product-description">
-	                                                                        <div class="product-groups">
-	                                                                            <div class="product-title">
-	                                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
-																						<th:block>
-																							<span th:text="${list.xpdtBrandName}"></span>
-																							<br>
-																							<span th:text="${list.pdtName}"></span>
-																						</th:block>
-																					</a>
-	                                                                            </div>
-	                                                                            <div class="product-group-price">
-	                                                                                <div class="product-price-and-shipping">
-	                                                                                    ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>원
-	                                                                                </div>
-	                                                                            </div>
-	                                                                        </div>
-	                                                                        
-	                                                                        <!-- 찜추가 -->
-			                                                                <div class="product-buttons d-flex justify-content-center">
-			                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
-																					<!-- controller 전달용 상품순번 -->
-			                                                                        <input th:name="'wishlistNew'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
-			                                                                        
-			                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0);" data-rel="1" th:onclick="fnWishlistClick(this);">
-			                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
-			                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style></i>
-			                                                                        </a>
-			                                                                    </form>
-			                                                                </div>	
-	                                                                    </div>
-	                                                                </div>
-	                                                            </div>
-                                                            </th:block>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+										<div class="product-container">
+	                                        <div class="tab-content product-items">
+	                                            <div id="grid" class="related tab-pane fade in active show">
+	                                                <div class="row">
+														<!-- 최근등록자료 리스트 -->
+	                                                	<th:block th:if="${!#lists.isEmpty(listNewReg)}" th:each="list : ${listNewReg}">
+															<div class="item col-md-4">
+		                                                        <div class="product-miniature js-product-miniature item-one first-item">
+		                                                            <div class="thumbnail-container border">
+		                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+		                                                                    <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
+		                                                                    <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
+		                                                                </a>
+		                                                            </div>
+		                                                            <div class="product-description">
+		                                                                <div class="product-groups">
+		                                                                    <div class="product-title">
+		                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+																					<th:block>
+																						<span th:text="${list.xpdtBrandName}"></span>
+																						<br>
+																						<span th:text="${list.pdtName}"></span>
+																					</th:block>	                                                                        
+		                                                                        </a>
+		                                                                    </div>
+		                                                                    <div class="rating">
+		                                                                        <div class="star-content">
+																					<th:block th:if="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																						<div class="star"></div>	
+																					</th:block>
+																					<th:block th:unless="${list.xpdtStar > 0}" th:each="num : ${#numbers.sequence(1, list.xpdtStar)}">
+																						<div class=""></div>	
+																					</th:block>	                                                                        
+		                                                                        </div>
+		                                                                    </div>
+		                                                                    <div class="product-group-price">
+		                                                                        <div class="product-price-and-shipping">
+		                                                                            ￦<span th:text="${#numbers.formatInteger(list.pdtPrice, 1, 'COMMA')}" class="price" style="font-size: 20px;"></span>원
+		                                                                        </div>
+		                                                                    </div>
+		                                                                </div>
+		
+		                                                                <!-- 찜추가 -->
+		                                                                <div class="product-buttons d-flex justify-content-center">
+		                                                                    <form action="#addToWishlist" method="post" class="formAddToWishlist">
+		                                                                        <input th:name="'wishlistNew'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
+		                                                                        
+		                                                                        <a th:name="'wishlistNew'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" 
+		                                                                        		th:onclick="javascript:fnWishlistClick(this);">
+		                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
+		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlistNew'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
+		                                                                        </a>		                                                                        
+		                                                                    </form>
+		                                                                </div>
+		                                                            </div>
+		                                                        </div>
+		                                                    </div>                                                	
+	                                                	</th:block>
+	                                                	
+				                                        <th:block th:unless="${!#lists.isEmpty(listNewReg)}">
+				                                        	<div class="mt-3 d-flex justify-content-center">
+				                                        		<h2><span style="color: purple;">최근등록차량이 없습니다</span></h2>
+				                                        	</div>
+				                                        </th:block>
+	                                                </div>
+	                                            </div>
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>

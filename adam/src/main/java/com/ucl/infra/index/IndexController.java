@@ -52,12 +52,11 @@ public class IndexController {
 	// 사용자메인
 	@RequestMapping(value = "/indexUsr")
 	public String indexUsr(ProductVo vo, Model model, HttpSession httpSession) throws Exception {
-		
 		// 로그인 회원순번 설정
 		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		
 		// 추천차량
-		vo.setShNewRegNy(0);
+		vo.setShNewRegNy(1);
 		vo.setShRecommend(17);
 		model.addAttribute("listRecommend", productService.selectListCarInfo(vo));
 		
@@ -67,5 +66,33 @@ public class IndexController {
 		model.addAttribute("listNewReg", productService.selectListCarInfo(vo));
 		
 		return Commvar.PATH_HOME + "indexUsr";
+	}
+	
+	// 추천차량 재조회
+	@RequestMapping(value = "/recommandUsrReload")
+	public String recommandUsrReload(ProductVo vo, Model model, HttpSession httpSession) {
+		// 로그인 회원순번 설정
+		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		// 추천차량
+		vo.setShNewRegNy(0);
+		vo.setShRecommend(17);
+		model.addAttribute("listRecommend", productService.selectListCarInfo(vo));
+		
+		return Commvar.PATH_HOME + "indexUsrRecommandAjax";
+	}
+	
+	// 최근등록차량 재조회
+	@RequestMapping(value = "/regnewUsrReload")
+	public String regnewUsrReload(ProductVo vo, Model model, HttpSession httpSession) {
+		// 로그인 회원순번 설정
+		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		// 최근등록차량
+		vo.setShNewRegNy(1);
+		vo.setShRecommend(null);
+		model.addAttribute("listNewRegReload", productService.selectListCarInfo(vo));
+		
+		return Commvar.PATH_HOME + "indexUsrRegnewAjax";
 	}
 }

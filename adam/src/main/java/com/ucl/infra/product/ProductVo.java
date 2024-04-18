@@ -21,8 +21,8 @@ public class ProductVo extends BaseVo {
 	private Integer shPrice;   				// 판매가액
 	private Integer shPriceFrom;   			// 판매가액 시작값
 	private Integer shPriceTo;   			// 판매가액 종료값
-	private Integer shDispCount = 10;       // 사용자 메인화면에 리스트 표시 갯수
-	private Integer shNewRegNy = 0;         // 최근등록여부 0:해당없음, 1:최근등록조회
+	private Integer shDispCount = 6;        // 사용자 메인화면에 리스트 표시 갯수
+	private Integer shNewRegNy  = 0;        // 최근등록여부 0:해당없음, 1:최근등록조회
 	private String  shMbrSeq;               // 회원순번
 	private String  shPdtName;				// 차량명
 

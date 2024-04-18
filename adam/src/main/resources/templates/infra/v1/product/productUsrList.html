@@ -216,7 +216,7 @@
 		                                                            <div class="thumbnail-container border">
 		                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
 		                                                                    <img class="img-fluid image-cover"     th:src="${list.xpdtImgF}" alt="img">
-		                                                                    <img class="img-fluid image-secondary" th:src="${list.xpdtImgF}" alt="img">
+		                                                                    <img class="img-fluid image-secondary" th:src="${list.xpdtImgB}" alt="img">
 		                                                                </a>
 		                                                            </div>
 		                                                            <div class="product-description">
@@ -253,7 +253,7 @@
 		                                                                        <input th:name="'wishlist'+${list.pdtSeq}" th:value="${list.pdtSeq}" type="hidden"/>
 		                                                                        
 		                                                                        <a th:name="'wishlist'+${list.pdtSeq}" class="addToWishlist" href="javascript:void(0)" data-rel="1" 
-		                                                                        		th:onclick="fnWishlistClick(this);">
+		                                                                        		th:onclick="javascript:fnWishlistClick(this);">
 		                                                                            <i th:if    ="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true" style="color:pink;"></i>
 		                                                                            <i th:unless="${list.xwshSeq != null}" th:name="'wishlist'+${list.pdtSeq}" class="fa fa-heart" aria-hidden="true"></i>
 		                                                                        </a>		                                                                        
@@ -404,27 +404,6 @@
 			
 			// controller 호출
 			fnCallController();
-			
-			/* $.ajax({
-				async: true
-				, cache: false
-				, type: "post"
-				, data: {"shCheckboxTypeArray" :$("#shCheckboxTypeArray" ).val()
-						,"shCheckboxBrandArray":$("#shCheckboxBrandArray").val()
-						,"shCheckboxColorArray":$("#shCheckboxColorArray").val()
-						,"shOptionYearFrom"    :$("#shOptionYearFrom"    ).val()
-						,"shOptionYearTo"      :$("#shOptionYearTo"      ).val()
-						,"shPriceFrom"         :$("#shPriceFrom"         ).val()
-						,"shPriceTo"           :$("#shPriceTo"           ).val()	
-						}					
-				, url: "/selectListReload"
-				, success: function(fragment) {
-					$("#listCar").replaceWith(fragment);
-				}
-				, error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				}
-			}); */
 		}
 		
 		// 금액 클릭
