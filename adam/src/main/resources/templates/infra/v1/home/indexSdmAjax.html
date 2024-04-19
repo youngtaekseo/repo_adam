@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<body>
+	                  				<div id="listData" class="w-full overflow-hidden rounded-lg shadow-xs">
+	              			<div class="w-full overflow-x-auto">
+	                			<table class="w-full whitespace-no-wrap">
+	                  				<thead>
+	                    				<tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+											<th class="px-4 py-3">차종</th>
+											<th class="px-4 py-3">브랜드</th>
+											<th class="px-4 py-3">색상</th>
+											<th class="px-4 py-3">연식</th>
+											<th class="px-4 py-3">차량명</th>
+											<th class="px-4 py-3" style="text-align:right">판매금액</th>
+											<th class="px-4 py-3">판매일시</th>
+	                    				</tr>
+	                  				</thead>
+	                  				
+	                  				<tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  						<tr class="text-gray-700 dark:text-gray-400" th:if="${#lists.isEmpty(list)}">
+                  							<td colspan="7" class="text-center text-purple-600"> 
+												There is no data !!!
+                 							</td>
+                  						</tr>
+	                    				<tr class="text-gray-700 dark:text-gray-400" th:unless="${#lists.isEmpty(list)}" th:each="list : ${list}">
+	                      					<td class="px-4 py-3" th:text="${list.typeName}"></td>                     
+	                      					<td class="px-4 py-3" th:text="${list.brandName}"></td>                      
+	                      					<td class="px-4 py-3" th:text="${list.colorName}"></td>                      
+	                      					<td class="px-4 py-3" th:text="${list.yearMonth}"></td>                      
+	                      					<td class="px-4 py-3" th:text="${list.pdtName}"></td>
+	                      					<td class="px-4 py-3" style="text-align:right">
+	                        					<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+	                        					 th:text="${'￦'+#numbers.formatInteger(list.buyPrice, 1, 'COMMA')}">
+	                        					</span>
+	                      					</td>
+	                      					<td class="px-4 py-3" th:text="${#dates.format(list.buyDateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+	                    				</tr>
+	                  				</tbody>
+	                			</table>
+	              			</div>
+              
+                			<!-- 페이지넘김 -->
+							<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
+            			</div>
+	</body>
+</html>

@@ -59,22 +59,17 @@ public class ProductController {
 	}
 
 	// 조회화면(paging 처리용)
-	@ResponseBody
-	@RequestMapping(value = "/productSdmListPaging")
-	public Map<String, Object> productSdmListPaging(ProductVo vo) throws Exception {
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-
+	@RequestMapping(value = "/productSdmPaging")
+	public String productSdmListPaging(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
 		int rowCount = service.selectOneDataCount(vo);
 
 		if (rowCount > 0) {
 			vo.setPagingVo(rowCount);
 
-			returnMap.put("list", service.selectList(vo));
-			returnMap.put("page", vo);
-		}
-		;
+			model.addAttribute("list", service.selectList(vo));
+		};
 
-		return returnMap;
+		return Commvar.PATH_PRODUCT + "productSdmListAjax";
 	}
 
 	// 등록화면

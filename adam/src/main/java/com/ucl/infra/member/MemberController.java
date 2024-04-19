@@ -42,6 +42,19 @@ public class MemberController extends BaseController {
 		return Commvar.PATH_MEMBER + "memberSdmList";
 	}
 	
+	//조회화면-페이징
+	@RequestMapping(value = "/memberSdmPaging")
+	public String memberSdmPaging(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		int rowCount = service.selectOneCount(vo);
+		
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			model.addAttribute("list", service.selectList(vo));
+		};
+		return Commvar.PATH_MEMBER + "memberSdmListAjax";
+	}
+	
 	// 코드조회
 	@RequestMapping(value = "/memberSdmCodeName")
 	public String memberSdmCodeName(MemberVo vo, Model model) throws Exception {

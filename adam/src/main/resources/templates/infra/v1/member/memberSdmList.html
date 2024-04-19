@@ -86,8 +86,8 @@
 									<div class="md:h-auto md:w-1/2 mr-3">
 										<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 											id="shSex" name="shSex">
-											<option value="">성별</option>
-											<option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}"></option>
+											<option value="" th:selected="${vo.shSex == null}">성별</option>
+											<option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq} == ${vo.shSex}"></option>
 										</select>							
 									</div>
 
@@ -142,7 +142,7 @@
             
            				 <!-- 조회결과 리스트 -->
             			<div class="w-full overflow-hidden rounded-lg shadow-xs">
-              				<div class="w-full overflow-x-auto">
+              				<div id="listData" class="w-full overflow-x-auto">
                 				<table class="w-full whitespace-no-wrap">
                   					<!-- 조회결과 리스트 타이틀-->
                   					<thead>
@@ -245,6 +245,9 @@
                   						</tr>
                   					</tbody>
                 				</table>
+
+								<!-- 페이지넘김 -->
+								<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
               				</div>
 
 							<script>
@@ -257,9 +260,6 @@
 							  		$(".checkboxList").prop("checked", isChecked);
 								}  
 							</script>
-              
-							<!-- 페이지넘김 -->
-							<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
 							         
 							<!-- 삭제버튼, 홈버튼 -->
 							<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
@@ -313,34 +313,32 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
+		// 폼
 		let form			= document.querySelector("form[name=form]");
+		// 회원순번
 		let mbrSeq			= document.querySelector("mbrSeq");
-		
 		// 날짜선택
 		let shOptionDate	= document.querySelector("select[name=shOptionDate]");
-	       
 		// 시작일자
 		let shDateStart		= document.querySelector("input[name=shDateStart]");
 		let shDateStartValid= document.querySelector("span[name=shDateStartValid]");
-	       
 		// 종료일자
 		let shDateEnd		= document.querySelector("input[name=shDateEnd]");
 		let shDateEndValid	= document.querySelector("span[name=shDateEndValid]");
-	
 		// 검색선택
 		let shOption		= document.querySelector("select[name=shOption]");
-	
 		// 검색어
 		let shValue			= document.querySelector("input[name=shValue]");
 		let shValueValid	= document.querySelector("span[name=shValueValid]");		
-		
-		let goUrlSdmList   	= "/memberSdmList";		/* 조회화면 */
-		let goUrlSdmForm   	= "/memberSdmForm";		/* 수정화면 */
-		let goUrlSdmCreate 	= "/memberSdmCreate";	/* 등록화면 */
-		let goUrlSdmInsert 	= "/memberSdmInsert";	/* 등록 */
-		let goUrlSdmUpdate 	= "/memberSdmUpdate";	/* 수정 */
-		let goUrlSdmDelete 	= "/memberSdmDelete";	/* 삭제 */
-		let goUrlSdmUdtDelNy= "/memberSdmUdtDelNy";	/* 삭제여부-삭제로변경 */
+		// controller
+		let goUrlSdmList   	= "/memberSdmList";			/* 조회화면 */
+		let goUrlSdmForm   	= "/memberSdmForm";			/* 수정화면 */
+		let goUrlSdmCreate 	= "/memberSdmCreate";		/* 등록화면 */
+		let goUrlSdmInsert 	= "/memberSdmInsert";		/* 등록 */
+		let goUrlSdmUpdate 	= "/memberSdmUpdate";		/* 수정 */
+		let goUrlSdmDelete 	= "/memberSdmDelete";		/* 삭제 */
+		let goUrlSdmUdtDelNy= "/memberSdmUdtDelNy";		/* 삭제여부-삭제로변경 */
+		let goUrlSdmPaging  = "/memberSdmPaging";		/* 페이징처리 */
 		
 		// 필수입력체크대상
 		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
@@ -420,6 +418,10 @@
 
 			shValue.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			shValueValid.setAttribute("style", "visibility:hidden;");
+			// 회원구분
+			$("#shOptionType option:eq(0)").prop("th:selected", true);
+			// 성별
+			$("#shSex option:eq(0)").prop("selected", true);
 		};
 		
 // ============================================================================

@@ -134,7 +134,7 @@
             
             			<!-- 조회결과 리스트 -->
             			<div class="w-full overflow-hidden rounded-lg shadow-xs">
-              				<div class="w-full overflow-x-auto">
+              				<div id="listData" class="w-full overflow-x-auto">
                 				<table class="w-full whitespace-no-wrap">
                   					<!-- 조회결과 리스트 타이틀-->
                   					<thead>
@@ -211,7 +211,11 @@
                   						</tr> 
                   					</tbody>
                 				</table>
+                				
+								<!-- 페이지넘김 -->
+								<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
               				</div>
+
 
 							<script>
 								// 타이틀바 체크시 리스트 체크박스 체크 및 해제
@@ -224,9 +228,6 @@
 								}  
 							</script>
               
-							<!-- 페이지넘김 -->
-							<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
-							         
 							<!-- 삭제버튼, 홈버튼 -->
 							<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                 				<!-- 삭제버튼 -->
@@ -309,6 +310,7 @@
 		let goUrlSdmUpdate 	= "/codeGroupSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
 		let goUrlSdmUdtDelNy= "/codeGroupSdmUdtDelNy";	/* 삭제여부변경 */
+		let goUrlSdmPaging  = "/codeGroupSdmPaging"; 	/* 페이징처리 */
 		
 		// 필수입력체크대상
 		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)

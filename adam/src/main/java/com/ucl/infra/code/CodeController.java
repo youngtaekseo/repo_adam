@@ -47,6 +47,19 @@ public class CodeController {
 		return Commvar.PATH_CODE + "codeSdmList";
 	}
 	
+	@RequestMapping(value = "/codeSdmPaging")
+	public String codeSdmPaging(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
+		int rowCount = service.getCount(vo);
+		
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			model.addAttribute("list", service.selectList(vo));
+		};
+		
+		return Commvar.PATH_CODE + "codeSdmListAjax";
+	}
+	
 //	등록화면
 	@RequestMapping(value = "/codeSdmCreate")
 	public String codeSdmCreate(CodeDto dto, Model model) throws Exception {

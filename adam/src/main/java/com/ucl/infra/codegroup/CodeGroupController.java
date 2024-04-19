@@ -43,6 +43,20 @@ public class CodeGroupController {
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmList";
 	}
 	
+	@RequestMapping(value = "/codeGroupSdmPaging")
+	public String codeGroupSdmPaging(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+		
+		int rowCount = service.getCount(vo);
+		
+		if(rowCount > 0) {			
+			vo.setPagingVo(rowCount);
+			
+			model.addAttribute("list", service.selectList(vo));
+		};
+		
+		return Commvar.PATH_CODE_GROUP + "codeGroupSdmListAjax";
+	}
+	
 //	수정화면
 	@RequestMapping(value = "/codeGroupSdmForm")
 	public String codeGroupSdmForm(CodeGroupDto dto, Model model) throws Exception {

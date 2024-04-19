@@ -23,7 +23,4 @@ fnModalCaptionChange = function(paramIndex, paramTitle, paramContent) {
 		$("#contents").html("삭제를 진행 하시겠습니까?");
 		$("#lineDelete").css("display", "");
 	}
-	
-
-	
 }

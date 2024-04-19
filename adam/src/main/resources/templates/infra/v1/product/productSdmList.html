@@ -291,7 +291,7 @@
 			
             			<!-- 조회결과 리스트 -->
             			<div class="w-full overflow-hidden rounded-lg shadow-xs">
-              				<div class="w-full overflow-x-auto">
+              				<div id="listData" class="w-full overflow-x-auto">
                 				<table class="w-full whitespace-no-wrap">
                   					<!-- 조회결과 리스트 타이틀-->
                   					<thead>
@@ -307,8 +307,8 @@
 											<th class="px-4 py-1">차량명</th>
 											<th class="px-4 py-1">색상</th>
 											<th class="px-4 py-1">연식(년/월)</th>
-											<th class="px-4 py-1" style="text-align:right;">주행기록</th>
-											<th class="px-4 py-1" style="text-align:right;">판매가격</th>
+											<th class="px-4 py-1" style="text-align:right;">주행기록(Km)</th>
+											<th class="px-4 py-1" style="text-align:right;">판매가격(원)</th>
 											<th class="px-4 py-1">사고유무</th>
 											<th class="px-4 py-1">추천여부</th>
 											<th class="px-4 py-1">삭제여부</th>
@@ -395,6 +395,9 @@
 					                  	</tr> 
                   					</tbody>
                 				</table>
+
+								<!-- 페이지넘김 -->
+								<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
               				</div>
 
 							<script>
@@ -407,9 +410,6 @@
 							    	$(".checkboxList").prop("checked", isChecked);
 							  	}  
 							</script>
-              
-							<!-- 페이지넘김 -->
-							<div th:replace="~{infra/v1/include/bodySdm :: bodyPagingBtn}"></div>
               
 							<!-- 삭제버튼, 이전버튼 -->
               				<div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
@@ -529,6 +529,7 @@
 		let goUrlSdmUpdate 	= "/productSdmUpdate";	/* 수정 */
 		let goUrlSdmDelete 	= "/productSdmDelete";	/* 삭제 */
 		let goUrlSdmUdtDelNy= "/productSdmUdtDelNy";/* 삭제여부-삭제로변경 */
+    	let goUrlSdmPaging  = "/productSdmPaging"; 	/* 페이징처리 */
 		
 		// 필수입력체크대상
 		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)

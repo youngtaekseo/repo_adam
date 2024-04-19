@@ -30,9 +30,6 @@ public class IndexController {
 	// 관리자메인
 	@RequestMapping(value = "/indexSdm")
 	public String indexSdm(@ModelAttribute("vo") IndexVo vo, Model model) throws Exception {
-		
-		System.out.println("vo.getPgStartPage(): " + vo.getPgStartPage());
-		
 		// 판매현황(합계)
 		model.addAttribute("item", service.selectOneSaleInfo());
 		
@@ -47,6 +44,23 @@ public class IndexController {
 		};
 		
 		return Commvar.PATH_HOME + "indexSdm";
+	}
+	
+	// 관리자메인-paging
+	@RequestMapping(value = "/indexSdmPaging")
+	public String indexSdmPaging(@ModelAttribute("vo") IndexVo vo, Model model) throws Exception {
+		// 판매현황(자료수)
+		int rowCount = service.selectOneCount();
+		
+		if(rowCount > 0) {			
+			// 페이지설정
+			vo.setPagingVo(rowCount);
+			
+			// 판매현황(리스트)
+			model.addAttribute("list", service.selectListSaleList(vo));
+		};
+		
+		return Commvar.PATH_HOME + "indexSdmAjax";
 	}
 	
 	// 사용자메인
