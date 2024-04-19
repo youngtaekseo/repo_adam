@@ -147,14 +147,15 @@
                           						id="checkboxAll" name="checkboxAll" type="checkbox"
                           						style="height: 15px; width: 15px">
                       					</th>
-										<th class="px-1 py-1">###</th>
-										<th class="px-4 py-1">그룹명</th>
-										<th class="px-4 py-1">코드순번</th>
-										<th class="px-4 py-1">코드명</th>
-										<th class="px-4 py-1">삭제여부</th>
-										<th class="px-4 py-1">등록일시</th>
-										<th class="px-4 py-1">수정일시</th>
-										<th class="px-6 py-1">작업</th>
+										<th class="px-1 py-1" style="text-align: center;">#</th>
+										<th class="px-2 py-1" style="text-align: center;">그룹순번</th>
+										<th class="px-2 py-1">그룹명</th>
+										<th class="px-2 py-1" style="text-align: center;">코드순번</th>
+										<th class="px-2 py-1">코드명</th>
+										<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
+										<th class="px-2 py-1">등록일시</th>
+										<th class="px-2 py-1">수정일시</th>
+										<th class="px-2 py-1">작업</th>
                     				</tr>
                   				</thead>
                   
@@ -164,7 +165,7 @@
                   					<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
                   						
                   					<tr th:if="${#lists.isEmpty(list)}">
-                  						<td colspan="9" class="text-center text-purple-600"> 
+                  						<td colspan="10" class="text-center text-purple-600"> 
 											There is no data !!!
                   						</td>
                   					</tr>
@@ -176,16 +177,18 @@
 				                  				th:value="${list.cdgSeq+list.cdcSeq}"
 				                        		style="height: 15px; width: 15px">
 				                    	</td>
-				                    	
-				                    	<td id="cdgSeq" name="cdgSeq" class="px-1 py-1" th:text="${list.cdgSeq}"></td>
-				                    	
-				                    	<td class="px-4 py-1" th:text="${list.cdgName}"></td>
-				                    	
-				                    	<td id="cdcSeq" name="cdcSeq" class="px-4 py-1" th:text="${list.cdcSeq}"></td>
-				                    	
-				                    	<td class="px-4 py-1" th:text="${list.cdcName}"></td>
-                             
-				                        <td class="px-4 py-1">
+				                    	<!-- row순번-->
+				                    	<td id="xrowSeq" name="xrowSeq" class="px-1 py-1" th:text="${list.xrowSeq}" style="text-align: center;"></td>
+				                    	<!-- 그룹코드순번 -->
+				                    	<td id="cdgSeq" name="cdgSeq" class="px-2 py-1" th:text="${list.cdgSeq}" style="text-align: center;"></td>
+				                    	<!-- 그룹코드명 -->
+				                    	<td class="px-2 py-1" th:text="${list.cdgName}"></td>
+				                    	<!-- 코드순번 -->
+				                    	<td id="cdcSeq" name="cdcSeq" class="px-2 py-1" th:text="${list.cdcSeq}" style="text-align: center;"></td>
+				                    	<!-- 코드명 -->
+				                    	<td class="px-2 py-1" th:text="${list.cdcName}"></td>
+                             			<!-- 삭제여부 -->
+				                        <td class="px-2 py-1" style="text-align: center;">
 				                        	<th:block th:switch="${list.cdcDelNy}">
 				                      			<span th:case="0"
 				                  					class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
@@ -197,12 +200,12 @@
 				                      			</span>      
 				                      		</th:block>                		
 				                        </td>
-				                                	
-				                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdcRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-				                    	
-				                    	<td class="px-4 py-1" th:text="${#dates.format(list.cdcUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-				                   
-				                    	<td class="px-6 py-1">
+				                        <!-- 등록일시 -->        	
+				                    	<td class="px-2 py-1" th:text="${#dates.format(list.cdcRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				                    	<!-- 수중일시 -->
+				                    	<td class="px-2 py-1" th:text="${#dates.format(list.cdcUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				                   		<!-- 작업 -->
+				                    	<td class="px-2 py-1">
 											<!-- 수정 -->
                     	    				<button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                     	    					th:if="${list.cdcSeq} != null">
@@ -214,7 +217,7 @@
 												</a>
                       						</button>
                       		
-                    	    				<button class="px-3" style="cursor:default" th:unless="${list.cdcSeq} != null"></button>                      		
+                    	    				<button class="px-2" style="cursor:default" th:unless="${list.cdcSeq} != null"></button>                      		
                       		
 											<!-- 추가 -->
 				                      		<button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">                   	

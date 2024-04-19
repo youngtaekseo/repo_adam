@@ -8,7 +8,7 @@
 	<sql id="selectCommon">
 		  FROM members a
 		 WHERE 1 = 1
-		 
+		   AND (@rownum:=0) = 0
 		<choose>
 			<when test="shOptionDate == 1">AND a.mbrRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
 			<when test="shOptionDate == 2">AND a.mbrUdtDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -29,7 +29,8 @@
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.*
 		  FROM (
-				SELECT a.mbrSeq
+				SELECT @rownum:=@rownum+1 xrowSeq
+				     , a.mbrSeq
 				     , a.mbrType
 				     , a.mbrName
 				     , a.mbrSex
@@ -40,9 +41,10 @@
 				     , a.mbrUdtDt
 				     , a.mbrDelNy
 			  <include refid="selectCommon"/>			 
-		         ORDER BY a.mbrSeq DESC 
+		         ORDER BY a.mbrSeq 
 				 LIMIT 99999999999
                ) aa
+         ORDER BY xrowSeq DESC
     	 LIMIT #{pgRowCount}
     	OFFSET #{pgOffset}          
 	</select>

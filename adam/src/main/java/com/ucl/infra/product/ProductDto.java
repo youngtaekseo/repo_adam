@@ -31,6 +31,7 @@ public class ProductDto {
 	private String  xpdtColorName;
 	private Date    xDateTime;
 	private String  xwshSeq;
+	private Integer xrowSeq;
 	
 	//=============================================================================
 	
@@ -194,5 +195,11 @@ public class ProductDto {
 	}
 	public void setXwshSeq(String xwshSeq) {
 		this.xwshSeq = xwshSeq;
+	}
+	public Integer getXrowSeq() {
+		return xrowSeq;
+	}
+	public void setXrowSeq(Integer xrowSeq) {
+		this.xrowSeq = xrowSeq;
 	}
 }

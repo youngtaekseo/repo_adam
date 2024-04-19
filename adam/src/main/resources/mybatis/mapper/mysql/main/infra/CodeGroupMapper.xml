@@ -8,6 +8,7 @@
 	<sql id="selectCommon">
           FROM codegroup a
          WHERE 1=1
+           AND (@rownum:=0) = 0
          <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
          
          <choose>
@@ -26,7 +27,8 @@
     <select id="selectList" resultMap="resultMapObj">
     	SELECT aa.*
     	  FROM (
-		        SELECT a.cdgSeq
+		        SELECT @rownum:=@rownum+1 xrowSeq
+		             , a.cdgSeq
 					 , a.cdgName
 					 , a.cdgRegDt
 					 , a.cdgUdtDt
@@ -36,9 +38,10 @@
 					     WHERE aa.cdgSeq = a.cdgSeq		        
 					   ) xcodeCount
 		      <include refid="selectCommon"/>
-		         ORDER BY a.cdgSeq DESC
+		         ORDER BY a.cdgSeq
 		         LIMIT 99999999999
                ) aa
+         ORDER BY xrowSeq desc
     	 LIMIT #{pgRowCount}
     	OFFSET #{pgOffset}          
     </select>
