@@ -1,4 +1,4 @@
-package com.ucl.common.kakaopay;
+package com.ucl.infra.kakaopay;
 
 public class KakaoPayVo {
 

@@ -1,4 +1,4 @@
-package com.ucl.common.kakaopay;
+package com.ucl.infra.kakaopay;
 
 // 누계 취소 금액
 

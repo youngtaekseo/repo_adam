@@ -1,4 +1,4 @@
-package com.ucl.common.kakaopay;
+package com.ucl.infra.kakaopay;
 
 import java.util.Date;
 
