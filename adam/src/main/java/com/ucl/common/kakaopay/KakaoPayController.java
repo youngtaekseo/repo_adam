@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ucl.common.constants.Commvar;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -13,30 +15,24 @@ import jakarta.servlet.http.HttpSession;
 public class KakaoPayController {
 	@Autowired
 	KakaoPayService kakaoPayService;
-	
-	// 결제화면
-    @RequestMapping(value="/kakao")
-	public String kakao() {
-    	return "kakaopay/kakaoPay";
-    }
 
     // 결제요청
-    @RequestMapping(value="/kakaopay")
-	public String kakaopay() {
+    @RequestMapping(value = "/kakaopay")
+	public String kakaopay(KakaoPayVo vo, HttpSession httpSession) {
     	System.out.println(".................................................... kakaopay");
-        return "redirect:" + kakaoPayService.kakaoPayReady();
+        return "redirect:" + kakaoPayService.kakaoPayReady(vo, httpSession);
 	}
     
     // 결제성공
-    @RequestMapping(value="/kakaoPaySuccess")
+    @RequestMapping(value = "/kakaoPaySuccess")
     public String kakaoPaySuccess(@RequestParam("pg_token")String pg_token, Model model, HttpSession httpSession) {
-    	model.addAttribute("info", kakaoPayService.kakaoPayInfo(pg_token, httpSession));
-    	return "kakaopay/kakaoPaySuccess";
+    	model.addAttribute("item", kakaoPayService.kakaoPayInfo(pg_token, httpSession));
+    	return Commvar.PATH_PRODUCT + "productUsrReceipt";
     }     
     
     // 결제취소
-    @RequestMapping(value="/kakaopayCancel")
-	public String kakaopayCancel(Model model, HttpSession httpSession ) {
+    @RequestMapping(value = "/kakaopayCancel")
+	public String kakaopayCancel(Model model, HttpSession httpSession) {
     	System.out.println(".................................................... kakaopayCancel");
     	String sessTidString = (String) httpSession.getAttribute("sessTid");
     	if(sessTidString != null) {

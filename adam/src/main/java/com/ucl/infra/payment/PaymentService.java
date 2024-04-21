@@ -5,16 +5,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ucl.common.kakaopay.KakaoPayApprovalDto;
+
 @Service
 public class PaymentService {
 
 	@Autowired
 	PaymentDao dao;
 	
-	// 결제저장
+	// 결제저장(카드)
 	public int paymentInsert(PaymentDto dto) {
 		return dao.paymentInsert(dto);
 	}
+	
+	// 결제저장(카카오페이)
+	public int paymentUpdateKakaoPay(KakaoPayApprovalDto dto) {
+		return dao.paymentUpdateKakaoPay(dto);
+	}	
 	
 	// 구매등록
 	public int insertProductbuy(PaymentDto dto) {

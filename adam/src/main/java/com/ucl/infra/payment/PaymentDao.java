@@ -2,10 +2,15 @@ package com.ucl.infra.payment;
 
 import java.util.List;
 
+import com.ucl.common.kakaopay.KakaoPayApprovalDto;
+
 public interface PaymentDao {
 	
-	// 결제저장
+	// 결제저장(카드)
 	public int paymentInsert(PaymentDto dto);
+	
+	// 결제저장(카카오페이)
+	public int paymentUpdateKakaoPay(KakaoPayApprovalDto dto);
 	
 	// 구매등록
 	public int insertProductbuy(PaymentDto dto);
