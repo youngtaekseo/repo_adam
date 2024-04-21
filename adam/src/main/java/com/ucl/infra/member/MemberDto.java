@@ -4,20 +4,21 @@ import java.util.Date;
 
 public class MemberDto {
 	
-	private String mbrSeq;
+	private String  mbrSeq;
 	private Integer mbrType; // 1:관리자, 2:사용자
-	private String mbrName;
+	private String  mbrName;
 	private Integer mbrSex;
-	private String mbrBirthday;
-	private String mbrEmail;
-	private String mbrPassword;
-	private Date mbrRegDt;
-	private Date mbrUdtDt;
+	private String  mbrBirthday;
+	private String  mbrEmail;
+	private String  mbrPassword;
+	private Date    mbrRegDt;
+	private Date    mbrUdtDt;
 	private Integer mbrDelNy; // 0:미삭제, 1:삭제
 	
 	private Integer xmbrCount;
-	private String xmbrPwConfirm;
-	private String xmbrPasswordPre;
+	private String  xmbrPwConfirm;
+	private String  xmbrPasswordPre;
+	private Integer xrowSeq;
 	
 //	===================================
 	
@@ -99,4 +100,11 @@ public class MemberDto {
 	public void setXmbrPwConfirm(String xmbrPwConfirm) {
 		this.xmbrPwConfirm = xmbrPwConfirm;
 	}
+	public Integer getXrowSeq() {
+		return xrowSeq;
+	}
+	public void setXrowSeq(Integer xrowSeq) {
+		this.xrowSeq = xrowSeq;
+	}
+	
 }

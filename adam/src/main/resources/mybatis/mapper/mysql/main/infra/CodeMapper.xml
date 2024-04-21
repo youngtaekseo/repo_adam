@@ -10,7 +10,7 @@
        		   LEFT JOIN code b
               		  ON b.cdgSeq = a.cdgSeq 
          WHERE 1 = 1          
-         
+		   AND (@rownum:=0) = 0         
          <if test="shDelNy != null and !shDelNy.equals('')">AND IFNULL(b.cdcDelNy, 0) = #{shDelNy}</if>
          
          <choose>
@@ -31,7 +31,8 @@
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.*
 		  FROM (
-		        SELECT a.cdgSeq
+		        SELECT @rownum:=@rownum+1 xrowSeq
+		             , a.cdgSeq
 		     		 , a.cdgName
 		     		 , b.cdcDelNy
 		     		 , b.cdcSeq
@@ -39,9 +40,10 @@
 		     		 , b.cdcRegDt
 		     		 , b.cdcUdtDt
 			  <include refid="selectCommon"/>			 
-		         ORDER BY a.cdgSeq DESC, b.cdcSeq         
+		         ORDER BY a.cdgSeq, b.cdcSeq         
 				 LIMIT 99999999999
                ) aa
+         ORDER BY xrowSeq DESC
     	 LIMIT #{pgRowCount}
     	OFFSET #{pgOffset}  		 
 	</select>

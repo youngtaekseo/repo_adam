@@ -152,23 +152,24 @@
                           							id="checkboxAll" name="checkboxAll" type="checkbox"
                           							style="height: 15px; width: 15px">
                       						</th>
-											<th class="px-1 py-1">###</th>
-											<th class="px-4 py-1">회원구분</th>
-											<th class="px-4 py-1">성명</th>
-											<th class="px-4 py-1">이메일</th>
-											<th class="px-4 py-1">성별</th>
-											<th class="px-4 py-1">생년월일</th>
-											<th class="px-4 py-1">삭제여부</th>
-											<th class="px-4 py-1">등록일시</th>
-											<th class="px-4 py-1">수정일시</th>
-											<th class="px-6 py-1">작업</th>
+											<th class="px-1 py-1" style="text-align: center;">#</th>
+											<th class="px-2 py-1" style="text-align: center;">순번</th>
+											<th class="px-2 py-1">회원구분</th>
+											<th class="px-2 py-1">성명</th>
+											<th class="px-2 py-1">이메일</th>
+											<th class="px-2 py-1" style="text-align: center;">성별</th>
+											<th class="px-2 py-1">생년월일</th>
+											<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
+											<th class="px-2 py-1">등록일시</th>
+											<th class="px-2 py-1">수정일시</th>
+											<th class="px-2 py-1">작업</th>
 										</tr>
 									</thead>
 
                   					<!-- 조회결과 리스트 내용 -->
                   					<tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   						<tr th:if="${#lists.isEmpty(list)}">
-                  							<td colspan="11" class="text-center text-purple-600"> 
+                  							<td colspan="12" class="text-center text-purple-600"> 
 												There is no data !!!
                   							</td>
                   						</tr>
@@ -181,21 +182,23 @@
                   									th:value="${list.mbrSeq}"
                   									style="height: 15px; width: 15px">
                     						</td>
+                    						<!-- row순번 -->
+											<td id="xrowSeq" class="px-1 py-1" th:text="${list.xrowSeq}" style="text-align: center;"></td>
 											<!-- 순번 -->
-											<td id="mbrSeq" class="px-1 py-1" th:text="${list.mbrSeq}"></td>
+											<td id="mbrSeq" class="px-2 py-1" th:text="${list.mbrSeq}" style="text-align: center;"></td>
 											<!-- 회원구분 -->
-											<td id="mbrType" class="px-4 py-1">
+											<td id="mbrType" class="px-2 py-1">
 					                    		<th:block th:switch="${list.mbrType}">
 					                    			<span th:case = "1">관리자</span>
 					                    			<span th:case = "2">사용자</span>
 					                    		</th:block>
 					                    	</td>
 											<!-- 성명 -->
-					                    	<td class="mbrName px-4 py-1" th:text="${list.mbrName}"></td>
+					                    	<td class="mbrName px-2 py-1" th:text="${list.mbrName}"></td>
 											<!-- 이메일 -->
-					                    	<td class="mbrEmail px-4 py-1" th:text="${list.mbrEmail}"></td>
+					                    	<td class="mbrEmail px-2 py-1" th:text="${list.mbrEmail}"></td>
 											<!-- 성별 -->
-											<td class="mbrSex px-4 py-1">
+											<td class="mbrSex px-2 py-1" style="text-align: center;">
 												<th:block th:switch="${list.mbrSex}">
 													<!-- 남 -->
 						                      		<span th:case="12" class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700"
@@ -212,9 +215,9 @@
 												</th:block>						
 											</td>
 											<!-- 생년월일 -->
-					                    	<td class="mbrBirthday px-4 py-1" th:text="${#strings.substring(list.mbrBirthday, 0, 10)}"></td>
+					                    	<td class="mbrBirthday px-2 py-1" th:text="${#strings.substring(list.mbrBirthday, 0, 10)}"></td>
 											<!-- 삭제여부 -->
-					                    	<td class="mbrDelNy px-4 py-1">
+					                    	<td class="mbrDelNy px-2 py-1" style="text-align: center;">
 					                    		<th:block th:switch="${list.mbrDelNy}">
 						                      		<span th:case="0"
 						                  				class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-white dark:bg-green-700">
@@ -227,11 +230,11 @@
 					                    		</th:block>
 					                    	</td>
 											<!-- 등록일시 -->
-					                    	<td class="mbrRegDt px-4 py-1" th:text="${#dates.format(list.mbrRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    	<td class="mbrRegDt px-2 py-1" th:text="${#dates.format(list.mbrRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 											<!-- 수정일시 -->
-					                    	<td class="mbrUdtDt px-4 py-1" th:text="${#dates.format(list.mbrUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    	<td class="mbrUdtDt px-2 py-1" th:text="${#dates.format(list.mbrUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 											<!-- 작업버튼 -->
-					                    	<td class="px-6 py-1">
+					                    	<td class="px-2 py-1">
 											<!-- 수정버튼 -->
 					                    	    <button class="px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
 													<a th:href="@{/memberSdmForm(mbrSeq=${list.mbrSeq}, mbrName=${list.mbrName})}">

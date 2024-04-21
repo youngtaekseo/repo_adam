@@ -14,6 +14,7 @@ public class CodeDto {
 			
 	private String 	cdgName;	
 	private Integer xcodeCount;
+	private Integer xrowSeq;
 	
 //	for cache
 	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
@@ -74,5 +75,11 @@ public class CodeDto {
 	}
 	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
 		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
+	}
+	public Integer getXrowSeq() {
+		return xrowSeq;
+	}
+	public void setXrowSeq(Integer xrowSeq) {
+		this.xrowSeq = xrowSeq;
 	}
 }
