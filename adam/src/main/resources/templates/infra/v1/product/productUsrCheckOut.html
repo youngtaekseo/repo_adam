@@ -333,6 +333,32 @@
 			fnCallController();
 		};
 		
+		// 카카오결제
+		document.getElementById("btnKakaoPay").onclick = function(){
+			alert("btnKakaoPay");
+			// 결제 정보
+			let item_name       = $("#itemName").val();	// 상품 명
+			let quantity        = $("#quantity").val();	// 상품 수량
+			let total_amount    = parseInt($("#price").text().replace(/,/g,''));// 상품 가격
+			let tax_free_amount = "0"; // 상품 비과세 금액
+			
+			// 카카오페이 결제
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, url: goUrlUsrKakaoPay
+				, data:{"item_name"      : item_name
+					   ,"quantity"       : quantity
+					   ,"total_amount"   : total_amount
+					   ,"tax_free_amount": tax_free_amount
+				},
+				success:function(response){
+								
+				}
+			});
+		};
+		
 		// event onkeydown
 		fnOnKeyDown = function() {
 			// 엔터키(13)이면

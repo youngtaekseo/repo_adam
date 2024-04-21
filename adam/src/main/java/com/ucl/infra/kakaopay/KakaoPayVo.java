@@ -14,6 +14,7 @@ public class KakaoPayVo {
 	
 	private String payTypeCd;
 	private String mbrSeq;
+	private String paySeq;
 	
 	public String getPartner_order_id() {
 		return partner_order_id;
@@ -80,6 +81,12 @@ public class KakaoPayVo {
 	}
 	public void setMbrSeq(String mbrSeq) {
 		this.mbrSeq = mbrSeq;
+	}
+	public String getPaySeq() {
+		return paySeq;
+	}
+	public void setPaySeq(String paySeq) {
+		this.paySeq = paySeq;
 	}
 	
 }

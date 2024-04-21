@@ -14,19 +14,24 @@ import jakarta.servlet.http.HttpSession;
 
 public class KakaoPayController {
 	@Autowired
-	KakaoPayService kakaoPayService;
+	KakaoPayService service;
 
     // 결제요청
     @RequestMapping(value = "/kakaopay")
-	public String kakaopay(KakaoPayVo vo, HttpSession httpSession) {
+	public String kakaopay(KakaoPayVo vo, KakaoPayDto dto, HttpSession httpSession) {
     	System.out.println(".................................................... kakaopay");
-        return "redirect:" + kakaoPayService.kakaoPayReady(vo, httpSession);
+    	
+    	// 결제순번
+    	service.paymentInsertPaySeq(dto);
+    	vo.setPaySeq(dto.getPaySeq());
+    	//vo.set
+        return "redirect:" + service.kakaoPayReady(vo, httpSession);
 	}
     
     // 결제성공
     @RequestMapping(value = "/kakaoPaySuccess")
     public String kakaoPaySuccess(@RequestParam("pg_token")String pg_token, Model model, HttpSession httpSession) {
-    	model.addAttribute("item", kakaoPayService.kakaoPayInfo(pg_token, httpSession));
+    	model.addAttribute("item", service.kakaoPayInfo(pg_token, httpSession));
     	return Commvar.PATH_PRODUCT + "productUsrReceipt";
     }     
     
@@ -36,7 +41,7 @@ public class KakaoPayController {
     	System.out.println(".................................................... kakaopayCancel");
     	String sessTidString = (String) httpSession.getAttribute("sessTid");
     	if(sessTidString != null) {
-    		model.addAttribute("info", kakaoPayService.kakaoPayCancel(httpSession));
+    		model.addAttribute("info", service.kakaoPayCancel(httpSession));
 
     		// 세션삭제
         	httpSession.removeAttribute("sessTid");

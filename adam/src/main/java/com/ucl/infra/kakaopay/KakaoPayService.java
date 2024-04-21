@@ -25,16 +25,36 @@ public class KakaoPayService {
 	@Autowired
 	PaymentService paymentService;
 	
+	@Autowired
+	KakaoPayDao dao;
+	
+	@Autowired
+	KakaoPayVo kakaoPayVo;
+	
+	@Autowired
+	KakaoPayDto kakaoPayDto;
+	
+	@Autowired
+	KakaoPayApprovalDto kakaoPayApprovalDto;
+	
+	@Autowired
+	CancelDto kakaoPayCancelDto;
+	
 	private static final String Host = "https://kapi.kakao.com";
 	
 	@Value("${kakaopay_admin_key}")
     private String kakaoAdminKey;
 
-	private KakaoPayVo kakaoPayVo;
-    private KakaoPayDto kakaoPayDto;
-    private KakaoPayApprovalDto kakaoPayApprovalDto;
-    private CancelDto kakaoPayCancelDto;
+	//private KakaoPayVo kakaoPayVo;
+    //private KakaoPayDto kakaoPayDto;
+    //private KakaoPayApprovalDto kakaoPayApprovalDto;
+    //private CancelDto kakaoPayCancelDto;
 
+    // 카카오페이 결제등록용 순번
+ 	public int paymentInsertPaySeq(KakaoPayDto dto) {
+ 		return dao.paymentInsertPaySeq(dto);
+ 	};
+ 	
     // 결제요청
     public String kakaoPayReady(KakaoPayVo vo, HttpSession httpSession) {
     	// 결제종류(카카오페이)
@@ -117,7 +137,7 @@ public class KakaoPayService {
             */
             
             // 결제정보db저장
-            paymentService.paymentUpdateKakaoPay(kakaoPayApprovalDto);
+            //paymentService.paymentUpdateKakaoPay(kakaoPayApprovalDto);
             
             return kakaoPayApprovalDto;
         
@@ -142,7 +162,7 @@ public class KakaoPayService {
         
         // Server Request Body : 서버 요청 본문
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-        params.add("cid"                   , "TC0ONETIME"); // 가맹점 코드 - 테스트용
+        params.add("cid"                   , "TC0ONETIME");											// 가맹점 코드 - 테스트용
         params.add("tid"                   , httpSession.getAttribute("sessTid").toString()); 		// 환불할 결제 고유 번호
         params.add("cancel_amount"         , httpSession.getAttribute("sessTotal").toString());		// 환불 금액
         params.add("cancel_vat_amount"     , httpSession.getAttribute("sessVat").toString());		// 환불 부가세
@@ -163,5 +183,7 @@ public class KakaoPayService {
         }
         
         return null;
-    }    
+    }  
+    
+    
 }
