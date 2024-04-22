@@ -18,7 +18,13 @@ public class PaymentDto extends ProductDto {
 	private String  payCardCvc;
 	private String  payCardYear;
 	private String  payCardMonth;
+	private Integer payQuantity;
 	private Integer payTotal;
+	private Integer payVat;
+	private Integer payTaxFree;
+	private String  payTid;
+	private Date    payCreatedAt;
+	private Date    payApprovedAt;	
 	private String  mbrSeq;
 	
 	// 영수증
@@ -108,6 +114,42 @@ public class PaymentDto extends ProductDto {
 	}
 	public void setPayTotal(Integer payTotal) {
 		this.payTotal = payTotal;
+	}
+	public Integer getPayQuantity() {
+		return payQuantity;
+	}
+	public void setPayQuantity(Integer payQuantity) {
+		this.payQuantity = payQuantity;
+	}
+	public Integer getPayVat() {
+		return payVat;
+	}
+	public void setPayVat(Integer payVat) {
+		this.payVat = payVat;
+	}
+	public Integer getPayTaxFree() {
+		return payTaxFree;
+	}
+	public void setPayTaxFree(Integer payTaxFree) {
+		this.payTaxFree = payTaxFree;
+	}
+	public String getPayTid() {
+		return payTid;
+	}
+	public void setPayTid(String payTid) {
+		this.payTid = payTid;
+	}
+	public Date getPayCreatedAt() {
+		return payCreatedAt;
+	}
+	public void setPayCreatedAt(Date payCreatedAt) {
+		this.payCreatedAt = payCreatedAt;
+	}
+	public Date getPayApprovedAt() {
+		return payApprovedAt;
+	}
+	public void setPayApprovedAt(Date payApprovedAt) {
+		this.payApprovedAt = payApprovedAt;
 	}
 	public String getMbrSeq() {
 		return mbrSeq;

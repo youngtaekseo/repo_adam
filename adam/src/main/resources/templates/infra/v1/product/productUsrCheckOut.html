@@ -362,7 +362,7 @@
 					   ,"tax_free_amount": tax_free_amount
 				},
 				success:function(response){
-								
+					location.href = response.rt;		
 				}
 			});
 		};
@@ -501,9 +501,6 @@
 		fnCallController = function() {
 			if(!fnValidationForm()) {return false;}
 			if(!fnValidation()) {return false;}
-			
-			// 전송자료생성
-			// let params = jQuery("#form").serialize();
 			
 			// 저장
 			$.ajax({

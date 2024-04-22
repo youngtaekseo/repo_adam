@@ -56,7 +56,7 @@
 	                                                        <div class="product-line-grid-left col-md-2">
 	                                                            <span class="product-image media-middle">
 	                                                                <a th:href="@{/productUsrDetail(pdtSeq=${list.pdtSeq})}">
-	                                                                    <img class="img-fluid" th:src="${list.xpdtImgF}" th:alt="${list.xpdtBrandName}+' '+${item.pdtName}">
+	                                                                    <img class="img-fluid" th:src="${list.xpdtImgF}" th:alt="${list.xpdtBrandName}+' '+${list.pdtName}">
 	                                                                </a>
 	                                                            </span>
 	                                                        </div>
@@ -137,7 +137,7 @@
 	                                        <div class="">
 	                                            <div id="main">
 	                                                <h1 class="title-page">결제결과</h1>
-	                                                <div class="content" id="">
+	                                                <div class="content" th:if="${item.payTypeCd} == '1'">
 	                                                    <table class="table">
 	                                                        <tbody>
 	                                                            <tr>
@@ -163,6 +163,42 @@
 	                                                        </tbody>
 	                                                    </table>
 	                                                </div>
+	                                                <div class="content" th:unless="${item.payTypeCd} == '1'">
+	                                                    <table class="table">
+	                                                        <tbody>
+	                                                            <tr>
+	                                                                <th class="first_item">승인일시</th>
+	                                                                <td th:text="${#dates.format(info.approved_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+	                                                            </tr>                                                            
+	                                                            <tr>
+	                                                                <th class="first_item">주문번호</th>
+	                                                                <td th:text="${info.partner_order_id}"></td>
+	                                                            </tr>                                                            
+	                                                            <tr>
+	                                                                <th class="first_item">구매품목</th>
+	                                                                <td th:text="${info.item_name}"></td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">결제수량</th>
+	                                                                <td th:text="${info.quantity}"></td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">결제금액</th>
+	                                                                <td>￦<span class="price" th:text="${#numbers.formatInteger(info.amount.total, 1, 'COMMA')}"></span>원</td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">부가세액</th>
+	                                                                <td>￦<span class="price" th:text="${#numbers.formatInteger(info.amount.vat, 1, 'COMMA')}"></span>원</td>
+	                                                            </tr>
+	                                                            <tr>
+	                                                                <th class="first_item">결제방법</th>
+	                                                                <td th:text="${info.payment_method_type}"></td>
+	                                                            </tr>
+	                                                        </tbody>
+	                                                    </table>
+	                                                </div>
+	                                                
+	                                                
 	                                            </div>
 	                                        </div>
 	                                    </div>  

@@ -134,9 +134,10 @@
 		     , d.pdtRunKm
 	</select>
 	
-	<!-- 영수증에 표시할 구매건수, 합계금액, 결제카드정보 -->
+	<!-- 영수증에 표시할 구매건수, 합계금액, 결제정보 -->
 	<select id="selectOneCountSumCard" resultMap="resultMapObj">
-		SELECT a.payDate
+		SELECT a.paySeq
+		     , a.payDate
 			 , a.payTypeCd
 			 , b.cdcName xpayTypeName
 			 , a.payCardCd
@@ -149,14 +150,20 @@
 			 , a.payCardCvc
 			 , a.payCardYear
 			 , a.payCardMonth
+			 , a.payQuantity
 			 , a.payTotal
+			 , a.payVat
+			 , a.payTaxFree
+			 , a.payTid
+			 , a.payCreatedAt
+			 , a.payApprovedAt
 			 , a.mbrSeq
 			 , d.xbuyCount
 			 , d.xbuyPrice
 		  FROM memberpayment a
 		       JOIN code b
 		         ON b.cdcSeq = a.payTypeCd
-			   JOIN code c
+			   LEFT JOIN code c
 		         ON c.cdcSeq = a.payCardCd
 		       JOIN (SELECT paySeq
 		       			  , COUNT(*)      xbuyCount
