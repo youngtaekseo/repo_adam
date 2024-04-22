@@ -28,27 +28,15 @@ public class KakaoPayService {
 	@Autowired
 	KakaoPayDao dao;
 	
-	@Autowired
-	KakaoPayVo kakaoPayVo;
-	
-	@Autowired
-	KakaoPayDto kakaoPayDto;
-	
-	@Autowired
-	KakaoPayApprovalDto kakaoPayApprovalDto;
-	
-	@Autowired
-	CancelDto kakaoPayCancelDto;
-	
 	private static final String Host = "https://kapi.kakao.com";
 	
 	@Value("${kakaopay_admin_key}")
     private String kakaoAdminKey;
 
-	//private KakaoPayVo kakaoPayVo;
-    //private KakaoPayDto kakaoPayDto;
-    //private KakaoPayApprovalDto kakaoPayApprovalDto;
-    //private CancelDto kakaoPayCancelDto;
+	private KakaoPayVo kakaoPayVo;
+    private KakaoPayDto kakaoPayDto;
+    private KakaoPayApprovalDto kakaoPayApprovalDto;
+    private CancelDto kakaoPayCancelDto;
 
     // 카카오페이 결제등록용 순번
  	public int paymentInsertPaySeq(KakaoPayDto dto) {
@@ -56,20 +44,15 @@ public class KakaoPayService {
  	};
  	
     // 결제요청
-    public String kakaoPayReady(KakaoPayVo vo, HttpSession httpSession) {
-    	// 결제종류(카카오페이)
-		vo.setPayTypeCd("30");
-		// 로그인 회원번호
-		vo.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
-		//paymentService.paymentInsertPaySeq(vo);
-    	
+    public String kakaoPayReady(KakaoPayVo vo) {
         RestTemplate restTemplate = new RestTemplate();
         //restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory()); // 정확한 에러 파악을 위해 생성
+        
         // Server Request Header : 서버 요청 헤더
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + kakaoAdminKey); // admin key
-        headers.add("Accept", "application/json");
-        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Accept"       , "application/json");
+        headers.add("Content-type" , "application/x-www-form-urlencoded;charset=utf-8");
         
         // Server Request Body : 서버 요청 본문
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
@@ -103,7 +86,7 @@ public class KakaoPayService {
     }
     
     // 결제결과정보
-    public KakaoPayApprovalDto kakaoPayInfo(String pg_token, HttpSession httpSession) {
+    public KakaoPayApprovalDto kakaoPayInfo(String pg_token) {
         RestTemplate restTemplate = new RestTemplate();
         //restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory()); // 정확한 에러 파악을 위해 생성
         // Server Request Header : 서버 요청 헤더
@@ -126,8 +109,11 @@ public class KakaoPayService {
         
         try {
             kakaoPayApprovalDto = restTemplate.postForObject(new URI(Host + "/v1/payment/approve"), body, KakaoPayApprovalDto.class);
-            kakaoPayApprovalDto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+            kakaoPayApprovalDto.setTax_free_amount(kakaoPayApprovalDto.getAmount().getTax_free());
+            kakaoPayApprovalDto.setVat_amount(kakaoPayApprovalDto.getAmount().getVat());
             kakaoPayApprovalDto.setResultInfo(kakaoPayApprovalDto.toString());
+            
+            //System.out.println(kakaoPayApprovalDto.toString());
 
             /*
             httpSession.setAttribute("sessTid"    , kakaoPayDto.getTid());							// 결제고유번호
@@ -137,7 +123,7 @@ public class KakaoPayService {
             */
             
             // 결제정보db저장
-            //paymentService.paymentUpdateKakaoPay(kakaoPayApprovalDto);
+            dao.paymentUpdateKakaoPay(kakaoPayApprovalDto);
             
             return kakaoPayApprovalDto;
         

@@ -12,10 +12,6 @@ public class KakaoPayVo {
 	private String cancel_url   = "http://localhost:8081/productUsrCheckOut"; // 취소시 url
 	private String fail_url     = "http://localhost:8081/productUsrCheckOut"; // 실패시 url
 	
-	private String payTypeCd;
-	private String mbrSeq;
-	private String paySeq;
-	
 	public String getPartner_order_id() {
 		return partner_order_id;
 	}
@@ -69,24 +65,6 @@ public class KakaoPayVo {
 	}
 	public void setFail_url(String fail_url) {
 		this.fail_url = fail_url;
-	}
-	public String getPayTypeCd() {
-		return payTypeCd;
-	}
-	public void setPayTypeCd(String payTypeCd) {
-		this.payTypeCd = payTypeCd;
-	}
-	public String getMbrSeq() {
-		return mbrSeq;
-	}
-	public void setMbrSeq(String mbrSeq) {
-		this.mbrSeq = mbrSeq;
-	}
-	public String getPaySeq() {
-		return paySeq;
-	}
-	public void setPaySeq(String paySeq) {
-		this.paySeq = paySeq;
 	}
 	
 }

@@ -27,28 +27,16 @@
 		
 	<!-- 카카오페이 결제등록 -->
 	<update id="paymentUpdateKakaoPay">
-		INSERT INTO memberpayment
-			(
-			  payDate
-			, payTypeCd
-			, payQuantiry
-			, payTotal
-			, payVat
-			, payTaxFree
-			, payTid
-			, mbrSeq
-			)
-		VALUES
-			(
-			  now()
-			, #{payTypeCd}
-			, #{payQuantiry}
-			, #{payTotal}
-			, #{payVat}
-			, #{payTaxFree}
-			, #{payTid}
-			, #{mbrSeq}		
-			)
+		UPDATE memberpayment
+		   SET payDate       = now()
+			 , payQuantity   = #{quantity}
+			 , payTotal      = #{total}
+			 , payVat        = #{vat_amount}
+			 , payTaxFree    = #{tax_free_amount}
+			 , payTid        = #{tid}
+			 , payCreatedAt  = #{created_at}
+			 , payApprovedAt = #{approved_at}
+		 WHERE paySeq        = #{partner_order_id}
 	</update>	
 	
 </mapper>

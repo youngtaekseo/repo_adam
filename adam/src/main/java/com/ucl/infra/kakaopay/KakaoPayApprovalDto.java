@@ -8,10 +8,9 @@ public class KakaoPayApprovalDto {
     private AmountDto amount;
     private CardDto card_info;
     private String item_name, item_code, payload;
-    private Integer quantity, tax_free_amount, vat_amount;
+    private Integer total, quantity, tax_free_amount, vat_amount;
     private Date created_at, approved_at;
     private String resultInfo;
-    private String mbrSeq;
     
 	public String getAid() {
 		return aid;
@@ -60,6 +59,7 @@ public class KakaoPayApprovalDto {
 	}
 	public void setAmount(AmountDto amount) {
 		this.amount = amount;
+		this.total = amount.getTotal();
 	}
 	public CardDto getCard_info() {
 		return card_info;
@@ -84,6 +84,12 @@ public class KakaoPayApprovalDto {
 	}
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+	public Integer getTotal() {
+		return total;
+	}
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	public Integer getQuantity() {
 		return quantity;
@@ -120,12 +126,6 @@ public class KakaoPayApprovalDto {
 	}
 	public void setResultInfo(String resultInfo) {
 		this.resultInfo = resultInfo;
-	}
-	public String getMbrSeq() {
-		return mbrSeq;
-	}
-	public void setMbrSeq(String mbrSeq) {
-		this.mbrSeq = mbrSeq;
 	}
 	@Override
 	public String toString() {

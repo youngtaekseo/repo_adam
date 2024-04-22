@@ -46,51 +46,6 @@
 		</selectKey>
 	</insert>
 	
-	<!-- 카카오페이 결제등록용 순번 -->
-	<insert id="paymentInsertPaySeq">
-		INSERT INTO memberpayment
-			(
-			  payDate
-			, payTypeCd
-			, mbrSeq
-			)
-		VALUES
-			(
-			  now()
-			, #{payTypeCd}
-			, #{mbrSeq}		
-			)
-		<selectKey resultType="String" keyProperty="paySeq" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-		
-	<!-- 카카오페이 결제등록 -->
-	<update id="paymentUpdateKakaoPay">
-		INSERT INTO memberpayment
-			(
-			  payDate
-			, payTypeCd
-			, payQuantiry
-			, payTotal
-			, payVat
-			, payTaxFree
-			, payTid
-			, mbrSeq
-			)
-		VALUES
-			(
-			  now()
-			, #{payTypeCd}
-			, #{payQuantiry}
-			, #{payTotal}
-			, #{payVat}
-			, #{payTaxFree}
-			, #{payTid}
-			, #{mbrSeq}		
-			)
-	</update>	
-	
 	<!-- 구매내역등록 -->
 	<insert id="insertProductbuy">
 		INSERT INTO productbuy 

@@ -2,7 +2,7 @@ package com.ucl.infra.payment;
 
 import java.util.List;
 
-import com.ucl.common.kakaopay.KakaoPayApprovalDto;
+import com.ucl.infra.kakaopay.KakaoPayApprovalDto;
 
 public interface PaymentDao {
 	

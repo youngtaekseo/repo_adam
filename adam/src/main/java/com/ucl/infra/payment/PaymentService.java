@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ucl.common.kakaopay.KakaoPayApprovalDto;
+import com.ucl.infra.kakaopay.KakaoPayApprovalDto;
 
 @Service
 public class PaymentService {
