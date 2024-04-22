@@ -122,6 +122,7 @@
 		  FROM code
 		 WHERE 1=1
 		   AND cdcDelNy = 0
+		 ORDER BY cdgSeq, cdcSeq
    </select> 
     
     <!-- 다중선택자료 삭제 -->
