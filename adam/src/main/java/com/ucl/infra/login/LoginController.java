@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 
@@ -14,7 +16,8 @@ public class LoginController {
 	
 	// 관리자 로그인
 	@RequestMapping(value = "/loginSdm")
-	public String loginSdm() throws Exception {
+	public String loginSdm(HttpSession httpSession) throws Exception {
+		httpSession.setAttribute("sessWorker", "sdm");
 		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
 	

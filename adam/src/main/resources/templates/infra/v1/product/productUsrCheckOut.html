@@ -170,76 +170,78 @@
 		                                                        </select>
 		                                                        <span id="payTypeCdValid" name="payTypeCdValid" style="float: left; color: red; visibility:hidden;"></span>
 		                                                    </div>
-<div id="divCardInfo" name="divCardInfo" style="display: none;">		                                                    
-		                                                    <div class="form-group row pl-3 pr-3 mb-4">
-		                                                        <select class="form-select form-control"
-		                                                        	id="payCardCd" name="payCardCd">
-		                                                            <option value="" th:selected="${vo.shCardType == null}">카드사</option>
-		                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(2)}">
-		                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shCardType}"></option>
-		                                                            </th:block>
-		                                                        </select>
-		                                                        <span id="payCardCdValid" name="payCardCdValid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                    </div>
-		
-		                                                    <div class="form-group row mb-4">
-		                                                        <div class="col">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payOwnerEng" name="payOwnerEng" type="text" placeholder="영문명" value="uesd car like"
-		                                                            	onchange="fnOnChange(this)">
-		                                                        	<span id="payOwnerEngValid" name="payOwnerEngValid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                    </div> 
-		
-		                                                    <div class="form-group row mb-4">
-		                                                        <div class="col-3">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardNo1" name="payCardNo1" type="text" placeholder="카드번호" value="1234"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardNo1Valid" name="payCardNo1Valid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                        <div class="col-3">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardNo2" name="payCardNo2" type="text" placeholder="카드번호" value="5678"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardNo2Valid" name="payCardNo2Valid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                        <div class="col-3">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardNo3" name="payCardNo3" type="text" placeholder="카드번호" value="9087"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardNo3Valid" name="payCardNo3Valid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                        <div class="col-3">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardNo4" name="payCardNo4" type="text" placeholder="카드번호" value="6543"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardNo4Valid" name="payCardNo4Valid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                    </div>     
-		
-		                                                    <div class="form-group row mb-4">
-		                                                        <div class="col">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardMonth" name="payCardMonth" type="text" placeholder="유효기간(월)" value="03"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardMonthValid" name="payCardMonthValid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                        <div class="col">
-		                                                            <input class="form-control js-child-focus"
-		                                                            	id="payCardYear" name="payCardYear" type="text" placeholder="유효기간(년)" value="30"
-		                                                            	onchange="fnOnChange(this)">
-		                                                            <span id="payCardYearValid" name="payCardYearValid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                        </div>
-		                                                    </div>        
-		
-		                                                    <div class="form-group row pl-3 pr-3 mb-4">
-		                                                        <input class="form-control js-child-focus"
-		                                                        	id="payCardCvc" name="payCardCvc" type="text" placeholder="카드 인증 값(CVC)" value="987"
-		                                                        	onchange="fnOnChange(this)">
-		                                                        <span id="payCardCvcValid" name="payCardCvcValid" style="float: left; color: red; visibility:hidden;"></span>
-		                                                    </div>                                              
-</div>		
+															
+															<div id="divCardInfo" name="divCardInfo" style="display: none;">		                                                    
+			                                                    <div class="form-group row pl-3 pr-3 mb-4">
+			                                                        <select class="form-select form-control"
+			                                                        	id="payCardCd" name="payCardCd">
+			                                                            <option value="" th:selected="${vo.shCardType == null}">카드사</option>
+			                                                            <th:block th:each="list : ${@codeService.selectListCachedCode(2)}">
+			                                                            	<option th:value="${list.cdcSeq}" th:text="${list.cdcName}" th:selected="${list.cdcSeq == vo.shCardType}"></option>
+			                                                            </th:block>
+			                                                        </select>
+			                                                        <span id="payCardCdValid" name="payCardCdValid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                    </div>
+			
+			                                                    <div class="form-group row mb-4">
+			                                                        <div class="col">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payOwnerEng" name="payOwnerEng" type="text" placeholder="영문명" value="uesd car like"
+			                                                            	onchange="fnOnChange(this)">
+			                                                        	<span id="payOwnerEngValid" name="payOwnerEngValid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                    </div> 
+			
+			                                                    <div class="form-group row mb-4">
+			                                                        <div class="col-3">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardNo1" name="payCardNo1" type="text" placeholder="카드번호" value="1234"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardNo1Valid" name="payCardNo1Valid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                        <div class="col-3">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardNo2" name="payCardNo2" type="text" placeholder="카드번호" value="5678"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardNo2Valid" name="payCardNo2Valid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                        <div class="col-3">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardNo3" name="payCardNo3" type="text" placeholder="카드번호" value="9087"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardNo3Valid" name="payCardNo3Valid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                        <div class="col-3">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardNo4" name="payCardNo4" type="text" placeholder="카드번호" value="6543"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardNo4Valid" name="payCardNo4Valid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                    </div>     
+			
+			                                                    <div class="form-group row mb-4">
+			                                                        <div class="col">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardMonth" name="payCardMonth" type="text" placeholder="유효기간(월)" value="03"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardMonthValid" name="payCardMonthValid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                        <div class="col">
+			                                                            <input class="form-control js-child-focus"
+			                                                            	id="payCardYear" name="payCardYear" type="text" placeholder="유효기간(년)" value="30"
+			                                                            	onchange="fnOnChange(this)">
+			                                                            <span id="payCardYearValid" name="payCardYearValid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                        </div>
+			                                                    </div>        
+			
+			                                                    <div class="form-group row pl-3 pr-3 mb-4">
+			                                                        <input class="form-control js-child-focus"
+			                                                        	id="payCardCvc" name="payCardCvc" type="text" placeholder="카드 인증 값(CVC)" value="987"
+			                                                        	onchange="fnOnChange(this)">
+			                                                        <span id="payCardCvcValid" name="payCardCvcValid" style="float: left; color: red; visibility:hidden;"></span>
+			                                                    </div>                                              
+															</div>
+																	
 		                                                    <div class="form-group row pl-3 pr-3" id="divSubmit" name="divSubmit" style="display: none;">
 		                                                        <button class="continue btn btn-primary pull-xs-right"
 		                                                        	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
