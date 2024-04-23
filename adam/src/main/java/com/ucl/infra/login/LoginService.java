@@ -8,4 +8,9 @@ public class LoginService {
 
 	@Autowired
 	LoginDao dao;
+	
+	// 회원정보조회
+	public LoginDto selectOne(LoginDto dto) {
+		return dao.selectOne(dto);
+	};
 }

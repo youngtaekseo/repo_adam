@@ -6,24 +6,12 @@
 	<resultMap id="resultMapObj" type="com.ucl.infra.login.LoginDto"></resultMap>
 	
 	<select id="selectOne" resultMap="resultMapObj">
-		SELECT b.seq  xcodeGroupSeq
-     		 , b.name xcodeGroupName
-     		 , a.delNy
-     		 , a.seq
-     		 , a.name
-     		 , a.regDateTime
-     		 , a.modDateTime
-  		  FROM commoncode a
+		SELECT a.mbrSeq
+     		 , a.mbrName
+     		 , a.mbrEmail
+  		  FROM members a
          WHERE 1 = 1		
-           AND a.seq = #{seq}	
+           AND a.mbrName = #{mbrName}	
 	</select>
-	
-	<update id="update">
-		UPDATE commoncode
-		   SET name = #{name}
-		     , modDateTime = now()
-         WHERE 1 = 1		
-           AND seq = #{seq}	
-	</update>
 
 </mapper>
