@@ -182,6 +182,7 @@
 			naverLogin.getLoginStatus(function (status) {
 				if (status) {
 					let email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
+		    		let mbrName = naverLogin.user.getName();
 		    		
 					console.log(naverLogin.user); 
 		    		
@@ -190,21 +191,32 @@
 						naverLogin.reprompt();
 						return;
 					}
+					
+					// 세션저장
+					fnSetSession(mbrName);
 				} else {
 					console.log("callback 처리에 실패하였습니다.");
 				}
 			});
 		});
-
-
-		let testPopUp;
-		function openPopUp() {
-		    testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
-		}
 		
-		function closePopUp(){
-		    testPopUp.close();
-		}		
+		// 세션저장
+		fnSetSession = function(mbrName) {
+			alert(mbrName);
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data: {"mbrName":mbrName}
+				, url: ""
+				, success: function(response) {
+					
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					fnModalFormOneBtnShow("오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
 
 		// controller 호출
 		fnCallController = function() {

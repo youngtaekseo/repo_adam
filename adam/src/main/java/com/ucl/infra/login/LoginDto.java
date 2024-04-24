@@ -1,5 +1,7 @@
 package com.ucl.infra.login;
 
-public class LoginDto {
+import com.ucl.infra.member.MemberDto;
+
+public class LoginDto extends MemberDto {
 
 }

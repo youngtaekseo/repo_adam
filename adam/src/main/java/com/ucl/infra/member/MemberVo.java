@@ -3,9 +3,9 @@ package com.ucl.infra.member;
 import com.ucl.common.base.BaseVo;
 
 public class MemberVo extends BaseVo {
-	private String shSeq;
-	private Integer shOptionType; // 1:관리자, 2:사용자
-	private Integer shSex; // 12:남성, 13:여성
+	private String  shSeq;
+	private Integer shOptionType;	// 1:관리자, 2:사용자
+	private Integer shSex;			// 12:남성, 13:여성
 	private Integer shCdgSeq;
 	
 //=============================================================================
