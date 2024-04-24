@@ -18,6 +18,8 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/index"
 				,"/indexUsr"
 				,"/loginUsr"
+				,"/loginNaver"
+				,"/redirectNaver"
 				,"/memberSdmLoginConfirm"
 				,"/memberUsrCreate"
 				,"/memberUsrInsert"
