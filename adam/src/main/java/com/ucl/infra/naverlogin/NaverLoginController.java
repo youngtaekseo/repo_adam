@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -171,5 +172,38 @@ public class NaverLoginController {
 	    request.getSession().removeAttribute("state");
 	    
 	    return "redirect:/indexUsr";
+	}
+	
+	// 네이버 로그인
+	@ResponseBody
+	@RequestMapping(value = "/naverLoginInsert")
+	public Map<String, Object> naverLoginInsert(NaverLoginDto dto, NaverLoginDto isDto, HttpSession httpSession) {
+		Map<String, Object> returnMap = new HashMap<>();
+		
+        // 회원존재확인
+		isDto = service.selectOneLogin(dto);
+        
+        if(isDto == null) {
+        	dto.setMbrType(1); // 사용자
+        	
+        	// 회원등록
+    		if(service.insert(dto) == 1) {
+	        	httpSession.setAttribute("sessMbrSeq"  , dto.getMbrSeq());
+	        	httpSession.setAttribute("sessMbrEmail", dto.getEmail());
+	        	httpSession.setAttribute("sessMbrName" , dto.getName());
+	        	
+    			returnMap.put("rt", "success");
+    		} else {
+    			returnMap.put("rt", "fail");
+    		}
+        } else {
+        	httpSession.setAttribute("sessMbrSeq"  , isDto.getMbrSeq());
+        	httpSession.setAttribute("sessMbrEmail", isDto.getMbrEmail());
+        	httpSession.setAttribute("sessMbrName" , isDto.getMbrName());
+        	
+        	returnMap.put("rt", "success");
+        }
+        
+		return returnMap;
 	}
 }
