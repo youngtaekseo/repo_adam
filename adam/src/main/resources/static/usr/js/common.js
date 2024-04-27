@@ -1,4 +1,5 @@
- fnLogout = function() {
+// 로그아웃
+fnLogout = function() {
 	  $.ajax({
 		  async: true
 		  , cache: false

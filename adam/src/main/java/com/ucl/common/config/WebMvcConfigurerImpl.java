@@ -25,6 +25,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/memberSdmLoginConfirm"
 				,"/memberUsrCreate"
 				,"/memberUsrInsert"
+				,"/memberSdmLogOut"
 				,"/sdm/**"
 				,"/loginSdm"
 				,"/loginSdmMemberCreate"
