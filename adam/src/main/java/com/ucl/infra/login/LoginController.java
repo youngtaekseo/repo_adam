@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ucl.common.constants.Commvar;
@@ -12,8 +14,16 @@ import com.ucl.common.constants.Commvar;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {
-
+public class LoginController {	
+	@Value("${javascript_key}")
+	private String javascriptKey;
+	
+	@Value("${kakao_redirect_uri}")
+	private String kakaoRedirectUri;
+	
+	@Value("${kakao_location}")
+	private String kakaoLocation;	
+	
 	@Autowired
 	LoginService service;
 	
@@ -32,7 +42,10 @@ public class LoginController {
 	
 	// 사용자 로그인
 	@RequestMapping(value = "/loginUsr")
-	public String loginUsr() throws Exception {
+	public String loginUsr(Model model) throws Exception {
+    	model.addAttribute("javascriptKey"   , javascriptKey);
+    	model.addAttribute("kakaoRedirectUri", kakaoRedirectUri);
+    	model.addAttribute("kakaoLocation"   , kakaoLocation);
 		return Commvar.PATH_LOGIN + "loginUsr";
 	}
 	

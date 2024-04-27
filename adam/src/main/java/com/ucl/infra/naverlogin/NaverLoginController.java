@@ -83,7 +83,7 @@ public class NaverLoginController {
 	        return "/error";
 	    }
 
-	    String tokenURL      = "https://nid.naver.com/oauth2.0/token";
+	    String tokenURL = "https://nid.naver.com/oauth2.0/token";
 
 	    // body data 생성
 	    MultiValueMap<String, String> parameter = new LinkedMultiValueMap<>();

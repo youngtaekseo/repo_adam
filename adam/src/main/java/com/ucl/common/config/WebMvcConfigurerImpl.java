@@ -21,6 +21,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/loginNaver"
 				,"/redirectNaver"
 				,"/naverLoginInsert"
+				,"/redirectKakao"
 				,"/memberSdmLoginConfirm"
 				,"/memberUsrCreate"
 				,"/memberUsrInsert"
