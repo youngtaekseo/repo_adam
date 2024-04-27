@@ -18,9 +18,9 @@ public class ProductVo extends BaseVo {
 	private Integer shOptionYearTo   = null;// 연식(년) 종료값
 	private Integer shOptionMonthFrom; 		// 연식(월) 시작값
 	private Integer shOptionMonthTo;   		// 연식(월) 종료값
-	private Integer shPrice;   				// 판매가액
-	private Integer shPriceFrom;   			// 판매가액 시작값
-	private Integer shPriceTo;   			// 판매가액 종료값
+	private Double shPrice;   				// 판매가액
+	private Double shPriceFrom;   			// 판매가액 시작값
+	private Double shPriceTo;   			// 판매가액 종료값
 	private Integer shDispCount = 6;        // 사용자 메인화면에 리스트 표시 갯수
 	private Integer shNewRegNy  = 0;        // 최근등록여부 0:해당없음, 1:최근등록조회
 	private String  shMbrSeq;               // 회원순번
@@ -144,22 +144,22 @@ public class ProductVo extends BaseVo {
 	public void setShCheckboxBrandArray(String[] shCheckboxBrandArray) {
 		this.shCheckboxBrandArray = shCheckboxBrandArray;
 	}
-	public Integer getShPrice() {
+	public Double getShPrice() {
 		return shPrice;
 	}
-	public void setShPrice(Integer shPrice) {
+	public void setShPrice(Double shPrice) {
 		this.shPrice = shPrice;
 	}
-	public Integer getShPriceFrom() {
+	public Double getShPriceFrom() {
 		return shPriceFrom;
 	}
-	public void setShPriceFrom(Integer shPriceFrom) {
+	public void setShPriceFrom(Double shPriceFrom) {
 		this.shPriceFrom = shPriceFrom;
 	}
-	public Integer getShPriceTo() {
+	public Double getShPriceTo() {
 		return shPriceTo;
 	}
-	public void setShPriceTo(Integer shPriceTo) {
+	public void setShPriceTo(Double shPriceTo) {
 		this.shPriceTo = shPriceTo;
 	}
 	public String[] getShCheckboxColorArray() {

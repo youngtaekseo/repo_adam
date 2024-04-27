@@ -68,4 +68,3 @@ fnWishlistClick = function(obj) {
 		}
 	});
 }
-		 

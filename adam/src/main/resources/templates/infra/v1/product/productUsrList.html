@@ -99,7 +99,7 @@
 	                                            <div class="new-item-content">
 	                                                <h3 class="title-product">연식</h3>
 	                                                <div class="d-flex justify-content-lg-center justify-content-md-center">
-	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom" onchange="fhChange(this)">
+	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom" onchange="fnChange(this)">
 	                                                        <option value="" th:selected="${vo.shOptionYearFrom == null}">시작</option>
 	                                                        <th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
 	                                                        	th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
@@ -107,7 +107,7 @@
 															</th:block>
 	                                                    </select>
 	                                                    <span style="margin-left: 20px; margin-right: 20px; padding-top: 8px;">~</span>
-	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo" onchange="fhChange(this)">
+	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo" onchange="fnChange(this)">
 															<option value="" th:selected="${vo.shOptionYearTo == null}">종료</option>
 															<th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
 																th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
@@ -147,16 +147,20 @@
 	                                                        </div>  
 	                                                        <div class="col mt-3">
 	                                                            <div class="input-group mb-3">
-	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${vo.shPriceFrom}">
-	                                                                <span class="input-group-text" id="basic-addon2"></span>
+																	<!--<input type="hidden" id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">-->
+	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceFrom, 1, 'COMMA')}"
+	                                                                	th:onchange="fnChangePriceFrom();">
+	                                                                <span class="input-group-text" id="basic-addon2">원</span>
 	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
 	                                                            </div>
 	                                                            <div class="input-group mb-3">
-	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${vo.shPriceTo}"
-	                                                                	> <!-- onkeyup="fnKeyup();" -->
-	                                                                <span class="input-group-text" id="basic-addon2"></span>                           
+																	<!--<input type="hidden" id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">-->
+	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceTo, 1, 'COMMA')}"
+	                                                                	onchange="fnChangePriceTo();">
+	                                                                <span class="input-group-text" id="basic-addon2">원</span>                           
 	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
 	                                                            </div>
+	                                                            <button type="button" class="btn" style="width: 100%;" onclick="fnPriceApply();">적&emsp;용</button>
 	                                                        </div>                                                                                                                   
 	                                                    </div>
 	                                            </div>                                           
@@ -415,33 +419,50 @@
 			fnCheckboxClick();
 		}
 		
+		// 금액적용
+		function fnPriceApply() {
+			let shPriceFrom   = document.querySelector("#shPriceFrom");		
+			shPriceFrom.value = shPriceFrom.value.replace(/,/g,"");
+			
+			let shPriceTo   = document.querySelector("#shPriceTo");		
+			shPriceTo.value = shPriceTo.value.replace(/,/g,"");
+			
+			// controller 호출
+			fnCheckboxClick();
+		}
+		
 		// 금액입력
+		/*
 		document.getElementById("shPriceTo").onkeydown = function() {
 			if(window.event.keyCode == 13) {
-				if(Number($("#shPriceFrom").val()) > Number($("#shPriceTo").val())) {
+				if(Number($("#shPriceFrom").val().replace(/,/g,"")) > Number($("#shPriceTo").val().replace(/,/g,""))) {
 					fnModalFormOneBtnShow("조건", "시작 금액이 큽니다. 다시 입력 바랍니다");
-					$("#shPriceFrom").focus();
 				} else {
 					// controller 호출
 					fnCheckboxClick();		
 				}
 			}
 		}
+		*/
 			
-		fnKeyup = function() {
-			if(window.event.keyCode == 13) {
-				if(Number($("#shPriceFrom").val()) > Number($("#shPriceTo").val())) {
-					fnModalFormOneBtnShow("조건", "시작 금액이 큽니다. 다시 입력 바랍니다");
-					$("#shPriceFrom").focus();
-				} else {
-					// controller 호출
-					fnCallController();		
-				}
-			}
+		// 시작금액
+		/*
+		function fnChangePriceFrom() {
+			let shPrice   = document.querySelector("#shPriceFrom");		
+			shPrice.value = shPrice.value.replace(/,/g,"");
 		}
+		*/
+		
+		// 종료금액
+		/*
+		function fnChangePriceTo() {
+			let shPrice   = document.querySelector("#shPriceTo");
+			shPrice.value = shPrice.value.replace(/,/g,"");
+		}
+		*/	
 		
 		// 연식 클릭
-		fhChange = function(obj) {
+		fnChange = function(obj) {
 			if(obj.name == "shOptionYearFrom") {				
 				let value = $("#shOptionYearFrom option:selected").val();
 				$("#shOptionYearTo").val(value);
