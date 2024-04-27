@@ -21,8 +21,8 @@
 		     , d.pdtYear
 		     , d.pdtMonth
 		     , d.pdtRunKm
-		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
-			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB	
+		     , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImg1
+			 , MAX(CASE WHEN j.pdiBack = 2 THEN j.pdiUrl END) xpdtImg2	
 	</sql>
 	
 	<sql id="selectCommonProductFrom">
@@ -59,6 +59,7 @@
 		     , b.wshSeq xwshSeq
 		     , b.wshDt xDateTime
 		     , d.pdtPrice
+		     , d.pdtSeq
 		  FROM members a
 		       JOIN productwishlist b
 		         ON b.mbrSeq = a.mbrSeq
@@ -74,6 +75,7 @@
 		     , b.wshSeq
 		     , b.wshDt
 		     , d.pdtPrice
+		     , d.pdtSeq
 		       <include refid="selectCommonProductGroup"/>
 	</select>
 	

@@ -139,8 +139,10 @@
 				     , g.cdcName xpdtColorName 
 				     , a.pdtPrice
 				     , a.pdtRecommendCd
-				     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
-				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
+				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImg1
+				     , MAX(CASE WHEN b.pdiBack = 2 THEN b.pdiUrl END) xpdtImg2
+				     , MAX(CASE WHEN b.pdiBack = 3 THEN b.pdiUrl END) xpdtImg3
+				     , MAX(CASE WHEN b.pdiBack = 4 THEN b.pdiUrl END) xpdtImg4
 		             , IFNULL(c.xpdtStar ,0) xpdtStar 
 		             , IFNULL(c.xpdtCount,0) xpdtCount
 		               <choose>
@@ -255,8 +257,10 @@
 		     , g.cdcName xpdtColorName 
 		     , a.pdtPrice
 		     , a.pdtRecommendCd
-		     , MAX(CASE WHEN b.pdiBack = 0 THEN b.pdiUrl END) xpdtImgF
-		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImgB
+		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImg1
+		     , MAX(CASE WHEN b.pdiBack = 2 THEN b.pdiUrl END) xpdtImg2
+		     , MAX(CASE WHEN b.pdiBack = 3 THEN b.pdiUrl END) xpdtImg3
+		     , MAX(CASE WHEN b.pdiBack = 4 THEN b.pdiUrl END) xpdtImg4
              , IFNULL(c.xpdtStar ,0) xpdtStar 
              , IFNULL(c.xpdtCount,0) xpdtCount
                <choose>
@@ -324,8 +328,10 @@
 		     , d.pdtYear
 		     , d.pdtMonth
 		     , d.pdtRunKm
-		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
-			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB	
+		     , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImg1
+			 , MAX(CASE WHEN j.pdiBack = 2 THEN j.pdiUrl END) xpdtImg2	
+			 , MAX(CASE WHEN j.pdiBack = 3 THEN j.pdiUrl END) xpdtImg3	
+			 , MAX(CASE WHEN j.pdiBack = 4 THEN j.pdiUrl END) xpdtImg4	
 	</sql>
 	
 	<sql id="selectCommonProductFrom">

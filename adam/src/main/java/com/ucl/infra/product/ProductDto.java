@@ -22,8 +22,10 @@ public class ProductDto {
 	private String  xpdtYearMonth;
 	private String  xpdtGroupCount;
 	private String  xpdtIdName;
-	private String  xpdtImgF;
-	private String  xpdtImgB;
+	private String  xpdtImg1;
+	private String  xpdtImg2;
+	private String  xpdtImg3;
+	private String  xpdtImg4;
 	private Integer xpdtStar;
 	private String  xpdtTypeName;
 	private String  xpdtBrandName;
@@ -143,17 +145,29 @@ public class ProductDto {
 	public void setXpdtIdName(String xpdtIdName) {
 		this.xpdtIdName = xpdtIdName;
 	}
-	public String getXpdtImgF() {
-		return xpdtImgF;
+	public String getXpdtImg1() {
+		return xpdtImg1;
 	}
-	public void setXpdtImgF(String xpdtImgF) {
-		this.xpdtImgF = xpdtImgF;
+	public void setXpdtImg1(String xpdtImg1) {
+		this.xpdtImg1 = xpdtImg1;
 	}
-	public String getXpdtImgB() {
-		return xpdtImgB;
+	public String getXpdtImg2() {
+		return xpdtImg2;
 	}
-	public void setXpdtImgB(String xpdtImgB) {
-		this.xpdtImgB = xpdtImgB;
+	public void setXpdtImg2(String xpdtImg2) {
+		this.xpdtImg2 = xpdtImg2;
+	}
+	public String getXpdtImg3() {
+		return xpdtImg3;
+	}
+	public void setXpdtImg3(String xpdtImg3) {
+		this.xpdtImg3 = xpdtImg3;
+	}
+	public String getXpdtImg4() {
+		return xpdtImg4;
+	}
+	public void setXpdtImg4(String xpdtImg4) {
+		this.xpdtImg4 = xpdtImg4;
 	}
 	public Integer getXpdtStar() {
 		return xpdtStar;
