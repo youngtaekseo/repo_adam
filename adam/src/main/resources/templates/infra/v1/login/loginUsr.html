@@ -128,16 +128,19 @@
                                     </div>
                                     <!-- 네이버 로그인 -->
   									<div id="naverIdLogin">
-                                        <a id="naverLoginButton" href="javascript:void(0)" th:onclick="javascript:fnNaverLogin();">
+										<!-- REST API 방식 -->  
+										<a th:href="@{/loginNaver}">
+										<!-- javascript API 방식 -->
+                                        <!--<a id="naverLoginButton" href="javascript:void(0)" th:onclick="javascript:fnNaverLogin();">-->
 											<img src="usr/img/naverLoginButton/btnG_완성형.png" style="width: 100%; height: 50px; border-radius: 16px;">
 										</a>
                                     </div>                                    
                                     <!-- 카카오 로그인 -->
   									<div id="kakaoLoginButton" class="mt-4">
 										<!-- REST API -->
-                                        <a th:href=${kakaoLocation}>
+                                        <!--<a th:href=${kakaoLocation}>-->
 										<!-- javascript API -->
-										<!--<a href="javascript:loginWithKakao()">-->
+										<a href="javascript:loginWithKakao()">
                                            	<img src="usr/img/kakaoLoginButton/kakao_login_large_wide.png" style="width: 100%; height: 50px; border-radius: 16px;">
                                         </a>
                                     </div>
@@ -173,6 +176,13 @@
     <!-- Template JS -->
     <script src="usr/js/theme.js"></script>
     
+    <!-- 네이버 로그인 -->
+    <!-- REST API용 -->
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <!-- javascript API용 -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <!--<script src="usr/js/naverlogin.js"></script>--> 
+        
     <!-- 카카오 로그인 -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01" crossorigin="anonymous"></script>
 	<script th:inline="javascript">
@@ -187,6 +197,63 @@
 			});
 		}
 		
+	</script>
+	
+	<script>
+		// 네이버 로그인
+		const naverLogin = new naver.LoginWithNaverId({
+		    clientId: "r1aTHRBql6Ny_r2b60bZ",
+		    callbackUrl: "http://localhost:8081/indexUsr",
+		    //loginButton: {color: "green", type: 0, height: 50}
+		});
+		
+		naverLogin.init();
+		
+		fnNaverLogin = function() {
+		    naverLogin.getLoginStatus(function (status) {
+				alert(status);
+				if (status) {
+					const nickName = naverLogin.user.getNickName();
+					const age      = naverLogin.user.getAge();
+					const birthday = naverLogin.user.getBirthday();
+					
+					/*if(nickName===null||nickName===undefined ){
+					    alert("별명이 필요합니다. 정보제공을 동의해주세요.");
+					    naverLogin.reprompt();
+					    return ;  
+					 } else{
+					  setLoginStatus();
+					 }*/
+					
+					setLoginStatus();
+				}
+			});
+			
+			//console.log(naverLogin);
+			
+			function setLoginStatus(){
+				let email = naverLogin.user.email;
+				let name  = naverLogin.user.name;
+				
+				$.ajax({
+					async: true
+					, cache: false
+					, type: "post"
+					, data: {"name":name, "email":email}
+					, url: "/naverLoginInsert"
+					, success: function(response) {
+						if(response.rt == "success") {
+							location.href = "/indexUsr";
+						} else if(response.rt == "fail") {
+							alert("실패");
+						}
+					}
+					, error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+			}
+		}		
 	</script>
 	    
     <script type="text/javascript">

@@ -1,14 +1,15 @@
+// 네이버 로그인
+const naverLogin = new naver.LoginWithNaverId({
+    clientId: "r1aTHRBql6Ny_r2b60bZ",
+    callbackUrl: "http://localhost:8081/indexUsr",
+    //loginButton: {color: "green", type: 2, height: 40}
+});
 
-fnNaverLogin = function() {
-	const naverLogin = new naver.LoginWithNaverId({
-	    clientId: "r1aTHRBql6Ny_r2b60bZ",
-	    callbackUrl: "http://localhost:8081/indexUsr"
-	    //loginButton: {color: "green", type: 2, height: 40}
-	});
-	
-    naverLogin.init();
+naverLogin.init();
     
+fnNaverLogin = function() {
     naverLogin.getLoginStatus(function (status) {
+		alert(status);
 		if (status) {
 			const nickName = naverLogin.user.getNickName();
 			const age      = naverLogin.user.getAge();
