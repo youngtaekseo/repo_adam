@@ -121,13 +121,14 @@
                                 </div>
                                 <div class="clearfix">
                                     <div class="text-center no-gutters">
-                                        <button id="btnLogin" name="btnLogin" class="btn btn-primary" data-link-action="sign-in"
+                                        <button id="btnLogin" name="btnLogin" class="btn btn-primary mb-2" data-link-action="sign-in"
                                         	type="button" style="font-size: 20px; width: 100%; height: 50px;">
                                             Log in
                                         </button>
                                     </div>
+                                   
                                     <!-- 네이버 로그인 -->
-  									<div id="naverIdLogin">
+  									<div id="naverIdLogin" class="mb-2">
 										<!-- REST API 방식 -->  
 										<a th:href="@{/loginNaver}">
 										<!-- javascript API 방식 -->
@@ -136,7 +137,7 @@
 										</a>
                                     </div>                                    
                                     <!-- 카카오 로그인 -->
-  									<div id="kakaoLoginButton" class="mt-4">
+  									<div id="kakaoLoginButton">
 										<!-- REST API -->
                                         <!--<a th:href=${kakaoLocation}>-->
 										<!-- javascript API -->
