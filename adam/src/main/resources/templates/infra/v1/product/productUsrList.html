@@ -94,78 +94,8 @@
 														</th:block>
 	                                                </ul>
 	                                            </div>
-	
-	                                            <!-- 연식 -->
-	                                            <div class="new-item-content">
-	                                                <h3 class="title-product">연식</h3>
-	                                                <div class="d-flex justify-content-lg-center justify-content-md-center">
-	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom" onchange="fnChange(this)">
-	                                                        <option value="" th:selected="${vo.shOptionYearFrom == null}">시작</option>
-	                                                        <th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
-	                                                        	th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
-																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearFrom)}"></option>
-															</th:block>
-	                                                    </select>
-	                                                    <span style="margin-left: 20px; margin-right: 20px; padding-top: 8px;">~</span>
-	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo" onchange="fnChange(this)">
-															<option value="" th:selected="${vo.shOptionYearTo == null}">종료</option>
-															<th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
-																th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
-																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearTo)}"></option>
-															</th:block>
-	                                                    </select>                                                                                                                    
-	                                                </div>                                               
-	                                            </div>    
-	
-	                                            <!-- 가격 -->
-	                                            <div>
-	                                                <h3 class="title-product">가격</h3>
-	                                                    <div class="row gy-1">
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="5000000" onclick="fnClick(this)">5백</button>
-	                                                        </div>
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="15000000" onclick="fnClick(this)">1천5백</button>
-	                                                        </div>
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="20000000" onclick="fnClick(this)">2천</button>
-	                                                        </div>
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="25000000" onclick="fnClick(this)">2천5백</button>
-	                                                        </div>  
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="30000000" onclick="fnClick(this)">3천</button>
-	                                                        </div>  
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="35000000" onclick="fnClick(this)">3천5백</button>
-	                                                        </div>            
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="40000000" onclick="fnClick(this)">4천</button>
-	                                                        </div>  
-	                                                        <div class="col">
-	                                                            <button type="button" class="btn" style="width: 100%;" value="45000000" onclick="fnClick(this)">4천5백</button>
-	                                                        </div>  
-	                                                        <div class="col mt-3">
-	                                                            <div class="input-group mb-3">
-																	<!--<input type="hidden" id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">-->
-	                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceFrom, 1, 'COMMA')}"
-	                                                                	th:onchange="fnChangePriceFrom();">
-	                                                                <span class="input-group-text" id="basic-addon2">원</span>
-	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
-	                                                            </div>
-	                                                            <div class="input-group mb-3">
-																	<!--<input type="hidden" id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">-->
-	                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceTo, 1, 'COMMA')}"
-	                                                                	onchange="fnChangePriceTo();">
-	                                                                <span class="input-group-text" id="basic-addon2">원</span>                           
-	                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
-	                                                            </div>
-	                                                            <button type="button" class="btn" style="width: 100%;" onclick="fnPriceApply();">적&emsp;용</button>
-	                                                        </div>                                                                                                                   
-	                                                    </div>
-	                                            </div>                                           
-	
-	                                            <!-- 색상 -->
+	                                            
+<!-- 색상 -->
 	                                            <div class="new-item-content">
 	                                                <div class="sidebar-block by-color">
 	                                                    <h3 class="title-product">색상</h3>
@@ -199,7 +129,87 @@
 	                                                        </ul>                                                    
 	                                                    </div> 
 	                                                </div>                                             
-	                                            </div>                                            
+	                                            </div>	                                            
+	
+	                                            <!-- 연식 -->
+	                                            <div class="new-item-content">
+	                                                <h3 class="title-product">연식</h3>
+	                                                <div class="d-flex justify-content-lg-center justify-content-md-center">
+	                                                    <select class="form-select" id="shOptionYearFrom" name="shOptionYearFrom" onchange="fnChange(this)">
+	                                                        <option value="" th:selected="${vo.shOptionYearFrom == null}">시작</option>
+	                                                        <th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
+	                                                        	th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
+																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearFrom)}"></option>
+															</th:block>
+	                                                    </select>
+	                                                    <span style="margin-left: 20px; margin-right: 20px; padding-top: 8px;">~</span>
+	                                                    <select class="form-select" id="shOptionYearTo" name="shOptionYearTo" onchange="fnChange(this)">
+															<option value="" th:selected="${vo.shOptionYearTo == null}">종료</option>
+															<th:block th:if="${vo.shFromYear != null and !vo.shFromYear.equals('') and vo.shToYear != null and !vo.shToYear.equals('')}"
+																th:each="year : ${#numbers.sequence(vo.shFromYear, vo.shToYear, -1)}">
+																<option th:text="${year}+'년'" th:value="${year}" th:selected="${year.equals(vo.shOptionYearTo)}"></option>
+															</th:block>
+	                                                    </select>                                                                                                                    
+	                                                </div>                                               
+	                                            </div>    
+	
+	                                            <!-- 가격 -->
+	                                            <div>
+	                                                <h3 class="title-product">가격</h3>
+                                                    <div class="row gy-1">
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="5000000" onclick="fnClick(this)">5백</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="15000000" onclick="fnClick(this)">1천5백</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="20000000" onclick="fnClick(this)">2천</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="25000000" onclick="fnClick(this)">2천5백</button>
+                                                        </div>  
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="30000000" onclick="fnClick(this)">3천</button>
+                                                        </div>  
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="35000000" onclick="fnClick(this)">3천5백</button>
+                                                        </div>            
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="40000000" onclick="fnClick(this)">4천</button>
+                                                        </div>  
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="45000000" onclick="fnClick(this)">4천5백</button>
+                                                        </div>  
+															                                                        
+                                                        <div class="col mt-3">
+                                                            <div class="input-group mb-3">
+																<!--<input type="hidden" id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">-->
+                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceFrom, 1, 'COMMA')}"
+                                                                	th:onchange="fnChangePriceFrom();">
+                                                                <span class="input-group-text" id="basic-addon2">원</span>
+                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
+                                                            </div>
+                                                            <div class="input-group mb-3">
+																<!--<input type="hidden" id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">-->
+                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceTo, 1, 'COMMA')}"
+                                                                	onchange="fnChangePriceTo();">
+                                                                <span class="input-group-text" id="basic-addon2">원</span>                           
+                                                                <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                    <div class="row gy-1">
+														<div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" onclick="fnPriceApply()">적&emsp;용</button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="btn" style="width: 100%;" value="0" onclick="fnClick(this)">취&emsp;소</button>
+                                                        </div>
+                                                    </div>
+	                                            </div>                                           
+	
+	                                                                                        
 	                                        </div>
 	                                    </div>
 	
@@ -410,7 +420,7 @@
 		}
 		
 		// 금액 클릭
-		fnClick = function(obj) {
+		function fnClick(obj) {
 			$("#shPriceFrom").val(obj.value);
 			$("#shPriceTo"  ).val(obj.value);
 			

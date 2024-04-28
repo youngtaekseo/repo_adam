@@ -112,18 +112,8 @@
          ORDER BY a.pdtBrandCd
 	</select>
 
-    <!-- 사용자 차량조회용 카운팅 -->
-    <select id="selectOneUsrDataCount">
-        SELECT COUNT(*)
-          FROM product a
-         WHERE 1 = 1
-           AND a.pdtDelNy = 0
-    </select>	
-    
-	<!-- 사용자 차량조회 -->
-	<select id="selectListCarInfo" resultMap="resultMapObj">
-		SELECT * 
-		  FROM (
+	<!-- 사용자 차량조회 공통쿼리 -->
+	<sql id="selectCommonUsr">
 				SELECT a.pdtSeq
 				     , a.pdtTypeCd
 				     , d.cdcName xpdtTypeName
@@ -212,7 +202,6 @@
 		           <if test="shPriceFrom != null and shPriceTo != null and shPriceTo != 0">
 		           		AND a.pdtPrice BETWEEN #{shPriceFrom} AND #{shPriceTo}
 		           </if>
-		           
 				 GROUP BY a.pdtSeq
 				     , a.pdtTypeCd
 				     , d.cdcName
@@ -230,13 +219,26 @@
 				     , a.pdtRecommendCd
 				       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
 				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
+	</sql>
+    
+    <!-- 사용자 차량조회용 카운팅 -->
+    <select id="selectOneUsrDataCount">
+		SELECT COUNT(*) 
+		  FROM (
+				<include refid="selectCommonUsr"/>
+               ) a           
+    </select>	
+    
+	<!-- 사용자 차량조회 -->
+	<select id="selectListCarInfo" resultMap="resultMapObj">
+		SELECT * 
+		  FROM (
+				<include refid="selectCommonUsr"/>
                ) a
-               
          <choose>
          	<when test="shNewRegNy == 0">LIMIT #{pgRowCount}</when>
          	<when test="shNewRegNy == 1">LIMIT #{shDispCount}</when><!-- 메인화면 화면표시 갯수제한 -->
          </choose>
-    	 
     	OFFSET #{pgOffset}                       
 	</select>
 	
