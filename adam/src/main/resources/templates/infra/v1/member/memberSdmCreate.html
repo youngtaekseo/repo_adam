@@ -124,6 +124,84 @@
 				    		
 				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
 				  		</div>
+				  		
+				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">우편번호</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrZipCode" name="mbrZipCode" readonly
+				            			type="text" placeholder="우편번호"
+				            			/>
+				      			</label>
+				    		</div>
+				    		
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+								<span class="text-gray-700 dark:text-gray-400">&nbsp;</span>
+				      			<!-- 우편번호 조회버튼 -->
+								<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+									id="btnZipCode" name="btnZipCode" type="button">
+									<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+										<path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
+									</svg>
+									우편번호검색
+								</button>
+				    		</div>
+				    		
+				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
+				  		</div>
+				  		
+				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">주소</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrAddr" name="mbrAddr" readonly
+				            			type="text" placeholder="주소"
+				            			/>
+				      			</label>
+				    		</div>
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">상세주소</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrAddrD" name="mbrAddrD"
+				            			type="text" placeholder="상세주소"
+				            			/>
+				      			</label>
+				    		</div>
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">참고사항</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrAddrRemark" name="mbrAddrRemark"
+				            			type="text" placeholder="참고사항"
+				            			/>
+				      			</label>
+				    		</div>
+				  		</div>
+
+				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">좌표(위도)</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrPointLat" name="mbrPointLat"
+				            			type="text" placeholder="좌표(위도)" readonly
+				            			/>
+				      			</label>
+				    		</div>
+
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+				      			<label class="block text-sm">
+				        			<span class="text-gray-700 dark:text-gray-400">좌표(경도)</span>
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				        				id="mbrPointLon" name="mbrPointLon"
+				            			type="text" placeholder="좌표(경도)" readonly
+				            			/>
+				      			</label>
+				    		</div>
+				  		</div>
 				
 						<!-- 저장버튼, 회원조회버튼 -->
 						<div class="flex flex-col md:flex-row mt-4">
@@ -219,7 +297,6 @@
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			
 			if(!fnValidation()) return false;
 	       	
 			$.ajax({
@@ -242,6 +319,11 @@
 				}
 			});
 		};
+		
+		// 우편번호검색
+		document.getElementById("btnZipCode").onclick = function() {
+			execDaumPostcode();	
+		} 
 		
 		// event onkeydown
 		fnOnKeyDown = function() {

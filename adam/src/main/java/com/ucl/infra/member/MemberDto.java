@@ -11,6 +11,12 @@ public class MemberDto {
 	private String  mbrBirthday;
 	private String  mbrEmail;
 	private String  mbrPassword;
+	private String  mbrZipCode;
+	private String  mbrAddr;
+	private String  mbrAddrD;
+	private String  mbrAddrRemark;
+	private Double  mbrPointLat;
+	private Double  mbrPointLon;
 	private Date    mbrRegDt;
 	private Date    mbrUdtDt;
 	private Integer mbrDelNy; // 0:미삭제, 1:삭제
@@ -63,6 +69,42 @@ public class MemberDto {
 	}
 	public void setMbrPassword(String mbrPassword) {
 		this.mbrPassword = mbrPassword;
+	}
+	public String getMbrZipCode() {
+		return mbrZipCode;
+	}
+	public void setMbrZipCode(String mbrZipCode) {
+		this.mbrZipCode = mbrZipCode;
+	}
+	public String getMbrAddr() {
+		return mbrAddr;
+	}
+	public void setMbrAddr(String mbrAddr) {
+		this.mbrAddr = mbrAddr;
+	}
+	public String getMbrAddrD() {
+		return mbrAddrD;
+	}
+	public void setMbrAddrD(String mbrAddrD) {
+		this.mbrAddrD = mbrAddrD;
+	}
+	public String getMbrAddrRemark() {
+		return mbrAddrRemark;
+	}
+	public void setMbrAddrRemark(String mbrAddrRemark) {
+		this.mbrAddrRemark = mbrAddrRemark;
+	}
+	public Double getMbrPointLat() {
+		return mbrPointLat;
+	}
+	public void setMbrPointLat(Double mbrPointLat) {
+		this.mbrPointLat = mbrPointLat;
+	}
+	public Double getMbrPointLon() {
+		return mbrPointLon;
+	}
+	public void setMbrPointLon(Double mbrPointLon) {
+		this.mbrPointLon = mbrPointLon;
 	}
 	public Date getMbrRegDt() {
 		return mbrRegDt;

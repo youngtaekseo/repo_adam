@@ -1,4 +1,4 @@
-package com.ucl.common.zipcode;
+package com.ucl.infra.zipcode;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

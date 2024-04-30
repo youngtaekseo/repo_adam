@@ -83,10 +83,10 @@ public class KakaoLoginService {
         Map<String, Object> kakao_account = (Map<String, Object>) jsonMap.get("kakao_account");
 
         Long id       = (Long) jsonMap.get("id");
-        String name   = kakao_account.get("name").toString();
+        String name   = "Guest"; //kakao_account.get("name").toString();
         String email  = kakao_account.get("email").toString();
-        String gender = kakao_account.get("gender").toString();
-        String phone  = kakao_account.get("phone_number").toString();
+        //String gender = kakao_account.get("gender").toString();
+        //String phone  = kakao_account.get("phone_number").toString();
         
         /*
         if(properties != null) {
@@ -102,14 +102,14 @@ public class KakaoLoginService {
         dto.setId(id);
         dto.setName(name);
         dto.setEmail(email);
-        dto.setPhone(phone);
+        //dto.setPhone(phone);
         
         // 성별
-        if(gender.equals("male")) {
-        	dto.setMbrSex(12); // 남
-        } else {
-        	dto.setMbrSex(13); // 여
-        }
+        //if(gender.equals("male")) {
+        //	dto.setMbrSex(12); // 남
+        //} else {
+        //	dto.setMbrSex(13); // 여
+        //}
 
         return dto;
     }	

@@ -18,7 +18,6 @@ public class KakaoLoginController {
 	// 토큰받기, 사용저정보 등록
     @RequestMapping(value="/redirectKakao")
     public String loginKakaoRedirect(KakaoLoginDto dto, KakaoLoginDto isDto, HttpSession httpSession) throws Exception {
-    	System.out.println("dto.getCode()======================="+dto.getCode());
     	// 토큰 받기 
     	String accessToken = service.getAccessTokenFromKakao(kakaoRestKey, dto.getCode());
 		  

@@ -63,6 +63,12 @@
 		     , a.mbrBirthday
 		     , a.mbrEmail
 		     , a.mbrPassword
+			 , mbrZipCode
+			 , mbrAddr
+			 , mbrAddrD
+			 , mbrAddrRemark
+			 , mbrPointLat
+			 , mbrPointLon
 		     , a.mbrRegDt
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
@@ -102,6 +108,12 @@
 			<if test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday</if>
 			, mbrEmail
 			, mbrPassword
+			, mbrZipCode
+			, mbrAddr
+			, mbrAddrD
+			, mbrAddrRemark
+			, mbrPointLat
+			, mbrPointLon
 			, mbrRegDt
 			, mbrUdtDt
 			, mbrDelNy
@@ -114,6 +126,12 @@
 			<if test="mbrBirthday != null and !mbrBirthday.equals('')">, STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</if>
 			, #{mbrEmail}
 			, #{mbrPassword}
+			, #{mbrZipCode}
+			, #{mbrAddr}
+			, #{mbrAddrD}
+			, #{mbrAddrRemark}
+			, #{mbrPointLat}
+			, #{mbrPointLon}
 			, now()
 			, now()
 			, 0
@@ -122,8 +140,14 @@
 	
 	<update id="update">
 		UPDATE members
-		   SET mbrName     = #{mbrName}
-			 , mbrSex      = #{mbrSex}
+		   SET mbrName       = #{mbrName}
+			 , mbrSex        = #{mbrSex}
+			 , mbrZipCode    = #{mbrZipCode}
+			 , mbrAddr       = #{mbrAddr}
+			 , mbrAddrD      = #{mbrAddrD}
+			 , mbrAddrRemark = #{mbrAddrRemark}
+			 , mbrPointLat   = #{mbrPointLat}
+			 , mbrPointLon   = #{mbrPointLon}
 			 <if test="mbrBirthday != null and !mbrBirthday.equals('')">, mbrBirthday = STR_TO_DATE(#{mbrBirthday},'%Y-%m-%d %H%i%s')</if>
 			 , mbrUdtDt = now()
          WHERE 1 = 1		
