@@ -63,12 +63,12 @@
 		     , a.mbrBirthday
 		     , a.mbrEmail
 		     , a.mbrPassword
-			 , mbrZipCode
-			 , mbrAddr
-			 , mbrAddrD
-			 , mbrAddrRemark
-			 , mbrPointLat
-			 , mbrPointLon
+			 , a.mbrZipCode
+			 , a.mbrAddr
+			 , a.mbrAddrD
+			 , a.mbrAddrRemark
+			 , a.mbrPointLat
+			 , a.mbrPointLon
 		     , a.mbrRegDt
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
