@@ -184,16 +184,14 @@
 															                                                        
                                                         <div class="col mt-3">
                                                             <div class="input-group mb-3">
-																<!--<input type="hidden" id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">-->
-                                                                <input id="shPriceFrom" name="shPriceFrom" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceFrom, 1, 'COMMA')}"
-                                                                	th:onchange="fnChangePriceFrom();">
+																<input type="hidden" id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">
+                                                                <input id="shPriceFromTmp" name="shPriceFromTmp" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최저금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceFrom, 1, 'COMMA')}"/>
                                                                 <span class="input-group-text" id="basic-addon2">원</span>
                                                                 <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;부터</span>
                                                             </div>
                                                             <div class="input-group mb-3">
-																<!--<input type="hidden" id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">-->
-                                                                <input id="shPriceTo" name="shPriceTo" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceTo, 1, 'COMMA')}"
-                                                                	onchange="fnChangePriceTo();">
+																<input type="hidden" id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">
+                                                                <input id="shPriceToTmp" name="shPriceToTmp" type="text" class="form-control pl-1 pr-1" style="text-align: right;" placeholder="0" aria-label="최고금액" aria-describedby="basic-addon2" th:value="${#numbers.formatInteger(vo.shPriceTo, 1, 'COMMA')}"/>
                                                                 <span class="input-group-text" id="basic-addon2">원</span>                           
                                                                 <span style="margin-left: 5px; margin-right: 5px; padding-top: 8px;">&emsp;까지</span>                                     
                                                             </div>
@@ -422,25 +420,62 @@
 		// 금액 클릭
 		function fnClick(obj) {
 			$("#shPriceFrom").val(obj.value);
-			$("#shPriceTo"  ).val(obj.value);
-			
+			$("#shPriceTo"  ).val(obj.value);			
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(obj.value));
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(obj.value));
+		    
+		    // 입력란에 형식화된 값을 설정
+			$("#shPriceFromTmp").val(value);
+			$("#shPriceToTmp"  ).val(value);
+					    
 			// controller 호출
 			fnCheckboxClick();
 		}
 		
 		// 금액적용
 		function fnPriceApply() {
-			let shPriceFrom   = document.querySelector("#shPriceFrom");		
-			shPriceFrom.value = shPriceFrom.value.replace(/,/g,"");
-			
-			let shPriceTo   = document.querySelector("#shPriceTo");		
-			shPriceTo.value = shPriceTo.value.replace(/,/g,"");
-			
 			// controller 호출
 			fnCheckboxClick();
 		}
 		
-		// 금액입력
+		// 시작금액입력
+		shPriceFromTmp.addEventListener('input', function(event) {
+		    // 입력된 값을 가져옵니다.
+		    let value = event.target.value;
+		    
+		    // 숫자 이외의 문자 제거
+		    value = value.replace(/[^\d]/g, '');
+		    
+		    $("#shPriceFrom").val(value);
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(value));
+		    
+		    // 입력란에 형식화된 값을 설정
+		    event.target.value = value;
+		});
+				
+		// 종료금액입력
+		shPriceToTmp.addEventListener('input', function(event) {
+		    // 입력된 값을 가져옵니다.
+		    let value = event.target.value;
+		    
+		    // 숫자 이외의 문자 제거
+		    value = value.replace(/[^\d]/g, '');
+		    
+		    $("#shPriceTo").val(value);
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(value));
+		    
+		    // 입력란에 형식화된 값을 설정
+		    event.target.value = value;
+		});
+				
 		/*
 		document.getElementById("shPriceTo").onkeydown = function() {
 			if(window.event.keyCode == 13) {
