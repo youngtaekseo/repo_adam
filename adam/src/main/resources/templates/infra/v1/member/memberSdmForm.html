@@ -128,14 +128,12 @@
 										우편번호검색
 									</button>
 									<!-- 지도보기 버튼 -->
-									<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-										type="button">
-										<a th:href="@{https://map.kakao.com/link/map/${item.mbrPointLat},${item.mbrPointLon}}">
+									<button th:if="${item.mbrPointLat != null and item.mbrPointLot != null}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+										id="btnMap" name="btnMap" type="button" >
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 											<path clip-rule="evenodd" fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"></path>
 										</svg>
 										지도보기
-										</a>
 									</button>	
 								</div>
 				    		</div>
@@ -257,6 +255,13 @@
     <!-- modalFormSdm -->  
 	<div th:replace="~{infra/v1/include/modalSdm :: modalFormSdm}"></div>
         
+    <script th:inline="javascript">
+		// 지도보기
+		document.getElementById("btnMap").onclick = function() {
+			location.href = "https://map.kakao.com/link/map/[[${item.mbrPointLat}]],[[${item.mbrPointLon}]]";
+		}
+	</script>
+		
     <script type="text/javascript">
 // ============================================================================
 // 변수선언
@@ -314,11 +319,11 @@
 			fnModalCaptionChange(1,"", "");	
 		};
 		
-		// 우편번호검색
+    	// 우편번호검색
 		document.getElementById("btnZipCode").onclick = function() {
 			execDaumPostcode();	
 		} 
-		
+				
 		// event onkeydown
 		fnOnKeyDown = function() {
 			// 엔터키(13)이면
