@@ -142,6 +142,9 @@
             
            				 <!-- 조회결과 리스트 -->
             			<div class="w-full overflow-hidden rounded-lg shadow-xs">
+							<!-- 체크된 항목 담을 태그 -->
+                  			<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
+                  					
               				<div id="listData" class="w-full overflow-x-auto">
                 				<table class="w-full whitespace-no-wrap">
                   					<!-- 조회결과 리스트 타이틀-->
@@ -467,7 +470,7 @@
 				} 
 			}
 			
-			document.querySelector("input[name='shCheckedArray']").value = checkedArray;
+			document.querySelector("input[name=shCheckedArray]").value = checkedArray;
 			
 			$.ajax({
 				async: true
