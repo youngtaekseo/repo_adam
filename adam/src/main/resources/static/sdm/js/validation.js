@@ -1,8 +1,8 @@
-// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수), 5(숫자콤마)
 //             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 //			   20(비밀번호), 21(날짜), 22(이메일)
 //             30(특수문자), 31(공백체크)
-const TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+const TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;  TYPE_ICM = 5;
 const TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 const TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 const TYPE_SP   = 30, TYPE_NULL = 31;
@@ -78,6 +78,9 @@ fnValidType = function(obj, objValid, validText, validType) {
 			break;
 		case TYPE_FT: // 숫자(실수)
 			rtReturn = fnNumberPoint(obj, objValid, validText);
+			break;
+		case TYPE_ICM: // 숫자콤마
+			rtReturn = fnNumberComma(obj, objValid, validText);
 			break;
 //=============================================================================
 		case TYPE_KREN: // 한글영문
@@ -182,6 +185,12 @@ fnNumberPoint = function(obj, objValid, validText) {
 	let regExp = /^[0-9]+(.)?[0-9]{1,2}$/;
 	return fnValidationCheck(obj, objValid, validText, regExp);	
 };
+
+// 숫자콤마
+fnNumberComma = function(obj, objValid, validText) {
+	let regExp = /^[0-9,]*$/;
+	return fnValidationCheck(obj, objValid, validText, regExp);	
+};
  
 // 한글숫자
 fnKoreanNumber = function(obj, objValid, validText) {
@@ -238,25 +247,3 @@ fnValidationCheck = function(obj, objValid, validText, regExp) {
 	};
 
 };
-
-/*// 날짜항목에 대한 특수문자처리
-fnSpecialDate = function(obj, objValid, validText) {
-	let regExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
-	fnValidationCheck(obj, validText, regExp);
-	return false;
-};
-
-// 특수문자확인
-fnSpecialCharCheck = function(obj, text, regExp) {
-	let validName = obj.name+"Valid";
-	let objValid = document.querySelector("span[name="+validName+"]");
-
-	if (regExp.test(obj.value.trim()) == true) {
-		obj.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
-		objValid.innerHTML = text;
-		objValid.setAttribute("style", "");
-	} else {
-		obj.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
-		objValid.setAttribute("style", "visibility:hidden;");
-	};
-};*/

@@ -139,11 +139,12 @@
 				      			<label class="block text-sm">
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">주행기록</span>
+				        			<input id="pdtRunKm" name="pdtRunKm" type="hidden" th:value="${item.pdtRunKm}" />
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="pdtRunKm" name="pdtRunKm" type="text" style="text-align:right;"
-				            			th:value="${#numbers.formatInteger(item.pdtRunKm, 1)}"
+				            			id="pdtRunKmTmp" name="pdtRunKmTmp" type="text" style="text-align:right;"
+				            			th:value="${#numbers.formatInteger(item.pdtRunKm, 1, 'COMMA')}"
 				            			onkeyup="fnOnKeyUp(this)">
-				        			<span id="pdtRunKmValid" name="pdtRunKmValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+				        			<span id="pdtRunKmTmpValid" name="pdtRunKmTmpValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				주행기록 입력하세요
 				        			</span>
 				      			</label>
@@ -153,11 +154,12 @@
 				      			<label class="block text-sm">
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">차량가액</span>
+				        			<input id="pdtPrice" name="pdtPrice" type="hidden" th:value="${item.pdtPrice}" />
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="pdtPrice" name="pdtPrice" type="text" style="text-align:right;"
-				            			th:value="${#numbers.formatInteger(item.pdtPrice, 1)}"
+				            			id="pdtPriceTmp" name="pdtPriceTmp" type="text" style="text-align:right;"
+				            			th:value="${#numbers.formatInteger(item.pdtPrice, 1, 'COMMA')}"
 				            			onkeyup="fnOnKeyUp(this)">
-				        			<span id="pdtPriceValid" name="pdtPriceValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+				        			<span id="pdtPriceTmpValid" name="pdtPriceTmpValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 				        				차량가액 입력하세요
 				        			</span>
 				      			</label>
@@ -249,26 +251,26 @@
  		let pdtMonthValid   	= document.querySelector("input[name=pdtMonthValid]");
 		
  		// 주행기록
- 		let pdtRunKm         	= document.querySelector("input[name=pdtRunKm]");
- 		let pdtRunKmValid    	= document.querySelector("span[name=pdtRunKmValid]");
+ 		let pdtRunKmTmp         = document.querySelector("input[name=pdtRunKmTmp]");
+ 		let pdtRunKmTmpValid    = document.querySelector("span[name=pdtRunKmTmpValid]");
 		
  		// 차량가액
- 		let pdtPrice         = document.querySelector("input[name=pdtPrice]");
- 		let pdtPriceValid    = document.querySelector("span[name=pdtPriceValid]");
+ 		let pdtPriceTmp         = document.querySelector("input[name=pdtPriceTmp]");
+ 		let pdtPriceTmpValid    = document.querySelector("span[name=pdtPriceTmpValid]");
 
 		// 필수입력체크대상
-		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수), 5(숫자콤마)
 		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 		//			   20(비밀번호), 21(날짜), 22(이메일)
 		//             30(특수문자), 31(공백체크)
-		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;  TYPE_ICM = 5;
 		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 		// TYPE_SP   = 30, TYPE_NULL = 31;
 		
 		let dispText = "";
-		let typeArr = [TYPE_NULL, TYPE_IT, TYPE_IT, TYPE_IT, TYPE_FT];		
-		let nameArr = ["pdtName", "pdtYear", "pdtMonth", "pdtRunKm", "pdtPrice"];
+		let typeArr = [TYPE_NULL, TYPE_IT, TYPE_IT, TYPE_ICM, TYPE_ICM];		
+		let nameArr = ["pdtName", "pdtYear", "pdtMonth", "pdtRunKmTmp", "pdtPriceTmp"];
 		let textArr = [dispText, dispText, dispText, dispText, dispText];		
 
 // ============================================================================
@@ -302,6 +304,40 @@
 			};				
 		};
 		
+		// 주행기록
+		pdtRunKmTmp.addEventListener('input', function(event) {
+		    // 입력된 값을 가져옵니다.
+		    let value = event.target.value;
+		    
+		    // 숫자 이외의 문자 제거
+		    value = value.replace(/[^\d]/g, '');
+		    
+		    $("#pdtRunKm").val(value);
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(value));
+		    
+		    // 입력란에 형식화된 값을 설정
+		    event.target.value = value;
+		});		
+		
+		// 차량가액
+		pdtPriceTmp.addEventListener('input', function(event) {
+		    // 입력된 값을 가져옵니다.
+		    let value = event.target.value;
+		    
+		    // 숫자 이외의 문자 제거
+		    value = value.replace(/[^\d]/g, '');
+		    
+		    $("#pdtPrice").val(value);
+		    
+		    // 숫자 형식 지정 (천 단위 콤마 추가)
+		    value = new Intl.NumberFormat().format(Number(value));
+		    
+		    // 입력란에 형식화된 값을 설정
+		    event.target.value = value;
+		});		
+		
 		// event onkeyup
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 		fnOnKeyUp = function(obj) {
@@ -316,11 +352,11 @@
 				case "pdtMonth" :
 					fnValidType(obj, pdtMonthValid, dispText, TYPE_IT);
 					break;
-				case "pdtRunKm" :
-					fnValidType(obj, pdtRunKmValid, dispText, TYPE_IT);
+				case "pdtRunKmTmp" :
+					fnValidType(obj, pdtRunKmTmpValid, dispText, TYPE_ICM);
 					break;
-				case "pdtPrice" :
-					fnValidType(obj, pdtPriceValid, dispText, TYPE_IT);
+				case "pdtPriceTmp" :
+					fnValidType(obj, pdtPriceTmpValid, dispText, TYPE_ICM);
 					break;
 				};
 			};	
@@ -333,6 +369,8 @@
 		// controller 호출
 		fnCallController = function() {
 			if(!fnValidation()) {return false;};
+			
+			pdtPriceTmp
 			
 			// 저장
 	       	form.action = goUrlSdmUpdate;
