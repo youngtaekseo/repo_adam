@@ -23,7 +23,6 @@ public class KakaoLoginService {
         //------kakao POST 요청------
         String reqURL = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id="+client_id+"&code="+code;
         
-        System.out.println("reqURL=============="+reqURL);
         URL url = new URL(reqURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -59,7 +58,6 @@ public class KakaoLoginService {
         conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
         int responseCode = conn.getResponseCode();
-        System.out.println("responseCode : " + responseCode);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -69,8 +67,6 @@ public class KakaoLoginService {
         while ((line = br.readLine()) != null) {
             result += line;
         }
-
-        System.out.println("Response Body : " + result);
 
         // jackson objectmapper 객체 생성
         ObjectMapper objectMapper = new ObjectMapper();

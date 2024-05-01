@@ -20,16 +20,15 @@ public class KakaoLoginController {
     public String loginKakaoRedirect(KakaoLoginDto dto, KakaoLoginDto isDto, HttpSession httpSession) throws Exception {
     	// 토큰 받기 
     	String accessToken = service.getAccessTokenFromKakao(kakaoRestKey, dto.getCode());
-		  
-    	dto = service.getUserInfo(accessToken, dto);
-		  
+		
+    	dto = service.getUserInfo(accessToken, dto);	  
+    	
     	// 회원확인
-        isDto = service.selectOneLogin(dto);
+    	isDto = service.selectOneLogin(dto);
         
         if(isDto == null) {
         	dto.setMbrType(1); // 사용자
-        	service.insert(dto);
-        	
+        	service.insert(dto);    		
         	httpSession.setAttribute("sessMbrSeq"  , dto.getMbrSeq());
         	httpSession.setAttribute("sessMbrEmail", dto.getEmail());
         	httpSession.setAttribute("sessMbrName" , dto.getName());	        	

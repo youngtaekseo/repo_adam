@@ -37,7 +37,7 @@
 			, now()
 			, 0
 			)
-		<selectKey keyProperty="mbrSeq" resultType="int" order="AFTER">
+		<selectKey keyProperty="mbrSeq" resultType="String" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
