@@ -90,8 +90,10 @@
 		     , d.pdtYear
 		     , d.pdtMonth
 		     , d.pdtRunKm
-		     , MAX(CASE WHEN j.pdiBack = 0 THEN j.pdiUrl END) xpdtImgF
-			 , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImgB	
+		     , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImg1
+			 , MAX(CASE WHEN j.pdiBack = 2 THEN j.pdiUrl END) xpdtImg2
+		     , MAX(CASE WHEN j.pdiBack = 3 THEN j.pdiUrl END) xpdtImg3
+			 , MAX(CASE WHEN j.pdiBack = 4 THEN j.pdiUrl END) xpdtImg4	
 		     , b.paySeq
 		     , k.buyDateTime xbuyDateTime
 		     , k.buyPrice    xbuyPrice

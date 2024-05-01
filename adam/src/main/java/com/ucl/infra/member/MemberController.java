@@ -89,7 +89,7 @@ public class MemberController extends BaseController {
 		return Commvar.PATH_LOGIN + "/loginSdm";		
 	}	
 	
-	// 수정화면
+	// 관리자 수정화면
 	@RequestMapping(value = "/memberSdmForm")
 	public String memberSdmForm(MemberDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));
@@ -127,7 +127,6 @@ public class MemberController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/memberSdmUpdatePass")
 	public Map<String, Object> memberSdmUpdatePass(MemberDto dto, HttpSession httpSession) throws Exception {
-		
 		// 결과 전달 객체
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
@@ -239,7 +238,6 @@ public class MemberController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/memberSdmPwConfirm")
 	public Map<String, Object> memberSdmPassword(MemberDto dto) throws Exception {
-		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		MemberDto rtDto = service.selectOneLogin(dto);
@@ -319,13 +317,29 @@ public class MemberController extends BaseController {
 	// 사용자등록
 	@RequestMapping(value = "/memberUsrInsert")
 	public String memberUsrInsert(MemberDto dto) throws Exception {
-		
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
 		service.insert(dto);
 		return Commvar.PATH_LOGIN + "loginUsr";		
 	}
+	
+	// 사용자 수정화면
+	@RequestMapping(value = "/memberUsrForm")
+	public String memberUsrForm(MemberDto dto, Model model, HttpSession httpSession) throws Exception {
+		// 로그인 회원순번
+		dto.setMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
+		
+		model.addAttribute("item", service.selectOne(dto));
+		return Commvar.PATH_MEMBER + "memberUsrForm";
+	}	
+	
+	// 사용자수정
+	@RequestMapping(value = "/memberUsrUpdate")
+	public String memberUsrUpdate(MemberDto dto) throws Exception {
+		service.update(dto);
+		return "redirect:/indexUsr";		
+	}	
 	
 	// 사용자 비밀번호수정화면
 	@RequestMapping(value = "/memberUsrPass")

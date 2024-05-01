@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- head -->
+<div th:replace="~{infra/v1/include/headUsr :: head}"></div>
+
+<body class="user-register blog">
+    <header>
+        <!-- header desktop -->
+        <div class="header-top d-xs-none ">
+            <div class="container">
+                <div class="row">
+                    <!-- logo -->
+                    <div class="col-1 d-flex align-items-center">
+                        <div id="logo">
+                            <a href="/indexUsr">
+                                <!-- <img class="img-fluid" src="img/home/logo.png" alt="logo"> -->
+                                <b style="font-size: 16px;">중고조아</b>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- menu -->
+                    <div class="main-menu col-2 align-items-center justify-content-center navbar-expand-md">
+                        <div class="menu navbar collapse navbar-collapse">
+                            <ul class="menu-top navbar-nav">
+                                <li><a href="/indexUsr" class="parent" style="color: red;">Home</a></li>
+                                <li><a href="/productUsrList" class="parent">차량조회</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="search_widget" class="col-9 align-items-center justify-content-end d-flex">
+                        <a class="login" href="/loginUsr" rel="nofollow" title="로그인">
+                            <i class="fa fa-sign-in"></i>
+                            <span>로그인</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <div class="main-content">
+        <div class="wrap-banner">
+            <!-- breadcrumb -->
+            <nav class="breadcrumb-bg">
+                <div class="container no-index">
+                    <div class="breadcrumb">
+                        <ol>
+                            <li><a href="/indexUsr"><span>Home</span></a></li>
+                            <li><span><b>회원수정</b></span></li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- main -->
+        <div id="wrapper-site">
+            <div class="container">
+                <div class="row">
+                    <div id="content-wrapper" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 onecol">
+                        <div id="main">
+                            <div id="content" class="page-content">
+                                <div class="register-form text-center">
+                                    <h1 class="text-center title-page">회원수정</h1>
+                                    <form id="form" name="form" class="js-customer-form" method="post" autocomplete="off">
+                                        <div>
+											<!-- 회원정보 순번 -->
+											<input id="mbrSeq" name="mbrSeq" th:value="${item.mbrSeq}" type="hidden">
+											<!-- 이메일 -->
+											<input id="mbrEmail" name="mbrEmail" th:value="${item.mbrEmail}" type="hidden">
+											<!-- 1:관리자 2:사용자 -->
+                                        	<input id="mbrType" name="mbrType" type="hidden" value="2" /> 
+                                            
+                                            <div class="form-group row mb-4">
+												<!-- 이름 -->
+                                                <div class="col-md-6">
+                                                    <input class="form-control"
+                                                    	id="mbrName" name="mbrName" type="text" placeholder="이름"
+                                                    	th:value="${item.mbrName}"
+                                                    	onkeyup="fnOnKeyUp(this)"/>
+                                                    <span id="mbrNameValid" name="mbrNameValid" style="float: left; color: red; visibility:hidden;"></span>
+                                                </div>
+                                                
+                                                <!-- 성별 -->
+                                                <div class="col-md-6">
+													<select class="form-select form-control"
+	                                                	id="mbrSex" name="mbrSex">
+	                                                    <option value=""   th:selected="${item.mbrSex == null}">성별</option>
+	                                                    <option value="12" th:selected="${item.mbrSex == 12}">남자</option>
+	                                                    <option value="13" th:selected="${item.mbrSex == 13}">여자</option>
+	                                                </select>
+												</div>
+                                            </div>
+
+	                                        <div class="form-group row mb-4">
+												<!-- 생년월일 -->
+	                                            <div class="col-md-6">
+	                                                <input class="form-control"
+	                                                	id="mbrBirthday" name="mbrBirthday" type="text" placeholder="생년월일"
+	                                                	th:value="${#strings.substring(item.mbrBirthday, 0, 10)}"
+	                                                	onkeyup="fnOnKeyUp(this)"/>
+	                                                <span id="mbrBirthdayValid" name="mbrBirthdayValid" style="float: left; color: red; visibility:hidden;"></span>
+	                                            </div>
+	                                            
+	                                            <div class="col-md-6"></div>
+	                                        </div>
+	                                        
+											<div class="form-group row mb-4">
+												<!-- 우편번호 -->
+	                                            <div class="col-md-6">
+	                                                <input class="form-control"
+	                                                	id="mbrZipCode" name="mbrZipCode" type="text" placeholder="우편번호"
+	                                                	th:value="${item.mbrZipCode}" readonly />
+	                                            </div>
+	                                            
+	                                            <!-- 우편번호 검색버튼 -->
+	                                            <div class="col-md-6">
+													<span id="btnMapValid" name="btnMapValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;"></span>
+                                                    <button class="btn btn-primary m-0 "
+	                                                	id="btnZipCode" name="btnZipCode" type="button" style="font-size: 13px;">
+	                                                    우편번호검색
+	                                                </button>
+	                                                &nbsp;
+	                                                <button class="btn btn-primary m-0"
+	                                                	id="btnMap" name="btnMap" type="button" style="font-size: 13px;">
+	                                                    지도보기
+	                                                </button>
+                                                </div>
+	                                        </div>	
+	                                        
+	                                        <div class="form-group row mb-4">
+												<!-- 주소 -->
+	                                            <div class="col">
+	                                                <input class="form-control"
+	                                                	id="mbrAddr" name="mbrAddr" type="text" placeholder="주소"
+	                                                	th:value="${item.mbrAddr}" />
+	                                            </div>
+	                                        </div>
+	                                        
+	                                        <div class="form-group row mb-4">
+	                                            <!-- 상세주소 -->
+	                                            <div class="col">
+                                                    <input class="form-control"
+                                                    	id="mbrAddrD" name="mbrAddrD" placeholder="상세주소"
+                                                    	th:value="${item.mbrAddrD}" />
+                                                </div>
+	                                        </div>
+	                                        
+	                                        <div class="form-group row mb-4">
+												<!-- 주소참고사항 -->
+	                                            <div class="col">
+	                                                <input class="form-control"
+	                                                	id="mbrAddrRemark" name="mbrAddrRemark" type="text" placeholder="참고사항"
+	                                                	th:value="${item.mbrAddrRemark}" />
+	                                            </div>
+	                                        </div>
+	                                        
+											<div class="form-group row mb-4">
+												<!-- 좌표(위도) -->
+	                                            <div class="col-md-6">
+	                                                <input class="form-control"
+	                                                	id="mbrPointLat" name="mbrPointLat" type="text" placeholder="좌표(위도)"
+	                                                	th:value="${item.mbrPointLat}" readonly />
+	                                            </div>
+	                                            
+	                                            <!-- 좌표(경도) -->
+	                                            <div class="col-md-6">
+                                                    <input class="form-control"
+                                                    	id="mbrPointLon" name="mbrPointLon" placeholder="좌표(경도)"
+                                                    	th:value="${item.mbrPointLon}" readonly />
+                                                </div>
+	                                        </div>	                                        
+                                            
+                                        </div>
+                                        <div class="clearfix">
+                                            <div>
+                                                <button class="btn btn-primary"
+                                                	id="btnHome" name="btnHome" type="button" style="font-size: 15px;">
+                                                	돌아가기
+                                                </button>
+                                                &nbsp;
+                                                <button class="btn btn-primary"
+                                                	id="btnSubmit" name="btnSubmit" type="button" style="font-size: 15px;">
+                                                    등&emsp;&emsp;록
+                                                </button>
+                                            </div>
+                                        </div>
+										
+										<!-- 지도표시 영역 -->
+										<div id="map" style="width:100%; height:350px; display: none; border: 2px; border-color: red; border-style: solid;"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="~{infra/v1/include/headUsr :: footer}"></div>
+
+    <!-- back top top -->
+    <div class="back-to-top">
+        <a href="#">
+            <i class="fa fa-long-arrow-up"></i>
+        </a>
+    </div>
+    
+    <!-- modalFormOneBtn(타이틀, 내용, 버튼명) -->
+    <div th:replace="~{infra/v1/include/modalSdm :: modalFormOneBtn('확인', '', '확인')}"></div>    
+        
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a4c9747a2b2880470d7fdb8bc928a8c"></script>
+
+    <!-- Vendor JS -->
+    <script src="usr/libs/jquery/jquery.min.js"></script>
+    <script src="usr/libs/popper/popper.min.js"></script>
+    <script src="usr/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="usr/libs/nivo-slider/js/jquery.nivo.slider.js"></script>
+    <script src="usr/libs/owl-carousel/owl.carousel.min.js"></script>
+    <script src="usr/libs/slider-range/js/tmpl.js"></script>
+    <script src="usr/libs/slider-range/js/jquery.dependClass-0.1.js"></script>
+    <script src="usr/libs/slider-range/js/draggable-0.1.js"></script>
+    <script src="usr/libs/slider-range/js/jquery.slider.js"></script>
+    <script src="usr/libs/slick-slider/js/slick.min.js"></script>
+
+    <!-- Template JS -->
+    <script src="usr/js/theme.js"></script>
+    
+    <script type="text/javascript">
+// ============================================================================
+// 변수선언
+// ============================================================================
+		let form = document.querySelector("form[name=form]");
+		
+		let goUrlUsrList   	= "/memberUsrList";		/* 조회화면 */
+		let goUrlUsrForm   	= "/memberUsrPass";		/* 수정화면 */
+		let goUrlUsrCreate 	= "/memberUsrCreate";	/* 등록화면 */
+		let goUrlUsrInsert 	= "/memberUsrInsert";	/* 등록 */
+		let goUrlUsrUpdate 	= "/memberUsrUpdate";	/* 수정 */
+		let goUrlUsrDelete 	= "/memberUsrDelete";	/* 삭제 */
+
+		// 회원명
+		let mbrName         	= document.querySelector("input[name=mbrName]");
+		let mbrNameValid    	= document.querySelector("span[name=mbrNameValid]");
+		
+		// 생년월일
+		let mbrBirthday        	= document.querySelector("input[name=mbrBirthday]");
+		let mbrBirthdayValid   	= document.querySelector("input[name=mbrBirthdayValid]");
+		
+		// 이메일
+		let mbrEmail         	= document.querySelector("input[name=mbrEmail]");
+		let mbrEmailValid    	= document.querySelector("span[name=mbrEmailValid]");
+		
+		// 비밀번호
+		let mbrPassword         = document.querySelector("input[name=mbrPassword]");
+		let mbrPasswordValid    = document.querySelector("span[name=mbrPasswordValid]");
+		
+		// 비밀번호확인
+		let mbrPwConfirm        = document.querySelector("input[name=mbrPwConfirm]");
+		let mbrPwConfirmValid	= document.querySelector("span[name=mbrPwConfirmValid]");
+		
+		// 필수입력체크대상
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
+		//			   20(비밀번호), 21(날짜), 22(이메일)
+		//             30(특수문자), 31(공백체크)
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
+		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
+		// TYPE_SP   = 30, TYPE_NULL = 31;
+		let dispText = "";
+		let typeArr = [TYPE_KREN];		
+		let nameArr = ["mbrName"];
+		let textArr = [dispText];	
+
+// ============================================================================
+// event
+// ============================================================================
+
+		window.addEventListener('load', function() {
+			jQuery.datetimepicker.setLocale('ko'); // 한국어
+
+			$("#mbrBirthday").datetimepicker({
+				timepicker:false,
+				format: 'Y-m-d', //'Y-m-d' //H:i
+			});
+		});
+
+    	// 저장버튼
+		document.getElementById("btnSubmit").onclick = function() {
+			fnCallController();
+		};
+		
+		// 돌아가기
+		document.getElementById("btnHome").onclick = function() {
+			location.href = "/indexUsr";
+		}
+		
+		// 우편번호검색
+		document.getElementById("btnZipCode").onclick = function() {
+			$("#btnMapValid").css("visibility", "hidden");
+			$("#map").css("display", "none");
+			execDaumPostcode();	
+		} 
+		
+		// 지도보기
+		document.getElementById("btnMap").onclick = function() {
+			let lat = $("#mbrPointLat").val();
+			let lon = $("#mbrPointLon").val();
+			
+			if(lat == null || lat == "" || lon == null || lon == "") {
+				$("#btnMapValid").css("visibility", "");
+				$("#btnMapValid").text("좌표값이 없습니다. 주소 검색 후 진행 바랍니다.");
+				$("#map").css("display", "none");
+				return;
+			}
+			
+			$("#map").css("display", "");
+			
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = { 
+			        center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			    };
+			
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+			
+			// 마커가 표시될 위치입니다 
+			var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+			
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+			    position: markerPosition
+			});
+			
+			// 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);		
+		}		
+		
+		// event onkeydown
+		fnOnKeyDown = function() {
+			// 엔터키(13)이면
+			if (window.event.keyCode == 13) {
+				if(!fnValidation()) return false;
+				fnCallController();
+			};				
+		};
+		
+		// event onkeyup
+		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
+		fnOnKeyUp = function(obj) {
+			if(window.event.keyCode != 13) {
+				switch(obj.name) {
+				case "mbrName" :
+					fnValidType(obj, mbrNameValid, "", TYPE_KREN);
+					break;					
+				};
+			};	
+		};		
+
+// ============================================================================
+// function
+// ============================================================================
+		
+		// controller 호출
+		fnCallController = function() {
+			if(!fnValidation()) {return false;};
+			
+			// 저장
+			form.action = goUrlUsrUpdate;
+			form.submit();
+		};	
+		
+		// 필수입력 확인
+	    fnValidationForm = function() {
+			let validChk = false;		
+			return validChk;
+		};
+
+    </script>
+	    
+</body>
+
+</html>
