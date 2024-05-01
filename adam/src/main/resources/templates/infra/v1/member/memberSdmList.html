@@ -211,8 +211,9 @@
 						                      		<!-- 여 -->
 						                      		<span th:case="13" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
 						                      		 	th:if="${list.mbrSex != null}" th:text="${#strings.substring(@codeService.selectOneCachedCode(list.mbrSex),0,1)}">
-						                      		</span>	                      		
-						                      		<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:text-white dark:bg-green-700"
+						                      		</span>	    
+						                      		                  		
+						                      		<span class="px-2 py-1"
 						                      		 	th:unless="${list.mbrSex != null}">
 						                      		</span>	                      							
 												</th:block>						

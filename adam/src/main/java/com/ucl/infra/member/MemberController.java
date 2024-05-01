@@ -82,7 +82,6 @@ public class MemberController extends BaseController {
 	// 관리자 로그인화면에서 회원가입클릭 후 저장
 	@RequestMapping(value = "/memberSdmLoginInsert")
 	public String memberSdmLoginInsert(MemberDto dto) throws Exception {
-		
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
@@ -197,7 +196,6 @@ public class MemberController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/memberSdmLoginConfirm")
 	public Map<String, Object> memberSdmLoginConfirm(MemberDto dto, HttpSession httpSession) throws Exception {
-		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		String loginPassword = dto.getMbrPassword();

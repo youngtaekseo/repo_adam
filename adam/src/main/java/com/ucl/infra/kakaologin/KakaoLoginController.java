@@ -27,7 +27,7 @@ public class KakaoLoginController {
     	isDto = service.selectOneLogin(dto);
         
         if(isDto == null) {
-        	dto.setMbrType(1); // 사용자
+        	dto.setMbrType(2); //1:관리자, 2:사용자
         	service.insert(dto);    		
         	httpSession.setAttribute("sessMbrSeq"  , dto.getMbrSeq());
         	httpSession.setAttribute("sessMbrEmail", dto.getEmail());
