@@ -29,8 +29,7 @@ public class LoginController {
 	
 	// 관리자 로그인
 	@RequestMapping(value = "/loginSdm")
-	public String loginSdm(HttpSession httpSession) throws Exception {
-		httpSession.setAttribute("sessWorker", "sdm");
+	public String loginSdm() throws Exception {
 		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
 	

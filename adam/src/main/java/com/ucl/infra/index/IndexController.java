@@ -66,8 +66,6 @@ public class IndexController {
 	// 사용자메인
 	@RequestMapping(value = "/indexUsr")
 	public String indexUsr(ProductVo vo, Model model, HttpSession httpSession) throws Exception {
-		httpSession.setAttribute("sessWorker", "usr");
-		
 		// 로그인 회원순번 설정
 		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		

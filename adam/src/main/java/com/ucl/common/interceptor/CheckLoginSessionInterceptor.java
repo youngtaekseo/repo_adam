@@ -13,15 +13,16 @@ public class CheckLoginSessionInterceptor implements HandlerInterceptor {
 		if(request.getSession().getAttribute("sessMbrSeq") != null) {
 			// by pass
 		} else {
-			if(request.getSession().getAttribute("sessWorker") == "usr") {
-				response.sendRedirect("/loginUsr");
-			} else if(request.getSession().getAttribute("sessWorker") == "sdm") {
+			if(request.getRequestURI().toString().contains("Sdm")) {
 				response.sendRedirect("/loginSdm");	
+			} else {
+				response.sendRedirect("/loginUsr");
 			}
 			
 			return false;
 		}
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
-	}
+	}	
+	
 }
