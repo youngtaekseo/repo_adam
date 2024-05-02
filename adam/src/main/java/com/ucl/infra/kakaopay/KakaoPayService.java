@@ -13,7 +13,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ucl.common.constants.Commvar;
 import com.ucl.infra.payment.PaymentService;
 
 import jakarta.servlet.http.HttpSession;
@@ -84,7 +83,8 @@ public class KakaoPayService {
         	e.printStackTrace();
         }
         
-        return Commvar.PATH_PRODUCT + "productUsrCheckOut";
+        //return Commvar.PATH_PRODUCT + "productUsrCheckOut";
+        return "redirect:/productUsrCheckOut";
     }
     
     // 결제결과정보
