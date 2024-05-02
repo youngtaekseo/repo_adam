@@ -159,7 +159,7 @@
 		                      ON g.cdcSeq = a.pdtColorCd
 		                      
 					   <if test="shMbrSeq != null and !shMbrSeq.equals('')">
-		               LEFT JOIN productWishlist h
+		               LEFT JOIN productwishlist h
 		                      ON h.pdtSeq = a.pdtSeq
 		                     AND h.mbrSeq = #{shMbrSeq}					   
 					   </if>
@@ -289,7 +289,7 @@
                       ON g.cdcSeq = a.pdtColorCd
                       
 			   <if test="shMbrSeq != null and !shMbrSeq.equals('')">
-               LEFT JOIN productWishlist h
+               LEFT JOIN productwishlist h
                       ON h.pdtSeq = a.pdtSeq
                      AND h.mbrSeq = #{shMbrSeq}					   
 			   </if>
