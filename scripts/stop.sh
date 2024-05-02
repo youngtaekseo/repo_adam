@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # stop.sh
 
-PROJECT_NAME="adam-0.0.1"
+PROJECT="adam-0.0.1"
 PROJECT_FULL_PATH_01="/home/ec2-user/service/ucarlike-prdt-01"
-JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT_NAME.jar"
+JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
 
 DEPLOY_LOG="$LOG_PATH/0_deploy.log"
