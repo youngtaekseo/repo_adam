@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,23 @@ public class KakaoPayController {
 	@Autowired
 	PaymentService paymentService;
 	
+	@Value("${kakaopay_approval_uri}")
+	private String kakaopayApprovalUri;
+	
+	@Value("${kakaopay_cancel_uri}")
+	private String kakaopayCancelUri;
+	
+	@Value("${kakaopay_fail_uri}")
+	private String kakaopayFailUri;	
+	
     // 결제요청
 	@ResponseBody
     @RequestMapping(value = "/kakaopay")
 	public Map<String, Object> kakaopay(KakaoPayVo vo, KakaoPayDto dto, HttpSession httpSession) {
+		vo.setApproval_url(kakaopayApprovalUri); // 성공시 url
+		vo.setCancel_url(kakaopayCancelUri);     // 취소시 url
+		vo.setFail_url(kakaopayFailUri);         // 실패시 url
+		
     	// 결제종류(카카오페이)
 		dto.setPayTypeCd("18");
 		// 로그인 회원번호

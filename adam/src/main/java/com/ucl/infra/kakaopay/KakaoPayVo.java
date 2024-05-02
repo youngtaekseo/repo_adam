@@ -1,26 +1,15 @@
 package com.ucl.infra.kakaopay;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class KakaoPayVo {
-	@Value("${kakaopay_approval_uri}")
-	private String kakaopayApprovalUri;
-	
-	@Value("${kakaopay_cancel_uri}")
-	private String kakaopayCancelUri;
-	
-	@Value("${kakaopay_fail_uri}")
-	private String kakaopayFailUri;	
-	
 	private String partner_order_id; // 주문 번호
 	private String partner_user_id;  // 회원 아이디
 	private String item_name;		 // 상품 명
 	private String quantity;		 // 상품 수량
 	private String total_amount;	 // 상품 가격
 	private String tax_free_amount;	 // 상품 비과세 금액	
-	private String approval_url = kakaopayApprovalUri;  // 성공시 url
-	private String cancel_url   = kakaopayCancelUri; 	// 취소시 url
-	private String fail_url     = kakaopayFailUri; 		// 실패시 url
+	private String approval_url;  	 // 성공시 url
+	private String cancel_url; 		 // 취소시 url
+	private String fail_url; 		 // 실패시 url
 	
 	public String getPartner_order_id() {
 		return partner_order_id;
