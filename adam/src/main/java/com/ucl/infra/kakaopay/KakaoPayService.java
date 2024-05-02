@@ -45,7 +45,6 @@ public class KakaoPayService {
  	
     // 결제요청
     public String kakaoPayReady(KakaoPayVo vo) {
-    	System.out.println("vo.getApproval_url()=================" + vo.getApproval_url());
         RestTemplate restTemplate = new RestTemplate();
         //restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory()); // 정확한 에러 파악을 위해 생성
         
@@ -74,19 +73,17 @@ public class KakaoPayService {
 
         try {
         	kakaoPayVo = vo;
-        	System.out.println("restTemplate=================1");
             kakaoPayDto = restTemplate.postForObject(new URI(Host + "/v1/payment/ready"), body, KakaoPayDto.class);
-            System.out.println("restTemplate=================2");
             return kakaoPayDto.getNext_redirect_pc_url();
 
         } catch (RestClientException e) {
-        	System.out.println("restTemplate=================3");
             e.printStackTrace();
         } catch (URISyntaxException e) {
-        	System.out.println("restTemplate=================4");
             e.printStackTrace();
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
-        System.out.println("restTemplate=================5");
+        
         return Commvar.PATH_PRODUCT + "productUsrCheckOut";
     }
     
