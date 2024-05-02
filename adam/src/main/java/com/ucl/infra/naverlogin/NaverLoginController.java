@@ -31,6 +31,8 @@ public class NaverLoginController {
     private String naverClientId;	
 	@Value("${naver_client_secret}")
     private String naverClientSecret;	
+	@Value("${naver_redirect_uri}")
+    private String naverRedirectUri;
 	
     // 랜덤 문자열 생성
     public String randomString() {
@@ -50,7 +52,6 @@ public class NaverLoginController {
     
 	@RequestMapping(value="/loginNaver")
 	public String loginNaver(HttpServletRequest request) {
-	    String redirect_uri = "http://localhost:8081/redirectNaver";
 	    //String state = RandomStringUtils.randomAlphabetic(10);   // 랜덤 문자열 생성
 	    
 	    // 랜덤 문자열 생성
@@ -58,7 +59,7 @@ public class NaverLoginController {
 	    
 	    String login_url = "https://nid.naver.com/oauth2.0/authorize?response_type=code"
 	            + "&client_id="    + naverClientId
-	            + "&redirect_uri=" + redirect_uri
+	            + "&redirect_uri=" + naverRedirectUri
 	            + "&state="        + state;
 
 	    request.getSession().setAttribute("state", state);
