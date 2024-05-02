@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # start.sh
 
-PROJECT="mia-0.0.1"
+PROJECT="adam-0.0.1"
 PROJECT_FULL_PATH_01="/home/ec2-user/service/ucarlike-prdt-01"
 JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
