@@ -116,7 +116,17 @@
             </div>
         </div>
     </div>	
-</div>
+</div>	 
+	
+<!-- 지도영역 -->
+<div th:fragment="traffic">
+	<div class="m-3">
+		<label id="trafficLabel" style="display: none;">
+			<input type="checkbox" id="traffic" name="traffic" />&nbsp;교통정보반영							
+		</label>
+		<div id="map" style="width:100%; height:350px; display: none; border: 2px; border-color: red; border-style: solid;"></div>		
+	</div>
+</div> 
 
 </body>
 
