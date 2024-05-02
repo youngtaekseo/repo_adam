@@ -30,8 +30,6 @@ public class KakaoPayController {
 	@ResponseBody
     @RequestMapping(value = "/kakaopay")
 	public Map<String, Object> kakaopay(KakaoPayVo vo, KakaoPayDto dto, HttpSession httpSession) {
-    	System.out.println(".................................................... kakaopay");
-    	
     	// 결제종류(카카오페이)
 		dto.setPayTypeCd("18");
 		// 로그인 회원번호
@@ -85,7 +83,6 @@ public class KakaoPayController {
     // 결제취소
     @RequestMapping(value = "/kakaopayCancel")
 	public String kakaopayCancel(Model model, HttpSession httpSession) {
-    	System.out.println(".................................................... kakaopayCancel");
     	String sessTidString = (String) httpSession.getAttribute("sessTid");
     	if(sessTidString != null) {
     		model.addAttribute("info", service.kakaoPayCancel(httpSession));
