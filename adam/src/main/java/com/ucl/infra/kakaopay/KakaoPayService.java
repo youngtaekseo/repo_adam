@@ -82,7 +82,7 @@ public class KakaoPayService {
             e.printStackTrace();
         }
         
-        return Commvar.PATH_PRODUCT + "/productUsrCheckOut";
+        return Commvar.PATH_PRODUCT + "productUsrCheckOut";
     }
     
     // 결제결과정보
