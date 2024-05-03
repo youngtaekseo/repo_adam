@@ -197,14 +197,13 @@
 				redirectUri: [[${kakaoRedirectUri}]],
 			});
 		}
-		
 	</script>
 	
-	<script>
+	<script th:inline="javascript">
 		// 네이버 로그인
 		const naverLogin = new naver.LoginWithNaverId({
-		    clientId: "r1aTHRBql6Ny_r2b60bZ",
-		    callbackUrl: "http://localhost:8081/indexUsr",
+		    clientId: [[${naverClientId}]], //"r1aTHRBql6Ny_r2b60bZ",
+		    callbackUrl: [[${naverCallbackUri}]] //"http://localhost:8081/indexUsr",
 		    //loginButton: {color: "green", type: 0, height: 50}
 		});
 		
@@ -255,7 +254,7 @@
 				});
 			}
 		}		
-	</script>
+	</script th:inline="javascript">
 	    
     <script type="text/javascript">
 				// 필수입력체크대상

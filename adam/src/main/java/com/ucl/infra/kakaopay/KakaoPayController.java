@@ -21,12 +21,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 
 public class KakaoPayController {
-	@Autowired
-	KakaoPayService service;
-	
-	@Autowired
-	PaymentService paymentService;
-	
 	@Value("${kakaopay_approval_uri}")
 	private String kakaopayApprovalUri;
 	
@@ -35,6 +29,13 @@ public class KakaoPayController {
 	
 	@Value("${kakaopay_fail_uri}")
 	private String kakaopayFailUri;	
+
+	@Autowired
+	KakaoPayService service;
+	
+	@Autowired
+	PaymentService paymentService;
+	
 	
     // 결제요청
 	@ResponseBody

@@ -22,7 +22,14 @@ public class LoginController {
 	private String kakaoRedirectUri;
 	
 	@Value("${kakao_location}")
-	private String kakaoLocation;	
+	private String kakaoLocation;
+	
+	@Value("${naver_client_id}")
+	private String naverClientId;
+
+	@Value("${naver_callback_uri}")
+	private String naverCallbackUri;
+	
 	
 	@Autowired
 	LoginService service;
@@ -45,6 +52,8 @@ public class LoginController {
     	model.addAttribute("javascriptKey"   , javascriptKey);
     	model.addAttribute("kakaoRedirectUri", kakaoRedirectUri);
     	model.addAttribute("kakaoLocation"   , kakaoLocation);
+    	model.addAttribute("naverClientId"   , naverClientId);
+    	model.addAttribute("naverCallbackUri", naverCallbackUri);
 		return Commvar.PATH_LOGIN + "loginUsr";
 	}
 	
