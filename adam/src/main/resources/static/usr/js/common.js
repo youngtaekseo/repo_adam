@@ -82,6 +82,8 @@ function execDaumPostcode() {
 	   //emphTextColor: "", //강조 글자색
 	   //outlineColor: "", //테두리
 	};
+	
+	$("#divMapValid").css("visibility", "hidden");
 			
     new daum.Postcode({
 		theme: themeObj
@@ -160,8 +162,8 @@ function mapDisplay(traffic) {
 	let lon = $("#mbrPointLon").val();
 	
 	if(lat == null || lat == "" || lon == null || lon == "") {
-		$("#btnMapValid").css("visibility", "");
-		$("#btnMapValid").text("좌표값이 없습니다. 주소 검색 후 진행 바랍니다.");
+		$("#divMapValid").css("visibility", "");
+		$("#btnMapValid").text("주소 검색 후 진행 바랍니다");
 		$("#map").css("display", "none");
 		return;
 	}

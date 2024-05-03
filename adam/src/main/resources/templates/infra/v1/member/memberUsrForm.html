@@ -9,34 +9,7 @@
         <!-- header desktop -->
         <div class="header-top d-xs-none ">
             <div class="container">
-                <div class="row">
-                    <!-- logo -->
-                    <div class="col-1 d-flex align-items-center">
-                        <div id="logo">
-                            <a href="/indexUsr">
-                                <!-- <img class="img-fluid" src="img/home/logo.png" alt="logo"> -->
-                                <b style="font-size: 16px;">중고조아</b>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- menu -->
-                    <div class="main-menu col-2 align-items-center justify-content-center navbar-expand-md">
-                        <div class="menu navbar collapse navbar-collapse">
-                            <ul class="menu-top navbar-nav">
-                                <li><a href="/indexUsr" class="parent" style="color: red;">Home</a></li>
-                                <li><a href="/productUsrList" class="parent">차량조회</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div id="search_widget" class="col-9 align-items-center justify-content-end d-flex">
-                        <a class="login" href="/loginUsr" rel="nofollow" title="로그인">
-                            <i class="fa fa-sign-in"></i>
-                            <span>로그인</span>
-                        </a>
-                    </div>
-                </div>
+				<div th:replace="~{infra/v1/include/bodyUsr :: topMenu(2)}"></div>
             </div>
         </div>
     </header>
@@ -119,7 +92,6 @@
 	                                            
 	                                            <!-- 우편번호 검색버튼 -->
 	                                            <div class="col-md-6">
-													<span id="btnMapValid" name="btnMapValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;"></span>
                                                     <button class="btn btn-primary m-0 "
 	                                                	id="btnZipCode" name="btnZipCode" type="button" style="font-size: 13px;">
 	                                                    우편번호검색
@@ -129,6 +101,9 @@
 	                                                	id="btnMap" name="btnMap" type="button" style="font-size: 13px;">
 	                                                    지도보기
 	                                                </button>
+	                                                <div id="divMapValid" name="divMapValid" style="visibility:hidden;">
+		                                                <span id="btnMapValid" name="btnMapValid" class="text-xs" style="color: red;"></span>														
+													</div>
                                                 </div>
 	                                        </div>	
 	                                        
@@ -190,8 +165,6 @@
                                             </div>
                                         </div>
 										
-										<!-- 지도표시 영역 -->
-										<div th:replace="~{infra/v1/include/bodyUsr :: traffic}"></div>
                                     </form>
                                 </div>
                             </div>
@@ -201,6 +174,9 @@
             </div>
         </div>
     </div>
+
+	<!-- 지도표시 영역 -->
+	<div th:replace="~{infra/v1/include/bodyUsr :: traffic}"></div>
 
     <!-- footer -->
     <div th:replace="~{infra/v1/include/headUsr :: footer}"></div>
