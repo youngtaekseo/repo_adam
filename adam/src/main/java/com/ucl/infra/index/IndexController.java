@@ -1,6 +1,7 @@
 package com.ucl.infra.index;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,14 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
+	@Value("${team_project1}")
+	private String teamProject1;
+	
+	@Value("${team_project2_usr}")
+	private String teamProject2Usr;
+	
+	@Value("${team_project2_sdm}")
+	private String teamProject2Sdm;
 	
 	@Autowired
 	IndexService service;
@@ -23,7 +32,11 @@ public class IndexController {
 
 	// 메인화면
 	@RequestMapping(value = "/index")
-	public String index() throws Exception {
+	public String index(Model model) throws Exception {
+		model.addAttribute("teamProject1"   , teamProject1);
+		model.addAttribute("teamProject2Usr", teamProject2Usr);
+		model.addAttribute("teamProject2Sdm", teamProject2Sdm);
+		
 		return Commvar.PATH_HOME + "index";
 	}
 
