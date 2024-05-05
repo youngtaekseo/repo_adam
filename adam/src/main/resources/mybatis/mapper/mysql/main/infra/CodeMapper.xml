@@ -39,6 +39,24 @@
 		     		 , b.cdcName
 		     		 , b.cdcRegDt
 		     		 , b.cdcUdtDt
+		     		 , (SELECT count(*) 
+		     		      FROM product aa
+		     		     WHERE aa.pdtTypeCd      = ifnull(b.cdcSeq,'x')
+		     		        OR aa.pdtBrandCd     = ifnull(b.cdcSeq,'x')
+		     		        OR aa.pdtAccidentCd  = ifnull(b.cdcSeq,'x')
+		     		        OR aa.pdtColorCd     = ifnull(b.cdcSeq,'x') 
+		     		        OR aa.pdtRecommendCd = ifnull(b.cdcSeq,'x')               
+		     		   ) +
+		     		   (SELECT count(*) 
+		     		      FROM memberpayment bb
+		     		     WHERE bb.payTypeCd             = ifnull(b.cdcSeq,'x')
+		     		        OR ifnull(bb.payCardCd,'o') = ifnull(b.cdcSeq,'x')
+		     		   ) +
+		     		   (SELECT count(*) 
+		     		      FROM members cc
+		     		     WHERE cc.mbrType = ifnull(b.cdcSeq,'x')
+		     		        OR cc.mbrSex  = ifnull(b.cdcSeq,'x')
+		     		   ) xcodeCount
 			  <include refid="selectCommon"/>			 
 		         ORDER BY a.cdgSeq, b.cdcSeq         
 				 LIMIT 99999999999
@@ -62,6 +80,24 @@
      		 , b.cdcName
      		 , b.cdcRegDt
      		 , b.cdcUdtDt
+     		 , (SELECT count(*) 
+     		      FROM product aa
+     		     WHERE aa.pdtTypeCd      = ifnull(b.cdcSeq,'x')
+     		        OR aa.pdtBrandCd     = ifnull(b.cdcSeq,'x')
+     		        OR aa.pdtAccidentCd  = ifnull(b.cdcSeq,'x')
+     		        OR aa.pdtColorCd     = ifnull(b.cdcSeq,'x') 
+     		        OR aa.pdtRecommendCd = ifnull(b.cdcSeq,'x')               
+     		   ) +
+     		   (SELECT count(*) 
+     		      FROM memberpayment bb
+     		     WHERE bb.payTypeCd             = ifnull(b.cdcSeq,'x')
+     		        OR ifnull(bb.payCardCd,'o') = ifnull(b.cdcSeq,'x')
+     		   ) +
+     		   (SELECT count(*) 
+     		      FROM members cc
+     		     WHERE cc.mbrType = ifnull(b.cdcSeq,'x')
+     		        OR cc.mbrSex  = ifnull(b.cdcSeq,'x')
+     		   ) xcodeCount
   		  FROM codegroup a
        		   LEFT JOIN code b
               		  ON b.cdgSeq = a.cdgSeq              		          

@@ -63,6 +63,18 @@
 					 , a.pdtRegDt
 					 , a.pdtUdtDt
 					 , a.pdtDelNy
+					 , (SELECT count(*) 
+		     		      FROM productwishlist aa
+		     		     WHERE aa.pdtSeq = a.pdtSeq
+		     		   ) +
+		     		   (SELECT count(*) 
+		     		      FROM productreview bb
+		     		     WHERE bb.pdtSeq = a.pdtSeq
+		     		   ) +
+		     		   (SELECT count(*) 
+		     		      FROM productbuy cc
+		     		     WHERE cc.pdtSeq = a.pdtSeq
+		     		   ) xpdtCount
 			  <include refid="selectCommon"/>
 		         ORDER BY a.pdtSeq
 		         LIMIT 99999999999
@@ -93,6 +105,18 @@
 			 , a.pdtRegDt
 			 , a.pdtUdtDt
 			 , a.pdtDelNy
+			 , (SELECT count(*) 
+     		      FROM productwishlist aa
+     		     WHERE aa.pdtSeq = a.pdtSeq
+     		   ) +
+     		   (SELECT count(*) 
+     		      FROM productreview bb
+     		     WHERE bb.pdtSeq = a.pdtSeq
+     		   ) +
+     		   (SELECT count(*) 
+     		      FROM productbuy cc
+     		     WHERE cc.pdtSeq = a.pdtSeq
+     		   ) xpdtCount
 		  FROM product a
 		 WHERE 1 = 1		
            AND a.pdtSeq = #{pdtSeq}

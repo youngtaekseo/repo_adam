@@ -36,7 +36,7 @@
 					<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 						<!-- 체크박스 -->
 						<td class="px-2 py-1">
-							<input class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+							<input th:if="${list.xmbrCount == 0}" class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
 								id = "checkbox" name="checkbox" type="checkbox"
 								th:value="${list.mbrSeq}"
 								style="height: 15px; width: 15px">

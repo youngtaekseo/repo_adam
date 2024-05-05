@@ -58,6 +58,10 @@
 			 , a.cdgRegDt
 			 , a.cdgUdtDt
 			 , a.cdgDelNy
+			 , (SELECT COUNT(*) 
+			      FROM code aa 
+			     WHERE aa.cdgSeq = a.cdgSeq		        
+			   ) xcodeCount
           FROM codegroup a
          WHERE 1=1
            AND a.cdgSeq = #{cdgSeq}
