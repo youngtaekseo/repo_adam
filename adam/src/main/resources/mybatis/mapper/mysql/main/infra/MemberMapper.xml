@@ -40,6 +40,7 @@
 				     , a.mbrRegDt
 				     , a.mbrUdtDt
 				     , a.mbrDelNy
+				     , (SELECT COUNT(*) FROM memberpayment aa WHERE aa.mbrSeq = a.mbrSeq) xmbrCount
 			  <include refid="selectCommon"/>			 
 		         ORDER BY a.mbrSeq 
 				 LIMIT 99999999999
