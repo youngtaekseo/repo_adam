@@ -63,7 +63,6 @@
 		     , a.mbrSex
 		     , a.mbrBirthday
 		     , a.mbrEmail
-		     , a.mbrPassword
 			 , a.mbrZipCode
 			 , a.mbrAddr
 			 , a.mbrAddrD
@@ -73,6 +72,7 @@
 		     , a.mbrRegDt
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
+		     , (SELECT COUNT(*) FROM memberpayment aa WHERE aa.mbrSeq = a.mbrSeq) xmbrCount
 		  FROM members a
 		 WHERE 1 = 1		
            AND a.mbrSeq = #{mbrSeq}	
