@@ -101,10 +101,18 @@ public class ProductController {
 	}
 
 	// 삭제
+	@ResponseBody
 	@RequestMapping(value = "/productSdmDelete")
-	public String productSdmDelete(ProductDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/productSdmList";
+	public Map<String, Object> productSdmDelete(ProductDto dto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.delete(dto) > 0) {
+			returnMap.put("rt", "success"); 
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;
 	}
 
 	// 삭제여부수정

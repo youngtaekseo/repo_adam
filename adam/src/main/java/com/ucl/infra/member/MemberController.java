@@ -39,6 +39,7 @@ public class MemberController extends BaseController {
 			
 			/* setUrl(vo); */
 		};
+
 		return Commvar.PATH_MEMBER + "memberSdmList";
 	}
 	
@@ -111,10 +112,19 @@ public class MemberController extends BaseController {
 	}	
 	
 	// 삭제
+	@ResponseBody
 	@RequestMapping(value = "/memberSdmDelete")
-	public String memberSdmDelte(MemberDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/memberSdmList";
+	public Map<String, Object> memberSdmDelte(MemberDto dto) throws Exception {
+		// 결과 전달 객체
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+
+		if (service.delete(dto) > 0) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;
 	}	
 	
 	// 비밀번호수정화면

@@ -85,10 +85,18 @@ public class CodeGroupController {
 	}	
 	
 //	그룹코드삭제
+	@ResponseBody
 	@RequestMapping(value = "/codeGroupSdmDelete")
-	public String codeGroupSdmDelete(CodeGroupDto dto) throws Exception {
-		service.delete(dto);
-		return "redirect:/codeGroupSdmList";
+	public Map<String, Object> codeGroupSdmDelete(CodeGroupDto dto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.delete(dto) > 0) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;
 	}
 	
 //	그룹코드 삭제여부 변경         
