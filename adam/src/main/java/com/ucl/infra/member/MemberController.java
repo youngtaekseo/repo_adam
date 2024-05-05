@@ -276,12 +276,16 @@ public class MemberController extends BaseController {
 	// 다중 선택자료 삭제
 	@ResponseBody
 	@RequestMapping(value = "/memberSdmListDelete")
-	public Map<String, Object> codeSdmListDelete(MemberVo vo) throws Exception {
+	public Map<String, Object> codeSdmListDelete(MemberVo vo) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		if(service.deleteList(vo) > 0) { 
-			returnMap.put("rt", "success"); 
-		} else {
+		try {
+			if(service.deleteList(vo) > 0) { 
+				returnMap.put("rt", "success"); 
+			} else {
+				returnMap.put("rt", "fail");
+			}			
+		} catch (Exception e) {
 			returnMap.put("rt", "fail");
 		}
 		  
