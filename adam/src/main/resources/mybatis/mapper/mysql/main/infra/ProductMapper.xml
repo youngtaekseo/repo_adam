@@ -165,7 +165,7 @@
 					   </if>
 		         WHERE 1 = 1
 		           AND a.pdtDelNy = 0
-		           <if test="shPdtName != null and !shPdtName.equals('')">AND a.pdtName LIKE CONCAT('%', #{shPdtName},'%')</if>
+		           <if test="shPdtName != null and !shPdtName.equals('')">AND CONCAT(UPPER(e.cdcName), UPPER(a.pdtName)) LIKE CONCAT('%', UPPER(#{shPdtName}),'%')</if>
 				   <if test="shSeq != null and !shSeq.equals('')">AND a.pdtSeq = #{shSeq}</if>
 		           <if test="shRecommend != null and !shRecommend.equals('')">AND a.pdtRecommendCd = #{shRecommend}</if>
 		               
