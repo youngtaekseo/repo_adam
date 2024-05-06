@@ -89,7 +89,7 @@
                                     <div class="form-group no-gutters">
                                         이메일
                                         <div class="input-group js-parent-focus"> 
-                                        	<input class="form-control" id="mbrEmail" name="mbrEmail" type="email" placeholder="" value="b@b.com" autocomplete="off">
+                                        	<input class="form-control" id="mbrEmail" name="mbrEmail" type="email" placeholder="" th:value="${myEmail}" autocomplete="off">
                                         </div>
 	                                    <div>
 	                                        <span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">										
@@ -99,7 +99,7 @@
                                     <div class="form-group no-gutters">
                                         비밀번호
                                         <div class="input-group js-parent-focus">                                            
-                                            <input class="form-control js-child-focus js-visible-password" id="mbrPassword" name="mbrPassword" type="password" value="q!2" placeholder="**********">
+                                            <input class="form-control js-child-focus js-visible-password" id="mbrPassword" name="mbrPassword" type="password" value="a!2" placeholder="**********">
                                         </div>
                                         <div>
 											<span id="mbrPasswordValid" name="mbrPasswordValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">

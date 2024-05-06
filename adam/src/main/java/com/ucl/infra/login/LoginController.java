@@ -14,7 +14,10 @@ import com.ucl.common.constants.Commvar;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {	
+public class LoginController {
+	@Value("${my_email}")
+	private String myEmail;
+	
 	@Value("${javascript_key}")
 	private String javascriptKey;
 	
@@ -36,7 +39,8 @@ public class LoginController {
 	
 	// 관리자 로그인
 	@RequestMapping(value = "/loginSdm")
-	public String loginSdm() throws Exception {
+	public String loginSdm(Model model) throws Exception {
+		model.addAttribute("myEmail", myEmail);
 		return Commvar.PATH_LOGIN + "loginSdm";
 	}	
 	
@@ -49,6 +53,7 @@ public class LoginController {
 	// 사용자 로그인
 	@RequestMapping(value = "/loginUsr")
 	public String loginUsr(Model model) throws Exception {
+		model.addAttribute("myEmail"         , myEmail);
     	model.addAttribute("javascriptKey"   , javascriptKey);
     	model.addAttribute("kakaoRedirectUri", kakaoRedirectUri);
     	model.addAttribute("kakaoLocation"   , kakaoLocation);
