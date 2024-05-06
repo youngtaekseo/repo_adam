@@ -123,15 +123,15 @@
           <!-- Profile menu -->
           <li class="relative">
             
-            <button class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+            <button class="align-middle rounded-full focus:outline-none"
               @click="toggleProfileMenu"
               @keydown.escape="closeProfileMenu"
               aria-label="Account"
               aria-haspopup="true">
-              <img class="object-cover w-8 h-8 rounded-full"
+              <img class="object-cover w-9 h-8 rounded-full"
                 src="sdm/img/face.jpg"
                 alt="" aria-hidden="true"/>
-                [[${session.sessMbrName}]]
+	            <apan class="align-middle">[[${session.sessMbrName}]]</apan>
             </button>
             
             <template x-if="isProfileMenuOpen">
