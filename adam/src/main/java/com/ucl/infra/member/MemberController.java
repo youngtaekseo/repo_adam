@@ -24,6 +24,23 @@ public class MemberController extends BaseController {
 	@Autowired
 	MemberService service;
 	
+	// 검색조건 초기화
+	@RequestMapping(value = "/memberSdmListInit")
+	public String memberSdmListInit(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
+		vo.setShDateEnd("");
+		vo.setShDateStart("");
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue("");
+		vo.setShSeq(null);
+		vo.setShOptionType(null);
+		vo.setShSex(null);
+		vo.setShCdgSeq(null);
+		
+		return "redirect:/memberSdmList";
+	}
+	
 	//조회화면
 	@RequestMapping(value = "/memberSdmList")
 	public String memberSdmList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {

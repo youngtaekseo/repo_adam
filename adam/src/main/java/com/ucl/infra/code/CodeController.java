@@ -25,8 +25,22 @@ public class CodeController {
 	@Autowired
 	CodeGroupService codeGroupService;
 	
+	// 검색조건 초기화
+	@RequestMapping(value = "/codeSdmListInit")
+	public String codeSdmListInit(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
+		vo.setShDateEnd(null);
+		vo.setShDateStart(null);
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue(null);
+		vo.setSeq(null);
+		vo.setShOptionGroup(null);
+		
+		return "redirect:/codeSdmList";
+	}
 	
-//	전체리스트 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	//	전체리스트 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 	@RequestMapping(value = "/codeSdmList")
 	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
 			 
