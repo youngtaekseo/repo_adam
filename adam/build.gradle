@@ -33,6 +33,10 @@ dependencies {
 	// Spring Boot Starter Security » 3.2.3
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.3'
+	
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.2.5'
+	
 }
 
 tasks.named('test') {

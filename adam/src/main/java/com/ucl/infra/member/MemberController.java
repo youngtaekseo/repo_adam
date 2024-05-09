@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.ucl.common.base.BaseController;
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
+import com.ucl.infra.mail.SendGmail;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -23,6 +24,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	SendGmail sendGmail;
 	
 	// 검색조건 초기화
 	@RequestMapping(value = "/memberSdmListInit")
@@ -94,6 +98,18 @@ public class MemberController extends BaseController {
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
 		service.insert(dto);
+		
+		//sendGmail.sendMail();
+		
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				sendGmail.sendMail();
+			}
+		});
+		
+		thread.start();
+		
 		return "redirect:/memberSdmList";		
 	}
 	
