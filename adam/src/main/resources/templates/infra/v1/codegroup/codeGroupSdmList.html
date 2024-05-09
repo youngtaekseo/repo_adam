@@ -251,25 +251,24 @@
                               
                 				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
 								<!-- 홈버튼 -->                
-				                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
-				                	<a th:href="@{/indexSdm}">
+			                	<a th:href="@{/indexSdm}">
+					                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 									  		<path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
 										</svg>                
-				                  	</a>	                  
-				                </button>
-								<!-- 추가버튼 -->        
+					                </button>
+			                  	</a>	                  
 								&nbsp;&nbsp;          
-				                <button 
-			                    	id="btnInsert"
-			                    	name="btnInsert"
-			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
-									<a th:href="@{/codeGroupSdmCreate}">
+								<!-- 추가버튼 -->        
+								<a th:href="@{/codeGroupSdmCreate}">
+					                <button class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create"
+				                    	id="btnInsert"
+				                    	name="btnInsert">
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
 										</svg>	
-									</a>
-				                </button>                  
+					                </button>                  
+								</a>
                 			</span>                
               			</div>
             		</div>
