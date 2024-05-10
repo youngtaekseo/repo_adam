@@ -101,6 +101,8 @@ public class MemberController extends BaseController {
 		
 		//sendGmail.sendMail();
 		
+		// 메일전송
+		//==========================================
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -109,7 +111,8 @@ public class MemberController extends BaseController {
 		});
 		
 		thread.start();
-		
+		//==========================================
+				
 		return "redirect:/memberSdmList";		
 	}
 	

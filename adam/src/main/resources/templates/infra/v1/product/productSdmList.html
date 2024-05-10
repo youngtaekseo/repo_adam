@@ -317,15 +317,15 @@
 											<th class="px-2 py-1" style="text-align: center;">추천여부</th>
 											<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
 											<th class="px-2 py-1">작업</th>
-											<th class="px-2 py-1">등록일시</th>
-											<th class="px-2 py-1">수정일시</th>
+											<!--<th class="px-2 py-1">등록일시</th>-->
+											<!--<th class="px-2 py-1">수정일시</th>-->
                     					</tr>
                   					</thead>
                   
                   					<!-- 조회결과 리스트 내용 -->
                   					<tbody id="trList" class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   						<tr th:if="${#lists.isEmpty(list)}">
-                  							<td colspan="16" class="text-center text-purple-600"> 
+                  							<td colspan="14" class="text-center text-purple-600"> 
 												There is no data !!!
                   							</td>
                   						</tr>
@@ -395,9 +395,9 @@
 					                      		</button>
 					                    	</td>
 											<!-- 등록일시 -->
-					                    	<td class="px-2 py-1" th:text="${#dates.format(list.pdtRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    	<!--<td class="px-2 py-1" th:text="${#dates.format(list.pdtRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
 											<!-- 수정일시 -->                    	
-					                    	<td class="px-2 py-1" th:text="${#dates.format(list.pdtUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                    	<!--<td class="px-2 py-1" th:text="${#dates.format(list.pdtUdtDt, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
 					                  	</tr> 
                   					</tbody>
                 				</table>
