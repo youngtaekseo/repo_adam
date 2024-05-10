@@ -106,7 +106,7 @@ public class MemberController extends BaseController {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				sendGmail.sendMail();
+				sendGmail.sendMail(dto);
 			}
 		});
 		
