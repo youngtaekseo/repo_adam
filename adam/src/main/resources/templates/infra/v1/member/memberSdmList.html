@@ -60,7 +60,7 @@
 									</div>
 			
 									<!-- 종료일자 -->
-									<div class="md:h-auto md:w-1/2 mr-3">
+									<div class="md:h-auto md:w-1/2">
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shDateEnd" name="shDateEnd" placeholder="종료일"
 											th:value="${#strings.substring(vo.shDateEnd,0,10)}"
@@ -102,7 +102,7 @@
 									</div>
 			
 									<!-- 검색어 -->
-									<div class="md:h-auto md:w-1/2 mr-3">
+									<div class="md:h-auto md:w-1/2">
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 											id="shValue" name="shValue" placeholder="검색어" th:value="${vo.shValue}"
 											onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">

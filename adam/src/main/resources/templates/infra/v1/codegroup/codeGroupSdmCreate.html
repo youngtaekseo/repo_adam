@@ -13,7 +13,7 @@
 		<div th:replace="~{infra/v1/include/bodySdm :: bodyHeader('코드관리','코드그룹')}"></div>
 
         <main class="h-full pb-16 overflow-y-auto">
-          <form name="form" id="form" method="get" autocomplete="off">
+          <form name="form" id="form" method="post" autocomplete="off">
             <div class="container px-6 mx-auto grid">
               <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 	              <a class="inline-flex items-center w-full">
@@ -26,7 +26,7 @@
   
               <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="mt-4 mb-4">                  
-                  <div class="md:h-auto mr-3">
+                  <div class="md:h-auto">
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">그룹코드명</span>
@@ -40,7 +40,7 @@
                   </div>                  
                 </div>
               </div> 
-  
+              
               <!-- 저장버튼, 회원조회버튼 -->
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
@@ -58,7 +58,7 @@
                               
                 <!-- 저장버튼 -->
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
-                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                     id="btnSubmit"
                     name="btnSubmit"             
                     aria-label="Edit"

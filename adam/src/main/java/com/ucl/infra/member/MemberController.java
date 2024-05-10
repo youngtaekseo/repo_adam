@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -112,6 +113,13 @@ public class MemberController extends BaseController {
 		
 		thread.start();
 		//==========================================
+		
+		// 파일첨부
+		if(dto.getUploadFiles() != null) {
+			for(MultipartFile mf : dto.getUploadFiles()) {
+				System.out.println("mf.getOriginalFilename():" + mf.getOriginalFilename());
+			}
+		}
 				
 		return "redirect:/memberSdmList";		
 	}

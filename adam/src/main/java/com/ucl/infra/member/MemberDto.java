@@ -2,6 +2,8 @@ package com.ucl.infra.member;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberDto {
 	
 	private String  mbrSeq;
@@ -25,6 +27,8 @@ public class MemberDto {
 	private String  xmbrPwConfirm;
 	private String  xmbrPasswordPre;
 	private Integer xrowSeq;
+	
+	private MultipartFile[] uploadFiles;
 	
 //	===================================
 	
@@ -147,6 +151,12 @@ public class MemberDto {
 	}
 	public void setXrowSeq(Integer xrowSeq) {
 		this.xrowSeq = xrowSeq;
+	}
+	public MultipartFile[] getUploadFiles() {
+		return uploadFiles;
+	}
+	public void setUploadFiles(MultipartFile[] uploadFiles) {
+		this.uploadFiles = uploadFiles;
 	}
 	
 }

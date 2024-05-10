@@ -13,8 +13,8 @@ public class CodeGroupDto {
 		
 	private Integer xcodeCount;
 	private Integer xrowSeq;
-
-//	for cache
+	
+	//	for cache
 	public static List<CodeGroupDto> cachedCodeGroupArrayList = new ArrayList<CodeGroupDto>();
 	
 //	-----------

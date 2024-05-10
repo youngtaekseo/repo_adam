@@ -72,34 +72,35 @@ public class CodeGroupController {
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmListAjax";
 	}
 	
-//	수정화면
+	//	수정화면
 	@RequestMapping(value = "/codeGroupSdmForm")
 	public String codeGroupSdmForm(CodeGroupDto dto, Model model) throws Exception {
 		model.addAttribute("item", service.selectOne(dto));	
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmForm";
 	}
 	
-//	등록화면
+	//	등록화면
 	@RequestMapping(value = "/codeGroupSdmCreate")
 	public String codeGroupSdmCreate() throws Exception {
 		return Commvar.PATH_CODE_GROUP + "codeGroupSdmCreate";
 	}	
 	
-//	그룹코드등록
+	//	그룹코드등록
 	@RequestMapping(value = "/codeGroupSdmInsert")
 	public String codeGroupSdmInsert(CodeGroupDto dto) throws Exception {
 		service.insert(dto);
+		
 		return "redirect:/codeGroupSdmList";
 	}
 	
-//	그룹코드수정
+	//	그룹코드수정
 	@RequestMapping(value = "/codeGroupSdmUpdate")
 	public String codeGroupSdmUpdate(CodeGroupDto dto) throws Exception {
 		service.update(dto);
 		return "redirect:/codeGroupSdmList";	
 	}	
 	
-//	그룹코드삭제
+	//	그룹코드삭제
 	@ResponseBody
 	@RequestMapping(value = "/codeGroupSdmDelete")
 	public Map<String, Object> codeGroupSdmDelete(CodeGroupDto dto) throws Exception {
