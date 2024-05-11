@@ -55,11 +55,11 @@ fnValidation = function() {
 // function(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
 fnValidType = function(obj, objValid, validText, validType) {
 	// 정규식 적용
-	// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+	// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수), 5(숫자콤마)
 	//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 	//			   20(비밀번호), 21(날짜), 22(이메일)
 	//             30(특수문자), 31(공백체크)
-	// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+	// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;  TYPE_ICM = 5;
 	// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 	// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 	// TYPE_SP   = 30, TYPE_NULL = 31;
