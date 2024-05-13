@@ -9,13 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.base.BaseController;
 import com.ucl.common.constants.Commvar;
 import com.ucl.common.util.UtilFunction;
+import com.ucl.infra.fileuploaded.FileUpLoadedDto;
 import com.ucl.infra.mail.SendGmail;
 
 import jakarta.servlet.http.HttpSession;
@@ -93,7 +93,7 @@ public class MemberController extends BaseController {
 	
 	// 관리자등록
 	@RequestMapping(value = "/memberSdmInsert")
-	public String memberSdmInsert(MemberDto dto) throws Exception {
+	public String memberSdmInsert(MemberDto dto, FileUpLoadedDto fDto) throws Exception {
 		
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
@@ -102,7 +102,7 @@ public class MemberController extends BaseController {
 		
 		//sendGmail.sendMail();
 		
-		// 메일전송
+		// 메일전송(Thread 이용)
 		//==========================================
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -111,15 +111,12 @@ public class MemberController extends BaseController {
 			}
 		});
 		
+		
 		thread.start();
 		//==========================================
 		
 		// 파일첨부
-		if(dto.getUploadFiles() != null) {
-			for(MultipartFile mf : dto.getUploadFiles()) {
-				System.out.println("mf.getOriginalFilename():" + mf.getOriginalFilename());
-			}
-		}
+		service.fileUploads(dto, fDto);
 				
 		return "redirect:/memberSdmList";		
 	}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ucl.infra.fileuploaded.FileUpLoadedDao">
+
+	<resultMap id="resultMapObj" type="com.ucl.infra.fileuploaded.FileUpLoadedDto"></resultMap>
+	
+	<insert id="insertFileUpLoaded">
+		INSERT INTO fileuploaded
+			( 
+			  category
+			, defaultNy
+			, sort
+			, pathName
+			, path
+			, originalName
+			, uuidName
+			, ext
+			, size
+			, delNy
+			, regDateTime
+			)
+		VALUES
+			(
+			  #{category}
+			, #{defaultNy}
+			, #{sort}
+			, #{pathName}
+			, #{path}
+			, #{originalName}
+			, #{uuidName}
+			, #{ext}
+			, #{size}
+			, 0
+			, now()
+			)
+	</insert>
+
+</mapper>
