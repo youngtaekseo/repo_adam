@@ -73,6 +73,8 @@
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
 		     , (SELECT COUNT(*) FROM memberpayment aa WHERE aa.mbrSeq = a.mbrSeq) xmbrCount
+		     , (SELECT originalName FROM fileuploaded aa WHERE aa.pseq = a.mbrSeq AND aa.defaultNy = 0) xmbrImgName
+		     , (SELECT pathName FROM fileuploaded aa WHERE aa.pseq = a.mbrSeq AND aa.defaultNy = 0) xmbrImgPathName
 		  FROM members a
 		 WHERE 1 = 1		
            AND a.mbrSeq = #{mbrSeq}	
@@ -137,6 +139,9 @@
 			, now()
 			, 0
 			)
+		<selectKey keyProperty="mbrSeq" resultType="String" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<update id="update">

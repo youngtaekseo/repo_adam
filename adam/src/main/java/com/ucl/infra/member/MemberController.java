@@ -99,6 +99,7 @@ public class MemberController extends BaseController {
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
 		service.insert(dto);
+		fDto.setPseq(dto.getMbrSeq());
 		
 		//sendGmail.sendMail();
 		
@@ -111,13 +112,12 @@ public class MemberController extends BaseController {
 			}
 		});
 		
-		
 		thread.start();
 		//==========================================
 		
 		// 파일첨부
 		service.fileUploads(dto, fDto);
-				
+		
 		return "redirect:/memberSdmList";		
 	}
 	

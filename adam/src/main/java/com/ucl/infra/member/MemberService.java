@@ -113,6 +113,7 @@ public class MemberService {
 				fDto.setUuidName(uuidName);
 				fDto.setExt(ext);
 				fDto.setSize(size);
+				fDto.setPseq(dto.getMbrSeq());
 				
 				upLoadedService.insertFileUpLoaded(fDto);
 				

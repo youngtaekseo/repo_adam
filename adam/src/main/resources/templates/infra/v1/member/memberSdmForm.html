@@ -28,8 +28,23 @@
 						<!-- 회원정보 순번 -->
 						<input id="mbrSeq" name="mbrSeq" th:value="${item.mbrSeq}" type="hidden">
 						
-						<!--  회원구분 -->
+						<div class="flex flex-col md:flex-row mt-4 mb-4">
+							<div class="md:h-auto md:w-1/2">
+				      			<label class="block text-sm">
+				        			사진첨부(등록파일:<span class="text-gray-700 dark:text-gray-400" th:text="${item.xmbrImgName}"></span>)
+				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+				            			id="uploadFiles" name="uploadFiles" type="file" multiple>
+				      			</label>
+				    		</div>
+				    		<div class="md:h-auto mr-3 md:w-1/2">
+								<img th:src = "${item.xmbrImgPathName}"
+					                width="100" height="100" aria-hidden="true"/>
+							</div>
+				    		<div class="md:h-auto md:w-1/2"></div>
+						</div>
+							
 				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
+							<!--  회원구분 -->
 				    		<div class="md:h-auto mr-3 md:w-1/2">
 				      			<label class="block text-sm">
 				      				<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
@@ -43,7 +58,7 @@
 				    		</div>
 				
 							<!--  회원명 -->
-				    		<div class="md:h-auto mr-3 md:w-1/2">
+				    		<div class="md:h-auto md:w-1/2">
 				      			<label class="block text-sm">
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">회원명</span>
@@ -57,7 +72,7 @@
 				      			</label>
 				    		</div>
 				    		
-				    		<div class="md:h-auto md:w-1/2"></div>
+				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
 						</div>
 						
 						<div class="flex flex-col md:flex-row mt-4 mb-4">

@@ -27,6 +27,8 @@ public class MemberDto {
 	private String  xmbrPwConfirm;
 	private String  xmbrPasswordPre;
 	private Integer xrowSeq;
+	private String  xmbrImgName;
+	private String  xmbrImgPathName;
 	
 	private MultipartFile[] uploadFiles;
 	
@@ -157,6 +159,18 @@ public class MemberDto {
 	}
 	public void setUploadFiles(MultipartFile[] uploadFiles) {
 		this.uploadFiles = uploadFiles;
+	}
+	public String getXmbrImgName() {
+		return xmbrImgName;
+	}
+	public void setXmbrImgName(String xmbrImgName) {
+		this.xmbrImgName = xmbrImgName;
+	}
+	public String getXmbrImgPathName() {
+		return xmbrImgPathName;
+	}
+	public void setXmbrImgPathName(String xmbrImgPathName) {
+		this.xmbrImgPathName = xmbrImgPathName;
 	}
 	
 }
