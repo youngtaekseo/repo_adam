@@ -13,7 +13,7 @@
 		<div th:replace="~{infra/v1/include/bodySdm :: bodyHeader('','회원관리')}"></div>
 
         <main class="h-full pb-16 overflow-y-auto">
-			<form name="form" id="form" method="post" autocomplete="off">
+			<form name="form" id="form" method="post" autocomplete="off" enctype="multipart/form-data">
 				<div class="container px-6 mx-auto grid">
 					<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 				    	<a class="inline-flex items-center w-full">
@@ -23,23 +23,28 @@
 							&nbsp;회원수정
 				    	</a>
 					</h2>
-			
+					<div th:if="${item.xmbrImgPathName != null}">
+						<img th:src = "${item.xmbrImgPathName}"
+			                style="position: absolute;
+								   top: 190px;
+								   right: 55px;
+								   width: 200px;
+								   height: 200px;
+								   border: 3px solid purple"/><!-- #73AD21;-->
+					</div>
 					<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
 						<!-- 회원정보 순번 -->
 						<input id="mbrSeq" name="mbrSeq" th:value="${item.mbrSeq}" type="hidden">
 						
 						<div class="flex flex-col md:flex-row mt-4 mb-4">
-							<div class="md:h-auto md:w-1/2">
+							<div class="md:h-auto mr-3 md:w-1/2">
 				      			<label class="block text-sm">
-				        			사진첨부(등록파일:<span class="text-gray-700 dark:text-gray-400" th:text="${item.xmbrImgName}"></span>)
+				        			<span class="text-gray-700 dark:text-gray-400">사진첨부</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				            			id="uploadFiles" name="uploadFiles" type="file" multiple>
 				      			</label>
 				    		</div>
-				    		<div class="md:h-auto mr-3 md:w-1/2">
-								<img th:src = "${item.xmbrImgPathName}"
-					                width="100" height="100" aria-hidden="true"/>
-							</div>
+				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
 				    		<div class="md:h-auto md:w-1/2"></div>
 						</div>
 							
@@ -389,7 +394,7 @@
 		// controller 호출
 		fnCallController = function() {
 			if(!fnValidation()) {return false;};
-			
+
 			// 저장
 	       	form.action = goUrlSdmUpdate;
 	       	form.submit();					

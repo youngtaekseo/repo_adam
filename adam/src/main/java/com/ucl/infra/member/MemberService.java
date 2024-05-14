@@ -75,51 +75,54 @@ public class MemberService {
 	// 파일업로드
 	public int fileUploads(MemberDto dto, FileUpLoadedDto fDto) throws Exception {
 		int index = 0;
-		int sort;
-		long size;
+		int newSeq;
+		String defaultNy;
+		
+		// 회원번호
+		fDto.setPseq(dto.getMbrSeq());
 		
 		for(MultipartFile multipartFile : dto.getUploadFiles()) {
 			if(!multipartFile.isEmpty()) {
-				ObjectMetadata metadata = new ObjectMetadata();
-				size = multipartFile.getSize(); 
-				metadata.setContentLength(size);
-				metadata.setContentType(multipartFile.getContentType());
+				String originalName = multipartFile.getOriginalFilename();
+				String ext = originalName.substring(originalName.lastIndexOf(".") + 1); // 파일 이름에서 확장자 추출하기	
+				String uuidName = UUID.randomUUID().toString()+"."+ext;
 				
-				String uuidName = UUID.randomUUID().toString();
-				
-				amazonS3Client.putObject(bucket, uuidName, multipartFile.getInputStream(), metadata);
-				String pathName = amazonS3Client.getUrl(bucket, uuidName).toString();
-				
-				String category = "1";
-				String defaultNy;
 				if(index == 0) {
 					defaultNy = "0";
 				} else {
 					defaultNy = "1";
 				}
-				sort = index;
-				String path = pathName.replaceAll("/"+uuidName, "");
-				String originalName = multipartFile.getOriginalFilename();
 				
-			    // 파일 이름에서 확장자 추출하기
-				String ext = originalName.substring(originalName.lastIndexOf(".") + 1);
+				ObjectMetadata metadata = new ObjectMetadata();
+				metadata.setContentLength(multipartFile.getSize());
+				metadata.setContentType(multipartFile.getContentType());
+				amazonS3Client.putObject(bucket, uuidName, multipartFile.getInputStream(), metadata);
+				String pathName = amazonS3Client.getUrl(bucket, uuidName).toString();
+				//String path = pathName.replaceAll("/"+uuidName, "");
 				
 				fDto.setCategory("1");
 				fDto.setDefaultNy(defaultNy);
-				fDto.setSort(sort);
+				fDto.setSort(index);
 				fDto.setPathName(pathName);
-				fDto.setPath(path);
+				fDto.setPath(pathName);
 				fDto.setOriginalName(originalName);
 				fDto.setUuidName(uuidName);
 				fDto.setExt(ext);
-				fDto.setSize(size);
-				fDto.setPseq(dto.getMbrSeq());
+				fDto.setSize(multipartFile.getSize());
 				
+				// 수정:대표이미값을 1로 변경
+				if(defaultNy == "0") {
+					upLoadedService.updateFileUpLoaded(fDto);
+				}
+				
+				// 저장
 				upLoadedService.insertFileUpLoaded(fDto);
 				
 				index++;
 			}
 		}
+		
+
 		
 		return 1;
 	}

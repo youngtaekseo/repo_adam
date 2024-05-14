@@ -140,8 +140,12 @@ public class MemberController extends BaseController {
 	
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")
-	public String memberSdmUpdate(MemberDto dto) throws Exception {
+	public String memberSdmUpdate(MemberDto dto, FileUpLoadedDto fDto) throws Exception {
 		service.update(dto);
+		
+		// 파일첨부
+		service.fileUploads(dto, fDto);
+		
 		return "redirect:/memberSdmList";	
 	}
 	

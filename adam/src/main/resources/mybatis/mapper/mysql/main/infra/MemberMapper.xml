@@ -72,11 +72,18 @@
 		     , a.mbrRegDt
 		     , a.mbrUdtDt
 		     , a.mbrDelNy
-		     , (SELECT COUNT(*) FROM memberpayment aa WHERE aa.mbrSeq = a.mbrSeq) xmbrCount
-		     , (SELECT originalName FROM fileuploaded aa WHERE aa.pseq = a.mbrSeq AND aa.defaultNy = 0) xmbrImgName
-		     , (SELECT pathName FROM fileuploaded aa WHERE aa.pseq = a.mbrSeq AND aa.defaultNy = 0) xmbrImgPathName
+		     , (SELECT COUNT(*)
+		          FROM memberpayment aa
+		         WHERE aa.mbrSeq = a.mbrSeq
+		       ) xmbrCount
+		     , b.originalName xmbrImgName
+		     , b.pathName xmbrImgPathName
 		  FROM members a
-		 WHERE 1 = 1		
+		       LEFT JOIN fileuploaded b
+		         ON b.pseq = a.mbrSeq
+		        AND b.category  = 1
+		        AND b.defaultNy = 0
+		 WHERE 1 = 1	
            AND a.mbrSeq = #{mbrSeq}	
 	</select>
 	

@@ -37,5 +37,13 @@
 			, now()
 			)
 	</insert>
+	
+	<update id="updateFileUpLoaded">
+		UPDATE fileuploaded
+		   SET defaultNy   = 1
+		     , regDateTime = now()
+		 WHERE pseq      = #{pseq}
+		   AND defaultNy = 0
+	</update>
 
 </mapper>

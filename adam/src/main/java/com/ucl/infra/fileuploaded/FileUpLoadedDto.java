@@ -3,22 +3,23 @@ package com.ucl.infra.fileuploaded;
 import java.sql.Date;
 
 public class FileUpLoadedDto {
-	private String seq;
-	private String category;
-	private String type;
-	private String defaultNy;
+	private String  seq;
+	private String  category;
+	private String  type;
+	private String  defaultNy;
 	private Integer sort;
-	private String pathName;
-	private String path;
-	private String originalName;
-	private String uuidName;
-	private String ext;
-	private Long size;
-	private String delNy;
-	private String pseq;
-	private String regIp;
-	private String regSeq;
-	private Date regDateTime;
+	private String  pathName;
+	private String  path;
+	private String  originalName;
+	private String  uuidName;
+	private String  ext;
+	private Long    size;
+	private String  delNy;
+	private String  pseq;
+	private String  regIp;
+	private String  regSeq;
+	private Date    regDateTime;
+	
 	public String getSeq() {
 		return seq;
 	}
