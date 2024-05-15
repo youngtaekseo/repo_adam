@@ -14,9 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.base.BaseController;
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.fileupload.FileUpLoadDto;
 import com.ucl.common.util.UtilFunction;
-import com.ucl.infra.fileuploaded.FileUpLoadedDto;
-import com.ucl.infra.mail.SendGmail;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,9 +24,6 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MemberService service;
-	
-	@Autowired
-	SendGmail sendGmail;
 	
 	// 검색조건 초기화
 	@RequestMapping(value = "/memberSdmListInit")
@@ -93,41 +89,20 @@ public class MemberController extends BaseController {
 	
 	// 관리자등록
 	@RequestMapping(value = "/memberSdmInsert")
-	public String memberSdmInsert(MemberDto dto, FileUpLoadedDto fDto) throws Exception {
-		
+	public String memberSdmInsert(MemberDto dto, FileUpLoadDto fDto) throws Exception {
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
-
-		service.insert(dto);
-		fDto.setPseq(dto.getMbrSeq());
-		
-		//sendGmail.sendMail();
-		
-		// 메일전송(Thread 이용)
-		//==========================================
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				sendGmail.sendMail(dto);
-			}
-		});
-		
-		thread.start();
-		//==========================================
-		
-		// 파일첨부
-		service.fileUploads(dto, fDto);
-		
+		service.insert(dto, fDto);		
 		return "redirect:/memberSdmList";		
 	}
 	
 	// 관리자 로그인화면에서 회원가입클릭 후 저장
 	@RequestMapping(value = "/memberSdmLoginInsert")
-	public String memberSdmLoginInsert(MemberDto dto) throws Exception {
+	public String memberSdmLoginInsert(MemberDto dto, FileUpLoadDto fDto) throws Exception {
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
-		service.insert(dto);
+		service.insert(dto, fDto);
 		return Commvar.PATH_LOGIN + "/loginSdm";		
 	}	
 	
@@ -140,12 +115,8 @@ public class MemberController extends BaseController {
 	
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")
-	public String memberSdmUpdate(MemberDto dto, FileUpLoadedDto fDto) throws Exception {
-		service.update(dto);
-		
-		// 파일첨부
-		service.fileUploads(dto, fDto);
-		
+	public String memberSdmUpdate(MemberDto dto, FileUpLoadDto fDto) throws Exception {
+		service.update(dto, fDto);
 		return "redirect:/memberSdmList";	
 	}
 	
@@ -371,11 +342,11 @@ public class MemberController extends BaseController {
 	
 	// 사용자등록
 	@RequestMapping(value = "/memberUsrInsert")
-	public String memberUsrInsert(MemberDto dto) throws Exception {
+	public String memberUsrInsert(MemberDto dto, FileUpLoadDto fDto) throws Exception {
 		// 비밀번호 암호화
 		dto.setMbrPassword(encodeBcrypt(dto.getMbrPassword(), 10));
 
-		service.insert(dto);
+		service.insert(dto, fDto);
 		return Commvar.PATH_LOGIN + "loginUsr";		
 	}
 	
@@ -391,8 +362,8 @@ public class MemberController extends BaseController {
 	
 	// 사용자수정
 	@RequestMapping(value = "/memberUsrUpdate")
-	public String memberUsrUpdate(MemberDto dto) throws Exception {
-		service.update(dto);
+	public String memberUsrUpdate(MemberDto dto, FileUpLoadDto fDto) throws Exception {
+		service.update(dto, fDto);
 		return "redirect:/indexUsr";		
 	}	
 	

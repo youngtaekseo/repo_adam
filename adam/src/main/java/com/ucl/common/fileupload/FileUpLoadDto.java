@@ -1,8 +1,8 @@
-package com.ucl.infra.fileuploaded;
+package com.ucl.common.fileupload;
 
 import java.sql.Date;
 
-public class FileUpLoadedDto {
+public class FileUpLoadDto {
 	private String  seq;
 	private String  category;
 	private String  type;

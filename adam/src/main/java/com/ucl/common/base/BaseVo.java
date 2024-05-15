@@ -33,8 +33,7 @@ public class BaseVo {
 	private int		pgOffset;         // 얼만큼 끊어서 가져올 것인가.
 	
 	private String 	uri;
-
-
+	
 	// list
 	//=========================================================================	
 	public Integer getShDelNy() {
@@ -222,6 +221,6 @@ public class BaseVo {
 	
 	public void setPgPage(int pgPage) {
 		this.pgPage = pgPage;
-	}	
+	}
 	
 }

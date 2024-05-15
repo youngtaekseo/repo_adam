@@ -2,7 +2,9 @@ package com.ucl.infra.product;
 
 import java.util.Date;
 
-public class ProductDto {
+import com.ucl.common.base.BaseDto;
+
+public class ProductDto extends BaseDto {
 	private String  pdtSeq;
 	private Integer pdtTypeCd;
 	private Integer pdtBrandCd;

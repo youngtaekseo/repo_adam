@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ucl.infra.fileuploaded.FileUpLoadedDao">
+<mapper namespace="com.ucl.common.fileupload.FileUpLoadDao">
 
-	<resultMap id="resultMapObj" type="com.ucl.infra.fileuploaded.FileUpLoadedDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.ucl.common.fileupload.FileUpLoadDto"></resultMap>
 	
-	<insert id="insertFileUpLoaded">
+	<insert id="insertFileUpLoad">
 		INSERT INTO fileuploaded
 			( 
 			  category
@@ -38,11 +38,12 @@
 			)
 	</insert>
 	
-	<update id="updateFileUpLoaded">
+	<update id="updateFileUpLoad">
 		UPDATE fileuploaded
 		   SET defaultNy   = 1
 		     , regDateTime = now()
-		 WHERE pseq      = #{pseq}
+		 WHERE category  = #{category}
+		   AND pseq      = #{pseq}
 		   AND defaultNy = 0
 	</update>
 

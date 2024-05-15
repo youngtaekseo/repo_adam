@@ -5,9 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ucl.common.base.BaseService;
+import com.ucl.common.fileupload.FileUpLoadDto;
+
 @Service
 public class ProductService {
-
+	@Autowired
+	BaseService baseService;
+	
 	@Autowired
 	ProductDao dao;
 	
@@ -22,13 +27,34 @@ public class ProductService {
 	}
 	
 	// 등록
-	public int insert(ProductDto dto) {
+	public int insert(ProductDto dto, FileUpLoadDto fDto) throws Exception {
+		/*
+		dao.insert(dto);
+		
+		fDto.setCategory("1");
+		fDto.setDefaultNy("0");
+		fDto.setSort(0);
+		fDto.setPseq(dto.getPdtSeq());
+
+		// 파일첨부
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto);
+		*/
 		return dao.insert(dto);
 	}
 	
 	// 수정
-	public int update(ProductDto dto) {
-		return dao.update(dto);
+	public int update(ProductDto dto, FileUpLoadDto fDto) throws Exception {
+		dao.update(dto);
+		
+		fDto.setCategory("1");
+		fDto.setDefaultNy("0");
+		fDto.setSort(0);
+		fDto.setPseq(dto.getPdtSeq());
+
+		// 파일첨부
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto);
+		
+		return 0; 
 	}
 	
 	// 삭제

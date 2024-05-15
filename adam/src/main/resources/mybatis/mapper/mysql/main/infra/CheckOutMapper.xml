@@ -21,8 +21,8 @@
 		     , d.pdtYear
 		     , d.pdtMonth
 		     , d.pdtRunKm
-		     , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImg1
-			 , MAX(CASE WHEN j.pdiBack = 2 THEN j.pdiUrl END) xpdtImg2	
+		     , MAX(CASE WHEN j.sort = 0 THEN j.path END) xpdtImg1
+			 , MAX(CASE WHEN j.sort = 1 THEN j.path END) xpdtImg2	
 	</sql>
 	
 	<sql id="selectCommonProductFrom">
@@ -34,8 +34,8 @@
 		         ON g.cdcSeq = d.pdtAccidentCd
 		       JOIN code h
 		         ON h.cdcSeq = d.pdtColorCd
-		       JOIN productimg j
-		         ON j.pdtSeq = d.pdtSeq
+		       JOIN fileuploaded j
+		         ON j.pSeq = d.pdtSeq
 	</sql>
 	
 	<sql id="selectCommonProductGroup">

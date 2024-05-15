@@ -153,10 +153,10 @@
 				     , g.cdcName xpdtColorName 
 				     , a.pdtPrice
 				     , a.pdtRecommendCd
-				     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImg1
-				     , MAX(CASE WHEN b.pdiBack = 2 THEN b.pdiUrl END) xpdtImg2
-				     , MAX(CASE WHEN b.pdiBack = 3 THEN b.pdiUrl END) xpdtImg3
-				     , MAX(CASE WHEN b.pdiBack = 4 THEN b.pdiUrl END) xpdtImg4
+				     , MAX(CASE WHEN b.sort = 0 THEN b.path END) xpdtImg1
+				     , MAX(CASE WHEN b.sort = 1 THEN b.path END) xpdtImg2
+				     , MAX(CASE WHEN b.sort = 2 THEN b.path END) xpdtImg3
+				     , MAX(CASE WHEN b.sort = 3 THEN b.path END) xpdtImg4
 		             , IFNULL(c.xpdtStar ,0) xpdtStar 
 		             , IFNULL(c.xpdtCount,0) xpdtCount
 		               <choose>
@@ -164,8 +164,8 @@
 		             		<otherwise>, null xwshSeq</otherwise>
 		               </choose>
 				  FROM product a
-				       LEFT JOIN productimg b
-				              ON b.pdtSeq = a.pdtSeq
+				       LEFT JOIN fileuploaded b
+				              ON b.pSeq = a.pdtSeq
 		               LEFT JOIN (SELECT pdtSeq
 		                               , ROUND(AVG(rvwStar)) xpdtStar
 		                               , COUNT(*)            xpdtCount
@@ -283,10 +283,10 @@
 		     , g.cdcName xpdtColorName 
 		     , a.pdtPrice
 		     , a.pdtRecommendCd
-		     , MAX(CASE WHEN b.pdiBack = 1 THEN b.pdiUrl END) xpdtImg1
-		     , MAX(CASE WHEN b.pdiBack = 2 THEN b.pdiUrl END) xpdtImg2
-		     , MAX(CASE WHEN b.pdiBack = 3 THEN b.pdiUrl END) xpdtImg3
-		     , MAX(CASE WHEN b.pdiBack = 4 THEN b.pdiUrl END) xpdtImg4
+		     , MAX(CASE WHEN b.sort = 0 THEN b.path END) xpdtImg1
+		     , MAX(CASE WHEN b.sort = 1 THEN b.path END) xpdtImg2
+		     , MAX(CASE WHEN b.sort = 2 THEN b.path END) xpdtImg3
+		     , MAX(CASE WHEN b.sort = 3 THEN b.path END) xpdtImg4
              , IFNULL(c.xpdtStar ,0) xpdtStar 
              , IFNULL(c.xpdtCount,0) xpdtCount
                <choose>
@@ -294,8 +294,8 @@
              		<otherwise>, null xwshSeq</otherwise>
                </choose>
 		  FROM product a
-		       LEFT JOIN productimg b
-		              ON b.pdtSeq = a.pdtSeq
+		       LEFT JOIN fileuploaded b
+		              ON b.pSeq = a.pdtSeq
                LEFT JOIN (SELECT pdtSeq
                                , ROUND(AVG(rvwStar)) xpdtStar
                                , COUNT(*)            xpdtCount
@@ -354,10 +354,10 @@
 		     , d.pdtYear
 		     , d.pdtMonth
 		     , d.pdtRunKm
-		     , MAX(CASE WHEN j.pdiBack = 1 THEN j.pdiUrl END) xpdtImg1
-			 , MAX(CASE WHEN j.pdiBack = 2 THEN j.pdiUrl END) xpdtImg2	
-			 , MAX(CASE WHEN j.pdiBack = 3 THEN j.pdiUrl END) xpdtImg3	
-			 , MAX(CASE WHEN j.pdiBack = 4 THEN j.pdiUrl END) xpdtImg4	
+		     , MAX(CASE WHEN j.sort = 0 THEN j.path END) xpdtImg1
+			 , MAX(CASE WHEN j.sort = 1 THEN j.path END) xpdtImg2	
+			 , MAX(CASE WHEN j.sort = 2 THEN j.path END) xpdtImg3	
+			 , MAX(CASE WHEN j.sort = 3 THEN j.path END) xpdtImg4	
 	</sql>
 	
 	<sql id="selectCommonProductFrom">
@@ -369,8 +369,8 @@
 		         ON g.cdcSeq = d.pdtAccidentCd
 		       JOIN code h
 		         ON h.cdcSeq = d.pdtColorCd
-		       JOIN productimg j
-		         ON j.pdtSeq = d.pdtSeq
+		       JOIN fileuploaded j
+		         ON j.pSeq = d.pdtSeq
 	</sql>
 	
 	<sql id="selectCommonProductGroup">

@@ -2,9 +2,9 @@ package com.ucl.infra.member;
 
 import java.util.Date;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.ucl.common.base.BaseDto;
 
-public class MemberDto {
+public class MemberDto extends BaseDto {
 	
 	private String  mbrSeq;
 	private Integer mbrType; // 1:관리자, 2:사용자
@@ -30,7 +30,7 @@ public class MemberDto {
 	private String  xmbrImgName;
 	private String  xmbrImgPathName;
 	
-	private MultipartFile[] uploadFiles;
+	//private MultipartFile[] uploadFiles;
 	
 //	===================================
 	
@@ -154,12 +154,14 @@ public class MemberDto {
 	public void setXrowSeq(Integer xrowSeq) {
 		this.xrowSeq = xrowSeq;
 	}
+	/*
 	public MultipartFile[] getUploadFiles() {
 		return uploadFiles;
 	}
 	public void setUploadFiles(MultipartFile[] uploadFiles) {
 		this.uploadFiles = uploadFiles;
 	}
+	*/
 	public String getXmbrImgName() {
 		return xmbrImgName;
 	}

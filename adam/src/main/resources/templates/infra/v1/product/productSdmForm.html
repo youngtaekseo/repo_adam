@@ -13,7 +13,7 @@
 		<div th:replace="~{infra/v1/include/bodySdm :: bodyHeader('','상품관리')}"></div>
 
         <main class="h-full pb-16 overflow-y-auto">
-			<form name="form" id="form" method="get" autocomplete="off">
+			<form name="form" id="form" method="post" autocomplete="off" enctype="multipart/form-data">
 				<div class="container px-6 mx-auto grid">
 					<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
 				    	<a class="inline-flex items-center w-full">
@@ -54,7 +54,7 @@
 				      			</label>
 				    		</div>
 				    		
-				    		<div class="md:h-auto mr-3 md:w-1/2">
+				    		<div class="md:h-auto md:w-1/2">
 				      			<label class="block text-sm">
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">차량명</span>
@@ -92,7 +92,7 @@
 				      			</label>
 				    		</div>
 
-				    		<div class="md:h-auto mr-3 md:w-1/2">
+				    		<div class="md:h-auto md:w-1/2">
 				      			<label class="block text-sm">
 				        			<span class="text-gray-700 dark:text-gray-400">추천여부</span>
 			                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -150,7 +150,7 @@
 				      			</label>
 				    		</div>
 				
-				    		<div class="md:h-auto mr-3 md:w-1/2">
+				    		<div class="md:h-auto md:w-1/2">
 				      			<label class="block text-sm">
 				        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 				        			<span class="text-gray-700 dark:text-gray-400">차량가액</span>
@@ -165,6 +165,18 @@
 				      			</label>
 				    		</div>
 				  		</div>
+				  		
+				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
+							<div class="md:h-auto mr-3 md:w-1/2">
+			      				<label class="block text-sm">
+			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+		                        		type="file" id="uploadFiles" name="uploadFiles" multiple>
+			      				</label>
+				    		</div>
+				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
+				    		<div class="md:h-auto md:w-1/2"></div>
+						</div>
 				
 						<!-- 저장버튼, 회원조회버튼 -->
 						<div class="flex flex-col md:flex-row mt-4">
@@ -203,7 +215,7 @@
 								</a>
 								
 								<!-- 삭제버튼 -->
-								<button th:if="${item.xpdtCount} == 0" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red mr-3"
+								<button th:if="${item.xpdtCount} == 0" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
 									id="btnDelete" name="btnDelete" aria-label="삭제버튼"
 									@click="openModal"
 									type="button" onclick="fnBtnDelete();">
@@ -288,7 +300,32 @@
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
+			
+			// 파일첨부
+			/*
+			let uploadFile = document.querySelector("#uploadFile1");
+			if(uploadFile != null) {
+				fnFileUpload(uploadFile, "0");
+			}
+			*/
 		};
+		
+		// 파일첨부
+		function fnFileUpload(obj, defaultNy) {
+			$.ajax({
+				async: true
+				, cache: false
+				, type: "post"
+				, data:{"pdtSeq":$("#pdtSeq").val(), "xpdtImg1":defaultNy, "uploadFile":obj}
+				, url:"/productFileUpload"
+				, success: function(response) {
+					fnModalCaptionChange(0,"성공", "파일저장 성공");
+				}
+				, error : function(jqXHR, textStatus, errorThrown){
+					fnModalCaptionChange(0,"오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
 		
     	// 삭제버튼
 		function fnBtnDelete() {
@@ -368,8 +405,6 @@
 		// controller 호출
 		fnCallController = function() {
 			if(!fnValidation()) {return false;};
-			
-			pdtPriceTmp
 			
 			// 저장
 	       	form.action = goUrlSdmUpdate;

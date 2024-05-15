@@ -1,7 +1,9 @@
 package com.ucl.common.base;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class BaseController {
 	// 암호화 처리
 	public String encodeBcrypt(String planeText, int strength) {
@@ -13,4 +15,6 @@ public class BaseController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(strength);
 		return passwordEncoder.matches(planeText, hashValue);
 	}
+	
+
 }

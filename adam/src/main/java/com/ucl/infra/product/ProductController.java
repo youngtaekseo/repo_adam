@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ucl.common.base.BaseService;
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.fileupload.FileUpLoadDto;
 import com.ucl.common.util.UtilDateTime;
 import com.ucl.common.util.UtilFunction;
 import com.ucl.infra.code.CodeService;
@@ -25,7 +27,9 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProductController {
-
+	@Autowired
+	BaseService baseService;
+	
 	@Autowired
 	ProductService service;
 	
@@ -38,6 +42,32 @@ public class ProductController {
 	@Autowired
 	CodeService codeService;
 	
+	// 파일첨부
+	@ResponseBody
+	@RequestMapping(value = "/productFileUpload")
+	public Map<String, Object> productFileUpload(ProductDto dto, FileUpLoadDto fdto) throws Exception {
+		System.out.println("productFileUpload==================================================="+dto.getPdtSeq());
+		fdto.setCategory("1");
+		fdto.setPseq(dto.getPdtSeq());
+		
+		if(dto.getXpdtImg1() != null) {
+			fdto.setSort(0);
+		} else if(dto.getXpdtImg2() != null) {
+			fdto.setSort(1);
+		} else if(dto.getXpdtImg3() != null) {
+			fdto.setSort(2);
+		} else if(dto.getXpdtImg4() != null) {
+			fdto.setSort(3);
+		}  
+		
+		System.out.println("dto.getXpdtImg1():============================================================"+dto.getXpdtImg1());
+		
+		baseService.fileUploadS3(dto.getUploadFile(), fdto);
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("rt", "success");
+		return returnMap;
+	}	
 
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")
@@ -88,15 +118,15 @@ public class ProductController {
 
 	// 입력
 	@RequestMapping(value = "/productSdmInsert")
-	public String productSdmInsert(ProductDto dto) throws Exception {
-		service.insert(dto);
+	public String productSdmInsert(ProductDto dto, FileUpLoadDto fDto) throws Exception {
+		service.insert(dto, fDto);
 		return "redirect:/productSdmList";
 	}
 
 	// 수정
 	@RequestMapping(value = "/productSdmUpdate")
-	public String productSdmUpdate(ProductDto dto) throws Exception {
-		service.update(dto);
+	public String productSdmUpdate(ProductDto dto, FileUpLoadDto fDto) throws Exception {
+		service.update(dto, fDto);
 		return "redirect:/productSdmList";
 	}
 
