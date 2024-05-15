@@ -28,18 +28,14 @@ public class ProductService {
 	
 	// 등록
 	public int insert(ProductDto dto, FileUpLoadDto fDto) throws Exception {
-		/*
 		dao.insert(dto);
 		
 		fDto.setCategory("1");
-		fDto.setDefaultNy("0");
-		fDto.setSort(0);
 		fDto.setPseq(dto.getPdtSeq());
 
 		// 파일첨부
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto);
-		*/
-		return dao.insert(dto);
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		return 0;
 	}
 	
 	// 수정
@@ -47,12 +43,10 @@ public class ProductService {
 		dao.update(dto);
 		
 		fDto.setCategory("1");
-		fDto.setDefaultNy("0");
-		fDto.setSort(0);
 		fDto.setPseq(dto.getPdtSeq());
 
 		// 파일첨부
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto);
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
 		
 		return 0; 
 	}

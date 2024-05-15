@@ -1,5 +1,6 @@
 package com.ucl.common.base;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class BaseService {
 	}
 	
 	// 여러파일 업로드(AWS S3)
-	public void fileUploadsS3(MultipartFile[] multipartFiles, FileUpLoadDto dto) throws Exception {
+	public void fileUploadsS3(MultipartFile[] multipartFiles, FileUpLoadDto dto, FileUpLoadDto fDto) throws Exception {
 		String originalName;
 		String ext;
 		String uuidName;
@@ -63,15 +64,41 @@ public class BaseService {
 		
 		for(int i = 0; i < multipartFiles.length; i++) {
 			if(!multipartFiles[i].isEmpty()) {
-				originalName = multipartFiles[i].getOriginalFilename();
-				ext = originalName.substring(originalName.lastIndexOf(".") + 1); // 파일 이름에서 확장자 추출하기	
-				uuidName = UUID.randomUUID().toString()+"."+ext;
 				
 				if(i == 0) {
 					defaultNy = "0";
+					
+					if(dto.getCategory() == "0") {
+						// 회원이미지
+						// 수정:대표이미값을 1로 변경
+						fileUpLoadService.updateFileUpLoad(dto);
+					} else if(dto.getCategory() == "1") {
+						// 상품이미지
+						
+						// 키조회
+						List<FileUpLoadDto> list = fileUpLoadService.selectListUuidName(fDto);
+						// 상품이미지 삭제
+						for(FileUpLoadDto dto2 : list) {
+							fDto.setUuidName(dto2.getUuidName());
+							fileUpLoadService.deleteFileUpLoad(fDto);
+						}
+						
+						/*
+						if(fDto != null) {
+							// AWS S3 삭제
+							amazonS3Client.deleteObject(bucket, fDto.getUuidName());							
+							// 상품이미지 삭제
+							fileUpLoadService.deleteFileUpLoad(dto);							
+						}
+						*/
+					}					
 				} else {
 					defaultNy = "1";
 				}	
+/*
+				originalName = multipartFiles[i].getOriginalFilename();
+				ext = originalName.substring(originalName.lastIndexOf(".") + 1); // 파일 이름에서 확장자 추출하기	
+				uuidName = UUID.randomUUID().toString()+"."+ext;
 				
 				ObjectMetadata metadata = new ObjectMetadata();
 				metadata.setContentLength(multipartFiles[i].getSize());
@@ -88,13 +115,9 @@ public class BaseService {
 				dto.setExt(ext);
 				dto.setSize(multipartFiles[i].getSize());
 				
-				// 수정:대표이미값을 1로 변경
-				if(defaultNy == "0") {
-					fileUpLoadService.updateFileUpLoad(dto);
-				}
-				
 				// 저장
 				fileUpLoadService.insertFileUpLoad(dto);	
+*/				
 			}
 		}
 	}	

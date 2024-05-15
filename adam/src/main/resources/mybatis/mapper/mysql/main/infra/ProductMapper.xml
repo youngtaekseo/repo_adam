@@ -489,6 +489,9 @@
 			, now()
 			, 0
 			)
+		<selectKey keyProperty="pdtSeq" resultType="String" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<update id="update">

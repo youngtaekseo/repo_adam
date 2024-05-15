@@ -37,7 +37,7 @@
 			, now()
 			)
 	</insert>
-	
+
 	<update id="updateFileUpLoad">
 		UPDATE fileuploaded
 		   SET defaultNy   = 1
@@ -46,5 +46,17 @@
 		   AND pseq      = #{pseq}
 		   AND defaultNy = 0
 	</update>
+		
+	<delete id="deleteFileUpLoad">
+		DELETE FROM fileuploaded
+		 WHERE category = #{category}
+		   AND pseq     = #{pseq}
+	</delete>
+	
+	<select id="selectListUuidName" resultMap="resultMapObj">
+		SELECT uuidName
+		  FROM fileuploaded
+		 WHERE pSeq = #{pseq}
+	</select>
 
 </mapper>
