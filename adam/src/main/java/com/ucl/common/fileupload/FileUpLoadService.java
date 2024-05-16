@@ -15,9 +15,14 @@ public class FileUpLoadService {
 		return dao.insertFileUpLoad(dto);
 	}
 	
-	// 파일업로드 수정
-	public int updateFileUpLoad(FileUpLoadDto dto) {
-		return dao.updateFileUpLoad(dto);
+	// 대표수정
+	public int updateDefaultNy(FileUpLoadDto dto) {
+		return dao.updateDefaultNy(dto);
+	};
+	
+	// 파일정보수정
+	public int updateUuidName(FileUpLoadDto dto) {
+		return dao.updateUuidName(dto);
 	};
 	
 	// 파일업로드 삭제

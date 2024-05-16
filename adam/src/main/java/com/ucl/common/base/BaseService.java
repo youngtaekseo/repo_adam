@@ -36,7 +36,7 @@ public class BaseService {
 			metadata.setContentType(multipartFile.getContentType());
 			amazonS3Client.putObject(bucket, uuidName, multipartFile.getInputStream(), metadata);
 			String pathName = amazonS3Client.getUrl(bucket, uuidName).toString();
-			
+
 			dto.setPathName(pathName);
 			dto.setPath(pathName);
 			dto.setOriginalName(originalName);
@@ -45,10 +45,14 @@ public class BaseService {
 			dto.setSize(multipartFile.getSize());
 			
 			// 수정:대표이미값을 1로 변경
-			if(dto.getDefaultNy() == "0") {
-				fileUpLoadService.updateFileUpLoad(dto);				
+			if(dto.getCategory() == "0") { // 회원이미지
+				if(dto.getDefaultNy() == "0") {
+					fileUpLoadService.updateDefaultNy(dto);				
+				}
+			} else if(dto.getCategory() == "1") { // 상품이미지
+				fileUpLoadService.updateUuidName(dto);
 			}
-			
+						
 			// 저장
 			fileUpLoadService.insertFileUpLoad(dto);			
 		}
@@ -68,34 +72,25 @@ public class BaseService {
 				if(i == 0) {
 					defaultNy = "0";
 					
-					if(dto.getCategory() == "0") {
-						// 회원이미지
+					if(dto.getCategory() == "0") { // 회원이미지
 						// 수정:대표이미값을 1로 변경
-						fileUpLoadService.updateFileUpLoad(dto);
-					} else if(dto.getCategory() == "1") {
-						// 상품이미지
-						
+						fileUpLoadService.updateDefaultNy(dto);
+					} else if(dto.getCategory() == "1") { // 상품이미지
 						// 키조회
 						List<FileUpLoadDto> list = fileUpLoadService.selectListUuidName(fDto);
 						// 상품이미지 삭제
 						for(FileUpLoadDto dto2 : list) {
+							// AWS S3 삭제
+							amazonS3Client.deleteObject(bucket, dto2.getUuidName());
+							// DB 삭제
 							fDto.setUuidName(dto2.getUuidName());
 							fileUpLoadService.deleteFileUpLoad(fDto);
 						}
-						
-						/*
-						if(fDto != null) {
-							// AWS S3 삭제
-							amazonS3Client.deleteObject(bucket, fDto.getUuidName());							
-							// 상품이미지 삭제
-							fileUpLoadService.deleteFileUpLoad(dto);							
-						}
-						*/
 					}					
 				} else {
 					defaultNy = "1";
 				}	
-/*
+
 				originalName = multipartFiles[i].getOriginalFilename();
 				ext = originalName.substring(originalName.lastIndexOf(".") + 1); // 파일 이름에서 확장자 추출하기	
 				uuidName = UUID.randomUUID().toString()+"."+ext;
@@ -116,8 +111,7 @@ public class BaseService {
 				dto.setSize(multipartFiles[i].getSize());
 				
 				// 저장
-				fileUpLoadService.insertFileUpLoad(dto);	
-*/				
+				fileUpLoadService.insertFileUpLoad(dto);				
 			}
 		}
 	}	

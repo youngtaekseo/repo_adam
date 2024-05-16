@@ -33,8 +33,21 @@ public class ProductService {
 		fDto.setCategory("1");
 		fDto.setPseq(dto.getPdtSeq());
 
-		// 파일첨부
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		// 파일첨부:4개파일을 멀티로 선택했을 경우
+		//baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		
+		// 파일첨부:4개파일 각각 선택했을 경우
+		fDto.setDefaultNy("0");
+		fDto.setSort(0);
+		baseService.fileUploadS3(dto.getUploadFile1(), fDto);
+		fDto.setDefaultNy("1");
+		fDto.setSort(1);
+		baseService.fileUploadS3(dto.getUploadFile2(), fDto);
+		fDto.setSort(2);
+		baseService.fileUploadS3(dto.getUploadFile3(), fDto);
+		fDto.setSort(3);
+		baseService.fileUploadS3(dto.getUploadFile4(), fDto);
+		
 		return 0;
 	}
 	
@@ -45,8 +58,20 @@ public class ProductService {
 		fDto.setCategory("1");
 		fDto.setPseq(dto.getPdtSeq());
 
-		// 파일첨부
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		// 파일첨부:4개파일을 멀티로 선택했을 경우
+		//baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		
+		// 파일첨부:4개파일 각각 선택했을 경우
+		fDto.setDefaultNy("0");
+		fDto.setSort(0);
+		baseService.fileUploadS3(dto.getUploadFile1(), fDto);
+		fDto.setDefaultNy("1");
+		fDto.setSort(1);
+		baseService.fileUploadS3(dto.getUploadFile2(), fDto);
+		fDto.setSort(2);
+		baseService.fileUploadS3(dto.getUploadFile3(), fDto);
+		fDto.setSort(3);
+		baseService.fileUploadS3(dto.getUploadFile4(), fDto);
 		
 		return 0; 
 	}

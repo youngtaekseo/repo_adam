@@ -75,6 +75,8 @@ public class MemberService {
 		dao.update(dto);
 		
 		fDto.setCategory("1");
+		fDto.setDefaultNy("0");
+		fDto.setSort(0);
 		fDto.setPseq(dto.getMbrSeq());		
 		
 		// 파일첨부

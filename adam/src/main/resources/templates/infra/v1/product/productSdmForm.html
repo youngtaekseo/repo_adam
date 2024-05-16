@@ -169,13 +169,32 @@
 				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
 							<div class="md:h-auto mr-3 md:w-1/2">
 			      				<label class="block text-sm">
-			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+			        				<span class="text-gray-700 dark:text-gray-400">대표상품이미지</span>
 		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFiles" name="uploadFiles" multiple>
+		                        		type="file" id="uploadFile1" name="uploadFile1">
 			      				</label>
 				    		</div>
-				    		<div class="md:h-auto mr-3 md:w-1/2"></div>
-				    		<div class="md:h-auto md:w-1/2"></div>
+							<div class="md:h-auto mr-3 md:w-1/2">
+			      				<label class="block text-sm">
+			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+		                        		type="file" id="uploadFile2" name="uploadFile2">
+			      				</label>
+				    		</div>
+							<div class="md:h-auto mr-3 md:w-1/2">
+			      				<label class="block text-sm">
+			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+		                        		type="file" id="uploadFile3" name="uploadFile3">
+			      				</label>
+				    		</div>
+							<div class="md:h-auto md:w-1/2">
+			      				<label class="block text-sm">
+			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+		                        		type="file" id="uploadFile4" name="uploadFile4">
+			      				</label>
+				    		</div>
 						</div>
 				
 						<!-- 저장버튼, 회원조회버튼 -->
@@ -298,32 +317,7 @@
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
-			
-			// 파일첨부
-			/*
-			let uploadFile = document.querySelector("#uploadFile1");
-			if(uploadFile != null) {
-				fnFileUpload(uploadFile, "0");
-			}
-			*/
 		};
-		
-		// 파일첨부
-		function fnFileUpload(obj, defaultNy) {
-			$.ajax({
-				async: true
-				, cache: false
-				, type: "post"
-				, data:{"pdtSeq":$("#pdtSeq").val(), "xpdtImg1":defaultNy, "uploadFile":obj}
-				, url:"/productFileUpload"
-				, success: function(response) {
-					fnModalCaptionChange(0,"성공", "파일저장 성공");
-				}
-				, error : function(jqXHR, textStatus, errorThrown){
-					fnModalCaptionChange(0,"오류", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				}
-			});
-		}
 		
     	// 삭제버튼
 		function fnBtnDelete() {

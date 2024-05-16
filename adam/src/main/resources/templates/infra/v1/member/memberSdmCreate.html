@@ -55,7 +55,7 @@
 				      			<label class="block text-sm">
 				        			<span class="text-gray-700 dark:text-gray-400">사진첨부</span>
 				        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				            			id="uploadFiles" name="uploadFiles" type="file" multiple>
+				            			id="uploadFile" name="uploadFile" type="file">
 				      			</label>
 				    		</div>
 						</div>
@@ -404,7 +404,7 @@
 			// 저장
 			form.action = goUrlSdmInsert;
 			form.submit();
-		};	
+		};
 		
 		// 필수입력 확인
 	    fnValidationForm = function() {

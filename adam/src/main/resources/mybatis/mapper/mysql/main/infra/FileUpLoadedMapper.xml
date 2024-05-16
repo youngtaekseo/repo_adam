@@ -38,9 +38,18 @@
 			)
 	</insert>
 
-	<update id="updateFileUpLoad">
+	<update id="updateDefaultNy">
 		UPDATE fileuploaded
 		   SET defaultNy   = 1
+		     , regDateTime = now()
+		 WHERE category  = #{category}
+		   AND pseq      = #{pseq}
+		   AND defaultNy = 0
+	</update>
+
+	<update id="updateUuidName">
+		UPDATE fileuploaded
+		   SET uuidName   = #{uuidName}
 		     , regDateTime = now()
 		 WHERE category  = #{category}
 		   AND pseq      = #{pseq}
@@ -49,14 +58,14 @@
 		
 	<delete id="deleteFileUpLoad">
 		DELETE FROM fileuploaded
-		 WHERE category = #{category}
-		   AND pseq     = #{pseq}
+		 WHERE uuidName = #{uuidName}
 	</delete>
 	
 	<select id="selectListUuidName" resultMap="resultMapObj">
 		SELECT uuidName
 		  FROM fileuploaded
-		 WHERE pSeq = #{pseq}
+		 WHERE category = #{category}
+		   AND pseq     = #{pseq}
 	</select>
 
 </mapper>
