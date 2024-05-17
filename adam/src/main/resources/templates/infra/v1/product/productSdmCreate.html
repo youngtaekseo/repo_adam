@@ -161,29 +161,49 @@
 			      				<label class="block text-sm">
 			        				<span class="text-gray-700 dark:text-gray-400">대표상품이미지</span>
 		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile1" name="uploadFile1">
+		                        		type="file" id="uploadFile1" name="uploadFile1" accept="image/*" onchange="fnImgChange(this);"> <!--accept="image/*" 속성을 사용하여 이미지만 선택할 수 있도록 제한합니다.-->
 			      				</label>
+			      				<div class="image-container" id="imageContainer1" name="imageContainer1" style="display: none;">
+									<img id="img1" name="img1" src=""
+										style="width: 100%; height: 200px;"/>	  
+									<button class="close-button" id="closeButton1" name="closeButton1" onclick="fnImgCloseClick(this);">&times;</button>
+								</div>
 				    		</div>
 							<div class="md:h-auto mr-3 md:w-1/2">
 			      				<label class="block text-sm">
 			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
 		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile2" name="uploadFile2">
+		                        		type="file" id="uploadFile2" name="uploadFile2" accept="image/*" onchange="fnImgChange(this);"> <!--accept="image/*" 속성을 사용하여 이미지만 선택할 수 있도록 제한합니다.-->
 			      				</label>
+			      				<div class="image-container" id="imageContainer2" name="imageContainer2" style="display: none;">
+									<img id="img2" name="img2" src=""
+										style="width: 100%; height: 200px;"/>	 
+									<button class="close-button" id="closeButton2" name="closeButton2" onclick="fnImgCloseClick(this);">&times;</button> 
+								</div>
 				    		</div>
 							<div class="md:h-auto mr-3 md:w-1/2">
 			      				<label class="block text-sm">
 			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
 		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile3" name="uploadFile3">
+		                        		type="file" id="uploadFile3" name="uploadFile3" accept="image/*" onchange="fnImgChange(this);"> <!--accept="image/*" 속성을 사용하여 이미지만 선택할 수 있도록 제한합니다.-->
 			      				</label>
+			      				<div class="image-container" id="imageContainer3" name="imageContainer3" style="display: none;">
+									<img id="img3" name="img3" src=""
+										style="width: 100%; height: 200px;"/>
+									<button class="close-button" id="closeButton3" name="closeButton3" onclick="fnImgCloseClick(this);">&times;</button>	  
+								</div>
 				    		</div>
 							<div class="md:h-auto md:w-1/2">
 			      				<label class="block text-sm">
 			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
 		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile4" name="uploadFile4">
+		                        		type="file" id="uploadFile4" name="uploadFile4" accept="image/*" onchange="fnImgChange(this);"> <!--accept="image/*" 속성을 사용하여 이미지만 선택할 수 있도록 제한합니다.-->
 			      				</label>
+			      				<div class="image-container" id="imageContainer4" name="imageContainer4" style="display: none;">
+									<img id="img4" name="img4" src=""
+										style="width: 100%; height: 200px;"/>	
+									<button class="close-button" id="closeButton4" name="closeButton4" onclick="fnImgCloseClick(this);">&times;</button>  
+								</div>
 				    		</div>
 						</div>
 				
@@ -350,6 +370,80 @@
 		function fnGoBack() {
 			location.href = "/productSdmList";
 		} 	
+		
+		// 이미지선택
+		function fnImgChange(obj) {
+			let imagePreview;
+			let imageContainer;
+			
+			let file = obj.files[0]; // 선택된 첫 번째 파일
+			
+			switch(obj.name) {
+				case "uploadFile1" :
+					imagePreview = document.querySelector("#img1");
+					imageContainer = document.querySelector("#imageContainer1");
+					break;
+				case "uploadFile2" :
+					imagePreview = document.querySelector("#img2");
+					imageContainer = document.querySelector("#imageContainer2");
+					break;
+				case "uploadFile3" :
+					imagePreview = document.querySelector("#img3");
+					imageContainer = document.querySelector("#imageContainer3");
+					break;
+				case "uploadFile4" :
+					imagePreview = document.querySelector("#img4");
+					imageContainer = document.querySelector("#imageContainer4");
+					break;
+			}
+			
+			//FileReader: FileReader 객체를 생성하여 파일을 읽습니다.
+			let reader = new FileReader();
+			
+			//reader.onload: 파일이 성공적으로 읽히면 호출되는 이벤트 핸들러를 정의합니다.
+			//여기서 읽은 파일의 DataURL을 이미지 요소의 src 속성에 설정합니다.
+			reader.onload = function(e) {
+	            imagePreview.src = e.target.result; // 파일의 데이터 URL을 이미지 src 속성에 설정
+	            //imagePreview.style.display = 'block'; // 이미지 요소를 표시
+	            
+	            //let imageContainer = document.querySelector(".image-container");
+	            
+	            imageContainer.style.display = 'inline-block'; // 이미지 컨테이너를 표시
+	        };
+	
+			//readAsDataURL: 선택된 파일을 DataURL로 읽습니다.
+	        reader.readAsDataURL(file); // 파일을 DataURL로 읽음
+		}
+		
+		function fnImgCloseClick(obj) {
+			let fileInput;
+			let imageContainer;
+			
+			switch(obj.name) {
+				case "closeButton1" :
+					imageContainer = document.querySelector("#imageContainer1");
+					fileInput      = document.querySelector("#uploadFile1");
+					break;
+				case "closeButton2" :
+					imageContainer = document.querySelector("#imageContainer2");
+					fileInput      = document.querySelector("#uploadFile2");
+					break;
+				case "closeButton3" :
+					imageContainer = document.querySelector("#imageContainer3");
+					fileInput      = document.querySelector("#uploadFile3");
+					break;
+				case "closeButton4" :
+					imageContainer = document.querySelector("#imageContainer4");
+					fileInput      = document.querySelector("#uploadFile4");
+					break;
+			}
+					
+			alert(obj.name);
+			alert(imageContainer.name);
+		    imageContainer.style.display = 'none'; // 이미지 컨테이너를 숨김
+		
+		    fileInput.value = ''; // 파일 입력 초기화
+		}
 
 // ============================================================================
 // function

@@ -42,7 +42,35 @@
         tbody tr:hover {
             background-color: burlywood;
             color: white;
-        }           
+        }  
+        
+        .image-container {
+		    position: relative;
+		    display: inline-block;
+		}
+  
+  		.image-container img{
+		    max-width: 100%;
+		    height: auto;
+		    display: block;
+  		}
+  		
+        .close-button {
+		    position: absolute;
+		    top: 10px;
+		    right: 10px;
+		    background-color: red;
+		    color: white;
+		    border: none;
+		    padding: 5px 10px;
+		    cursor: pointer;
+		    font-size: 16px;
+		    border-radius: 50%;
+		}
+		
+		.close-button:hover {
+		    background-color: darkred;
+		}         
 	</style>
 </head>
 

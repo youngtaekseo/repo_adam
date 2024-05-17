@@ -63,14 +63,13 @@ public class BaseService {
 		String originalName;
 		String ext;
 		String uuidName;
-		String defaultNy;
 		String pathName;
 		
 		for(int i = 0; i < multipartFiles.length; i++) {
 			if(!multipartFiles[i].isEmpty()) {
 				
 				if(i == 0) {
-					defaultNy = "0";
+					dto.setDefaultNy("0");
 					
 					if(dto.getCategory() == "0") { // 회원이미지
 						// 수정:대표이미값을 1로 변경
@@ -88,7 +87,7 @@ public class BaseService {
 						}
 					}					
 				} else {
-					defaultNy = "1";
+					dto.setDefaultNy("1");
 				}	
 
 				originalName = multipartFiles[i].getOriginalFilename();
@@ -101,7 +100,6 @@ public class BaseService {
 				amazonS3Client.putObject(bucket, uuidName, multipartFiles[i].getInputStream(), metadata);
 				pathName = amazonS3Client.getUrl(bucket, uuidName).toString();	
 				
-				dto.setDefaultNy(defaultNy);
 				dto.setSort(i);
 				dto.setPathName(pathName);
 				dto.setPath(pathName);
