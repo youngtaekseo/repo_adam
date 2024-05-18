@@ -242,7 +242,10 @@
 				     , a.pdtPrice
 				     , a.pdtRecommendCd
 				       <if test="shMbrSeq != null and !shMbrSeq.equals('')">, h.wshSeq</if>
-				       <if test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</if>
+				       <choose>
+				       		<when test="shNewRegNy == 1">ORDER BY a.pdtRegDt DESC </when>
+				       		<when test="shSeq == null or shSeq.equals('')">ORDER BY a.pdtSeq</when>
+				       </choose>
 	</sql>
     
     <!-- 사용자 차량조회용 카운팅 -->
