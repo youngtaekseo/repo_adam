@@ -540,4 +540,13 @@
     	       </foreach>
     </delete>  
 
+	<!-- 상품이미지 조회 -->
+	<select id="selectListImages" resultMap="resultMapObj">
+		SELECT defaultNy xdefaultNy
+		     , path      xpath
+		     , originalName xoriginalName
+		  FROM fileuploaded
+		 WHERE pseq = #{pdtSeq}
+		 ORDER BY sort
+	</select>
 </mapper>

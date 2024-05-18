@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head">
+<div th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>중고조아</title>
@@ -42,36 +42,8 @@
         tbody tr:hover {
             background-color: burlywood;
             color: white;
-        }  
-        
-        .image-container {
-		    position: relative;
-		    display: inline-block;
-		}
-  
-  		.image-container img{
-		    max-width: 100%;
-		    height: auto;
-		    display: block;
-  		}
-  		
-        .close-button {
-		    position: absolute;
-		    top: 10px;
-		    right: 10px;
-		    background-color: red;
-		    color: white;
-		    border: none;
-		    padding: 5px 10px;
-		    cursor: pointer;
-		    font-size: 16px;
-		    border-radius: 50%;
-		}
-		
-		.close-button:hover {
-		    background-color: darkred;
-		}         
+        }                  
 	</style>
-</head>
+</div>
 
 </html>

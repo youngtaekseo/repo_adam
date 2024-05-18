@@ -15,7 +15,7 @@ public interface ProductDao {
 	public int selectOneDataCount(ProductVo vo);  
 	public int selectOneUsrDataCount(ProductVo vo);
 	public List<ProductDto> selectListBrand();
-
+	
 	// 차량정보
 	public List<ProductDto> selectListCarInfo(ProductVo vo);
 	// 차량명으로 검색
@@ -32,4 +32,7 @@ public interface ProductDao {
 	public ProductDto selectOneWisilistCount(ProductVo vo);
 	// 다중선택자료 삭제
 	public int deleteList(ProductVo vo);
+	
+	//상품이미지조회
+	public List<ProductDto> selectListImages(ProductDto dto);
 }

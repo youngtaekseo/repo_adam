@@ -37,6 +37,10 @@ public class ProductDto extends BaseDto {
 	private String  xwshSeq;
 	private Integer xrowSeq;
 	
+	private String xpath;
+	private String xdefaultNy;
+	private String xoriginalName;
+	
 	//=============================================================================
 	
 	public String getPdtSeq() {
@@ -217,5 +221,23 @@ public class ProductDto extends BaseDto {
 	}
 	public void setXrowSeq(Integer xrowSeq) {
 		this.xrowSeq = xrowSeq;
+	}
+	public String getXpath() {
+		return xpath;
+	}
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
+	public String getXdefaultNy() {
+		return xdefaultNy;
+	}
+	public void setXdefaultNy(String xdefaultNy) {
+		this.xdefaultNy = xdefaultNy;
+	}
+	public String getXoriginalName() {
+		return xoriginalName;
+	}
+	public void setXoriginalName(String xoriginalName) {
+		this.xoriginalName = xoriginalName;
 	}
 }

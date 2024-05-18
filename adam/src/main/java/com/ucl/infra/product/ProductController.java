@@ -46,7 +46,6 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value = "/productFileUpload")
 	public Map<String, Object> productFileUpload(ProductDto dto, FileUpLoadDto fdto) throws Exception {
-		System.out.println("productFileUpload==================================================="+dto.getPdtSeq());
 		fdto.setCategory("1");
 		fdto.setPseq(dto.getPdtSeq());
 		
@@ -59,8 +58,6 @@ public class ProductController {
 		} else if(dto.getXpdtImg4() != null) {
 			fdto.setSort(3);
 		}  
-		
-		System.out.println("dto.getXpdtImg1():============================================================"+dto.getXpdtImg1());
 		
 		baseService.fileUploadS3(dto.getUploadFile(), fdto);
 		
@@ -133,10 +130,13 @@ public class ProductController {
 	// 삭제
 	@ResponseBody
 	@RequestMapping(value = "/productSdmDelete")
-	public Map<String, Object> productSdmDelete(ProductDto dto) throws Exception {
+	public Map<String, Object> productSdmDelete(ProductDto dto, FileUpLoadDto fDto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		if(service.delete(dto) > 0) {
+			fDto.setCategory("1");
+			fDto.setPseq(dto.getPdtSeq());
+			baseService.fileDeleteS3(fDto, fDto);
 			returnMap.put("rt", "success"); 
 		} else {
 			returnMap.put("rt", "fail");

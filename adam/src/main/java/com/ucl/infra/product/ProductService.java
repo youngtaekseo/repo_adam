@@ -34,9 +34,10 @@ public class ProductService {
 		fDto.setPseq(dto.getPdtSeq());
 
 		// 파일첨부:4개파일을 멀티로 선택했을 경우
-		//baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
 		
 		// 파일첨부:4개파일 각각 선택했을 경우
+		/*
 		fDto.setDefaultNy("0");
 		fDto.setSort(0);
 		baseService.fileUploadS3(dto.getUploadFile1(), fDto);
@@ -47,7 +48,7 @@ public class ProductService {
 		baseService.fileUploadS3(dto.getUploadFile3(), fDto);
 		fDto.setSort(3);
 		baseService.fileUploadS3(dto.getUploadFile4(), fDto);
-		
+		*/
 		return 0;
 	}
 	
@@ -59,9 +60,10 @@ public class ProductService {
 		fDto.setPseq(dto.getPdtSeq());
 
 		// 파일첨부:4개파일을 멀티로 선택했을 경우
-		//baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
 		
 		// 파일첨부:4개파일 각각 선택했을 경우
+		/*
 		fDto.setDefaultNy("0");
 		fDto.setSort(0);
 		baseService.fileUploadS3(dto.getUploadFile1(), fDto);
@@ -72,6 +74,7 @@ public class ProductService {
 		baseService.fileUploadS3(dto.getUploadFile3(), fDto);
 		fDto.setSort(3);
 		baseService.fileUploadS3(dto.getUploadFile4(), fDto);
+		*/
 		
 		return 0; 
 	}
@@ -141,4 +144,9 @@ public class ProductService {
 	public int deleteList(ProductVo vo) {
 		return dao.deleteList(vo);
 	};	
+	
+	//상품이미지조회
+	public List<ProductDto> selectListImages(ProductDto dto) {
+		return dao.selectListImages(dto);
+	};
 }

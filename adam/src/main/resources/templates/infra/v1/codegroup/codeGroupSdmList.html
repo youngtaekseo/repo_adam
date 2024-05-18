@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html :class="{'theme-dark': dark}" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
 	<div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+</head>	
       
 	<body>
     	<div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{'overflow-hidden': isSideMenuOpen}">

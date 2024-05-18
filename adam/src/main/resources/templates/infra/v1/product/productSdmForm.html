@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:th="http://www.thymeleaf.org">
   
-  <div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+<head>
+	<div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+	<link rel="stylesheet" href="sdm/css/fileupload.css">
+	<style>
+		 .image-container input[name="imageRadioLoad"] {
+            cursor: default; /* 기본 커서로 설정 */
+        }
+	</style>	
+</head>	
 
   <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900"
@@ -166,35 +174,15 @@
 				    		</div>
 				  		</div>
 				  		
-				  		<div class="flex flex-col md:flex-row mt-4 mb-4">
-							<div class="md:h-auto mr-3 md:w-1/2">
-			      				<label class="block text-sm">
-			        				<span class="text-gray-700 dark:text-gray-400">대표상품이미지</span>
-		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile1" name="uploadFile1">
-			      				</label>
-				    		</div>
-							<div class="md:h-auto mr-3 md:w-1/2">
-			      				<label class="block text-sm">
-			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
-		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile2" name="uploadFile2">
-			      				</label>
-				    		</div>
-							<div class="md:h-auto mr-3 md:w-1/2">
-			      				<label class="block text-sm">
-			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
-		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile3" name="uploadFile3">
-			      				</label>
-				    		</div>
-							<div class="md:h-auto md:w-1/2">
-			      				<label class="block text-sm">
-			        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
-		                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-		                        		type="file" id="uploadFile4" name="uploadFile4">
-			      				</label>
-				    		</div>
+				  		<div class="md:flex-row mt-4 mb-4">
+							<!--대표이미지 체크정보-->
+							<input type="hidden" id="defaultNy" name="defaultNy" value="">
+					  		<label class="block text-sm">
+		        				<span class="text-gray-700 dark:text-gray-400">상품이미지</span>
+	                        	<input  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                        		type="file" id="uploadFiles" name="uploadFiles" accept="image/*" multiple> <!--accept="image/*" 속성을 사용하여 이미지만 선택할 수 있도록 제한합니다.-->
+		      				</label>
+		      				<div id="imageContainerWrapper"></div>
 						</div>
 				
 						<!-- 저장버튼, 회원조회버튼 -->
@@ -252,6 +240,8 @@
     <!-- modalFormSdm -->  
 	<div th:replace="~{infra/v1/include/modalSdm :: modalFormSdm}"></div>
     
+    <script src="sdm/js/fileupload.js"></script>
+    <script src="sdm/js/fileload.js"></script>
     <script type="text/javascript">
 // ============================================================================
 // 변수선언
@@ -312,10 +302,26 @@
 				timepicker:false,
 				format: 'Y-m-d', //'Y-m-d' //H:i
 			});
+			
+			// 이미지불러오기
+			
 		});
 
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
+			// 라디오버튼 객체담을 변수
+			let defaultNy;
+			
+			let imageRadio = document.querySelectorAll("input[name=imageRadio]");
+			
+			for(let i = 0; i < imageRadio.length; i++) {
+				if(imageRadio[i].checked) {
+					defaultNy = imageRadio[i].value;
+					break;
+				}
+			}
+			
+			$("#defaultNy").val(defaultNy);			
 			fnCallController();
 		};
 		

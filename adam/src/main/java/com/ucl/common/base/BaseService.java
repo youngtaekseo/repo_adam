@@ -64,19 +64,47 @@ public class BaseService {
 		String ext;
 		String uuidName;
 		String pathName;
+		String defaultName = dto.getDefaultNy();
+		int index = 1;
 		
 		for(int i = 0; i < multipartFiles.length; i++) {
 			if(!multipartFiles[i].isEmpty()) {
+				// 파일명 예)img01.jpg
+				originalName = multipartFiles[i].getOriginalFilename();
 				
-				if(i == 0) {
+				if(dto.getCategory() == "0") {
+					// 회원이미지
+					//=========================================================
+					// 대표이미지 설정
 					dto.setDefaultNy("0");
+					// 순서
+					dto.setSort(0);
 					
-					if(dto.getCategory() == "0") { // 회원이미지
-						// 수정:대표이미값을 1로 변경
-						fileUpLoadService.updateDefaultNy(dto);
-					} else if(dto.getCategory() == "1") { // 상품이미지
+					// 수정:이전 대표값을 1로 변경
+					fileUpLoadService.updateDefaultNy(dto);
+				} else if(dto.getCategory() == "1") {
+					// 상품이미지
+					//=========================================================
+					// 대표이미지 설정
+					if(originalName.equals(defaultName)) {
+						// 대표이미지 설정
+						dto.setDefaultNy("0");
+						// 순서
+						dto.setSort(0);
+						
+						index--;
+					} else {
+						// 대표이미지 아님설정
+						dto.setDefaultNy("1");
+						// 순서
+						dto.setSort(index);
+					}
+					
+					// 삭제는 처음 1번만 실행
+					if(i == 0) {
 						// 키조회
 						List<FileUpLoadDto> list = fileUpLoadService.selectListUuidName(fDto);
+						
 						// 상품이미지 삭제
 						for(FileUpLoadDto dto2 : list) {
 							// AWS S3 삭제
@@ -85,12 +113,9 @@ public class BaseService {
 							fDto.setUuidName(dto2.getUuidName());
 							fileUpLoadService.deleteFileUpLoad(fDto);
 						}
-					}					
-				} else {
-					dto.setDefaultNy("1");
+					}
 				}	
-
-				originalName = multipartFiles[i].getOriginalFilename();
+				
 				ext = originalName.substring(originalName.lastIndexOf(".") + 1); // 파일 이름에서 확장자 추출하기	
 				uuidName = UUID.randomUUID().toString()+"."+ext;
 				
@@ -100,7 +125,6 @@ public class BaseService {
 				amazonS3Client.putObject(bucket, uuidName, multipartFiles[i].getInputStream(), metadata);
 				pathName = amazonS3Client.getUrl(bucket, uuidName).toString();	
 				
-				dto.setSort(i);
 				dto.setPathName(pathName);
 				dto.setPath(pathName);
 				dto.setOriginalName(originalName);
@@ -109,10 +133,28 @@ public class BaseService {
 				dto.setSize(multipartFiles[i].getSize());
 				
 				// 저장
-				fileUpLoadService.insertFileUpLoad(dto);				
+				fileUpLoadService.insertFileUpLoad(dto);
+				
+				index++;
 			}
 		}
-	}	
+	}
+	
+	// 파일삭제
+	public void fileDeleteS3(FileUpLoadDto dto, FileUpLoadDto fDto) throws Exception {
+		// 키조회
+		List<FileUpLoadDto> list = fileUpLoadService.selectListUuidName(fDto);
+		if(list != null && list.size() != 0) {
+			// 상품이미지 삭제
+			for(FileUpLoadDto dto2 : list) {
+				// AWS S3 삭제
+				amazonS3Client.deleteObject(bucket, dto2.getUuidName());
+				// DB 삭제
+				fDto.setUuidName(dto2.getUuidName());
+				fileUpLoadService.deleteFileUpLoad(fDto);
+			}			
+		}
+	}
 	
 	// 단일파일 업로드(NAS)
 	public void fileUploadNas(MultipartFile multipartFile, FileUpLoadDto dto) throws Exception {

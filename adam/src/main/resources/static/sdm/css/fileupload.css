@@ -1,0 +1,77 @@
+  .image-container {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 0;
+    background-color: #fff;
+    width: 200px; /* 컨테이너 너비 */
+    height: 150px; /* 컨테이너 높이 */
+    text-align: center;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 150px; /* 이미지 높이 */
+    object-fit: contain;
+    display: block;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50%;
+  }
+
+  .close-button:hover {
+    background-color: darkred;
+  }
+  
+  .custom-radio {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: yellow; /* 바탕색 설정 */
+    border-radius: 50%;
+    outline: none;
+  }
+
+  .custom-radio::before {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    background-color: transparent; /* 가운데 색상 초기화 */
+    margin: 20% auto; /* 가운데 정렬 */
+  }
+
+  .custom-radio:checked::before {
+    background-color: #ff0000; /* 선택됐을 때 가운데 색상 설정 */
+  }
+
+  .file-name {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* 배경색 및 투명도 설정 */
+    padding: 5px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
