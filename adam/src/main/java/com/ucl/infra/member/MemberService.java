@@ -3,6 +3,7 @@ package com.ucl.infra.member;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ucl.common.base.BaseService;
@@ -11,6 +12,9 @@ import com.ucl.infra.mail.SendGmail;
 
 @Service
 public class MemberService {
+	@Value("${file_upload_type}")
+	private String fileUploadType;
+	
 	@Autowired
 	BaseService baseService;
 	
@@ -59,13 +63,18 @@ public class MemberService {
 		thread.start();
 		//==========================================
 		
-		fDto.setCategory("1");
+		fDto.setCategory("0"); // 0:회원, 1:상품
 		fDto.setDefaultNy("0");
 		fDto.setSort(0);
 		fDto.setPseq(dto.getMbrSeq());
 
-		// 파일첨부
-		baseService.fileUploadS3(dto.getUploadFile(), fDto);
+		if(fileUploadType.toLowerCase().equals("aws")) {
+			// AWS S3 파일첨부
+			baseService.fileUploadS3(dto.getUploadFile(), fDto);
+		} else if(fileUploadType.toLowerCase().equals("nas")) {
+			// NAS 파일첨부
+			baseService.fileUploadNas(dto.getUploadFile(), fDto);			
+		}
 		
 		return 0; 
 	}
@@ -74,13 +83,19 @@ public class MemberService {
 	public int update(MemberDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.update(dto);
 		
-		fDto.setCategory("1");
+		fDto.setCategory("0"); // 0:회원, 1:상품
 		fDto.setDefaultNy("0");
 		fDto.setSort(0);
 		fDto.setPseq(dto.getMbrSeq());		
 		
-		// 파일첨부
-		baseService.fileUploadS3(dto.getUploadFile(), fDto);
+		if(fileUploadType.toLowerCase().equals("aws")) {
+			// AWS S3 파일첨부
+			baseService.fileUploadS3(dto.getUploadFile(), fDto);		
+		} else if(fileUploadType.toLowerCase().equals("nas")) {
+			// NAS 파일첨부
+			baseService.fileUploadNas(dto.getUploadFile(), fDto);			
+		}
+		
 		return 0;
 	}
 	

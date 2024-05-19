@@ -27,8 +27,10 @@ public class MemberDto extends BaseDto {
 	private String  xmbrPwConfirm;
 	private String  xmbrPasswordPre;
 	private Integer xrowSeq;
-	private String  xmbrImgName;
-	private String  xmbrImgPathName;
+	private String  xfileName;
+	private String  xpathUpload;
+	private String  xpathload;
+	private String  xuuidName;
 	
 	//private MultipartFile[] uploadFiles;
 	
@@ -154,25 +156,29 @@ public class MemberDto extends BaseDto {
 	public void setXrowSeq(Integer xrowSeq) {
 		this.xrowSeq = xrowSeq;
 	}
-	/*
-	public MultipartFile[] getUploadFiles() {
-		return uploadFiles;
+	public String getXfileName() {
+		return xfileName;
 	}
-	public void setUploadFiles(MultipartFile[] uploadFiles) {
-		this.uploadFiles = uploadFiles;
+	public void setXfileName(String xfileName) {
+		this.xfileName = xfileName;
 	}
-	*/
-	public String getXmbrImgName() {
-		return xmbrImgName;
+	public String getXpathUpload() {
+		return xpathUpload;
 	}
-	public void setXmbrImgName(String xmbrImgName) {
-		this.xmbrImgName = xmbrImgName;
+	public void setXpathUpload(String xpathUpload) {
+		this.xpathUpload = xpathUpload;
 	}
-	public String getXmbrImgPathName() {
-		return xmbrImgPathName;
+	public String getXpathload() {
+		return xpathload;
 	}
-	public void setXmbrImgPathName(String xmbrImgPathName) {
-		this.xmbrImgPathName = xmbrImgPathName;
+	public void setXpathload(String xpathload) {
+		this.xpathload = xpathload;
+	}
+	public String getXuuidName() {
+		return xuuidName;
+	}
+	public void setXuuidName(String xuuidName) {
+		this.xuuidName = xuuidName;
 	}
 	
 }

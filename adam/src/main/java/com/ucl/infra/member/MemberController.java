@@ -1,9 +1,16 @@
 package com.ucl.infra.member;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -109,9 +116,42 @@ public class MemberController extends BaseController {
 	// 관리자 수정화면
 	@RequestMapping(value = "/memberSdmForm")
 	public String memberSdmForm(MemberDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
+		dto = service.selectOne(dto);
+		model.addAttribute("item", dto);
+		
+		// NAS 저장된 파일 로드
+		/*
+		if(dto.getXfileName() != null) {
+			String pathFile = dto.getXpathload() + dto.getXuuidName();
+			model.addAttribute("imageUrl", pathFile);			
+		}
+		*/
+		
 		return Commvar.PATH_MEMBER + "memberSdmForm";
 	}
+
+    // 실제 이미지 데이터를 반환하는 엔드포인트 images/{filename} @PathVariable String filename
+	@RequestMapping(value = "/viewFile")
+    public ResponseEntity<Resource> viewFile(MemberDto dto) {
+		System.out.println("==============================================================viewFile");
+		String filename = dto.getXfileName();
+		String uploadDir = Commvar.UPLOADED_PATH_PREFIX_LOCAL;
+		System.out.println("===============================================================uploadDir: " + uploadDir);
+        try {
+            Path file = Paths.get(uploadDir).resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (MalformedURLException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }	
 	
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")

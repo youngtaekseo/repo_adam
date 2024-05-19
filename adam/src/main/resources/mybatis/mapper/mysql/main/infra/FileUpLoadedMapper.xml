@@ -63,6 +63,7 @@
 	
 	<select id="selectListUuidName" resultMap="resultMapObj">
 		SELECT uuidName
+		     , path
 		  FROM fileuploaded
 		 WHERE category = #{category}
 		   AND pseq     = #{pseq}

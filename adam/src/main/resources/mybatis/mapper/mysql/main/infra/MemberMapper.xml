@@ -76,12 +76,14 @@
 		          FROM memberpayment aa
 		         WHERE aa.mbrSeq = a.mbrSeq
 		       ) xmbrCount
-		     , b.originalName xmbrImgName
-		     , b.pathName xmbrImgPathName
+		     , b.originalName xFileName
+		     , b.pathName xpathUpload
+		     , b.path xpathLoad
+		     , b.uuidName xuuidName
 		  FROM members a
 		       LEFT JOIN fileuploaded b
 		         ON b.pseq = a.mbrSeq
-		        AND b.category  = 1
+		        AND b.category  = 0
 		        AND b.defaultNy = 0
 		 WHERE 1 = 1	
            AND a.mbrSeq = #{mbrSeq}	

@@ -3,6 +3,7 @@ package com.ucl.infra.product;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ucl.common.base.BaseService;
@@ -10,6 +11,9 @@ import com.ucl.common.fileupload.FileUpLoadDto;
 
 @Service
 public class ProductService {
+	@Value("${file_upload_type}")
+	private String fileUploadType;
+	
 	@Autowired
 	BaseService baseService;
 	
@@ -30,11 +34,16 @@ public class ProductService {
 	public int insert(ProductDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.insert(dto);
 		
-		fDto.setCategory("1");
+		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		// 파일첨부:4개파일을 멀티로 선택했을 경우
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		if(fileUploadType.toLowerCase().equals("aws")) {
+			// 파일첨부:4개파일을 멀티로 선택했을 경우
+			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
+		} else if(fileUploadType.toLowerCase().equals("nas")) {
+			// NAS 파일첨부
+			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);				
+		}
 		
 		// 파일첨부:4개파일 각각 선택했을 경우
 		/*
@@ -56,11 +65,16 @@ public class ProductService {
 	public int update(ProductDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.update(dto);
 		
-		fDto.setCategory("1");
+		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		// 파일첨부:4개파일을 멀티로 선택했을 경우
-		baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);
+		if(fileUploadType.toLowerCase().equals("aws")) {
+			// AWS S3 파일첨부
+			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
+		} else if(fileUploadType.toLowerCase().equals("nas")) {
+			// NAS 파일첨부
+			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);			
+		}
 		
 		// 파일첨부:4개파일 각각 선택했을 경우
 		/*
