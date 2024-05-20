@@ -65,6 +65,37 @@ public class ProductController {
 		returnMap.put("rt", "success");
 		return returnMap;
 	}	
+	
+	// 검색조건 초기화
+	@RequestMapping(value = "/productSdmListInit")
+	public String memberSdmListInit(@ModelAttribute("vo") ProductVo vo, Model model) throws Exception {
+		vo.setShSeq(null);
+		vo.setShCarType(null); 	// 1:중형차, 2:대형차
+		vo.setShCarBrand(null); 	// 1:현대, 2:제네시스, 3:기아
+		vo.setShCarColor(null); 	// 1:검정색, 2:흰색
+		vo.setShRecommend(null); 	// 1:추천, 2:비추천
+		vo.setShAccident(null); 	// 1:무사고, 2:유사고
+
+		vo.setShOptionRunKm(null);	// 주행기록
+		vo.setShOptionRunKmFrom(null);		// 주행기록 시작값
+		vo.setShOptionRunKmTo(null);		// 주행기록 종료값
+		vo.setShOptionYear(null);	// 연식
+		vo.setShOptionYearFrom(null);// 연식(년) 시작값
+		vo.setShOptionYearTo(null);// 연식(년) 종료값
+		vo.setShOptionMonthFrom(null); 		// 연식(월) 시작값
+		vo.setShOptionMonthTo(null);   		// 연식(월) 종료값
+		vo.setShPrice(null);   				// 판매가액
+		vo.setShPriceFrom(null);   			// 판매가액 시작값
+		vo.setShPriceTo(null);   			// 판매가액 종료값
+		vo.setShMbrSeq(null);               // 회원순번
+		vo.setShPdtName(null);				// 차량명
+
+		vo.setShCheckboxTypeArray(null); // 차종
+		vo.setShCheckboxBrandArray(null); // 브랜드
+		vo.setShCheckboxColorArray(null); // 색상	
+		
+		return "redirect:/productSdmList";
+	}	
 
 	// 조회화면
 	@RequestMapping(value = "/productSdmList")

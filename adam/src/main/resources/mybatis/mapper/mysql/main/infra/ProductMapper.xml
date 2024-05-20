@@ -15,8 +15,8 @@
 		</choose>
 		
 		<choose>
-			<when test="shOption == 1">AND a.pdtName LIKE CONCAT('%', #{shValue}, '%')</when>
-		</choose>
+			<when test="shOption == 1 and shValue != null and !shValue.equals('')">AND UPPER(a.pdtName) LIKE CONCAT('%', UPPER(#{shValue}),'%')</when>
+		</choose>		
 		
 		<choose>
 			<when test="shOptionRunKm == 1">AND a.pdtRunKm  BETWEEN #{shOptionRunKmFrom} AND #{shOptionRunKmTo}</when>

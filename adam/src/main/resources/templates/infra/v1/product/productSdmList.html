@@ -255,8 +255,7 @@
 				                    <!-- 검색어 -->
 				                    <div class="md:h-auto md:w-1/2 mr-3">
 				                        <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				                            id="shValue" name="shValue" placeholder="검색어"
-				                            th:text="${vo.shValue}"
+				                            id="shValue" name="shValue" placeholder="검색어" th:value="${vo.shValue}"
 											onkeydown="fnOnKeyDown()" onkeyup="fnOnKeyUp(this)">
 										<span id="shValueValid" name="shValueValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											검색어를 입력하세요
@@ -751,6 +750,8 @@
 			shOptionMonthTo.setAttribute("class","block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			shOptionMonthTo.setAttribute("style", "visibility:hidden;");
 			shOptionMonthToValid.setAttribute("style", "visibility:hidden;");
+			
+			location.href = "/productSdmListInit"; // 검색조건 초기화
 		};
 		
 		// 페이지 리스트 갯수 변경 이벤트
