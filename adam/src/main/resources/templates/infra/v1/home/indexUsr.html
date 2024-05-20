@@ -83,11 +83,12 @@
                             
                             <!--환율정보-->
 							<div class="block-title-content">
-								<h2>환율정보</h2>
+								<h2>환율정보</h2><span id="searchDay" name="searchDay"></span>
 							</div>
 							<!--환율정보표시영역-->
                             <div th:replace="~{infra/v1/include/bodyUsr :: exchangeRate}"></div>
-
+						</div>
+						
                         <!-- 취향저격! 추천차량 -->
                         <div class="section mt-5">
                             <div class="container">
@@ -300,7 +301,12 @@
 // ============================================================================
 // function
 // ============================================================================
-
+	<!--환율정보 조회일자 설정-->
+	window.onload = () => {
+		let toDay = new Date();
+		let searchDay = document.getElementById("searchDay");
+		searchDay.innerHTML = "(조회기준일: "+toDay.getFullYear()+"-"+(toDay.getMonth()+1)+"-"+toDay.getDate()+")";
+	}
 	</script>		
 		    
 </body>
