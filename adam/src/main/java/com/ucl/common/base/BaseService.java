@@ -20,6 +20,8 @@ import com.ucl.common.fileupload.FileUpLoadDto;
 import com.ucl.common.fileupload.FileUpLoadService;
 import com.ucl.common.util.UtilDateTime;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class BaseService {
 	@Autowired
@@ -178,12 +180,16 @@ public class BaseService {
 			String pathModule   = className;
 			String nowString    = UtilDateTime.nowString();
 			String pathDate     = nowString.substring(0,4) + "/" + nowString.substring(5,7) + "/" + nowString.substring(8,10); 
-			String pathUpload   = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-			String pathLoad     = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
+			String pathUpload;
+			String pathLoad;
 			
-			// ip
-			InetAddress inetAddress = InetAddress.getLocalHost();
-			String ip = inetAddress.getHostAddress();
+			if(BaseService.getOs().equals("win")) {
+				pathUpload = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
+				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
+			} else {
+				pathUpload = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
+				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
+			}
 			
 			File uploadPath = new File(pathUpload);
 			
@@ -296,11 +302,14 @@ public class BaseService {
 				pathModule   = className;
 				nowString    = UtilDateTime.nowString();
 				pathDate     = nowString.substring(0,4) + "/" + nowString.substring(5,7) + "/" + nowString.substring(8,10); 
-				writePath = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-				loadPath  = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
 				
-				// ip
-				InetAddress ip = InetAddress.getLocalHost(); 
+				if(BaseService.getOs().equals("win")) {
+					writePath = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
+					loadPath  = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
+				} else {
+					writePath = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
+					loadPath  = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
+				}
 				
 				File uploadPath = new File(writePath);
 				
@@ -331,4 +340,54 @@ public class BaseService {
 			}
 		}
 	}	
+	
+	// os, ip 정보
+	//=========================================================================
+	@PostConstruct
+	public void setOsVersion() throws Exception {
+        // 운영 체제 이름을 가져옵니다.
+        String osVersion = System.getProperty("os.name").toLowerCase();
+        String osName;
+        System.out.println("================================================================");
+        // 운영 체제를 확인하고 메시지를 출력합니다.
+        if (osVersion.contains("win")) {
+        	osName = "win";
+            System.out.println("현재 운영 체제는 Windows 입니다.");
+        } else if (osVersion.contains("mac")) {
+        	osName = "mac";
+        	System.out.println("현재 운영 체제는 MacOS 입니다.");
+        } else if (osVersion.contains("nix") || osVersion.contains("nux") || osVersion.contains("aix")) {
+        	osName = "ulx";
+        	System.out.println("현재 운영 체제는 Unix 또는 Linux 입니다.");
+        } else if (osVersion.contains("sunos")) {
+        	osName = "sun";
+        	System.out.println("현재 운영 체제는 Solaris 입니다.");
+        } else {
+        	osName = "etc";
+            System.out.println("알 수 없는 운영 체제입니다.");
+        }
+
+        // 시스템 속성 예제: Java 버전
+        String javaVersion = System.getProperty("java.version");
+        System.out.println("현재 자바 버전: " + javaVersion);
+        
+        // osm 정보 설정
+        BaseDto.setInfoOs(osName);
+        
+        // ip 정보 설정
+    	InetAddress ip = InetAddress.getLocalHost();
+    	BaseDto.setInfoIp(ip.getHostAddress());
+        System.out.println("HostAddress : " + ip.getHostAddress());
+        System.out.println("================================================================");
+    }
+	
+	// os 정보리턴
+	public static String getOs() {
+		return BaseDto.getInfoOs();
+	}
+	
+	// ip 정보리턴
+	public static String getIp() {
+		return BaseDto.getInfoIp();
+	}
 }

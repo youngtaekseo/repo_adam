@@ -11,6 +11,12 @@ public class BaseDto {
 	private MultipartFile uploadFile3;
 	private MultipartFile uploadFile4;
 
+	// os 정보
+	public static String infoOs;
+	
+	// ip 정보
+	public static String infoIp;
+	
 	// fileupload
 	//=========================================================================
 	public MultipartFile getUploadFile() {
@@ -48,6 +54,24 @@ public class BaseDto {
 	}
 	public void setUploadFile4(MultipartFile uploadFile4) {
 		this.uploadFile4 = uploadFile4;
+	}
+	
+	// os 정보
+	//=========================================================================
+	public static String getInfoOs() {
+		return infoOs;
+	}
+	public static void setInfoOs(String infoOs) {
+		BaseDto.infoOs = infoOs;
+	}
+	
+	// ip 정보
+	//=========================================================================
+	public static String getInfoIp() {
+		return infoIp;
+	}
+	public static void setInfoIp(String infoIp) {
+		BaseDto.infoIp = infoIp;
 	}
 
 }

@@ -80,6 +80,108 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!--환율정보-->
+                            <div class="section policy-home col-lg-12 col-xs-12" style="height: 80px;">
+								<div class="row">
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'USD'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'HKD'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'SGD'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'EUR'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'GBP'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'THB'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'CNH'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col">
+                                        <div class="block">
+                                            <div class="block-content">
+												<ul th:each="node : ${node}">
+													<th:block th:if="${node.get('cur_unit').asText() == 'JPY(100)'}">
+														<li th:text="${node.get('cur_nm').asText()}"></li>
+														<li th:text="${node.get('deal_bas_r').asText()}"></li>														
+													</th:block>
+												</ul>													
+                                            </div>
+                                        </div>
+                                    </div>
+								</div>	
+							</div>
                         </div>
 
                         <!-- 취향저격! 추천차량 -->

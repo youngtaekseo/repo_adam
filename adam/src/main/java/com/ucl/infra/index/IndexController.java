@@ -7,7 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilApiGet;
+import com.ucl.common.util.UtilDateTime;
 import com.ucl.infra.product.ProductService;
 import com.ucl.infra.product.ProductVo;
 
@@ -92,6 +96,20 @@ public class IndexController {
 		vo.setShRecommend(null);
 		model.addAttribute("listNewReg", productService.selectListCarInfo(vo));
 		
+		// 환율정보 api 호출
+		String curDate = UtilDateTime.nowYmdString();
+		String apiUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=g6Y79ObfDSH3FKL8AXTeQOBe72X21Fct&searchdate="+curDate+"&data=AP01";
+		StringBuilder stringBuilder = UtilApiGet.apiGet(apiUrl);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode node = objectMapper.readTree(stringBuilder.toString());
+		
+		System.out.println("node.get(\"cur_unit\").asText(): " + node.get(0).get("cur_unit").asText());
+		System.out.println("node..get(\"ttb\").asText(): " + node.get(0).get("ttb").asText());
+		System.out.println("node.get(\"cur_nm\").asText(): " + node.get(0).get("cur_nm").asText());
+		
+		model.addAttribute("node", node);
+			
 		return Commvar.PATH_HOME + "indexUsr";
 	}
 	

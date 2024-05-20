@@ -139,7 +139,7 @@ public class UtilDateTime {
 		String dateTimeRt = localDateTimeParam.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		return dateTimeRt;
 	}	
-	
+
 	// String -> Date
 	public static Date StringToDateTime(String dateStr) throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -151,6 +151,13 @@ public class UtilDateTime {
 	public static String nowYearString() throws Exception {
 		LocalDateTime localDateTime = LocalDateTime.now();
 		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy"));
+		return localDateTimeString;
+	}	
+
+	// 리턴값 : 오늘일자(yyyymmdd)
+	public static String nowYmdString() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		return localDateTimeString;
 	}	
 	

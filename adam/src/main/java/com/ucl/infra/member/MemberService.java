@@ -86,7 +86,7 @@ public class MemberService {
 		fDto.setCategory("0"); // 0:회원, 1:상품
 		fDto.setDefaultNy("0");
 		fDto.setSort(0);
-		fDto.setPseq(dto.getMbrSeq());		
+		fDto.setPseq(dto.getMbrSeq());	
 		
 		if(fileUploadType.toLowerCase().equals("aws")) {
 			// AWS S3 파일첨부
