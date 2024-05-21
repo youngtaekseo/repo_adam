@@ -28,6 +28,10 @@ public class IndexController {
 	@Value("${team_project2_sdm}")
 	private String teamProject2Sdm;
 	
+	// 환율정보 api key
+	@Value("${koreaexim.go.kr.authkey}")
+	private String koreaexim_go_kr_authkey;
+	
 	@Autowired
 	IndexService service;
 	
@@ -98,15 +102,15 @@ public class IndexController {
 		
 		// 환율정보 api 호출
 		String curDate = UtilDateTime.nowYmdString();
-		String apiUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=g6Y79ObfDSH3FKL8AXTeQOBe72X21Fct&searchdate="+curDate+"&data=AP01";
+		String apiUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+koreaexim_go_kr_authkey+"&searchdate="+curDate+"&data=AP01";
 		StringBuilder stringBuilder = UtilApiGet.apiGet(apiUrl);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode node = objectMapper.readTree(stringBuilder.toString());
 		
-		System.out.println("node.get(\"cur_unit\").asText(): " + node.get(0).get("cur_unit").asText());
-		System.out.println("node..get(\"ttb\").asText(): " + node.get(0).get("ttb").asText());
-		System.out.println("node.get(\"cur_nm\").asText(): " + node.get(0).get("cur_nm").asText());
+		//System.out.println("node.get(\"cur_unit\").asText(): " + node.get(0).get("cur_unit").asText());
+		//System.out.println("node..get(\"ttb\").asText(): " + node.get(0).get("ttb").asText());
+		//System.out.println("node.get(\"cur_nm\").asText(): " + node.get(0).get("cur_nm").asText());
 		
 		model.addAttribute("node", node);
 			

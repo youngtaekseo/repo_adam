@@ -45,6 +45,16 @@ public class MemberService {
 	}	
 	
 	// 저장
+	public int restInsert(MemberDto dto) throws Exception {
+		return dao.insert(dto);
+	}
+	
+	// 수정
+	public int restUpdate(MemberDto dto) throws Exception {
+		return dao.update(dto);
+	}
+		
+	// 저장
 	public int insert(MemberDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.insert(dto);
 
