@@ -20,7 +20,7 @@ public class Commvar {
 	public static final String UPLOADED_PATH_PREFIX_LOCAL          = "D:\\factory\\workspace\\nas/"; // 저장위치
 	public static final String UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL = "/images/";                  // 보여줄위치
 	
-	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC          = "work/factory/workspace/nas/"; // 저장위치
+	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC          = "/Volumes/Work/factory/workspace/nas/"; // 저장위치
 	public static final String UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC = "/images/";                  // 보여줄위치
 	
 }
