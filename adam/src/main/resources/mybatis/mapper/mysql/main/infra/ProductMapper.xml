@@ -165,7 +165,8 @@
 		               </choose>
 				  FROM product a
 				       LEFT JOIN fileuploaded b
-				              ON b.pSeq = a.pdtSeq
+				              ON b.pSeq     = a.pdtSeq
+				             AND b.category = 1
 		               LEFT JOIN (SELECT pdtSeq
 		                               , ROUND(AVG(rvwStar)) xpdtStar
 		                               , COUNT(*)            xpdtCount
@@ -298,7 +299,8 @@
                </choose>
 		  FROM product a
 		       LEFT JOIN fileuploaded b
-		              ON b.pSeq = a.pdtSeq
+		              ON b.pSeq     = a.pdtSeq
+		             AND b.category = 1
                LEFT JOIN (SELECT pdtSeq
                                , ROUND(AVG(rvwStar)) xpdtStar
                                , COUNT(*)            xpdtCount
@@ -373,7 +375,8 @@
 		       JOIN code h
 		         ON h.cdcSeq = d.pdtColorCd
 		       JOIN fileuploaded j
-		         ON j.pSeq = d.pdtSeq
+		         ON j.pSeq     = d.pdtSeq
+		        AND j.category = 1
 	</sql>
 	
 	<sql id="selectCommonProductGroup">
@@ -549,7 +552,8 @@
 		     , path      xpath
 		     , originalName xoriginalName
 		  FROM fileuploaded
-		 WHERE pseq = #{pdtSeq}
+		 WHERE pseq     = #{pdtSeq}
+		   AND category = 1
 		 ORDER BY sort
 	</select>
 </mapper>
