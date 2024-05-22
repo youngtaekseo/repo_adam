@@ -8,6 +8,7 @@ import java.net.URL;
 public class UtilApiGet {
 	
 	public static StringBuilder apiGet(String apiUrl) throws Exception {
+		//System.out.println("==============================================apiUrl:"+apiUrl);
 		URL url = new URL(apiUrl);
 		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 		httpURLConnection.setRequestMethod("GET");
@@ -21,11 +22,15 @@ public class UtilApiGet {
 		
 		StringBuilder stringBuilder = new StringBuilder();
 		String line;
+		
+		//System.out.println("====================================================bufferedReader.readLine():"+bufferedReader.readLine());
 		while ((line = bufferedReader.readLine()) != null) {
 			System.out.println("line: " + line);
 			stringBuilder.append(line);
 		}
-
+		
+		//System.out.println("====================================================stringBuilder:"+stringBuilder);
+		
 		bufferedReader.close();
 		httpURLConnection.disconnect();
 		

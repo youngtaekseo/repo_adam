@@ -101,9 +101,19 @@ public class IndexController {
 		model.addAttribute("listNewReg", productService.selectListCarInfo(vo));
 		
 		// 환율정보 api 호출
-		String curDate = UtilDateTime.nowYmdString();
+		StringBuilder stringBuilder = new StringBuilder();
+		String curDate, curDateDash;
+		
+		if(UtilDateTime.houreToInteger() >= 11) {
+			curDate = UtilDateTime.nowYmdString(); 
+			curDateDash = UtilDateTime.nowYmdStringDash();
+		} else {
+			curDate = UtilDateTime.preYmdString(); 
+			curDateDash = UtilDateTime.preYmdStringDash();
+		}
+		 
 		String apiUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+koreaexim_go_kr_authkey+"&searchdate="+curDate+"&data=AP01";
-		StringBuilder stringBuilder = UtilApiGet.apiGet(apiUrl);
+		stringBuilder = UtilApiGet.apiGet(apiUrl);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode node = objectMapper.readTree(stringBuilder.toString());
@@ -113,6 +123,7 @@ public class IndexController {
 		//System.out.println("node.get(\"cur_nm\").asText(): " + node.get(0).get("cur_nm").asText());
 		
 		model.addAttribute("node", node);
+		model.addAttribute("searchDay", curDateDash);
 			
 		return Commvar.PATH_HOME + "indexUsr";
 	}

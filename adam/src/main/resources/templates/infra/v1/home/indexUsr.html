@@ -83,7 +83,7 @@
                             
                             <!--환율정보-->
 							<div class="block-title-content">
-								<h2>환율정보</h2><span id="searchDay" name="searchDay"></span>
+								<h2>환율정보</h2>(조회기준일: <span th:text="${searchDay}"></span>)
 							</div>
 							<!--환율정보표시영역-->
                             <div th:replace="~{infra/v1/include/bodyUsr :: exchangeRate}"></div>
@@ -302,11 +302,13 @@
 // function
 // ============================================================================
 	<!--환율정보 조회일자 설정-->
+	/*
 	window.onload = () => {
 		let toDay = new Date();
 		let searchDay = document.getElementById("searchDay");
 		searchDay.innerHTML = "(조회기준일: "+toDay.getFullYear()+"-"+(toDay.getMonth()+1)+"-"+toDay.getDate()+")";
 	}
+	*/
 	</script>		
 		    
 </body>

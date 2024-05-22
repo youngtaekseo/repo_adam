@@ -159,7 +159,35 @@ public class UtilDateTime {
 		LocalDateTime localDateTime = LocalDateTime.now();
 		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		return localDateTimeString;
+	}		
+	
+	// 리턴값 : 오늘일자(yyyymmdd) - 1
+	public static String preYmdString() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
+		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		return localDateTimeString;
+	}
+	
+	// 리턴값 : 오늘일자(yyyy-mm-dd)
+	public static String nowYmdStringDash() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now();
+		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return localDateTimeString;
+	}		
+	
+	// 리턴값 : 오늘일자(yyyy-mm-dd) - 1
+	public static String preYmdStringDash() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
+		String localDateTimeString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return localDateTimeString;
 	}	
+	
+	// 리턴값 : 현제시간 정규식(HH)
+	public static int houreToInteger() {
+		LocalDateTime localDateTime = LocalDateTime.now().minusDays(1);
+		int localHourInteger = Integer.parseInt(localDateTime.format(DateTimeFormatter.ofPattern("HH")));
+		return localHourInteger;
+	}
 	
 	// 리턴값 : 현재년도
 	public static Integer nowYearInteger() throws Exception {
