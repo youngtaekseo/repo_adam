@@ -1,17 +1,10 @@
 package com.ucl.infra.member;
 
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,6 +27,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	MemberImageService imageService;
 	
 	// 검색조건 초기화
 	@RequestMapping(value = "/memberSdmListInit")
@@ -126,36 +122,14 @@ public class MemberController extends BaseController {
 		if(fileUploadType.toLowerCase().equals("nas")) {
 			// NAS 파일
 			if(dto.getXfileName() != null) {
-				String pathFile = dto.getXpathUpload(); // dto.getXpathload() + dto.getXuuidName();
-				//model.addAttribute("imageUrl", pathFile);
-				ResponseEntity<Resource> responseEntity = viewFile(pathFile);
-				model.addAttribute("imageUrl", responseEntity);
+				String pathFile = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC+dto.getXuuidName();
+				String base64Image = imageService.getBase64ExternalImage(pathFile, dto.getxExt());
+				model.addAttribute("imageUrl", base64Image);
 			}			
 		}
 		
 		return Commvar.PATH_MEMBER + "memberSdmForm";
 	}
-
-    // 실제 이미지 데이터를 반환하는 엔드포인트 images/{filename} @PathVariable String filename
-	//@RequestMapping(value = "/viewFile/{fileName}")
-    public ResponseEntity<Resource> viewFile(String fileName) {
-		//String filename = dto.getXfileName();
-		String uploadDir = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;
-		
-        try {
-            Path file = Paths.get(uploadDir).resolve(fileName);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (MalformedURLException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }	
 	
 	// 수정
 	@RequestMapping(value = "/memberSdmUpdate")

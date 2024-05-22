@@ -36,6 +36,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/loginSdmMemberCreate"
 				,"/memberSdmLoginInsert"
 				,"/rest/**"
+				,"/images/**"
 				,"/test","/test2","/test3","/test4"
 		);
 	}

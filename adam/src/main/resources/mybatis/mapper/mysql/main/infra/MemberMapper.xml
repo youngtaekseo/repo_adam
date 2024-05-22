@@ -80,6 +80,7 @@
 		     , b.pathName xpathUpload
 		     , b.path xpathLoad
 		     , b.uuidName xuuidName
+		     , b.ext xExt
 		  FROM members a
 		       LEFT JOIN fileuploaded b
 		         ON b.pseq = a.mbrSeq

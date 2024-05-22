@@ -42,7 +42,7 @@
 					<th:block th:unless="${uploadType == 'aws'}">
 						<!--NAS방식-->
 						<div th:if="${imageUrl != null}">
-							<img th:src = "${imageUrl}" id="imageUrl" name="imageUrl"
+							<img th:src = "'data:image/jpeg;base64,' + ${imageUrl}" id="imageUrl" name="imageUrl"
 				                style="position: absolute;
 									   top: 190px;
 									   right: 6%;

@@ -31,6 +31,7 @@ public class MemberDto extends BaseDto {
 	private String  xpathUpload;
 	private String  xpathload;
 	private String  xuuidName;
+	private String  xExt;
 	
 	//private MultipartFile[] uploadFiles;
 	
@@ -179,6 +180,12 @@ public class MemberDto extends BaseDto {
 	}
 	public void setXuuidName(String xuuidName) {
 		this.xuuidName = xuuidName;
+	}
+	public String getxExt() {
+		return xExt;
+	}
+	public void setxExt(String xExt) {
+		this.xExt = xExt;
 	}
 	
 }
