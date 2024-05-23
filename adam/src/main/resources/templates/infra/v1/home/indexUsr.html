@@ -83,7 +83,7 @@
                             
                             <!--환율정보-->
 							<div class="block-title-content">
-								<h2>환율정보</h2>(조회기준일: <span th:text="${searchDay}"></span>)
+								<h2>환율정보</h2>[조회기준일: <span th:text="${searchDay}"></span>] <b style="color: blueviolet">[오전 11시 이전은 전일 환율]</b> [출처: 한국수출입은행]
 							</div>
 							<!--환율정보표시영역-->
                             <div th:replace="~{infra/v1/include/bodyUsr :: exchangeRate}"></div>

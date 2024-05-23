@@ -37,6 +37,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/memberSdmLoginInsert"
 				,"/rest/**"
 				,"/images/**"
+				,"/api/v1/oauth2/google/**"
 				,"/test","/test2","/test3","/test4"
 		);
 	}

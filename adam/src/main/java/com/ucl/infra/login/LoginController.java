@@ -31,8 +31,7 @@ public class LoginController {
 	private String naverClientId;
 
 	@Value("${naver_callback_uri}")
-	private String naverCallbackUri;
-	
+	private String naverCallbackUri;	
 	
 	@Autowired
 	LoginService service;
