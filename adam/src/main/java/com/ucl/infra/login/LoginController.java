@@ -33,6 +33,18 @@ public class LoginController {
 	@Value("${naver_callback_uri}")
 	private String naverCallbackUri;	
 	
+	@Value("${google.client.id}")
+	private String googleClientId;
+
+	@Value("${google.client.secret}")
+	private String googleClientSecret;
+
+	@Value("${google.callback.uri}")
+	private String googleCallbackUri;
+	
+	@Value("${google.scope}")
+	private String scope;
+	
 	@Autowired
 	LoginService service;
 	
@@ -52,12 +64,21 @@ public class LoginController {
 	// 사용자 로그인
 	@RequestMapping(value = "/loginUsr")
 	public String loginUsr(Model model) throws Exception {
-		model.addAttribute("myEmail"         , myEmail);
-    	model.addAttribute("javascriptKey"   , javascriptKey);
-    	model.addAttribute("kakaoRedirectUri", kakaoRedirectUri);
-    	model.addAttribute("kakaoLocation"   , kakaoLocation);
-    	model.addAttribute("naverClientId"   , naverClientId);
-    	model.addAttribute("naverCallbackUri", naverCallbackUri);
+		// email%20profile%20openid
+		scope = scope.replaceAll(",", "%20");
+		String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
+                + "&redirect_uri="+googleCallbackUri+"&response_type=code&scope="+scope+"&access_type=offline";
+        
+		model.addAttribute("myEmail"           , myEmail);
+    	model.addAttribute("javascriptKey"     , javascriptKey);
+    	model.addAttribute("kakaoRedirectUri"  , kakaoRedirectUri);
+    	model.addAttribute("kakaoLocation"     , kakaoLocation);
+    	model.addAttribute("naverClientId"     , naverClientId);
+    	model.addAttribute("naverCallbackUri"  , naverCallbackUri);
+    	model.addAttribute("googleClientId"    , googleClientId);
+    	model.addAttribute("googleClientSecret", googleClientSecret);
+    	model.addAttribute("googleCallbackUri" , googleCallbackUri);
+    	model.addAttribute("googleLocation"    , reqUrl);
 		return Commvar.PATH_LOGIN + "loginUsr";
 	}
 	

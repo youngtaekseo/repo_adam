@@ -38,6 +38,8 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 				,"/rest/**"
 				,"/images/**"
 				,"/api/v1/oauth2/google/**"
+				,"/googlelogin"
+				,"/loginUrlGoogle"
 				,"/test","/test2","/test3","/test4"
 		);
 	}
