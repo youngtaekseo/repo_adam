@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="searchVo">
+	<div>
+		<!-- 체크박스 조건담을 태그 -->
+		<!--차종-->
+		<input id="shCheckboxTypeArray" name="shCheckboxTypeArray" />
+		<div class="new-item-content">
+            <ul>
+				<th:block th:each="list : ${@codeService.selectListCachedCode(3)}">
+					<li>
+                        <input th:if="${vo.shCheckboxTypeArray != null}" th:id="'checkboxSeq_'+${list.cdcSeq}" name="checkboxTypeSeq" type="checkbox" th:value="${list.cdcSeq}"
+                        	th:checked="${#arrays.contains(vo.shCheckboxTypeArray, list.cdcSeq)}"/>
+                        <input th:unless="${vo.shCheckboxTypeArray != null}" th:id="'checkboxSeq_'+${list.cdcSeq}" name="checkboxTypeSeq" type="checkbox" th:value="${list.cdcSeq}"/>
+                    </li>
+				</th:block>
+            </ul>
+        </div>
+	                                            
+		<!--제조사-->
+		<input  id="shCheckboxBrandArray" name="shCheckboxBrandArray" />
+		<div class="new-item-content">
+            <ul>
+				<th:block th:each="list : ${@codeService.selectListCachedCode(4)}">
+					<li>
+                        <input th:if="${vo.shCheckboxBrandArray != null}" th:id="'checkboxBrand'+${list.cdcSeq}" name="checkboxBrandSeq" type="checkbox" th:value="${list.cdcSeq}"
+                        	th:checked="${#arrays.contains(vo.shCheckboxBrandArray, list.cdcSeq)}"/>
+                        <input th:unless="${vo.shCheckboxBrandArray != null}" th:id="'checkboxBrand'+${list.cdcSeq}" name="checkboxBrandSeq" type="checkbox" th:value="${list.cdcSeq}"/>
+                    </li>
+				</th:block>
+            </ul>
+        </div>
+		<!--색상-->
+		<input  id="shCheckboxColorArray" name="shCheckboxColorArray" />
+		<div>
+            <ul>
+				<th:block th:each="list : ${@codeService.selectListCachedCode(5)}">
+                    <li>          
+	                    <input th:if="${vo.shCheckboxColorArray != null}" th:id="'checkboxColor'+${list.cdcSeq}" name="checkboxColorSeq" type="checkbox" th:value="${list.cdcSeq}"
+	                    	th:checked="${#arrays.contains(vo.shCheckboxColorArray, list.cdcSeq)}"/>
+	                    <input th:unless="${vo.shCheckboxColorArray != null}" th:id="'checkboxColor'+${list.cdcSeq}" name="checkboxColorSeq" type="checkbox" th:value="${list.cdcSeq}"/>
+                    </li>
+				</th:block>
+            </ul>                                                    
+        </div> 
+		<!--연식-->
+		<input  id="shFromYear" name="shFromYear" th:value="${vo.shFromYear}">
+		<input  id="shToYear" name="shToYear" th:value="${vo.shToYear}">
+		<input  id="shOptionYearFrom" name="shOptionYearFrom" th:value="${vo.shOptionYearFrom}">
+		<input  id="shOptionYearTo" name="shOptionYearTo" th:value="${vo.shOptionYearTo}">
+		<!--가격-->
+		<input  id="shPriceFrom" name="shPriceFrom" th:value="${vo.shPriceFrom}">
+		<input  id="shPriceTo" name="shPriceTo" th:value="${vo.shPriceTo}">
+		
+		<!--paging-->
+		<!--<input  id="pgIsPrev" name="pgIsPrev" th:value="${vo.pgIsPrev}">
+		<input  id="pgIsNext" name="pgIsNext" th:value="${vo.pgIsNext}">
+		<input  id="pgStartPage" name="pgStartPage" th:value="${vo.pgStartPage}">
+		<input  id="pgEndPage" name="pgEndPage" th:value="${vo.pgEndPage}">
+		<input  id="pgTotalCount" name="pgTotalCount" th:value="${vo.pgTotalCount}">-->
+		<input  id="pgPage" name="pgPage" th:value="${vo.pgPage}">
+	</div>
+</th:block>
+
+</html>

@@ -31,7 +31,7 @@
                                     <ol>
                                         <li><a href="/indexUsr"><span>Home</span></a></li>
                                         <li>
-                                            <a href="/productUsrList"><span>차량조회</span></a>
+                                            <a href="javascript:void(0)" th:onclick="javascript:fnGoList();"><span>차량조회</span></a>
                                         </li>
                                         <li><span><b>상세설명</b></span></li>
                                     </ol>
@@ -329,6 +329,11 @@
         </div>
     </div>
 
+	<!--vo용-->
+	<form id="formList" name="formList" method="get">
+		<th:block th:replace="~{infra/v1/product/productUsrDetailVo :: searchVo}"></th:block>
+	</form>
+	
     <!-- footer -->
     <div th:replace="~{infra/v1/include/headUsr :: footer}"></div>
 
@@ -432,6 +437,46 @@
 				fnModalFormOneBtnShow("등록", "ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 			})
     	}
+    	
+    	// 차종, 제조사 클릭		
+		function fnCheckboxClick() {	
+			// 체크된 항목 저장 변수
+			let checkboxTypeCheckedArray  = []; // 차종
+			let checkboxBrandCheckedArray = []; // 제조사
+			let checkboxCheckedArray      = []; // 색상
+			
+			// 차종 체크박스 항목 수 만큼 배열선언
+			let checkboxTypeArr = document.querySelectorAll("input[name='checkboxTypeSeq']");
+			for(let i = 0; i < checkboxTypeArr.length; i++) {
+				if(checkboxTypeArr[i].checked) checkboxTypeCheckedArray.push(checkboxTypeArr[i].value);
+			}
+			// 차종 체크된값 저장
+			document.querySelector("input[name='shCheckboxTypeArray']").value = checkboxTypeCheckedArray;
+			
+			// 제조사 체크박스 항목 수 만큼 배열선언
+			let checkboxBrandArr = document.querySelectorAll("input[name='checkboxBrandSeq']");
+			for(let i = 0; i < checkboxBrandArr.length; i++) {
+				if(checkboxBrandArr[i].checked) checkboxBrandCheckedArray.push(checkboxBrandArr[i].value);
+			}			
+			// 제조사 체크된값 저장
+			document.querySelector("input[name='shCheckboxBrandArray']").value = checkboxBrandCheckedArray;
+			
+			// 색상 체크된 항목만큼 배열선언
+			let checkboxColordArr = document.querySelectorAll("input[name='checkboxColorSeq']");
+			for(let i = 0; i < checkboxColordArr.length; i++) {
+				if(checkboxColordArr[i].checked) checkboxCheckedArray.push(checkboxColordArr[i].value);
+			}			
+			// 색상 체크된값 저장
+			document.querySelector("input[name='shCheckboxColorArray']").value = checkboxCheckedArray;
+		}
+		
+    	// 차량조회화면호출
+    	let formList = document.querySelector("#formList");
+    	function fnGoList() {
+			fnCheckboxClick();
+			formList.action = "/productUsrList";
+			formList.submit();
+		}
     </script>
 </body>
 

@@ -276,8 +276,7 @@ public class ProductController {
 
 	// 사용자 상세화면
 	@RequestMapping(value = "/productUsrDetail")
-	public String productUsrDetail(ProductVo vo, ReviewVo rvo, Model model, HttpSession httpSession) throws Exception {
-		
+	public String productUsrDetail(@ModelAttribute("vo") ProductVo vo, ReviewVo rvo, Model model, HttpSession httpSession) throws Exception {
 		// 로그인 회원순번 설정
 		vo.setShMbrSeq((String) httpSession.getAttribute("sessMbrSeq"));
 		

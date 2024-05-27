@@ -337,6 +337,8 @@ public class BaseService {
 //				dto.setPseq(pSeq);
 				
 				fileUpLoadService.insertFileUpLoad(dto);
+				
+				index++;
 			}
 		}
 	}	

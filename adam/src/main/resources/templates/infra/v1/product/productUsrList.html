@@ -206,8 +206,6 @@
                                                         </div>
                                                     </div>
 	                                            </div>                                           
-	
-	                                                                                        
 	                                        </div>
 	                                    </div>
 	
@@ -222,19 +220,21 @@
 	                                        <div class="tab-content product-items">
 	                                            <div id="grid" class="related tab-pane fade in active show">
 	                                                <div class="row" id="listCar">
+														<input id="shSeq" name="shSeq" type="hidden" />
 	                                                	<th:block th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 															<div class="item col-md-4">
 		                                                        <div class="product-miniature js-product-miniature item-one first-item">
 		                                                            <div class="thumbnail-container border">
-		                                                                <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+		                                                                <!--<a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">-->
+																		<a href="javascript:void(0)" th:onclick="javascript:fnGoDetail([[${list.pdtSeq}]]);">
 		                                                                    <img class="img-fluid image-cover"     th:src="${list.xpdtImg1}" alt="img">
 		                                                                    <img class="img-fluid image-secondary" th:src="${list.xpdtImg2}" alt="img">
 		                                                                </a>
 		                                                            </div>
 		                                                            <div class="product-description">
 		                                                                <div class="product-groups">
-		                                                                    <div class="product-title">
-		                                                                        <a th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}">
+		                                                                    <div class="product-title"><!--th:href="@{/productUsrDetail(shSeq=${list.pdtSeq})}"-->
+		                                                                        <a href="javascript:void(0)" th:onclick="javascript:fnGoDetail([[${list.pdtSeq}]]);">
 																					<th:block>
 																						<span th:text="${list.xpdtBrandName}"></span>
 																						<br>
@@ -522,6 +522,16 @@
 				// controller 호출
 				fnCheckboxClick();	
 			}
+		}
+		
+		// 이미지 클릭하여 상세화면 호출
+		function fnGoDetail(seq) {
+			fnCheckboxClick();
+			//let shSeq = document.querySelector("#shSeq");
+			$("#shSeq").val(seq);
+			// 조회
+	       	form.action = "/productUsrDetail";
+	       	form.submit(); 
 		}
 		
 // ============================================================================

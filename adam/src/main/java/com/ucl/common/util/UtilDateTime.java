@@ -2,6 +2,7 @@ package com.ucl.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -195,4 +196,35 @@ public class UtilDateTime {
 		Integer localDateTimeInteger = localDateTime.getYear();
 		return localDateTimeInteger;
 	}
+	
+	// 리턴값 : 요일 (월요일이 1, 일요일이 7)
+	public static int nowOfWeekNumber() throws Exception {
+		// 1. LocalDate 생성
+		LocalDateTime localDateTime = LocalDateTime.now();
+	    // 2. DayOfWeek 객체 구하기        
+		DayOfWeek dayOfWeek = localDateTime.getDayOfWeek();         
+		// 3. 숫자 요일 구하기        
+		int dayOfWeekNumber = dayOfWeek.getValue();
+		
+        // 3. 텍스트 요일 구하기 (영문)        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.US));  
+		// Saturday        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.US));  
+		// S        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US));  
+		// Sat         
+		// 4. 텍스트 요일 구하기 (한글)        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN));  
+		// 토요일        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN));  
+		// 토        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN));  
+		// 토         
+		// 5. 텍스트 요일 구하기 (default)        
+		//System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()));  // 토요일
+		
+		return dayOfWeekNumber;
+	}
+
+
 }
