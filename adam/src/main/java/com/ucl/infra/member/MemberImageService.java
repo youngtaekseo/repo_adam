@@ -42,7 +42,7 @@ public class MemberImageService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, ext, outputStream); // 이미지 형식을 "png"로 설정
         byte[] imageBytes = outputStream.toByteArray();
-
+        
         // byte 배열을 Base64 문자열로 인코딩하여 반환
         return Base64.getEncoder().encodeToString(imageBytes);
     }
