@@ -546,11 +546,20 @@
     	       </foreach>
     </delete>  
 
+	<!-- 이미지 갯수 -->
+	<select id="selectOneImageCount" resultMap="resultMapObj">
+		SELECT COUNT(*) xCount
+		  FROM fileuploaded
+		 WHERE pseq     = #{pdtSeq}
+		   AND category = 1
+	</select>
+
 	<!-- 상품이미지 조회 -->
 	<select id="selectListImages" resultMap="resultMapObj">
-		SELECT defaultNy xdefaultNy
-		     , path      xpath
-		     , originalName xoriginalName
+		SELECT defaultNy    xdefaultNy
+		     , path         xpathUpload
+		     , originalName xfileName
+		     , ext          xExt
 		  FROM fileuploaded
 		 WHERE pseq     = #{pdtSeq}
 		   AND category = 1

@@ -29,13 +29,21 @@ async function createImageGallery() {
 
         // 새로운 img 요소를 생성하여 이미지 추가
         const img = document.createElement('img');
-        img.src = image.xpath;
+        if(uploadType.value == 'aws') {
+			img.src = image.xpathUpload;
+		} else {
+	        if(image.xext == 'png') {
+				img.src = 'data:image/png;base64,' + image.xpathUpload;
+			} else {
+				img.src = 'data:image/jpeg;base64,' + image.xpathUpload;
+			}			
+		}
         
        // 라디오 버튼 생성
         let radioButton = document.createElement('input');
         radioButton.type = 'radio';
         radioButton.name = 'imageRadioLoad';
-        radioButton.value = image.xoriginalName;
+        radioButton.value = image.xfileName;
         radioButton.className = 'custom-radio';
         radioButton.disabled = true;
 		
@@ -46,7 +54,7 @@ async function createImageGallery() {
         // 파일명 요소 생성
         let fileName = document.createElement('div');
         fileName.className = 'file-name';
-        fileName.textContent = image.xoriginalName;           
+        fileName.textContent = image.xfileName;           
 
         // 이미지 컨테이너에 이미지, 라디오 버튼, 닫기 버튼, 파일명 추가
         imageContainer.appendChild(img);

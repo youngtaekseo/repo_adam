@@ -1,6 +1,13 @@
 package com.ucl.infra.product;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -159,8 +166,43 @@ public class ProductService {
 		return dao.deleteList(vo);
 	};	
 	
+	//이미지갯수
+	public ProductDto selectOneImageCount(ProductDto dto) throws Exception {
+		return dao.selectOneImageCount(dto);
+	};
+	
 	//상품이미지조회
 	public List<ProductDto> selectListImages(ProductDto dto) {
 		return dao.selectListImages(dto);
 	};
+	
+	//이미지변환
+	public List<ProductDto> getBase64ExternalImage(ProductDto dto) throws Exception {
+    	List<ProductDto> returnList = new ArrayList<>();
+    	
+    	// 이미지파일조회
+    	List<ProductDto> listDto = selectListImages(dto);
+    	
+    	for(ProductDto forDto : listDto) {
+        	// 이미지 파일을 파일 시스템에서 로드
+            File imgPath = new File(forDto.getXpath());
+            BufferedImage bufferedImage = ImageIO.read(imgPath);
+
+            // 이미지를 byte 배열로 변환
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, forDto.getXext(), outputStream); // 이미지 확장자:forDto.getxExt()
+            byte[] imageBytes = outputStream.toByteArray();
+
+            ProductDto dto2 = new ProductDto();
+            
+            // byte 배열을 Base64 문자열로 인코딩하여 반환
+            dto2.setXpathUpload(Base64.getEncoder().encodeToString(imageBytes));
+            dto2.setXfileName(forDto.getXfileName());
+            dto2.setXext(forDto.getXext().toLowerCase());
+            
+            returnList.add(dto2);		
+    	}
+        
+        return returnList;
+    }
 }

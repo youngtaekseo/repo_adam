@@ -32,7 +32,8 @@ public interface ProductDao {
 	public ProductDto selectOneWisilistCount(ProductVo vo);
 	// 다중선택자료 삭제
 	public int deleteList(ProductVo vo);
-	
+	//이미지갯수
+	public ProductDto selectOneImageCount(ProductDto dto);
 	//상품이미지조회
 	public List<ProductDto> selectListImages(ProductDto dto);
 }

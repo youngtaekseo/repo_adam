@@ -36,10 +36,15 @@ public class ProductDto extends BaseDto {
 	private Date    xDateTime;
 	private String  xwshSeq;
 	private Integer xrowSeq;
-	
-	private String xpath;
-	private String xdefaultNy;
-	private String xoriginalName;
+
+	private Integer xCount;
+	private String  xpath;
+	private String  xfileName;
+	private String  xpathUpload;
+	private String  xpathLoad;
+	private String  xuuidName;
+	private String  xext;
+	private String  xdefaultNy;
 	
 	//=============================================================================
 	
@@ -234,10 +239,40 @@ public class ProductDto extends BaseDto {
 	public void setXdefaultNy(String xdefaultNy) {
 		this.xdefaultNy = xdefaultNy;
 	}
-	public String getXoriginalName() {
-		return xoriginalName;
+	public String getXext() {
+		return xext;
 	}
-	public void setXoriginalName(String xoriginalName) {
-		this.xoriginalName = xoriginalName;
+	public void setXext(String xext) {
+		this.xext = xext;
+	}
+	public String getXfileName() {
+		return xfileName;
+	}
+	public void setXfileName(String xfileName) {
+		this.xfileName = xfileName;
+	}
+	public String getXpathUpload() {
+		return xpathUpload;
+	}
+	public void setXpathUpload(String xpathUpload) {
+		this.xpathUpload = xpathUpload;
+	}
+	public String getXpathLoad() {
+		return xpathLoad;
+	}
+	public void setXpathLoad(String xpathLoad) {
+		this.xpathLoad = xpathLoad;
+	}
+	public String getXuuidName() {
+		return xuuidName;
+	}
+	public void setXuuidName(String xuuidName) {
+		this.xuuidName = xuuidName;
+	}
+	public Integer getxCount() {
+		return xCount;
+	}
+	public void setxCount(Integer xCount) {
+		this.xCount = xCount;
 	}
 }
