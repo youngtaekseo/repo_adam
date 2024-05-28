@@ -1,11 +1,17 @@
+// 페이지가 로드될 때 이미지 호출
+/*window.onload = () => {
+	let imageUrl = document.getElementById("imageUrl");
+	location.href = imageUrl.src;
+}*/
+
 //let selectedFile = null;
 
 // API 엔드포인트에서 이미지 데이터를 가져오는 비동기 함수
 async function fetchImages() {
     try {
         // /api/images 엔드포인트에서 데이터를 가져옴 
-        let pdtSeq = $("#pdtSeq").val();
-        const response = await fetch('/productLoadImage?pdtSeq='+pdtSeq);
+        let mbrSeq = $("#mbrSeq").val();
+        const response = await fetch('/memberLoadImage?mbrSeq='+mbrSeq);
         // JSON 형식으로 응답 데이터를 파싱
         const images = await response.json();
         return images;
@@ -38,31 +44,14 @@ async function createImageGallery() {
 				img.src = 'data:image/jpeg;base64,' + image.xpathUpload;
 			}			
 		}
-        
-       // 라디오 버튼 생성
-        let radioButton = document.createElement('input');
-        radioButton.type = 'radio';
-        radioButton.name = 'imageRadioLoad';
-        radioButton.value = image.xfileName;
-        radioButton.className = 'custom-radio';
-        radioButton.disabled = true;
-		
-		if(image.xdefaultNy == "0") {
-			radioButton.checked = true;
-		}
 
         // 파일명 요소 생성
         let fileName = document.createElement('div');
         fileName.className = 'file-name';
         fileName.textContent = image.xfileName;           
 
-        // 이미지 컨테이너에 이미지, 라디오 버튼, 닫기 버튼, 파일명 추가
-        imageContainer.appendChild(img);
-        
-        if(image.xdefaultNy == "0") {
-        	imageContainer.appendChild(radioButton);
-        }
-        
+        // 이미지 컨테이너에 이미지, 파일명 추가
+        imageContainer.appendChild(img);        
         imageContainer.appendChild(fileName);        
         // 갤러리에 이미지 컨테이너를 추가
         gallery.appendChild(imageContainer);

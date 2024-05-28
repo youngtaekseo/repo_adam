@@ -17,13 +17,7 @@ public class Commvar {
 	
 	public static final int SESSION_MINUTE_SDM = 30;
 	
-	public static final String UPLOADED_PATH_PREFIX_LOCAL          = "D:\\factory\\workspace\\nas/"; // 저장위치
-	public static final String UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL = "/images/";                  // 보여줄위치
-	
-	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC          = "/Volumes/Work/factory/workspace/nas/"; // 저장위치
-	public static final String UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC = "/images/";                  // 보여줄위치
-	
-	public static final String UPLOADED_RESSOURCE_HANDLER = "/images/**";
-	public static final String UPLOADED_RESSOURCE_LOCATIONS = "file:///Volumes/Work/factory/workspace/nas/";
+	public static final String UPLOADED_PATH_PREFIX_LOCAL     = "D:\\factory\\workspace\\nas\\"; // 저장위치
+	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC = "/Volumes/Work/factory/workspace/nas/"; // 저장위치
 	
 }

@@ -19,6 +19,7 @@ public class FileUpLoadDto {
 	private String  regIp;
 	private String  regSeq;
 	private Date    regDateTime;
+	private String  storage;
 	
 	public String getSeq() {
 		return seq;
@@ -115,6 +116,12 @@ public class FileUpLoadDto {
 	}
 	public void setRegDateTime(Date regDateTime) {
 		this.regDateTime = regDateTime;
+	}
+	public String getStorage() {
+		return storage;
+	}
+	public void setStorage(String storage) {
+		this.storage = storage;
 	}
 	
 }

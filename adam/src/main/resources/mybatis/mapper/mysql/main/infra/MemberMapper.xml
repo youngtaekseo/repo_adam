@@ -86,6 +86,7 @@
 		         ON b.pseq = a.mbrSeq
 		        AND b.category  = 0
 		        AND b.defaultNy = 0
+		        AND b.storage   = #{xstorage}
 		 WHERE 1 = 1	
            AND a.mbrSeq = #{mbrSeq}	
 	</select>
@@ -206,5 +207,28 @@
     	         #{list}
     	       </foreach>
     </delete> 	
+
+	<!-- 이미지 갯수 -->
+	<select id="selectOneImageCount" resultMap="resultMapObj">
+		SELECT COUNT(*) xCount
+		  FROM fileuploaded
+		 WHERE pseq      = #{mbrSeq}
+		   AND defaultNy = 0
+		   AND category  = 0
+		   AND storage   = #{xstorage}
+	</select>
+
+	<!-- 이미지 조회 -->
+	<select id="selectListImages" resultMap="resultMapObj">
+		SELECT defaultNy    xdefaultNy
+		     , path         xpathUpload
+		     , originalName xfileName
+		     , ext          xext
+		  FROM fileuploaded
+		 WHERE pseq      = #{mbrSeq}
+		   AND defaultNy = 0
+		   AND category  = 0
+		   AND storage   = #{xstorage}
+	</select>
 
 </mapper>

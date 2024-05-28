@@ -45,6 +45,7 @@ public class ProductDto extends BaseDto {
 	private String  xuuidName;
 	private String  xext;
 	private String  xdefaultNy;
+	private String  xstorage;
 	
 	//=============================================================================
 	
@@ -274,5 +275,11 @@ public class ProductDto extends BaseDto {
 	}
 	public void setxCount(Integer xCount) {
 		this.xCount = xCount;
+	}
+	public String getXstorage() {
+		return xstorage;
+	}
+	public void setXstorage(String xstorage) {
+		this.xstorage = xstorage;
 	}
 }

@@ -44,10 +44,10 @@ public class ProductService {
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		if(fileUploadType.toLowerCase().equals("aws")) {
+		if(fileUploadType.toLowerCase().equals("0")) { // aws
 			// 파일첨부:4개파일을 멀티로 선택했을 경우
 			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
-		} else if(fileUploadType.toLowerCase().equals("nas")) {
+		} else if(fileUploadType.toLowerCase().equals("1")) { // nas
 			// NAS 파일첨부
 			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);				
 		}
@@ -75,10 +75,10 @@ public class ProductService {
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		if(fileUploadType.toLowerCase().equals("aws")) {
+		if(fileUploadType.toLowerCase().equals("0")) { // aws
 			// AWS S3 파일첨부
 			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
-		} else if(fileUploadType.toLowerCase().equals("nas")) {
+		} else if(fileUploadType.toLowerCase().equals("1")) { // nas
 			// NAS 파일첨부
 			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);			
 		}
@@ -168,11 +168,13 @@ public class ProductService {
 	
 	//이미지갯수
 	public ProductDto selectOneImageCount(ProductDto dto) throws Exception {
+		dto.setXstorage(fileUploadType);
 		return dao.selectOneImageCount(dto);
 	};
 	
 	//상품이미지조회
 	public List<ProductDto> selectListImages(ProductDto dto) {
+		dto.setXstorage(fileUploadType);
 		return dao.selectListImages(dto);
 	};
 	

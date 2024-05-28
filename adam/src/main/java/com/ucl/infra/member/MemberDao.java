@@ -17,4 +17,8 @@ public interface MemberDao {
 	
 	// 다중선택자료 삭제
 	public int deleteList(MemberVo vo);
+	//이미지갯수
+	public MemberDto selectOneImageCount(MemberDto dto);
+	//상품이미지조회
+	public List<MemberDto> selectListImages(MemberDto dto);
 }

@@ -28,9 +28,6 @@ public class MemberController extends BaseController {
 	@Autowired
 	MemberService service;
 	
-	@Autowired
-	MemberImageService imageService;
-	
 	// 검색조건 초기화
 	@RequestMapping(value = "/memberSdmListInit")
 	public String memberSdmListInit(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
@@ -115,19 +112,8 @@ public class MemberController extends BaseController {
 	// 관리자 수정화면
 	@RequestMapping(value = "/memberSdmForm")
 	public String memberSdmForm(MemberDto dto, Model model) throws Exception {
-		dto = service.selectOne(dto);
-		model.addAttribute("item", dto);
+		model.addAttribute("item", service.selectOne(dto));
 		model.addAttribute("uploadType", fileUploadType.toLowerCase());
-		
-		if(fileUploadType.toLowerCase().equals("nas")) {
-			// NAS 파일
-			if(dto.getXfileName() != null) {
-				String pathFile = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC+dto.getXuuidName();
-				String base64Image = imageService.getBase64ExternalImage(pathFile, dto.getxExt());
-				model.addAttribute("imageUrl", base64Image);
-			}			
-		}
-		
 		return Commvar.PATH_MEMBER + "memberSdmForm";
 	}
 	

@@ -26,14 +26,17 @@ public class MemberDto extends BaseDto {
 	private Integer xmbrCount;
 	private String  xmbrPwConfirm;
 	private String  xmbrPasswordPre;
+	
 	private Integer xrowSeq;
+	private Integer xCount;
+	private String  xpath;
 	private String  xfileName;
 	private String  xpathUpload;
-	private String  xpathload;
+	private String  xpathLoad;
 	private String  xuuidName;
-	private String  xExt;
-	
-	//private MultipartFile[] uploadFiles;
+	private String  xext;
+	private String  xdefaultNy;
+	private String  xstorage;
 	
 //	===================================
 	
@@ -169,23 +172,47 @@ public class MemberDto extends BaseDto {
 	public void setXpathUpload(String xpathUpload) {
 		this.xpathUpload = xpathUpload;
 	}
-	public String getXpathload() {
-		return xpathload;
-	}
-	public void setXpathload(String xpathload) {
-		this.xpathload = xpathload;
-	}
 	public String getXuuidName() {
 		return xuuidName;
 	}
 	public void setXuuidName(String xuuidName) {
 		this.xuuidName = xuuidName;
 	}
-	public String getxExt() {
-		return xExt;
+	public Integer getxCount() {
+		return xCount;
 	}
-	public void setxExt(String xExt) {
-		this.xExt = xExt;
+	public void setxCount(Integer xCount) {
+		this.xCount = xCount;
+	}
+	public String getXpath() {
+		return xpath;
+	}
+	public void setXpath(String xpath) {
+		this.xpath = xpath;
+	}
+	public String getXpathLoad() {
+		return xpathLoad;
+	}
+	public void setXpathLoad(String xpathLoad) {
+		this.xpathLoad = xpathLoad;
+	}
+	public String getXext() {
+		return xext;
+	}
+	public void setXext(String xext) {
+		this.xext = xext;
+	}
+	public String getXdefaultNy() {
+		return xdefaultNy;
+	}
+	public void setXdefaultNy(String xdefaultNy) {
+		this.xdefaultNy = xdefaultNy;
+	}
+	public String getXstorage() {
+		return xstorage;
+	}
+	public void setXstorage(String xstorage) {
+		this.xstorage = xstorage;
 	}
 	
 }

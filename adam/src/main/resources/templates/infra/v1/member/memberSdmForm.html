@@ -3,6 +3,7 @@
   
 <head>
 	<div th:replace="~{infra/v1/include/headSdm :: head}"></div>
+	<link rel="stylesheet" href="sdm/css/fileuploadMember.css">
 </head>	
 
   <body>
@@ -26,9 +27,13 @@
 				    	</a>
 					</h2>
 					
+					<!-- 회원정보 순번 -->
+					<input id="mbrSeq" name="mbrSeq" th:value="${item.mbrSeq}" type="hidden">
+					
 					<!--이미지-->
-					<th:block th:if="${uploadType == 'aws'}">
-						<!--AWS S3 방식-->
+					<div id="imageContainerWrapper"></div>
+					<!--<th:block th:if="${uploadType == 'aws'}">
+						AWS S3 방식
 						<div th:if="${item.xpathUpload != null}">
 							<img th:src = "${item.xpathUpload}"
 				                style="position: absolute;
@@ -40,7 +45,7 @@
 						</div>
 					</th:block>
 					<th:block th:unless="${uploadType == 'aws'}">
-						<!--NAS방식-->
+						NAS방식
 						<div th:if="${imageUrl != null}">
 							<img th:src = "'data:image/jpeg;base64,' + ${imageUrl}" id="imageUrl" name="imageUrl"
 				                style="position: absolute;
@@ -50,13 +55,9 @@
 									   height: 200px;
 									   border: 3px solid purple"/>
 						</div>
-					</th:block>
-					
+					</th:block>-->
 					
 					<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-						<!-- 회원정보 순번 -->
-						<input id="mbrSeq" name="mbrSeq" th:value="${item.mbrSeq}" type="hidden">
-						
 						<div class="flex flex-col md:flex-row mt-4 mb-4">
 							<!--파일선택-->
 							<div class="md:h-auto mr-3 md:w-1/2">
@@ -304,9 +305,10 @@
     <!--지도표시-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a4c9747a2b2880470d7fdb8bc928a8c"></script>
 	
-	<!--NAS 방식 이미지 로그-->
-	<!--<script src="sdm/js/fileloadmember.js"></script>-->
-	
+	<!--이미지-->
+	<script src="sdm/js/fileuploadMember.js"></script>
+    <script src="sdm/js/fileloadMember.js"></script>
+    
     <script type="text/javascript">
 // ============================================================================
 // 변수선언

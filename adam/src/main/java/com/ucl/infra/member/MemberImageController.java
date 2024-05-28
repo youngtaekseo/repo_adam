@@ -1,6 +1,5 @@
-package com.ucl.infra.product;
+package com.ucl.infra.member;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,28 +8,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ProductImageController {
+public class MemberImageController {
 	@Value("${file_upload_type}")
 	private String fileUploadType;
 	
 	@Autowired
-	ProductService service;
+	MemberService service;
 	
 	// 이미지조회
-	@RequestMapping(value = "/productLoadImage")
-	public List<ProductDto> productLoadImage(ProductDto dto, ProductDto dto2) throws Exception {
+	@RequestMapping(value = "/memberLoadImage")
+	public List<MemberDto> productLoadImage(MemberDto dto, MemberDto dto2) throws Exception {
 		// 파일갯수확인
 		dto2 = service.selectOneImageCount(dto);
 		
 		if(dto2 != null) {
-			List<ProductDto> returnList = new ArrayList<>();
-			if(fileUploadType.toLowerCase().equals("1")) { // nas
-				returnList = service.getBase64ExternalImage(dto);				
+			if(fileUploadType.toLowerCase().equals("1")) { //nas
+				return service.getBase64ExternalImage(dto);
 			} else {
-				returnList = service.selectListImages(dto);
+				return service.selectListImages(dto);
 			}
-			
-			return returnList;
 		} else {
 			return null;
 		}

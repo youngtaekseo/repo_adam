@@ -185,10 +185,10 @@ public class BaseService {
 			
 			if(BaseService.getOs().equals("win")) {
 				pathUpload = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
+				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
 			} else {
 				pathUpload = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
+				pathLoad   = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
 			}
 			
 			File uploadPath = new File(pathUpload);
@@ -201,8 +201,8 @@ public class BaseService {
 			  
 			multipartFile.transferTo(new File(pathUpload + uuidFileName));
 					
-			dto.setPath(pathLoad);      // 불러올위치
-			dto.setPathName(pathUpload); // 원격저장위치
+			dto.setPath(pathLoad + uuidFileName);      // 불러올위치
+			dto.setPathName(pathUpload + uuidFileName); // 원격저장위치
 			dto.setOriginalName(fileName);
 			dto.setUuidName(uuidFileName);
 			dto.setExt(ext);
@@ -305,10 +305,10 @@ public class BaseService {
 				
 				if(BaseService.getOs().equals("win")) {
 					writePath = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-					loadPath  = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
+					loadPath  = Commvar.UPLOADED_PATH_PREFIX_LOCAL;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";					
 				} else {
 					writePath = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";
-					loadPath  = Commvar.UPLOADED_PATH_PREFIX_FOR_VIEW_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
+					loadPath  = Commvar.UPLOADED_PATH_PREFIX_LOCAL_MAC;// + "/" + pathModule + "/" + type + "/" + pathDate + "/";										
 				}
 				
 				File uploadPath = new File(writePath);
