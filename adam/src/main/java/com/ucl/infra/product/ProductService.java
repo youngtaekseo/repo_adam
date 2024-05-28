@@ -41,6 +41,7 @@ public class ProductService {
 	public int insert(ProductDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.insert(dto);
 		
+		fDto.setStorage(fileUploadType);
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
@@ -72,6 +73,7 @@ public class ProductService {
 	public int update(ProductDto dto, FileUpLoadDto fDto) throws Exception {
 		dao.update(dto);
 		
+		fDto.setStorage(fileUploadType);
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
@@ -187,7 +189,7 @@ public class ProductService {
     	
     	for(ProductDto forDto : listDto) {
         	// 이미지 파일을 파일 시스템에서 로드
-            File imgPath = new File(forDto.getXpath());
+            File imgPath = new File(forDto.getXpathUpload());
             BufferedImage bufferedImage = ImageIO.read(imgPath);
 
             // 이미지를 byte 배열로 변환

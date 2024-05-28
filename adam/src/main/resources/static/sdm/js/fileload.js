@@ -17,6 +17,8 @@ async function fetchImages() {
 
 // 이미지 갤러리를 동적으로 생성하는 비동기 함수
 async function createImageGallery() {
+	//저장소구분
+	const uploadType = document.getElementById('uploadType');
     // 이미지 갤러리 컨테이너 요소를 가져옴
     const gallery = document.getElementById('imageContainerWrapper');
     // 이미지 데이터를 가져옴
