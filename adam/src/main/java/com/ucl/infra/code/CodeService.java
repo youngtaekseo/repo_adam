@@ -3,6 +3,8 @@ package com.ucl.infra.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class CodeService {
 	CodeDao dao;
 	
 	public List<CodeDto> selectList(CodeVo vo) {
+		Workbook workbook = new XSSFWorkbook();
 		return dao.selectList(vo);
 	}
 	

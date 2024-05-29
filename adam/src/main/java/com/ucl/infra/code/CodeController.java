@@ -1,8 +1,16 @@
 package com.ucl.infra.code;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +21,11 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ucl.common.constants.Commvar;
+import com.ucl.common.util.UtilDateTime;
 import com.ucl.common.util.UtilFunction;
 import com.ucl.infra.codegroup.CodeGroupService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CodeController {
@@ -52,8 +63,6 @@ public class CodeController {
 			vo.setPagingVo(rowCount);
 			
 			model.addAttribute("list", service.selectList(vo));
-			
-			/* setUrl(vo); */
 		};
 
 		model.addAttribute("listCodeGroupName", codeGroupService.selectListCodeGroup());
@@ -153,4 +162,100 @@ public class CodeController {
 		vo.setUri("&"+uri.toUriString().substring(1, uri.toUriString().length()));
 	}
 	
+	// 엑셀다운
+	@RequestMapping(value = "/excelDown")
+	public void excelDown(CodeVo vo, HttpServletResponse httpServletResponse) throws Exception {
+		// 일자설정
+		UtilFunction.setSearch(vo);
+		
+		// 조회자료 전체건수
+		int rowCount = service.getCount(vo);
+		
+		if(rowCount > 0) {	
+			// 페이지설정
+			vo.setPagingVo(rowCount);
+			
+			// 자료조회
+			List<CodeDto> list = service.selectList(vo);
+			
+			Workbook workbook = new XSSFWorkbook();
+			Sheet sheet = workbook.createSheet("첫시트");
+			CellStyle cellStyle = workbook.createCellStyle();
+			Row row = null;
+			Cell cell  = null;
+			int rowNum = 0;
+			
+			sheet.setColumnWidth(0, 2100);
+			sheet.setColumnWidth(1, 3100);
+			
+			String[] tableHead = {"순번","그룹순번","그룹명","코드순번","코드명","삭제여부","등록일시","수정일시"};
+			
+			for(int i=0; i < list.size(); i++) {
+				row = sheet.createRow(rowNum++);
+//	            String type: null 전달 되어도 ok
+//	            int, date type: null 시 오류 발생 하므로 null check
+//	            String type 이지만 정수형 데이터가 전체인 seq 의 경우 캐스팅
+				
+				// 순번
+				cell = row.createCell(0);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(list.get(i).getXrowSeq());
+				
+				// 그룹순번
+				cell = row.createCell(1);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(list.get(i).getCdgSeq());
+				
+				// 그룹명
+				cell = row.createCell(2);
+				cellStyle.setAlignment(HorizontalAlignment.LEFT);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(list.get(i).getCdgName());
+				
+				// 코드순번
+				cell = row.createCell(3);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(list.get(i).getCdcSeq());
+				
+				// 코드명
+				cell = row.createCell(4);
+				cellStyle.setAlignment(HorizontalAlignment.LEFT);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(list.get(i).getCdcName());
+				
+				// 삭제여부
+				cell = row.createCell(5);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				if(list.get(i).getCdcDelNy() != null) {
+					cell.setCellValue(list.get(i).getCdcDelNy() == 0 ? "N" : "Y");
+				}
+				
+				// 등록일시
+				cell = row.createCell(6);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				if(list.get(i).getCdcRegDt() != null) {
+					cell.setCellValue(UtilDateTime.dateTimeToString(list.get(i).getCdcRegDt()));
+				}
+				
+				// 수정일시
+				cell = row.createCell(7);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				if(list.get(i).getCdcUdtDt() != null) {
+					cell.setCellValue(UtilDateTime.dateTimeToString(list.get(i).getCdcUdtDt()));
+				}
+			}
+			
+			httpServletResponse.setContentType("ms-vnd/excel");
+			httpServletResponse.setHeader("Content-Disposition", "attachment;filename=example.xlsx");
+			
+			workbook.write(httpServletResponse.getOutputStream());
+			workbook.close();
+		};
+	}
 }

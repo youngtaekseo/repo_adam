@@ -267,8 +267,18 @@
                   				<nav aria-label="Table navigation"></nav>
                 			</span>
                               
-                			<!-- 이전버튼 -->
                 			<span class="flex col-span-3 sm:mt-auto sm:justify-end">
+								<!--엑셀다운-->
+              					<a th:href="@{/excelDown}">
+	                  				<button class="flex items-center px-2 py-2 mr-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
+    	                				aria-label="excel">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  		<path clip-rule="evenodd" fill-rule="evenodd" d="M4.5 2A1.5 1.5 0 0 0 3 3.5v13A1.5 1.5 0 0 0 4.5 18h11a1.5 1.5 0 0 0 1.5-1.5V7.621a1.5 1.5 0 0 0-.44-1.06l-4.12-4.122A1.5 1.5 0 0 0 11.378 2H4.5Zm4.75 6.75a.75.75 0 0 1 1.5 0v2.546l.943-1.048a.75.75 0 0 1 1.114 1.004l-2.25 2.5a.75.75 0 0 1-1.114 0l-2.25-2.5a.75.75 0 1 1 1.114-1.004l.943 1.048V8.75Z"></path>
+										</svg>
+	                  				</button>
+              					</a>
+                			
+                				<!-- 홈버튼 -->
               					<a th:href="@{/indexSdm}">
 	                  				<button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
     	                				aria-label="Back">
@@ -277,7 +287,7 @@
 										</svg>
 	                  				</button>
               					</a>
-                			</span>                
+                			</span>   
               			</div>
             		</div>
           		</div>
