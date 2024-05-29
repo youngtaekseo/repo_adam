@@ -185,14 +185,19 @@ public class CodeController {
 			Cell cell  = null;
 			int rowNum = 0;
 			
-			sheet.setColumnWidth(0, 2100);
-			sheet.setColumnWidth(1, 3100);
-			
+			//sheet.setColumnWidth(0, 2100);
+			//sheet.setColumnWidth(1, 3100);
+
 			String[] tableHead = {"순번","그룹순번","그룹명","코드순번","코드명","삭제여부","등록일시","수정일시"};
 			
 			// 타이틀
 			row = sheet.createRow(rowNum++);
-			for(int i=0; i< tableHead.length; i++) {
+			for(int i=0; i < tableHead.length; i++) {
+				// 셀너비 조정
+				sheet.autoSizeColumn(i);
+				sheet.setColumnWidth(i, (sheet.getColumnWidth(i)) + (short) 1024);
+				
+				// 타이틀 설정
 				cell = row.createCell(i);
 				cellStyle.setAlignment(HorizontalAlignment.CENTER);
 				cell.setCellStyle(cellStyle);
