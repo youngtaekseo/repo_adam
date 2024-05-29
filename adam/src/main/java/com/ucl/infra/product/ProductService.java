@@ -45,10 +45,10 @@ public class ProductService {
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		if(fileUploadType.toLowerCase().equals("0")) { // aws
+		if(fileUploadType.equals("0")) { // aws
 			// 파일첨부:4개파일을 멀티로 선택했을 경우
 			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
-		} else if(fileUploadType.toLowerCase().equals("1")) { // nas
+		} else if(fileUploadType.equals("1")) { // nas
 			// NAS 파일첨부
 			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);				
 		}
@@ -77,10 +77,10 @@ public class ProductService {
 		fDto.setCategory("1"); // 0:회원, 1:상품
 		fDto.setPseq(dto.getPdtSeq());
 
-		if(fileUploadType.toLowerCase().equals("0")) { // aws
+		if(fileUploadType.equals("0")) { // aws
 			// AWS S3 파일첨부
 			baseService.fileUploadsS3(dto.getUploadFiles(), fDto, fDto);		
-		} else if(fileUploadType.toLowerCase().equals("1")) { // nas
+		} else if(fileUploadType.equals("1")) { // nas
 			// NAS 파일첨부
 			baseService.fileUploadsNas(dto.getUploadFiles(), fDto, fDto);			
 		}
@@ -184,25 +184,32 @@ public class ProductService {
 	public List<ProductDto> getBase64ExternalImage(ProductDto dto) throws Exception {
     	List<ProductDto> returnList = new ArrayList<>();
     	
+    	// 이미지 확장자
+    	String ext = null;
+    	
     	// 이미지파일조회
     	List<ProductDto> listDto = selectListImages(dto);
     	
     	for(ProductDto forDto : listDto) {
+        	// 이미지 확장자
+        	ext = forDto.getXext().toLowerCase();
+        	
         	// 이미지 파일을 파일 시스템에서 로드
             File imgPath = new File(forDto.getXpathUpload());
             BufferedImage bufferedImage = ImageIO.read(imgPath);
 
             // 이미지를 byte 배열로 변환
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, forDto.getXext(), outputStream); // 이미지 확장자:forDto.getxExt()
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();         
+            ImageIO.write(bufferedImage, ext, outputStream);
             byte[] imageBytes = outputStream.toByteArray();
 
             ProductDto dto2 = new ProductDto();
             
             // byte 배열을 Base64 문자열로 인코딩하여 반환
+            dto2.setXdefaultNy(forDto.getXdefaultNy());
             dto2.setXpathUpload(Base64.getEncoder().encodeToString(imageBytes));
             dto2.setXfileName(forDto.getXfileName());
-            dto2.setXext(forDto.getXext().toLowerCase());
+            dto2.setXext(ext);
             
             returnList.add(dto2);		
     	}

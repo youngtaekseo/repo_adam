@@ -87,10 +87,10 @@ public class MemberService {
 		fDto.setSort(0);
 		fDto.setPseq(dto.getMbrSeq());
 
-		if(fileUploadType.toLowerCase().equals("0")) { //aws
+		if(fileUploadType.equals("0")) { //aws
 			// AWS S3 파일첨부
 			baseService.fileUploadS3(dto.getUploadFile(), fDto);
-		} else if(fileUploadType.toLowerCase().equals("1")) { //nas
+		} else if(fileUploadType.equals("1")) { //nas
 			// NAS 파일첨부
 			baseService.fileUploadNas(dto.getUploadFile(), fDto);			
 		}
@@ -108,10 +108,10 @@ public class MemberService {
 		fDto.setSort(0);
 		fDto.setPseq(dto.getMbrSeq());	
 		
-		if(fileUploadType.toLowerCase().equals("0")) { //aws
+		if(fileUploadType.equals("0")) { //aws
 			// AWS S3 파일첨부
 			baseService.fileUploadS3(dto.getUploadFile(), fDto);		
-		} else if(fileUploadType.toLowerCase().equals("1")) { //nas
+		} else if(fileUploadType.equals("1")) { //nas
 			// NAS 파일첨부
 			baseService.fileUploadNas(dto.getUploadFile(), fDto);			
 		}

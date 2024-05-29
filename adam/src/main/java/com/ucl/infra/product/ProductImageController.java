@@ -1,6 +1,5 @@
 package com.ucl.infra.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,9 @@ public class ProductImageController {
 		dto2 = service.selectOneImageCount(dto);
 		
 		if(dto2 != null) {
-			List<ProductDto> returnList = new ArrayList<>();
-			if(fileUploadType.toLowerCase().equals("1")) { // nas
-				returnList = service.getBase64ExternalImage(dto);				
+			List<ProductDto> returnList;
+			if(fileUploadType.equals("1")) { // nas
+				returnList = service.getBase64ExternalImage(dto);	
 			} else {
 				returnList = service.selectListImages(dto);
 			}

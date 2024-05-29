@@ -34,11 +34,8 @@ async function createImageGallery() {
         if(uploadType.value == '0') { // aws
 			img.src = image.xpathUpload;
 		} else {
-	        if(image.xext == 'png') {
-				img.src = 'data:image/png;base64,' + image.xpathUpload;
-			} else {
-				img.src = 'data:image/jpeg;base64,' + image.xpathUpload;
-			}			
+			let src = "data:image/"+image.xext.toLowerCase()+";base64," + image.xpathUpload;
+			img.src = src;
 		}
         
        // 라디오 버튼 생성
@@ -47,8 +44,8 @@ async function createImageGallery() {
         radioButton.name = 'imageRadioLoad';
         radioButton.value = image.xfileName;
         radioButton.className = 'custom-radio';
-        radioButton.disabled = true;
-		
+		radioButton.disabled = true;
+
 		if(image.xdefaultNy == "0") {
 			radioButton.checked = true;
 		}

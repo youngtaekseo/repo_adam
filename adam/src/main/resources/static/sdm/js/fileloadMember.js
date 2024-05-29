@@ -39,11 +39,16 @@ async function createImageGallery() {
         if(uploadType.value == '0') { // aws
 			img.src = image.xpathUpload;
 		} else {
-	        if(image.xext == 'png') {
+			// image.xext.toLowerCase(): 이미지파일 확장자
+			// image.xpathUpload: 인코딩된 이미지 파일 정보
+			let src = "data:image/"+image.xext.toLowerCase()+";base64," + image.xpathUpload;
+			img.src = src;
+			
+	        /*if(image.xext == 'png') {
 				img.src = 'data:image/png;base64,' + image.xpathUpload;
 			} else {
 				img.src = 'data:image/jpeg;base64,' + image.xpathUpload;
-			}			
+			}*/			
 		}         
 
         // 이미지 컨테이너에 이미지, 파일명 추가
