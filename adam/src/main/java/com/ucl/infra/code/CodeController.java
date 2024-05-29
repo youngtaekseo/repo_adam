@@ -190,6 +190,16 @@ public class CodeController {
 			
 			String[] tableHead = {"순번","그룹순번","그룹명","코드순번","코드명","삭제여부","등록일시","수정일시"};
 			
+			// 타이틀
+			row = sheet.createRow(rowNum++);
+			for(int i=0; i< tableHead.length; i++) {
+				cell = row.createCell(i);
+				cellStyle.setAlignment(HorizontalAlignment.CENTER);
+				cell.setCellStyle(cellStyle);
+				cell.setCellValue(tableHead[i]);
+			}
+			
+			// 리스트
 			for(int i=0; i < list.size(); i++) {
 				row = sheet.createRow(rowNum++);
 //	            String type: null 전달 되어도 ok
