@@ -17,7 +17,7 @@ public class Commvar {
 	
 	public static final int SESSION_MINUTE_SDM = 30;
 	
-	public static final String UPLOADED_PATH_PREFIX_LOCAL     = "D:\\factory\\workspace\\nas\\"; // 저장위치
-	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC = "/Volumes/Work/factory/workspace/nas/"; // 저장위치
+	public static final String UPLOADED_PATH_PREFIX_LOCAL     = "D:\\factory\\nas\\"; // 저장위치
+	public static final String UPLOADED_PATH_PREFIX_LOCAL_MAC = "/Volumes/Work/factory/nas/"; // 저장위치
 	
 }
