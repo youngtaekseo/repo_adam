@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CodeGroupDto {
+import com.ucl.common.base.BaseDto;
+
+public class CodeGroupDto extends BaseDto {
 	private String 	cdgSeq;
 	private String 	cdgName;
 	private Date 	cdgRegDt;
