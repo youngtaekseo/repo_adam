@@ -136,12 +136,14 @@ public class ProductService {
 	
 	// 차량명으로 검색
 	public List<ProductDto> selectListCarName(ProductVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectListCarName(vo);
 	}
 	
 	
 	// 차량상세정보
 	public ProductDto selectOneCarInfo(ProductVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectOneCarInfo(vo);
 	}
 	
