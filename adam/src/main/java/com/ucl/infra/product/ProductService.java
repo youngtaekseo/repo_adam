@@ -119,6 +119,7 @@ public class ProductService {
 	
 	// 차량리스트 페이징위한 전체 자료건수
 	public int selectOneUsrDataCount(ProductVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectOneUsrDataCount(vo);
 	}
 	
@@ -129,6 +130,7 @@ public class ProductService {
 
 	// 차량정보
 	public List<ProductDto> selectListCarInfo(ProductVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectListCarInfo(vo);
 	}
 	
@@ -145,11 +147,13 @@ public class ProductService {
 	
 	// 구매목록
 	public List<ProductDto> selectListSale(ProductVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectListSale(vo);
 	}
 	
 	// 찜목록
 	public List<ProductDto> selectListWishList(ProductVo vo){
+		vo.setXstorage(fileUploadType);
 		return dao.selectListWishList(vo);
 	}
 	

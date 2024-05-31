@@ -5,6 +5,7 @@ public class PaymentVo {
 	private String shMbrSeq;
 	private String shPaySeq;
 
+	private String xstorage;
 //=============================================================================
 	
 	public String getShSeq() {
@@ -29,6 +30,14 @@ public class PaymentVo {
 
 	public void setShPaySeq(String shPaySeq) {
 		this.shPaySeq = shPaySeq;
+	}
+
+	public String getXstorage() {
+		return xstorage;
+	}
+
+	public void setXstorage(String xstorage) {
+		this.xstorage = xstorage;
 	}
 	
 }

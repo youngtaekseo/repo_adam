@@ -114,8 +114,10 @@
 		         ON g.cdcSeq = d.pdtAccidentCd
 		       JOIN code h
 		         ON h.cdcSeq = d.pdtColorCd
-		       JOIN fileuploaded j
+		       LEFT JOIN fileuploaded j
 		         ON j.pSeq = d.pdtSeq
+		        AND j.category = 1
+		        AND j.storage  = #{xstorage}
 		 WHERE 1 = 1
 		   AND a.mbrSeq = #{shMbrSeq}
 		 GROUP BY a.mbrSeq

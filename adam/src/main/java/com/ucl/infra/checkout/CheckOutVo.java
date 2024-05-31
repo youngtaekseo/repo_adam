@@ -6,6 +6,8 @@ public class CheckOutVo extends BaseVo {
 	private String  shSeq;
 	private Integer shPayType  = 1;  // 결제구분
 	private Integer shCardType = 2; // 카드종류
+	
+	private String xstorage;
 
 //=============================================================================	
 	
@@ -31,5 +33,13 @@ public class CheckOutVo extends BaseVo {
 
 	public void setShCardType(Integer shCardType) {
 		this.shCardType = shCardType;
+	}
+
+	public String getXstorage() {
+		return xstorage;
+	}
+
+	public void setXstorage(String xstorage) {
+		this.xstorage = xstorage;
 	}	
 }

@@ -34,6 +34,8 @@ public class ProductVo extends BaseVo {
 	private Integer shToYear;     // 현재년도 - shRange 결과 년도
 	private Integer shRange = 20; // 현재년도 이전 몇년까지 표시할것이가 : 예) 2024 - 3 하면 2024, 2023, 2022
 	
+	private String xstorage;
+	
 //=============================================================================
 
 	public String getShSeq() {
@@ -197,5 +199,11 @@ public class ProductVo extends BaseVo {
 	}
 	public void setShPdtName(String shPdtName) {
 		this.shPdtName = shPdtName;
+	}
+	public String getXstorage() {
+		return xstorage;
+	}
+	public void setXstorage(String xstorage) {
+		this.xstorage = xstorage;
 	}	
 }

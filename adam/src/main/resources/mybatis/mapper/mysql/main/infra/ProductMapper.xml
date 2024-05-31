@@ -167,6 +167,7 @@
 				       LEFT JOIN fileuploaded b
 				              ON b.pSeq     = a.pdtSeq
 				             AND b.category = 1
+				             AND b.storage  = #{xstorage}
 		               LEFT JOIN (SELECT pdtSeq
 		                               , ROUND(AVG(rvwStar)) xpdtStar
 		                               , COUNT(*)            xpdtCount
@@ -301,6 +302,7 @@
 		       LEFT JOIN fileuploaded b
 		              ON b.pSeq     = a.pdtSeq
 		             AND b.category = 1
+		             AND b.storage  = #{xstorage}
                LEFT JOIN (SELECT pdtSeq
                                , ROUND(AVG(rvwStar)) xpdtStar
                                , COUNT(*)            xpdtCount
@@ -374,9 +376,10 @@
 		         ON g.cdcSeq = d.pdtAccidentCd
 		       JOIN code h
 		         ON h.cdcSeq = d.pdtColorCd
-		       JOIN fileuploaded j
+		       LEFT JOIN fileuploaded j
 		         ON j.pSeq     = d.pdtSeq
 		        AND j.category = 1
+		        AND j.storage  = #{xstorage}
 	</sql>
 	
 	<sql id="selectCommonProductGroup">

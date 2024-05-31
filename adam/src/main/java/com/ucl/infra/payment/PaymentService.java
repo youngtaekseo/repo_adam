@@ -3,10 +3,13 @@ package com.ucl.infra.payment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
+	@Value("${file_upload_type}")
+	private String fileUploadType;
 
 	@Autowired
 	PaymentDao dao;
@@ -28,6 +31,7 @@ public class PaymentService {
 	
 	// 영수증 조회
 	public List<PaymentDto> selectListBuy(PaymentVo vo) {
+		vo.setXstorage(fileUploadType);
 		return dao.selectListBuy(vo);
 	};
 	
