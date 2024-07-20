@@ -12,7 +12,7 @@ public class UtilApiGet {
 		URL url = new URL(apiUrl);
 		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 		httpURLConnection.setRequestMethod("GET");
-		
+
 		BufferedReader bufferedReader;
 		if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() <= 300) {
 			bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
