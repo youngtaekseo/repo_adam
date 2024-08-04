@@ -7,11 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucl.common.constants.Commvar;
-import com.ucl.common.util.UtilApiGet;
-import com.ucl.common.util.UtilDateTime;
 import com.ucl.infra.product.ProductService;
 import com.ucl.infra.product.ProductVo;
 
@@ -101,6 +97,7 @@ public class IndexController {
 		model.addAttribute("listNewReg", productService.selectListCarInfo(vo));
 		
 		// 환율정보 api 호출
+		/*
 		StringBuilder stringBuilder = new StringBuilder();
 		String curDate, curDateDash;
 		
@@ -117,13 +114,14 @@ public class IndexController {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode node = objectMapper.readTree(stringBuilder.toString());
+		*/
 		
 		//System.out.println("node.get(\"cur_unit\").asText(): " + node.get(0).get("cur_unit").asText());
 		//System.out.println("node..get(\"ttb\").asText(): " + node.get(0).get("ttb").asText());
 		//System.out.println("node.get(\"cur_nm\").asText(): " + node.get(0).get("cur_nm").asText());
 		
-		model.addAttribute("node", node);
-		model.addAttribute("searchDay", curDateDash);
+		//model.addAttribute("node", node);
+		//model.addAttribute("searchDay", curDateDash);
 			
 		return Commvar.PATH_HOME + "indexUsr";
 	}
