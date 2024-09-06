@@ -3,16 +3,16 @@ package com.ucl.infra.review;
 import java.util.Date;
 
 public class ReviewDto {
-	private String  rvwSeq;
-	private String  mbrSeq;
-	private String  rvwRemark;
-	private Integer rvwStar;
-	private Date    rvwDateTime;
-	private String  pdtSeq;
+	private String  rvwSeq; // 댓글순번
+	private String  mbrSeq; // 회원순번
+	private String  rvwRemark; // 댓글내용
+	private Integer rvwStar;  // 댓글별점
+	private Date    rvwDateTime; // 댓글등록일시
+	private String  pdtSeq; // 제품순번
 	
-	private Integer xrvwCount;
-	private Integer xrvwStar;
-	private String xmbrName;
+	private Integer xrvwCount; // 댓글갯수
+	private Integer xrvwStar; // 댓글별점
+	private String xmbrName; // 회원명
 
 	//=============================================================================
 
